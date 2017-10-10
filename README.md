@@ -2,7 +2,9 @@
 **Members:**
 
 Daniel Schroeder
+
 Parker Bruni
+
 Aubrey Thenell 
 
 ## Clone this repo
