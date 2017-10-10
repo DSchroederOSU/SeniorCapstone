@@ -1,5 +1,9 @@
 # SeniorCapstone
+**Members:**
 
+Daniel Schroeder
+Parker Bruni
+Aubrey Thenell 
 
 ## Clone this repo
 ```git clone https://github.com/DSchroederOSU/SeniorCapstone.git```
