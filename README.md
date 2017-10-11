@@ -1,4 +1,4 @@
-# Senior Capstone Repository Fall 2017
+# Senior Capstone Repository 2017-2018
 **Members:**
 
 Daniel Schroeder
