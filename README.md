@@ -7,11 +7,18 @@ Parker Bruni
 
 Aubrey Thenell 
 
-JACK
 
 ## Clone this repo
 ```git clone https://github.com/DSchroederOSU/SeniorCapstone.git```
+```cd SeniorCapstone```
 
+
+
+## Make sure that remote origin is set to the correct url
+```git remote -v```
+```Output:```
+``` origin	https://github.com/DSchroederOSU/SeniorCapstone.git (fetch)```
+``` origin	https://github.com/DSchroederOSU/SeniorCapstone.git (push)```
 
 
 
