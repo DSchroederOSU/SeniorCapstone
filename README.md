@@ -7,6 +7,8 @@ Parker Bruni
 
 Aubrey Thenell 
 
+JACK
+
 ## Clone this repo
 ```git clone https://github.com/DSchroederOSU/SeniorCapstone.git```
 
