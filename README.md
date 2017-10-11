@@ -6,12 +6,12 @@ Daniel Schroeder
 Parker Bruni
 
 Aubrey Thenell 
-<br><br>
+<br><br><br>
 
 # Clone this repo
 ```git clone https://github.com/DSchroederOSU/SeniorCapstone.git```  
 ```cd SeniorCapstone```
-<br><br>
+<br><br><br>
 
 # Make sure that remote origin is set to the correct url
 ```git remote -v```
@@ -20,12 +20,12 @@ Aubrey Thenell
 
 ``` origin	https://github.com/DSchroederOSU/SeniorCapstone.git (fetch)```  
 ``` origin	https://github.com/DSchroederOSU/SeniorCapstone.git (push)```
-<br><br>
+<br><br><br>
 
 
 # Create a new branch under your name
 ```git checkout -b YOUR_NAME```
-<br><br>
+<br><br><br>
 
 
 # To push to master
@@ -35,12 +35,14 @@ Aubrey Thenell
 
 This will make your branch a head of master. Then in your branch on Github.com you can click:
 
-![Pull Request Screenshot](https://github.com/DSchroederOSU/SeniorCapstone/blob/master/Misc/Github_Pull_request.png)
-
+![Pull Request Screenshot](https://github.com/DSchroederOSU/SeniorCapstone/blob/master/Misc/Github_Pull_request.png)  
+<br><br><br>
 
 # For pulling from master and merging into local branch
 ```git fetch```  
-```git rebase origin/master```
+```git rebase origin/master```  
+<br><br><br>  
+
 
 # If there are merge conflicts your will receive dialogue
 >CONFLICT (content): Merge conflict in...</br> error: Failed to merge in the changes.</br>When you have resolved this problem, run "git rebase --continue".
