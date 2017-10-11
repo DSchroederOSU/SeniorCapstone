@@ -6,13 +6,12 @@ Daniel Schroeder
 Parker Bruni
 
 Aubrey Thenell 
-
+<br><br>
 
 # Clone this repo
 ```git clone https://github.com/DSchroederOSU/SeniorCapstone.git```  
 ```cd SeniorCapstone```
-
-
+<br><br>
 
 # Make sure that remote origin is set to the correct url
 ```git remote -v```
@@ -21,12 +20,12 @@ Aubrey Thenell
 
 ``` origin	https://github.com/DSchroederOSU/SeniorCapstone.git (fetch)```  
 ``` origin	https://github.com/DSchroederOSU/SeniorCapstone.git (push)```
-
+<br><br>
 
 
 # Create a new branch under your name
 ```git checkout -b YOUR_NAME```
-
+<br><br>
 
 
 # To push to master
