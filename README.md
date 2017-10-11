@@ -39,17 +39,9 @@ This will make your branch a head of master. Then in your branch on Github.com y
 <br><br><br>
 
 # For pulling from master and merging into local branch
-```git fetch```  
-```git rebase origin/master```  
+```git fetch --all```  
+```git merge origin/master```  
 <br><br><br>  
 
 
 # If there are merge conflicts your will receive dialogue
->CONFLICT (content): Merge conflict in...</br> error: Failed to merge in the changes.</br>When you have resolved this problem, run "git rebase --continue".
-If you prefer to skip this patch, run "git rebase --skip" instead.
-To check out the original branch and stop rebasing, run "git rebase --abort".
-
-Once you resolve the conflicts, run:  
-```git add [FILENAME]```  
-Where FILENAME is the file that had conflicts. Then run:  
-```git rebase --continue```
