@@ -1,1 +1,1 @@
-#Blogs Directory#
+# Blogs Directory
