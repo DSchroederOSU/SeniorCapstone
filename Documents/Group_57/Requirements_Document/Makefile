@@ -31,7 +31,6 @@ $(PSF):%.ps: %.dvi
 
 $(PDF): %.pdf: %.ps
 	ps2pdf $<
-	rm -f *.fdb_latexmk *.fls
 
 show: $(TRG)
 	@for i in $(TRG) ; do $(XDVI) $$i & done
