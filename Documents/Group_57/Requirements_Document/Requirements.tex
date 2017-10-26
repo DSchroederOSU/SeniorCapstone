@@ -171,12 +171,22 @@
     
     \subsection{Design Constraints}
     Design constraints may include server availability which could harm scalability.
-    
+    \subsubsection{Standards Compliance}
+    There may be standards when storing energy data based on The Office of Sustainability Standards.
+    [Check with Client]
+
     \subsection{Software System Attributes}
     
     \subsubsection{Reliability}
     The system will be reliable at the time of deployment if all data displayed in graphs and charts is correct.\\
+    \subsubsection{Availability}
+    The system should be consistently available as long as the servers are up and running. As a web application, the system will be available via URL 
+    \subsubsection{Security}
+    The web application will comply with standard Model, View, Controller architecture and keep each entity of the application separate. All data that is sent to the database will be validated in the controller to ensure it is not a security risk or duplicate data.\\
+    \subsubsection{Maintainability}
     
+    \subsubsection{Portability}
+
     Gantt Chart (Months)\\
     \newpsstyle{Important}{fillstyle=solid,fillcolor=red}
     \newpsstyle{NotImportant}{fillstyle=vlines}
