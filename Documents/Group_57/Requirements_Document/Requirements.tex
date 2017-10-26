@@ -93,10 +93,30 @@
     % 8. now you write!
     \section{Introduction}
     \subsection{Purpose}
+	The purpose of this document is to outline the project and all associated information. Furthermore, it will outline how the end product will be used, how it was developed, and all resources and documentation referenced and used during development. This document will also describe the application’s target audience, user interface, and any hardware/software requirements. Finally, it will define how our client, team, and users will see the final product and related functionality.
     \subsection{Scope}
+	Primarily, the scope will pertain to the \'Scalable Web Application Framework for Monitoring Energy Usage on Campus\' project. The project will display different collections that reports energy usage for campus buildings across campus in a user-friendly manner. Each of these collections will be customizable, with the ability to add or remove relevant energy readings to user desire. There will be three main permission levels: Guest, User, and Admin. Guest access will allow anyone with a link to view a specific dashboard with no ability to edit. User will be able to create their own collections from pre-existing data. Admin will be able to add, remove, manage, and change anything on the dashboard application. This will allow the Sustainability Office, Oregon State University affiliates, and the general public to each have permissions to view energy usage.
     \subsection{Definitions, acronyms, and abbreviations}
+	\begin{table}[h]
+	\centering
+	
+	\begin{tabular}{ll}
+	\textbf{Term} & \textbf{Definition} \\
+	OSU & Oregon State University \\
+	MEAN stack & MongoDB, Express, AngularJS, Node.js \\
+	JSON & JavaScript Object Notation \\
+	AcquiSuite & Data Acquisition Servers responsible for metering energy usage. \\
+	Collections & User Interface dashboard that displays assortment of blocks \\
+	Blocks & Charts/graphs of building data
+	\end{tabular}
+	\end{table}
     \subsection{References}
+	The references are:
+	Blank for now
+
     \subsection{Overview}
+	The remainder sections of this document provide an overall description, including product functionality, assumptions, and specific requirements. Section 2 gives functional requirements, data requirements, and assumptions made while designing \'Scalable Web Application Framework for Monitoring Energy Usage on Campus.\' Section 3 gives the specific requirements of the end product as well as discuss the external interface requirements along with functional requirements.
+	
     \section{Overall description}
     \subsection{Product perspective}
     The application that we aim to create will essentially take the place of the current application that is used by the Oregon State Sustainability office. The current application in place has been developed by a company called Lucid that was contracted by the Sustainability office to gather and display information about Oregon State buildings energy consumption to make better infrastructure decisions related to energy consumption. The application makes use of energy monitoring meters dubbed AcquiSuite meters (implemented by the company Obvius) that are already in place inside the buildings, with some buildings containing multiple meters monitoring various distinguishable sections of the building. The current application in place processes the data from the meters and organizes it in an easily interpretable and intuitive way. A user may view this data presentation via web browsing devices such as computer systems or mobile smartphones. Our goal for this product is to mimic the functionality of the current system in place with more efficient alterations to the design. The new product will aim to remove unnecessary features from the design and add new functionality and features that are more desirable for the application users. The product will contain a database that will gather live data from the energy meter data interface as well as be updated with past data about OSU buildings energy consumption. The energy data will be presented two separate UI’s. One UI will focus on a clean general public interface that has relatively simple information navigation features, the other UI will be a more customizable dashboard of information presentations such as graphs or charts that will be accessible only to approved users. 
