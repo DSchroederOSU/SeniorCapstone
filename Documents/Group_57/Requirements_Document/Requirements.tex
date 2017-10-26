@@ -192,17 +192,7 @@
     \newpsstyle{NotImportant}{fillstyle=vlines}
     
     %% http://www.bakoma-tex.com/doc/generic/pst-gantt/pst-gantt-doc.pdf
-    \begin{PstGanttChart}[yunit=2,ChartUnitIntervalName=Month,
-        TaskUnitIntervalValue=15,TaskUnitType=Month,
-        ChartShowIntervals]{5}{7}
-    \PstGanttTask[TaskOutsideLabel={Task 1}]{0}{3}
-    \PstGanttTask[TaskOutsideLabel={Task 2},TaskUnitType=Day]{15}{3}
-    \PstGanttTask[TaskStyle=Important,TaskOutsideLabel={Task 3},
-        TaskInsideLabel={\Large\textcolor{white}{\textbf{Important}}}]{2}{5}
-    \PstGanttTask[TaskStyle=NotImportant,TaskOutsideLabel={Task 4}]{4}{2}
-    \PstGanttTask[TaskOutsideLabel={Task 5}]{5}{2}
-    \end{PstGanttChart}
-
+    
     \section{Appendixes}
     \section{Index}
     
