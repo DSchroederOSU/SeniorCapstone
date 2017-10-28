@@ -24,5 +24,3 @@
 \contentsline {subsubsection}{\numberline {3.6.3}Security}{6}{subsubsection.3.6.3}
 \contentsline {subsubsection}{\numberline {3.6.4}Maintainability}{6}{subsubsection.3.6.4}
 \contentsline {subsubsection}{\numberline {3.6.5}Portability}{6}{subsubsection.3.6.5}
-\contentsline {section}{\numberline {4}Appendixes}{7}{section.4}
-\contentsline {section}{\numberline {5}Index}{7}{section.5}
