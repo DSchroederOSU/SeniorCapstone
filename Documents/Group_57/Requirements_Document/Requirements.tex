@@ -4,6 +4,7 @@
     \usepackage{setspace}
     \usepackage{geometry}
     \usepackage{hyperref}
+    \usepackage{float}
     \hypersetup{
         colorlinks,
         citecolor=black,
@@ -178,15 +179,19 @@
     \subsubsection{Availability}
     The system should be consistently available as long as the servers are up and running. As a web application, the system will be available via URL 
     \subsubsection{Security}
-    The web application will comply with standard Model, View, Controller architecture and keep each entity of the application separate. All data that is sent to the database will be validated in the controller to ensure it is not a security risk or duplicate data.\\
+    The system will validate input for duplication and malicious content.\\
     \subsubsection{Maintainability}
-    
+    The system will be able to be maintained as long as servers are present.
     \subsubsection{Portability}
-
+    The system should be available from any web application. The source code should stay on github so modifications should be easy.
     Gantt Chart (Months)\\ 
     %% http://www.bakoma-tex.com/doc/generic/pst-gantt/pst-gantt-doc.pdf
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=18cm,height=8cm]{gantt.eps}
+    \end{figure}
 
-    \section{Appendixes}
-    \section{Index}
+    %\section{Appendixes}
+    %\section{Index}
     
     \end{document}
