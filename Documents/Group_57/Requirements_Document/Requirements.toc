@@ -8,7 +8,7 @@
 \contentsline {subsection}{\numberline {2.1}Product perspective}{3}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Product functions}{3}{subsection.2.2}
 \contentsline {subsection}{\numberline {2.3}User characteristics}{3}{subsection.2.3}
-\contentsline {subsection}{\numberline {2.4}Constraints}{4}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.4}Constraints}{3}{subsection.2.4}
 \contentsline {subsection}{\numberline {2.5}Assumptions and Dependencies}{4}{subsection.2.5}
 \contentsline {subsection}{\numberline {2.6}Apportioning of Requirements}{4}{subsection.2.6}
 \contentsline {section}{\numberline {3}Specific Requirements}{4}{section.3}
@@ -18,7 +18,7 @@
 \contentsline {subsubsection}{\numberline {3.3.1}Users}{5}{subsubsection.3.3.1}
 \contentsline {subsubsection}{\numberline {3.3.2}Data Management}{5}{subsubsection.3.3.2}
 \contentsline {subsubsection}{\numberline {3.3.3}Visualization}{5}{subsubsection.3.3.3}
-\contentsline {subsubsection}{\numberline {3.3.4}Objects}{6}{subsubsection.3.3.4}
+\contentsline {subsubsection}{\numberline {3.3.4}Objects}{5}{subsubsection.3.3.4}
 \contentsline {subsection}{\numberline {3.4}Logical Database Requirements}{6}{subsection.3.4}
 \contentsline {subsection}{\numberline {3.5}Design Constraints}{6}{subsection.3.5}
 \contentsline {subsubsection}{\numberline {3.5.1}Standards Compliance}{6}{subsubsection.3.5.1}

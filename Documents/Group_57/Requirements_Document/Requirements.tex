@@ -134,7 +134,7 @@
             \item Details about the user interface and expected user interactions.
             \item An outline of specific constraints and dependences included in development. 
             \item Background information about the specific software requirements.
-
+        \end{enumerate}
     \subsection{Product perspective}
     %A block diagram showing the major components of the larger system, interconnections, and external interfaces can be helpful.
     %5.2.1.1 System interfaces
@@ -176,14 +176,14 @@
     \subsection{Functions}
     This section defines how the software system should behave with regards to input and output.
     \begin{itemize}
-    \item The system shall receive and store data from AcquiSuite data acquisition servers into the database. 
-    \item The system shall have input validation measures in place to monitor incoming data and protect from malicious injections.
-    \item The system shall retrieve data from the database and populate webpages with filtered datasets when prompted.
-    \item The system shall have permission based restrictions for accessing certain data.
-    \item The system shall generate alerts for offline buildings and high energy usage.
-    \item The system shall generate emails for users to access a sign-up form and create an account.
-    \item The system shall be able to create arbitrary combinations of datasets given user filters.
-    \item The system shall be able to calculate rankings for all the buildings based on certain metrics like ``kilowatt-hour consumption''.
+        \item The system shall receive and store data from AcquiSuite data acquisition servers into the database. 
+        \item The system shall have input validation measures in place to monitor incoming data and protect from malicious injections.
+        \item The system shall retrieve data from the database and populate webpages with filtered datasets when prompted.
+        \item The system shall have permission based restrictions for accessing certain data.
+        \item The system shall generate alerts for offline buildings and high energy usage.
+        \item The system shall generate emails for users to access a sign-up form and create an account.
+        \item The system shall be able to create arbitrary combinations of datasets given user filters.
+        \item The system shall be able to calculate rankings for all the buildings based on certain metrics like ``kilowatt-hour consumption''.
     \end{itemize}
 
     \subsection{Performance Requirements}
@@ -243,7 +243,10 @@
     \subsubsection{Availability}
     The system should be consistently available as long as the servers are up and running. As a web application, the system will be available via URL 
     \subsubsection{Security}
-    The system will validate input for duplication and malicious content.\\
+    The system will validate input for duplicate and malicious content.\\
+    The system will also have back-end functionality to protect user passwords through proper hashing.\\
+    The web application will restrict access to certain pages and content based on user roles and permissions.
+
     \subsubsection{Maintainability}
     The system will be able to be maintained as long as servers are present.
     \subsubsection{Portability}
