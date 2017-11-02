@@ -221,14 +221,11 @@
         \begin{itemize}
             \item \textbf{Building} - A building on campus that is connected to a data acquisition server.
             \item \textbf{Meter} - A specific data acquisition server.
-            \item \textbf{User} - A user with certain permissions.
+            \item \textbf{User} - A user with a specific role.
         \end{itemize}
         
     \subsection{Logical Database Requirements}
-    Schema to be added soon\\
-    User - \{Primary Key, First Name, Last Name, Username, Password, Permissions Role...\} \\ 
-    Building - \{ID, Name, Type, Energy, Water, Etc\}\\
-    Collection - \{Name, Foreign Building Key 1, Foreign Building Key 2.. Etc\}
+    Most of the calls to the database will be requests for meter data from a specific building or group of buildings. Access to the database should be hidden from the user and only accessed from the back-end of the application itself. Any input into the database should be validated and encrypted, if applicable. 
     
     \subsection{Design Constraints}
     Design constraints may include server availability which could harm scalability.
