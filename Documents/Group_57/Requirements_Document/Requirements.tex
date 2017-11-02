@@ -92,8 +92,8 @@
     \subsection{Purpose}
 	The purpose of this document is to outline the project and all associated information. Furthermore, it will outline how the end product will be used, how it was developed, and all resources and documentation referenced and used during development. This document will also describe the application’s target audience, user interface, and any hardware/software requirements. Finally, it will define how our client, team, and users will see the final product and related functionality.
     \subsection{Scope}
-	Primarily, the scope will pertain to the \'Scalable Web Application Framework for Monitoring Energy Usage on Campus\' project. The project will display different collections that reports energy usage for campus buildings across campus in a user-friendly manner. Each of these collections will be customizable, with the ability to add or remove relevant energy readings to user desire. There will be three main permission levels: Guest, User, and Admin. Guest access will allow anyone with a link to view a specific dashboard with no ability to edit. User will be able to create their own collections from pre-existing data. Admin will be able to add, remove, manage, and change anything on the dashboard application. This will allow the Sustainability Office, Oregon State University affiliates, and the general public to each have permissions to view energy usage.
-    \subsection{Definitions, acronyms, and abbreviations}
+	Primarily, the scope will pertain to the \textit{Scalable Web Application Framework for Monitoring Energy Usage on Campus}  project. The project will display different collections that reports energy usage for campus buildings across campus in a user-friendly manner. Each of these collections will be customizable, with the ability to add or remove relevant energy readings to user desire. There will be three main permission levels: Guest, User, and Admin. Guest access will allow anyone with a link to view a specific dashboard with no ability to edit. User will be able to create their own collections from pre-existing data. Admin will be able to add, remove, manage, and change anything on the dashboard application. This will allow the Sustainability Office, Oregon State University affiliates, and the general public to each have permissions to view energy usage.
+    \subsection{Definitions, acronyms, and abbreviations} \label{definition}
 	\begin{table}[h]
 	\centering
 	
@@ -104,32 +104,43 @@
 	JSON & JavaScript Object Notation \\
 	AcquiSuite & Data Acquisition Servers responsible for metering energy usage. \\
 	Collections & User Interface dashboard that displays assortment of blocks \\
-	Blocks & Charts/graphs of building data
+    Blocks & Charts/graphs of building data \\
+    Stories & Collections of dashboards 
 	\end{tabular}
 	\end{table}
-    \subsection{References}
-	The references are:
-	Blank for now
+    \subsection{References} 
+	The references are:\\
+	http://www.obvius.com/Products/A8812 \\
+    https://d3js.org/  \\
+    http://visjs.org/  \\
+    \url{http://www.obvius.com/sites/obvius.com/files/A8812_Manual.pdf}
 
     \subsection{Overview}
-	The remainder sections of this document provide an overall description, including product functionality, assumptions, and specific requirements. Section 2 gives functional requirements, data requirements, and assumptions made while designing \'Scalable Web Application Framework for Monitoring Energy Usage on Campus.\' Section 3 gives the specific requirements of the end product as well as discuss the external interface requirements along with functional requirements.
+	The remainder sections of this document provide an overall description, including product functionality, assumptions, and specific requirements. Section 2 gives functional requirements, data requirements, and assumptions made while designing \textit{Scalable Web Application Framework for Monitoring Energy Usage on Campus}. Section 3 gives the specific requirements of the end product as well as discuss the external interface requirements along with functional requirements.
 	
     \section{Overall description}
+    This section will provide an overview about our product. A basic description of the product and what role it serves will be provide. Assumptions about the users of the product will be detailed and the constraints and dependencies of the product will be described. 
     \subsection{Product perspective}
-    The application that we aim to create will essentially take the place of the current application that is used by the Oregon State Sustainability office. The current application in place has been developed by a company called Lucid that was contracted by the Sustainability office to gather and display information about Oregon State buildings energy consumption to make better infrastructure decisions related to energy consumption. The application makes use of energy monitoring meters dubbed AcquiSuite meters (implemented by the company Obvius) that are already in place inside the buildings, with some buildings containing multiple meters monitoring various distinguishable sections of the building. The current application in place processes the data from the meters and organizes it in an easily interpretable and intuitive way. A user may view this data presentation via web browsing devices such as computer systems or mobile smartphones. Our goal for this product is to mimic the functionality of the current system in place with more efficient alterations to the design. The new product will aim to remove unnecessary features from the design and add new functionality and features that are more desirable for the application users. The product will contain a database that will gather live data from the energy meter data interface as well as be updated with past data about OSU buildings energy consumption. The energy data will be presented two separate UI’s. One UI will focus on a clean general public interface that has relatively simple information navigation features, the other UI will be a more customizable dashboard of information presentations such as graphs or charts that will be accessible only to approved users. 
+    This product will essentially take the place of the current application that is used by the Oregon State Sustainability office. The current application in place has been developed by a company called Lucid that was contracted by the Sustainability office to gather and display information about Oregon State buildings energy consumption to make better infrastructure decisions related to energy consumption. Our product will make use of energy monitoring meters dubbed AcquiSuite meters (implemented by the company Obvius) that are already in place inside the buildings, with some buildings containing multiple meters monitoring various distinguishable sections of the building.
+    
     \subsection{Product functions}
-    User accounts will be able to be created via automatically generated	invitation emails via batch emails or individual emails. User accounts can be given either administrative Permissions, or user permissions. Users can create personalized ``collections'' to view their own data. Administrators can create/edit public ``collection'', as well as perform general administration tasks. All users	can opt in/out of email and text message alerts for offline buildings or exceedingly high energy usage alerts. All users can opt in/out of monthly or weekly energy usage reports (delivered via email).\\ 
-    The application will allow users to create customizable dashboards dubbed “Collections” that will contain easily adjustable “blocks” of building data presentations content	(graphs, charts, etc.) that will contain live data as well as past data. These “blocks” of data will be the basic building blocks for the dashboard and will provide data from any building or building subspaces from any time period (including live data updates). They will also provide various graph types, building energy efficiency rankings, and data trends.\\
-    Each OSU building that contains the energy monitoring meter(s) will have a specific, non-customizable page that will display general information.\\
+    The product will allow users to create accounts that may be given either administrative or user permissions. Users have the ability to personalize their accounts. Administrators accounts will have special capabilities that user accounts will not. \\
+    The application will allow users to create customizable dashboards that will contain easily adjustable “blocks” of campus building data that will contain the campus building energy usage data. These “blocks” of data will be the basic building blocks for the dashboard and will provide an intuitive view of the data. They will feature various graph types, building energy efficiency rankings, and data trends.\\
+    Each OSU building that contains the energy monitoring meter(s) will have a specific, non-customizable page that will display general information. The product will also have a public interface and a private administrative interface.\\
     Administrators of the application will have the ability to add, remove, or edit entire buildings profiles, building subspaces, or individual meters.
+    
     \subsection{User characteristics}
-    There are two general user interfaces that will differ in user experience. A user that will be using the general public UI will not need to know any specific information about the application to navigate the various energy data presentations. A public user will be able to intuitively navigate the UI to their discretion.\\ 
-    An administrator class user will need to know the basic tools of the application to create the dashboard that is specific to their profile and needs. An administrator will likely need to use the information for more critical objectives and will be allowed the freedom to control parts of the website as well as have access to more specific energy data within the application. An administrator will likely not need extensive training to use this application for more specific purposes as the administrator UI will be designed to be intuitive to navigate.
+    A user that will be using the general public UI will not need to know any specific information about the application to navigate the various energy data presentations. A public user will be able to intuitively navigate the UI at their discretion. \\ 
+    An administrative level user will need a basic understanding of the tools of the application because they will be allowed the freedom to control parts of the website as well as have access to more specific energy data within the application. An administrator will likely not need extensive training to use this application for more specific purposes as the administrator UI will be designed to be intuitive to navigate.
     \subsection{Constraints}
-    The application will be entirely dependant on the energy metering system. If the energy metering system is drastically changed or removed, the application will not be functional. Live data updates will be limited to a granularity of 15 minute intervals. The energy monitoring meters are capable of providing a granularity of up to 15 second intervals but it is not necessary for the purposes of the application. In the future, the application may be altered to achieve a smaller interval of granularity if desired. Meter data within the application will also be limited by the functionality of the meters themselves. Should a meter malfunction, the energy data will not be gathered which may cause some of the data presentations to deviate from expected data. The deviation amount will depend on the number of malfunctioning meters and the timeframe that the meter(s) was malfunctioning. The use of the application will require a compatible web browsing interface, which may be limited to browsers such as Firefox, Chrome, and Internet Explorer. The functionality of the application will depend on those applications performing as expected. The application may fail if those browsers are altered by their associated developers in a way that the application does not account for and/or if those browsers do not have proper internet access.
+    Data updates will be limited to a granularity of 15 minute intervals. The data acquisition server is capable of providing a granularity of up to 15 second intervals but it is not necessary for the purposes of the application. Any other constraints on the product are subject to the internet browsing interface that is accessing our product. The UI will be intuitive and able to navigate data presentations, but will not allow manipulation of the data or underlying structure of the application.
+    
     \subsection{Assumptions and Dependencies}
+    The application will be dependant on the data acquisition server. If the data acquisition server is drastically changed or removed, the application will not be functional. Meter data within the application will also be limited by the functionality of the meters themselves. Should a meter malfunction, the energy data will not be gathered which may cause some of the data presentations to deviate from expected data. The use of the application will require a compatible web browsing interface, which may be limited to browsers such as Firefox, Chrome, and Internet Explorer. The functionality of the product will depend on those internet browsers performing as expected with regards to their intended functionality and internet access. 
+
     \subsection{Apportioning of Requirements}
     Future versions of the application may include features such as cost tables, automated electronic invoice generation, energy billing analysis capabilities, budget analysis capabilities, and mobile energy data entry.
+    
     \section{Specific Requirements}
     
     \subsection{External Interfaces}
@@ -143,23 +154,56 @@
     
     
     \subsection{Functions}
+    This section defines how the software system should behave with regards to input and output.
     \begin{itemize}
-    \item The system shall collect data from AcquiSuite data acquisition servers, validate the data, and store it into the database. The data will need to be interpreted and converted to JSON to be properly stored into the corresponding database table. There should be input validation measures in place to monitor incoming data and protect from malicious injections.
-    \item The system shall retrieve data from the database to create graphical representations on user dashboards. These graphs and charts should update in real time as new data is retrieved from the AcquiSuite data acquisition servers. The database will return a JSON object full of data that will be parsed and fed into a Javascript graphics framework to create visualizations. 
-    \item The system shall have a permissions system with 2 to 3 different user roles. A user can have administrative roles and be able to add Acquisuite meters, buildings, and other objects into the database. A user can be a general user that can view the public dashboard and browse public stories. A user can be a special user, for example the head of a campus department, that can create their own stories that pertain to their relative departments and buildings. 
-    \item The system shall generate emails that allow users to sign-up. This email will have a way of granting a user role during sign up so the users is granted specific permissions based on the sign-up link they received. 
-    \item The system shall have a form to have users input data when they create a login profile. The user will be stored in the database with a primary key, name, username, password, permission role, and other user attributes. This sign-up form will have data validation on all input parameters to protect against malicious injections. This form should also validate that the user has not already signed up and is not already a part of the system.
-    \item The system shall allow users to customize dashboard layouts in a grid-based orientation. A story page should have a customizable layout where a user will be able to add different blocks and graphs pertaining to information that is relevant to them.
-    \item The system shall have a general page for each building in the database with a uniform dashboard layout. This page will have the same design for each building and should display a series of graphs and charts that outline energy usage for each building.
-    \item The system shall allow users to create “stories” which are collections of dashboards. These stories are meant to bring related buildings and datasets together into intuitive groups, for instance “Residence Halls” or “Engineering Buildings.”
-    \item The system shall allow blocks to combine data from multiple buildings or database entries and apply filters. The blocks will be able to be manipulated based on time constraints.
-    \item The system shall have the ability to rank building based on energy used.
-    \item The system shall be able to download building data as a CSV file.
+    \item The system shall receive and store data from AcquiSuite data acquisition servers into the database. 
+    \item The system shall have input validation measures in place to monitor incoming data and protect from malicious injections.
+    \item The system shall retrieve data from the database and populate webpages with filtered datasets when prompted.
+    \item The system shall have permission based restrictions for accessing certain data.
+    \item The system shall generate alerts for offline buildings and high energy usage.
+    \item The system shall generate emails for users to access a sign-up form and create an account.
+    \item The system shall be able to create arbitrary combinations of datasets given user filters.
+    \item The system shall be able to calculate rankings for all the buildings based on certain metrics like ``kilowatt-hour consumption''.
     \end{itemize}
+
     \subsection{Performance Requirements}
-    
-    The web application should be able to scale up to as many buildings are on campus. As new buildings are constructed, or current buildings are metered with AcquiSuite data acquisition servers, an administrative user should be able to add it to the database and use it stories and dashboards.  
-    [there should be a metric about number of users. Based on server size in Sustainability Office?]
+    This section describes the functionality requirements for the software as well as what a user should be able to accomplish when using the web application.
+
+    \subsubsection{Users}
+    The system will have 3 types of users: admin level users, registered users, and generic users. An administrative user will be able to add new meters, buildings, and other objects into the database. A registered user, for example the head of a department, can create their own stories with information and collections that are unique to their own interests or departments. Lastly, a generic user can simply view the publically facing web application and see public dashboards and browse public stories. 
+    \begin{itemize}
+        \item A registered user should be able to customize dashboard layouts in a grid-based orientation. A \hyperref[definition]{\textit{story}} page should have a customizable layout where a user can add different \hyperref[definition]{\textit{blocks}} with information relevant to their personal needs.
+        \item An administrative user should be able to add buildings to the database through a web form.
+        \item An administrative user should be able to add data aquisitions servers.
+        \item An administrative user should be able to download specific datasets as a .csv file.
+        \item An administrative user should be able to customize public stories.
+    \end{itemize}
+
+    \subsubsection{Data Management}
+    \begin{itemize}
+        \item The web application should update data blocks every 15 minutes as new data is received into the database.
+        \item The web application should allow users to create  which are collections of dashboards. These 
+        \hyperref[definition]{\textit{stories}} are meant to bring related buildings and datasets together into intuitive groups, for instance ``Residence Halls'' or ``Engineering Buildings.''
+        \item The application should be able to filter building data by date range specifications.
+        \item The web application should be able to scale up to as many buildings are on campus.
+        \item The web application should properly create and store new entities (buildings, users, meters) into the database.
+        
+    \end{itemize}    
+
+    \subsubsection{Visualization}
+    \begin{itemize}
+        \item The web application should be able to generate different types of graphs for different \hyperref[definition]{\textit{blocks}}. For example load-profile charts, comparitive line charts, and heap maps.
+        \item The web application should have a generic pages for each building in the database. This page will display a series of graphs and charts that outline energy usage for a particular building.
+        \item The web application 
+    \end{itemize}
+    \subsubsection{Objects}
+        The system should have three main entities: 
+        \begin{itemize}
+            \item \textbf{Building} - A building on campus that is connected to a data acquisition server.
+            \item \textbf{Meter} - A specific data acquisition server.
+            \item \textbf{User} - A user with certain permissions.
+        \end{itemize}
+        
     \subsection{Logical Database Requirements}
     Schema to be added soon\\
     User - \{Primary Key, First Name, Last Name, Username, Password, Permissions Role...\} \\ 
