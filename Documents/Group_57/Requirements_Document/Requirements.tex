@@ -92,7 +92,7 @@
     \subsection{Purpose}
 	The purpose of this document is to outline the project and all associated information. Furthermore, it will outline how the end product will be used, how it was developed, and all resources and documentation referenced and used during development. This document will also describe the application’s target audience, user interface, and any hardware/software requirements. Finally, it will define how our client, team, and users will see the final product and related functionality.
     \subsection{Scope}
-	Primarily, the scope will pertain to the \'Scalable Web Application Framework for Monitoring Energy Usage on Campus\' project. The project will display different collections that reports energy usage for campus buildings across campus in a user-friendly manner. Each of these collections will be customizable, with the ability to add or remove relevant energy readings to user desire. There will be three main permission levels: Guest, User, and Admin. Guest access will allow anyone with a link to view a specific dashboard with no ability to edit. User will be able to create their own collections from pre-existing data. Admin will be able to add, remove, manage, and change anything on the dashboard application. This will allow the Sustainability Office, Oregon State University affiliates, and the general public to each have permissions to view energy usage.
+	Primarily, the scope will pertain to the \textit{Scalable Web Application Framework for Monitoring Energy Usage on Campus}  project. The project will display different collections that reports energy usage for campus buildings across campus in a user-friendly manner. Each of these collections will be customizable, with the ability to add or remove relevant energy readings to user desire. There will be three main permission levels: Guest, User, and Admin. Guest access will allow anyone with a link to view a specific dashboard with no ability to edit. User will be able to create their own collections from pre-existing data. Admin will be able to add, remove, manage, and change anything on the dashboard application. This will allow the Sustainability Office, Oregon State University affiliates, and the general public to each have permissions to view energy usage.
     \subsection{Definitions, acronyms, and abbreviations} \label{definition}
 	\begin{table}[h]
 	\centering
@@ -105,7 +105,7 @@
 	AcquiSuite & Data Acquisition Servers responsible for metering energy usage. \\
 	Collections & User Interface dashboard that displays assortment of blocks \\
     Blocks & Charts/graphs of building data \\
-    Stories & Collections of dashboards that create
+    Stories & Collections of dashboards 
 	\end{tabular}
 	\end{table}
     \subsection{References}
@@ -113,7 +113,7 @@
 	Blank for now
 
     \subsection{Overview}
-	The remainder sections of this document provide an overall description, including product functionality, assumptions, and specific requirements. Section 2 gives functional requirements, data requirements, and assumptions made while designing \'Scalable Web Application Framework for Monitoring Energy Usage on Campus.\' Section 3 gives the specific requirements of the end product as well as discuss the external interface requirements along with functional requirements.
+	The remainder sections of this document provide an overall description, including product functionality, assumptions, and specific requirements. Section 2 gives functional requirements, data requirements, and assumptions made while designing \textit{Scalable Web Application Framework for Monitoring Energy Usage on Campus}. Section 3 gives the specific requirements of the end product as well as discuss the external interface requirements along with functional requirements.
 	
     \section{Overall description}
     \subsection{Product perspective}
@@ -169,12 +169,8 @@
         \item The user should be able to download specific datasets as a .csv file.
         \item The user should be able to filter building data by date/time specifications.
         \item The web application should be able to generate different types of graphs for different \hyperref[definition]{\textit{blocks}}. For example load-profile charts, comparitive line charts, and heap maps.
-        \item The 
-
-        1. Data from any number of building groups, buildings, or subspaces can be displayed.
-        3. Must have load-profile analysis, comparisons, heat maps, and other types of graphs.
-        4. Must be able to rank buildings by different metrics, such as kilowatt-hour consumption.
-        5. Must be able to show general trends in data.
+        \item An administrative user should be able to add buildings to the database through a web form.
+        \item An administrative user should be able to add data aquisitions servers
     \end{itemize}
 
      As new buildings are constructed, or current buildings are metered with AcquiSuite data acquisition servers, an administrative user should be able to add it to the database and use it stories and dashboards.  
