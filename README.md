@@ -39,9 +39,5 @@ This will make your branch a head of master. Then in your branch on Github.com y
 <br><br><br>
 
 # For pulling from master and merging into local branch
-```git fetch --all```  
-```git merge origin/master```  
-<br><br><br>  
-
-
-# If there are merge conflicts your will receive dialogue
+```git pull origin master```   
+<br><br><br>   
