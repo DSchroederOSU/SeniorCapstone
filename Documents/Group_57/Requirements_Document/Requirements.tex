@@ -152,12 +152,8 @@
     \item The system shall have permission based restrictions for accessing certain data.
     \item The system shall generate alerts for offline buildings and high energy usage.
     \item The system shall generate emails for users to access a sign-up form and create an account.
-    \item 
-    
-    
-    \item The system shall allow blocks to combine data from multiple buildings or database entries and apply filters. The blocks will be able to be manipulated based on time constraints.
-    \item The system shall have the ability to rank building based on energy used.
-    \item The system shall be able to download building data as a CSV file.
+    \item The system shall be able to create arbitrary combinations of datasets given user filters.
+    \item The system shall be able to calculate total building energy usage and rank the buildings.
     \end{itemize}
     \textit{These graphs and charts should update in real time as new data is retrieved from the AcquiSuite data acquisition servers. The database will return a JSON object full of data that will be parsed and fed into a Javascript graphics framework to create visualizations.}
     \textit{system shall have a permissions system with 2 to 3 different user roles. A user can have administrative roles and be able to add Acquisuite meters, buildings, and other objects into the database. A user can be a general user that can view the public dashboard and browse public stories. A user can be a special user, for example the head of a campus department, that can create their own stories that pertain to their relative departments and buildings. 
@@ -167,10 +163,10 @@
     This section describes the functionality requirements for the software as well as what a user should be able to accomplish when using the web application.
     \begin{itemize}
         \item The web application should be able to scale up to as many buildings are on campus.
-        \item The web application should be able to scale up to as many buildings are on campus.
         \item A user should be able to customize dashboard layouts in a grid-based orientation. A story [\ref{definition}] page should have a customizable layout where a user can add different blocks [\ref{definition}] and graphs with information relevant to their personal needs.
         \item The web application should have a generic page for each building in the database with a consistent layout. This page will display a series of graphs and charts that outline energy usage for a particular building.
-        \item The web application should allow users to create \hyperref[definition]{\textit{stories}} which are collections of dashboards. These stories [\ref{definition}] are meant to bring related buildings and datasets together into intuitive groups, for instance “Residence Halls” or “Engineering Buildings.”
+        \item The web application should allow users to create \hyperref[definition]{\textit{stories}} which are collections of dashboards. These stories [\ref{definition}] are meant to bring related buildings and datasets together into intuitive groups, for instance ``Residence Halls'' or ``Engineering Buildings.''
+        \item The user should be able to download specific datasets as a .csv file.
     \end{itemize}
 
      As new buildings are constructed, or current buildings are metered with AcquiSuite data acquisition servers, an administrative user should be able to add it to the database and use it stories and dashboards.  
