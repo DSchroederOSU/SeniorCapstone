@@ -1,4 +1,9 @@
-\documentclass[onecolumn, draftclsnofoot,10pt, compsoc]{IEEEtran}
+\documentclass[journal,10pt,onecolumn,compsoc]{IEEEtran} 
+    \usepackage[margin=0.75in]{geometry} 
+    \usepackage{pdfpages} 
+    \usepackage{graphicx} 
+    \setlength{\parskip}{\baselineskip} \setlength\parindent{24pt}
+    \usepackage[english]{babel}
     \usepackage{graphicx}
     \usepackage{url}
     \usepackage{setspace}
@@ -49,6 +54,7 @@
     
     \begin{document}
     \maketitle
+    \vfill
     \noindent \textbf{Abstract} \\
                 \indent 
                 Insert an Abstract
@@ -251,12 +257,6 @@
         \end{ganttchart}
     \newpage
  
-    %% http://www.bakoma-tex.com/doc/generic/pst-gantt/pst-gantt-doc.pdf
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=18cm,height=8cm]{gantt.eps}
-    \end{figure}
-
     %\section{Appendixes}
     %\section{Index}
     
