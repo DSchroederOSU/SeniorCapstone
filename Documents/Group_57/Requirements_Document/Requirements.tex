@@ -5,6 +5,8 @@
     \usepackage{geometry}
     \usepackage{hyperref}
     \usepackage{float}
+    \usepackage{pgfgantt}
+    \usepackage{rotating}
     \hypersetup{
         colorlinks,
         citecolor=black,
@@ -221,14 +223,11 @@
         \begin{itemize}
             \item \textbf{Building} - A building on campus that is connected to a data acquisition server.
             \item \textbf{Meter} - A specific data acquisition server.
-            \item \textbf{User} - A user with certain permissions.
+            \item \textbf{User} - A user with a specific role.
         \end{itemize}
         
     \subsection{Logical Database Requirements}
-    Schema to be added soon\\
-    User - \{Primary Key, First Name, Last Name, Username, Password, Permissions Role...\} \\ 
-    Building - \{ID, Name, Type, Energy, Water, Etc\}\\
-    Collection - \{Name, Foreign Building Key 1, Foreign Building Key 2.. Etc\}
+    Most of the calls to the database will be requests for meter data from a specific building or group of buildings. Access to the database should be hidden from the user and only accessed from the back-end of the application itself. Any input into the database should be validated and encrypted, if applicable. 
     
     \subsection{Design Constraints}
     Design constraints may include server availability which could harm scalability.
@@ -251,7 +250,30 @@
     Maintainability for this application should be simple for anyone with web development experience. The application code will be organized into logical directories and sub directories that should mimic a full stack web application. There will be documentation that explains how to connect to the AcquiSuite servers and how to use our API for data collection.
     \subsubsection{Portability}
     Our web application should be visible and accessible from most web browsers. There are not any host-dependent constraints since it will be hosted from a central server and available to the public via the internet. The source code should stay on Github so modifications can be made easily.
+    
+    \newpage
     Gantt Chart (Months)\\ 
+        %\section{Development Schedule}
+        %http://texdoc.net/texmf-dist/doc/latex/pgfgantt/pgfgantt.pdf
+        \begin{ganttchart}[
+            x unit=0.77mm, 
+            y unit chart=9.0mm,
+            hgrid,
+            bar label font=\tiny, 
+            title label font=\normalsize,
+            time slot format=isodate
+            ]{2017-11-01}{2018-05-31}
+            \gantttitlecalendar{year, month=name}\\
+            \ganttbar{Design}{2017-11-01}{2017-11-30}\\
+            \ganttbar{Connect to AcquiSuite servers}{2017-11-01}{2017-11-30}\\
+            \ganttbar{Configure Database Schema}{2017-11-15}{2018-01-06}\\
+            \ganttbar{Bind Data to Front-end}{2018-01-01}{2018-01-31}\\
+            \ganttbar{Design UI}{2018-01-15}{2018-02-28}\\
+            \ganttbar{Test}{2018-03-01}{2018-03-31}\\
+            \ganttbar{Prepare for Expo}{2018-04-01}{2018-04-30}\\ 
+        \end{ganttchart}
+    \newpage
+ 
     %% http://www.bakoma-tex.com/doc/generic/pst-gantt/pst-gantt-doc.pdf
     \begin{figure}[H]
         \centering
