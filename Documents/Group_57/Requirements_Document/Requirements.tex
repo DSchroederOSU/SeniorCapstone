@@ -93,7 +93,7 @@
 	The purpose of this document is to outline the project and all associated information. Furthermore, it will outline how the end product will be used, how it was developed, and all resources and documentation referenced and used during development. This document will also describe the application’s target audience, user interface, and any hardware/software requirements. Finally, it will define how our client, team, and users will see the final product and related functionality.
     \subsection{Scope}
 	Primarily, the scope will pertain to the \'Scalable Web Application Framework for Monitoring Energy Usage on Campus\' project. The project will display different collections that reports energy usage for campus buildings across campus in a user-friendly manner. Each of these collections will be customizable, with the ability to add or remove relevant energy readings to user desire. There will be three main permission levels: Guest, User, and Admin. Guest access will allow anyone with a link to view a specific dashboard with no ability to edit. User will be able to create their own collections from pre-existing data. Admin will be able to add, remove, manage, and change anything on the dashboard application. This will allow the Sustainability Office, Oregon State University affiliates, and the general public to each have permissions to view energy usage.
-    \subsection{Definitions, acronyms, and abbreviations}
+    \subsection{Definitions, acronyms, and abbreviations} \label{definition}
 	\begin{table}[h]
 	\centering
 	
@@ -104,7 +104,8 @@
 	JSON & JavaScript Object Notation \\
 	AcquiSuite & Data Acquisition Servers responsible for metering energy usage. \\
 	Collections & User Interface dashboard that displays assortment of blocks \\
-	Blocks & Charts/graphs of building data
+    Blocks & Charts/graphs of building data \\
+    Stories & Collections of dashboards that create
 	\end{tabular}
 	\end{table}
     \subsection{References}
@@ -154,9 +155,6 @@
     \item 
     
     
-    \item 
-    \item 
-    \item The system shall allow users to create “stories” which are collections of dashboards. These stories are meant to bring related buildings and datasets together into intuitive groups, for instance “Residence Halls” or “Engineering Buildings.”
     \item The system shall allow blocks to combine data from multiple buildings or database entries and apply filters. The blocks will be able to be manipulated based on time constraints.
     \item The system shall have the ability to rank building based on energy used.
     \item The system shall be able to download building data as a CSV file.
@@ -170,8 +168,9 @@
     \begin{itemize}
         \item The web application should be able to scale up to as many buildings are on campus.
         \item The web application should be able to scale up to as many buildings are on campus.
-        \item A user should be able to customize dashboard layouts in a grid-based orientation. A ``story'' page should have a customizable layout where a user can add different ``blocks'' and graphs with information relevant to their personal needs.
+        \item A user should be able to customize dashboard layouts in a grid-based orientation. A story [\ref{definition}] page should have a customizable layout where a user can add different blocks [\ref{definition}] and graphs with information relevant to their personal needs.
         \item The web application should have a generic page for each building in the database with a consistent layout. This page will display a series of graphs and charts that outline energy usage for a particular building.
+        \item The web application should allow users to create \hyperref[definition]{\textit{stories}} which are collections of dashboards. These stories [\ref{definition}] are meant to bring related buildings and datasets together into intuitive groups, for instance “Residence Halls” or “Engineering Buildings.”
     \end{itemize}
 
      As new buildings are constructed, or current buildings are metered with AcquiSuite data acquisition servers, an administrative user should be able to add it to the database and use it stories and dashboards.  
