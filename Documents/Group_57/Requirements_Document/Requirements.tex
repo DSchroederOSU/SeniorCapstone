@@ -153,7 +153,7 @@
     \item The system shall generate alerts for offline buildings and high energy usage.
     \item The system shall generate emails for users to access a sign-up form and create an account.
     \item The system shall be able to create arbitrary combinations of datasets given user filters.
-    \item The system shall be able to calculate total building energy usage and rank the buildings.
+    \item The system shall be able to calculate rankings for all the buildings based on certain metrics like ``kilowatt-hour consumption''.
     \end{itemize}
     \textit{These graphs and charts should update in real time as new data is retrieved from the AcquiSuite data acquisition servers. The database will return a JSON object full of data that will be parsed and fed into a Javascript graphics framework to create visualizations.}
     \textit{system shall have a permissions system with 2 to 3 different user roles. A user can have administrative roles and be able to add Acquisuite meters, buildings, and other objects into the database. A user can be a general user that can view the public dashboard and browse public stories. A user can be a special user, for example the head of a campus department, that can create their own stories that pertain to their relative departments and buildings. 
@@ -167,6 +167,14 @@
         \item The web application should have a generic page for each building in the database with a consistent layout. This page will display a series of graphs and charts that outline energy usage for a particular building.
         \item The web application should allow users to create \hyperref[definition]{\textit{stories}} which are collections of dashboards. These stories [\ref{definition}] are meant to bring related buildings and datasets together into intuitive groups, for instance ``Residence Halls'' or ``Engineering Buildings.''
         \item The user should be able to download specific datasets as a .csv file.
+        \item The user should be able to filter building data by date/time specifications.
+        \item The web application should be able to generate different types of graphs for different \hyperref[definition]{\textit{blocks}}. For example load-profile charts, comparitive line charts, and heap maps.
+        \item The 
+
+        1. Data from any number of building groups, buildings, or subspaces can be displayed.
+        3. Must have load-profile analysis, comparisons, heat maps, and other types of graphs.
+        4. Must be able to rank buildings by different metrics, such as kilowatt-hour consumption.
+        5. Must be able to show general trends in data.
     \end{itemize}
 
      As new buildings are constructed, or current buildings are metered with AcquiSuite data acquisition servers, an administrative user should be able to add it to the database and use it stories and dashboards.  
