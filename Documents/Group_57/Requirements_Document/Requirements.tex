@@ -143,23 +143,40 @@
     
     
     \subsection{Functions}
+    This section defines how the software system should behave with regards to input and output.
     \begin{itemize}
-    \item The system shall collect data from AcquiSuite data acquisition servers, validate the data, and store it into the database. The data will need to be interpreted and converted to JSON to be properly stored into the corresponding database table. There should be input validation measures in place to monitor incoming data and protect from malicious injections.
-    \item The system shall retrieve data from the database to create graphical representations on user dashboards. These graphs and charts should update in real time as new data is retrieved from the AcquiSuite data acquisition servers. The database will return a JSON object full of data that will be parsed and fed into a Javascript graphics framework to create visualizations. 
-    \item The system shall have a permissions system with 2 to 3 different user roles. A user can have administrative roles and be able to add Acquisuite meters, buildings, and other objects into the database. A user can be a general user that can view the public dashboard and browse public stories. A user can be a special user, for example the head of a campus department, that can create their own stories that pertain to their relative departments and buildings. 
-    \item The system shall generate emails that allow users to sign-up. This email will have a way of granting a user role during sign up so the users is granted specific permissions based on the sign-up link they received. 
-    \item The system shall have a form to have users input data when they create a login profile. The user will be stored in the database with a primary key, name, username, password, permission role, and other user attributes. This sign-up form will have data validation on all input parameters to protect against malicious injections. This form should also validate that the user has not already signed up and is not already a part of the system.
-    \item The system shall allow users to customize dashboard layouts in a grid-based orientation. A story page should have a customizable layout where a user will be able to add different blocks and graphs pertaining to information that is relevant to them.
-    \item The system shall have a general page for each building in the database with a uniform dashboard layout. This page will have the same design for each building and should display a series of graphs and charts that outline energy usage for each building.
+    \item The system shall receive and store data from AcquiSuite data acquisition servers into the database. 
+    \item The system shall have input validation measures in place to monitor incoming data and protect from malicious injections.
+    \item The system shall retrieve data from the database and populate webpages with filtered datasets when prompted.
+    \item The system shall have permission based restrictions for accessing certain data.
+    \item The system shall generate alerts for offline buildings and high energy usage.
+    \item The system shall generate emails for users to access a sign-up form and create an account.
+    \item 
+    
+    
+    \item 
+    \item 
     \item The system shall allow users to create “stories” which are collections of dashboards. These stories are meant to bring related buildings and datasets together into intuitive groups, for instance “Residence Halls” or “Engineering Buildings.”
     \item The system shall allow blocks to combine data from multiple buildings or database entries and apply filters. The blocks will be able to be manipulated based on time constraints.
     \item The system shall have the ability to rank building based on energy used.
     \item The system shall be able to download building data as a CSV file.
     \end{itemize}
+    \textit{These graphs and charts should update in real time as new data is retrieved from the AcquiSuite data acquisition servers. The database will return a JSON object full of data that will be parsed and fed into a Javascript graphics framework to create visualizations.}
+    \textit{system shall have a permissions system with 2 to 3 different user roles. A user can have administrative roles and be able to add Acquisuite meters, buildings, and other objects into the database. A user can be a general user that can view the public dashboard and browse public stories. A user can be a special user, for example the head of a campus department, that can create their own stories that pertain to their relative departments and buildings. 
+    The system shall have a form to have users input data when they create a login profile. The user will be stored in the database with a primary key, name, username, password, permission role, and other user attributes. This sign-up form will have data validation on all input parameters to protect against malicious injections. This form should also validate that the user has not already signed up and is not already a part of the system.
+    The system shall generate emails that allow users to sign-up. This email will have a way of granting a user role during sign up so the users is granted specific permissions based on the sign-up link they received. }
     \subsection{Performance Requirements}
-    
-    The web application should be able to scale up to as many buildings are on campus. As new buildings are constructed, or current buildings are metered with AcquiSuite data acquisition servers, an administrative user should be able to add it to the database and use it stories and dashboards.  
+    This section describes the functionality requirements for the software as well as what a user should be able to accomplish when using the web application.
+    \begin{itemize}
+        \item The web application should be able to scale up to as many buildings are on campus.
+        \item The web application should be able to scale up to as many buildings are on campus.
+        \item A user should be able to customize dashboard layouts in a grid-based orientation. A ``story'' page should have a customizable layout where a user can add different ``blocks'' and graphs with information relevant to their personal needs.
+        \item The web application should have a generic page for each building in the database with a consistent layout. This page will display a series of graphs and charts that outline energy usage for a particular building.
+    \end{itemize}
+
+     As new buildings are constructed, or current buildings are metered with AcquiSuite data acquisition servers, an administrative user should be able to add it to the database and use it stories and dashboards.  
     [there should be a metric about number of users. Based on server size in Sustainability Office?]
+    
     \subsection{Logical Database Requirements}
     Schema to be added soon\\
     User - \{Primary Key, First Name, Last Name, Username, Password, Permissions Role...\} \\ 
