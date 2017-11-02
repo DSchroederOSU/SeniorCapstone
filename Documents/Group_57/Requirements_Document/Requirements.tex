@@ -108,9 +108,12 @@
     Stories & Collections of dashboards 
 	\end{tabular}
 	\end{table}
-    \subsection{References}
-	The references are:
-	Blank for now
+    \subsection{References} 
+	The references are:\\
+	http://www.obvius.com/Products/A8812 \\
+    https://d3js.org/  \\
+    http://visjs.org/  \\
+    \url{http://www.obvius.com/sites/obvius.com/files/A8812_Manual.pdf}
 
     \subsection{Overview}
 	The remainder sections of this document provide an overall description, including product functionality, assumptions, and specific requirements. Section 2 gives functional requirements, data requirements, and assumptions made while designing \textit{Scalable Web Application Framework for Monitoring Energy Usage on Campus}. Section 3 gives the specific requirements of the end product as well as discuss the external interface requirements along with functional requirements.
@@ -155,15 +158,21 @@
     \item The system shall be able to create arbitrary combinations of datasets given user filters.
     \item The system shall be able to calculate rankings for all the buildings based on certain metrics like ``kilowatt-hour consumption''.
     \end{itemize}
-    \textit{These graphs and charts should update in real time as new data is retrieved from the AcquiSuite data acquisition servers. The database will return a JSON object full of data that will be parsed and fed into a Javascript graphics framework to create visualizations.}
-    \textit{system shall have a permissions system with 2 to 3 different user roles. A user can have administrative roles and be able to add Acquisuite meters, buildings, and other objects into the database. A user can be a general user that can view the public dashboard and browse public stories. A user can be a special user, for example the head of a campus department, that can create their own stories that pertain to their relative departments and buildings. 
-    The system shall have a form to have users input data when they create a login profile. The user will be stored in the database with a primary key, name, username, password, permission role, and other user attributes. This sign-up form will have data validation on all input parameters to protect against malicious injections. This form should also validate that the user has not already signed up and is not already a part of the system.
-    The system shall generate emails that allow users to sign-up. This email will have a way of granting a user role during sign up so the users is granted specific permissions based on the sign-up link they received. }
+
     \subsection{Performance Requirements}
     This section describes the functionality requirements for the software as well as what a user should be able to accomplish when using the web application.
+
+    \subsubsection{Users}
+
+    \subsubsection{Data Management}
+
+    \subsubsection{Visualization}
+
+
+
     \begin{itemize}
         \item The web application should be able to scale up to as many buildings are on campus.
-        \item A user should be able to customize dashboard layouts in a grid-based orientation. A story [\ref{definition}] page should have a customizable layout where a user can add different blocks [\ref{definition}] and graphs with information relevant to their personal needs.
+        \item A user should be able to customize dashboard layouts in a grid-based orientation. A \hyperref[definition]{\textit{story}} page should have a customizable layout where a user can add different \hyperref[definition]{\textit{blocks}} with information relevant to their personal needs.
         \item The web application should have a generic page for each building in the database with a consistent layout. This page will display a series of graphs and charts that outline energy usage for a particular building.
         \item The web application should allow users to create \hyperref[definition]{\textit{stories}} which are collections of dashboards. These stories [\ref{definition}] are meant to bring related buildings and datasets together into intuitive groups, for instance ``Residence Halls'' or ``Engineering Buildings.''
         \item The user should be able to download specific datasets as a .csv file.
@@ -171,6 +180,13 @@
         \item The web application should be able to generate different types of graphs for different \hyperref[definition]{\textit{blocks}}. For example load-profile charts, comparitive line charts, and heap maps.
         \item An administrative user should be able to add buildings to the database through a web form.
         \item An administrative user should be able to add data aquisitions servers
+        \item The web application should update data blocks every 15 minutes as new data is received into the database.
+        \item The web application should be hav
+
+
+        \textit{system shall have a permissions system with 2 to 3 different user roles. A user can have administrative roles and be able to add Acquisuite meters, buildings, and other objects into the database. A user can be a general user that can view the public dashboard and browse public stories. A user can be a special user, for example the head of a campus department, that can create their own stories that pertain to their relative departments and buildings. 
+        The system shall have a form to have users input data when they create a login profile. The user will be stored in the database with a primary key, name, username, password, permission role, and other user attributes. This sign-up form will have data validation on all input parameters to protect against malicious injections. This form should also validate that the user has not already signed up and is not already a part of the system.
+        The system shall generate emails that allow users to sign-up. This email will have a way of granting a user role during sign up so the users is granted specific permissions based on the sign-up link they received. }
     \end{itemize}
 
      As new buildings are constructed, or current buildings are metered with AcquiSuite data acquisition servers, an administrative user should be able to add it to the database and use it stories and dashboards.  
