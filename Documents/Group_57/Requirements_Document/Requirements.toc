@@ -18,6 +18,7 @@
 \contentsline {subsubsection}{\numberline {3.3.1}Users}{5}{subsubsection.3.3.1}
 \contentsline {subsubsection}{\numberline {3.3.2}Data Management}{5}{subsubsection.3.3.2}
 \contentsline {subsubsection}{\numberline {3.3.3}Visualization}{5}{subsubsection.3.3.3}
+\contentsline {subsubsection}{\numberline {3.3.4}Objects}{6}{subsubsection.3.3.4}
 \contentsline {subsection}{\numberline {3.4}Logical Database Requirements}{6}{subsection.3.4}
 \contentsline {subsection}{\numberline {3.5}Design Constraints}{6}{subsection.3.5}
 \contentsline {subsubsection}{\numberline {3.5.1}Standards Compliance}{6}{subsubsection.3.5.1}
@@ -26,4 +27,4 @@
 \contentsline {subsubsection}{\numberline {3.6.2}Availability}{6}{subsubsection.3.6.2}
 \contentsline {subsubsection}{\numberline {3.6.3}Security}{6}{subsubsection.3.6.3}
 \contentsline {subsubsection}{\numberline {3.6.4}Maintainability}{6}{subsubsection.3.6.4}
-\contentsline {subsubsection}{\numberline {3.6.5}Portability}{6}{subsubsection.3.6.5}
+\contentsline {subsubsection}{\numberline {3.6.5}Portability}{7}{subsubsection.3.6.5}

@@ -163,31 +163,40 @@
     This section describes the functionality requirements for the software as well as what a user should be able to accomplish when using the web application.
 
     \subsubsection{Users}
+    The system will have 3 types of users: admin level users, registered users, and generic users. An administrative user will be able to add new meters, buildings, and other objects into the database. A registered user, for example the head of a department, can create their own stories with information and collections that are unique to their own interests or departments. Lastly, a generic user can simply view the publically facing web application and see public dashboards and browse public stories. 
+    \begin{itemize}
+        \item A registered user should be able to customize dashboard layouts in a grid-based orientation. A \hyperref[definition]{\textit{story}} page should have a customizable layout where a user can add different \hyperref[definition]{\textit{blocks}} with information relevant to their personal needs.
+        \item An administrative user should be able to add buildings to the database through a web form.
+        \item An administrative user should be able to add data aquisitions servers.
+        \item An administrative user should be able to download specific datasets as a .csv file.
+        \item An administrative user should be able to customize public stories.
+    \end{itemize}
 
     \subsubsection{Data Management}
+    \begin{itemize}
+        \item The web application should update data blocks every 15 minutes as new data is received into the database.
+        \item The web application should allow users to create  which are collections of dashboards. These 
+        \hyperref[definition]{\textit{stories}} are meant to bring related buildings and datasets together into intuitive groups, for instance ``Residence Halls'' or ``Engineering Buildings.''
+        \item The application should be able to filter building data by date range specifications.
+        \item The web application should be able to scale up to as many buildings are on campus.
+        \item The web application should properly create and store new entities (buildings, users, meters) into the database.
+        
+    \end{itemize}    
 
     \subsubsection{Visualization}
-
-
-
     \begin{itemize}
-        \item The web application should be able to scale up to as many buildings are on campus.
-        \item A user should be able to customize dashboard layouts in a grid-based orientation. A \hyperref[definition]{\textit{story}} page should have a customizable layout where a user can add different \hyperref[definition]{\textit{blocks}} with information relevant to their personal needs.
-        \item The web application should have a generic page for each building in the database with a consistent layout. This page will display a series of graphs and charts that outline energy usage for a particular building.
-        \item The web application should allow users to create \hyperref[definition]{\textit{stories}} which are collections of dashboards. These stories [\ref{definition}] are meant to bring related buildings and datasets together into intuitive groups, for instance ``Residence Halls'' or ``Engineering Buildings.''
-        \item The user should be able to download specific datasets as a .csv file.
-        \item The user should be able to filter building data by date/time specifications.
         \item The web application should be able to generate different types of graphs for different \hyperref[definition]{\textit{blocks}}. For example load-profile charts, comparitive line charts, and heap maps.
-        \item An administrative user should be able to add buildings to the database through a web form.
-        \item An administrative user should be able to add data aquisitions servers
-        \item The web application should update data blocks every 15 minutes as new data is received into the database.
-        \item The web application should be hav
-
-
-        \textit{system shall have a permissions system with 2 to 3 different user roles. A user can have administrative roles and be able to add Acquisuite meters, buildings, and other objects into the database. A user can be a general user that can view the public dashboard and browse public stories. A user can be a special user, for example the head of a campus department, that can create their own stories that pertain to their relative departments and buildings. 
-        The system shall have a form to have users input data when they create a login profile. The user will be stored in the database with a primary key, name, username, password, permission role, and other user attributes. This sign-up form will have data validation on all input parameters to protect against malicious injections. This form should also validate that the user has not already signed up and is not already a part of the system.
-        The system shall generate emails that allow users to sign-up. This email will have a way of granting a user role during sign up so the users is granted specific permissions based on the sign-up link they received. }
+        \item The web application should have a generic pages for each building in the database. This page will display a series of graphs and charts that outline energy usage for a particular building.
+        \item The web application 
     \end{itemize}
+    \subsubsection{Objects}
+        The system should have three main entities: 
+        \begin{itemize}
+            \item \textbf{Building} - A building on campus that is connected to a data acquisition server.
+            \item \textbf{Meter} - A specific data acquisition server.
+            \item \textbf{User} - A user with certain permissions.
+        \end{itemize}
+        
 
      As new buildings are constructed, or current buildings are metered with AcquiSuite data acquisition servers, an administrative user should be able to add it to the database and use it stories and dashboards.  
     [there should be a metric about number of users. Based on server size in Sustainability Office?]
