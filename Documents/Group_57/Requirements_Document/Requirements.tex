@@ -119,7 +119,10 @@
 	http://json.org
 	https://buildingos.com/
 	Jack
-	
+    https://www.youtube.com/watch?v=jfKY928Ozrw
+    http://www.obvius.com/Products/A8810-0
+    https://www.youtube.com/watch?v=7x0tQf1OsDY
+    https://mochajs.org/
     \url{http://www.obvius.com/sites/obvius.com/files/A8812_Manual.pdf}
 
     \subsection{Overview}
@@ -131,14 +134,14 @@
             \item Details about the user interface and expected user interactions.
             \item An outline of specific constraints and dependences included in development. 
             \item Background information about the specific software requirements.
-
+        \end{enumerate}
     \subsection{Product perspective}
     %A block diagram showing the major components of the larger system, interconnections, and external interfaces can be helpful.
     %5.2.1.1 System interfaces
     %This should list each system interface and identify the functionality of the software to accomplish the system
     %requirement and the interface description to match the system.
 
-    This product will essentially take the place of the current application that is used by the Oregon State Sustainability office. The current application in place has been developed by a company called Lucid that was contracted by the Sustainability office to gather and display information about Oregon State buildings energy consumption to make better infrastructure decisions related to energy consumption. Our product will make use of energy monitoring meters dubbed AcquiSuite meters (implemented by the company Obvius) that are already in place inside the buildings, with some buildings containing multiple meters monitoring various distinguishable sections of the building.
+    This product will replace the current web application that is used by The Oregon State Sustainability Office. The product will display energy usage information about Oregon State University buildings through an intuitive user interface. The application will gather data from energy meters by connecting to AcquiSuite\texttrademark data acquisition servers. The energy data from the meters will be transferred to a database that the product will access directly. Users will interact with the application interface from an internet browser application. 
     
     \subsection{Product functions}
     The product will allow users to create accounts that may be given either administrative or user permissions. Users have the ability to personalize their accounts. Administrators accounts will have special capabilities that user accounts will not. \\
@@ -162,25 +165,25 @@
     
     \subsection{External Interfaces}
     AcquiSuite data acquisition servers [meters] made by Obvious
-    AcquiSuite meter
-    Used for collecting electric, water, gas, steam, and other energy parameters over the web
-    Meters connect through IP-based applications
-    Data can be reached anywhere with an internet connection as long as the AcquiSuite is online
-    Data will be collected every 15 minutes
-    Our application will attempt to receive this information and convert it to JSON for insertion into the MONGODB database
-    
-    
+    \begin{itemize}
+        \item Used for collecting electric, water, gas, steam, and other energy parameters over the web.
+        \item Data is received through IP-based connection.
+        \item Data can be reached anywhere with an internet connection, as long as the AcquiSuite is online.
+        \item Data will be collected every 15 minutes.
+        \item Data from the AcquiSuite servers will be stored into a database.
+    \end{itemize}
+
     \subsection{Functions}
     This section defines how the software system should behave with regards to input and output.
     \begin{itemize}
-    \item The system shall receive and store data from AcquiSuite data acquisition servers into the database. 
-    \item The system shall have input validation measures in place to monitor incoming data and protect from malicious injections.
-    \item The system shall retrieve data from the database and populate webpages with filtered datasets when prompted.
-    \item The system shall have permission based restrictions for accessing certain data.
-    \item The system shall generate alerts for offline buildings and high energy usage.
-    \item The system shall generate emails for users to access a sign-up form and create an account.
-    \item The system shall be able to create arbitrary combinations of datasets given user filters.
-    \item The system shall be able to calculate rankings for all the buildings based on certain metrics like ``kilowatt-hour consumption''.
+        \item The system shall receive and store data from AcquiSuite data acquisition servers into the database. 
+        \item The system shall have input validation measures in place to monitor incoming data and protect from malicious injections.
+        \item The system shall retrieve data from the database and populate webpages with filtered datasets when prompted.
+        \item The system shall have permission based restrictions for accessing certain data.
+        \item The system shall generate alerts for offline buildings and high energy usage.
+        \item The system shall generate emails for users to access a sign-up form and create an account.
+        \item The system shall be able to create arbitrary combinations of datasets given user filters.
+        \item The system shall be able to calculate rankings for all the buildings based on certain metrics like ``kilowatt-hour consumption''.
     \end{itemize}
 
     \subsection{Performance Requirements}
@@ -240,11 +243,14 @@
     \subsubsection{Availability}
     The system should be consistently available as long as the servers are up and running. As a web application, the system will be available via URL 
     \subsubsection{Security}
-    The system will validate input for duplication and malicious content.\\
+    The system will validate input for duplicate and malicious content.\\
+    The system will also have back-end functionality to protect user passwords through proper hashing.\\
+    The web application will restrict access to certain pages and content based on user roles and permissions.
+
     \subsubsection{Maintainability}
-    The system will be able to be maintained as long as servers are present.
+    Maintainability for this application should be simple for anyone with web development experience. The application code will be organized into logical directories and sub directories that should mimic a full stack web application. There will be documentation that explains how to connect to the AcquiSuite servers and how to use our API for data collection.
     \subsubsection{Portability}
-    The system should be available from any web application. The source code should stay on github so modifications should be easy.
+    Our web application should be visible and accessible from most web browsers. There are not any host-dependent constraints since it will be hosted from a central server and available to the public via the internet. The source code should stay on Github so modifications can be made easily.
     Gantt Chart (Months)\\ 
     %% http://www.bakoma-tex.com/doc/generic/pst-gantt/pst-gantt-doc.pdf
     \begin{figure}[H]

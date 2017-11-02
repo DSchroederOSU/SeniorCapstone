@@ -8,7 +8,7 @@
 \contentsline {subsection}{\numberline {2.1}Product perspective}{3}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Product functions}{3}{subsection.2.2}
 \contentsline {subsection}{\numberline {2.3}User characteristics}{3}{subsection.2.3}
-\contentsline {subsection}{\numberline {2.4}Constraints}{4}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.4}Constraints}{3}{subsection.2.4}
 \contentsline {subsection}{\numberline {2.5}Assumptions and Dependencies}{4}{subsection.2.5}
 \contentsline {subsection}{\numberline {2.6}Apportioning of Requirements}{4}{subsection.2.6}
 \contentsline {section}{\numberline {3}Specific Requirements}{4}{section.3}
