@@ -6,7 +6,8 @@
     \usepackage{hyperref}
     \usepackage{float}
     \usepackage{pgfgantt}
-    \usepackage{rotating}
+    \usepackage{rotating} 
+    \usepackage{ragged2e} % provides \RaggedLeft
     \hypersetup{
         colorlinks,
         citecolor=black,
@@ -252,15 +253,18 @@
     Our web application should be visible and accessible from most web browsers. There are not any host-dependent constraints since it will be hosted from a central server and available to the public via the internet. The source code should stay on Github so modifications can be made easily.
     
     \newpage
-    Gantt Chart (Months)\\ 
+    Gantt Chart (Months)\\
+    
+    
         %\section{Development Schedule}
         %http://texdoc.net/texmf-dist/doc/latex/pgfgantt/pgfgantt.pdf
         \begin{ganttchart}[
-            x unit=0.77mm, 
-            y unit chart=9.0mm,
+            x unit=0.65mm, 
+            y unit chart=11mm,
             hgrid,
-            bar label font=\tiny, 
+            bar label font=\normalsize, 
             title label font=\normalsize,
+            bar label node/.style={text width=2cm,align=right,font=\scriptsize\RaggedLeft,anchor=east},
             time slot format=isodate
             ]{2017-11-01}{2018-05-31}
             \gantttitlecalendar{year, month=name}\\
