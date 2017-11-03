@@ -85,7 +85,7 @@
 	OSU & Oregon State University \\
 	MEAN stack & MongoDB, Express, AngularJS, Node.js \\
 	JSON & JavaScript Object Notation \\
-	AcquiSuite & Data Acquisition Servers responsible for metering energy usage. \\
+	AcquiSuite & Data Acquisition Servers responsible for metering energy usage \\
 	Collections & User Interface dashboard that displays assortment of blocks \\
     Blocks & Charts/graphs of building data \\
     Stories & Collections of dashboards 
@@ -106,7 +106,7 @@
     \url{http://www.obvius.com/sites/obvius.com/files/A8812_Manual.pdf} \\
 
     \subsection{Overview}
-	The remaining sections of this document provide an more elaborate description of product functionality, assumptions, and specific requirements. Section 2 provides information about functional requirements, data requirements, and assumptions made for designing the \textit{Scalable Web Application Framework for Monitoring Energy Usage on Campus}. Section 3 outlines the specific requirements for the final product, the external interfaces that communicate with the software, and the functional requirements of the system.
+	The remaining sections of this document provide a more elaborate description of product functionality, assumptions, and specific requirements. Section 2 provides information about functional requirements, data requirements, and assumptions made for designing the \textit{Scalable Web Application Framework for Monitoring Energy Usage on Campus}. Section 3 outlines the specific requirements for the final product, the external interfaces that communicate with the software, and the functional requirements of the system.
 	
     \section{Overall description}
     This section will provide an overview of the web application as a whole, including:
@@ -192,7 +192,7 @@
 
     \subsubsection{Visualization}
     \begin{itemize}
-        \item The web application should be able to generate different types of graphs for different \hyperref[definition]{\textit{blocks}}. For example load-profile charts, comparitive line charts, and heap maps.
+        \item The web application should be able to generate different types of graphs for different \hyperref[definition]{\textit{blocks}}. For example load-profile charts, comparative line charts, and heat maps.
         \item The web application should have generic pages for each building in the database. This page will display a series of graphs and charts that outline energy usage for a particular building.
         \item The \hyperref[definition]{\textit{blocks}} on each page should automatically update as new data is received by the database.
     \end{itemize}
@@ -216,12 +216,12 @@
     \subsection{Software System Attributes}
     
     \subsubsection{Reliability}
-    The system will be reliable at the time of deployment if all data displayed in graphs and charts is correct.\\
+    The system will be reliable at the time of deployment if all data displayed in graphs and charts is correct.
     \subsubsection{Availability}
-    The system should be consistently available as long as the servers are up and running. As a web application, the system will be available via URL 
+    The system should be consistently available as long as the servers are up and running. As a web application, the system will be available via URL.
     \subsubsection{Security}
-    The system will validate input for duplicate and malicious content.\\
-    The system will also have back-end functionality to protect user passwords through proper hashing.\\
+    The system will validate input for duplicate and malicious content.
+    The system will also have back-end functionality to protect user passwords through proper hashing.
     The web application will restrict access to certain pages and content based on user roles and permissions.
 
     \subsubsection{Maintainability}
