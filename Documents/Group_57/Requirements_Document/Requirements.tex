@@ -2,7 +2,8 @@
     \usepackage[margin=0.75in]{geometry} 
     \usepackage{pdfpages} 
     \usepackage{graphicx} 
-    \setlength{\parskip}{\baselineskip} \setlength\parindent{24pt}
+    \setlength{\parskip}{\baselineskip} \setlength\parindent{24pt} 
+    
     \usepackage[english]{babel}
     \usepackage{graphicx}
     \usepackage{url}
@@ -111,6 +112,7 @@
     \section{Overall description}
     This section will provide an overview of the web application as a whole, including:
         \begin{enumerate} 
+            \setlength\itemsep{1mm}
             \item Details about the user interface and expected user interactions.
             \item An outline of specific constraints and dependences included in development. 
             \item Background information about the specific software requirements.
@@ -146,6 +148,7 @@
     \subsection{External Interfaces}
     AcquiSuite data acquisition servers [meters] made by Obvious
     \begin{itemize}
+        \setlength\itemsep{1mm}
         \item Used for collecting electric, water, gas, steam, and other energy parameters over the web.
         \item Data is received through IP-based connection.
         \item Data can be reached anywhere with an internet connection, as long as the AcquiSuite is online.
@@ -156,6 +159,7 @@
     \subsection{Functions}
     This section defines how the software system should behave with regards to input and output.
     \begin{itemize}
+        \setlength\itemsep{1mm}
         \item The system shall receive and store data from AcquiSuite data acquisition servers into the database. 
         \item The system shall have input validation measures in place to monitor incoming data and protect from malicious injections.
         \item The system shall retrieve data from the database and populate webpages with filtered datasets when prompted.
@@ -172,6 +176,7 @@
     \subsubsection{Users}
     The system will have 3 types of users: admin level users, registered users, and generic users. An administrative user will be able to add new meters, buildings, and other objects into the database. A registered user, for example the head of a department, can create their own stories with information and collections that are unique to their own interests or departments. Lastly, a generic user can simply view the publically facing web application and see public dashboards and browse public stories. 
     \begin{itemize}
+        \setlength\itemsep{1mm}
         \item A registered user should be able to customize dashboard layouts in a grid-based orientation. A \hyperref[definition]{\textit{story}} page should have a customizable layout where a user can add different \hyperref[definition]{\textit{blocks}} with information relevant to their personal needs.
         \item An administrative user should be able to add buildings to the database through a web form.
         \item An administrative user should be able to add data aquisitions servers.
@@ -181,6 +186,7 @@
 
     \subsubsection{Data Management}
     \begin{itemize}
+        \setlength\itemsep{1mm}
         \item The web application should update data blocks every 15 minutes as new data is received into the database.
         \item The web application should allow users to create  which are collections of dashboards. These 
         \hyperref[definition]{\textit{stories}} are meant to bring related buildings and datasets together into intuitive groups, for instance ``Residence Halls'' or ``Engineering Buildings.''
@@ -192,6 +198,7 @@
 
     \subsubsection{Visualization}
     \begin{itemize}
+        \setlength\itemsep{1mm}
         \item The web application should be able to generate different types of graphs for different \hyperref[definition]{\textit{blocks}}. For example load-profile charts, comparative line charts, and heat maps.
         \item The web application should have generic pages for each building in the database. This page will display a series of graphs and charts that outline energy usage for a particular building.
         \item The \hyperref[definition]{\textit{blocks}} on each page should automatically update as new data is received by the database.
@@ -199,6 +206,7 @@
     \subsubsection{Objects}
         The system should have three main entities: 
         \begin{itemize}
+            \setlength\itemsep{1mm}
             \item \textbf{Building} - A building on campus that is connected to a data acquisition server.
             \item \textbf{Meter} - A specific data acquisition server.
             \item \textbf{User} - A user with a specific role.
@@ -246,7 +254,7 @@
             ]{2017-11-01}{2018-05-31}
             \gantttitlecalendar{year, month=name}\\
             \ganttbar{Design}{2017-11-01}{2017-11-30}\\
-            \ganttbar{Configure Database Schema}{2017-11-20}{2017-12-30}\\
+            \ganttbar{Configure Database and Back-end}{2017-11-20}{2017-12-30}\\
             \ganttbar{Connect to AcquiSuite servers}{2017-11-20}{2017-12-30}\\
             \ganttlinkedbar{Bind Data to Front-end}{2017-12-20}{2018-01-31}\\
             \ganttbar{Design UI}{2017-12-01}{2017-12-31}\\
