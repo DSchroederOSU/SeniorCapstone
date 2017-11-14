@@ -1,12 +1,17 @@
-\contentsline {section}{\numberline {1}Introduction}{2}
-\contentsline {section}{\numberline {2}Visualization Frameworks}{2}
-\contentsline {subsection}{\numberline {2.1}D3.js}{2}
-\contentsline {subsection}{\numberline {2.2}vis.js}{2}
-\contentsline {subsection}{\numberline {2.3}Chart.js}{3}
-\contentsline {subsection}{\numberline {2.4}Conclusion}{3}
-\contentsline {section}{\numberline {3}Data-binding Technologies}{3}
-\contentsline {section}{\numberline {4}Password Hashing Algorithms}{3}
-\contentsline {subsection}{\numberline {4.1}PBKDF2}{3}
-\contentsline {subsection}{\numberline {4.2}Bcrypt}{3}
-\contentsline {subsection}{\numberline {4.3}Scrypt}{4}
-\contentsline {section}{References}{4}
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}
+\contentsline {section}{\numberline {2}Visualization Frameworks}{2}{section.2}
+\contentsline {subsection}{\numberline {2.1}D3.js}{2}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Vis.js}{2}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Chart.js}{3}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Conclusion}{3}{subsection.2.4}
+\contentsline {section}{\numberline {3}Password Hashing Algorithms}{3}{section.3}
+\contentsline {subsection}{\numberline {3.1}PBKDF2}{3}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Bcrypt}{4}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Scrypt}{4}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Conclusion}{4}{subsection.3.4}
+\contentsline {section}{\numberline {4}Front-end Framework}{4}{section.4}
+\contentsline {subsection}{\numberline {4.1}CSS Bootstrap}{5}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Pure CSS}{5}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Foundation}{5}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Conclusion}{6}{subsection.4.4}
+\contentsline {section}{References}{6}{section*.2}

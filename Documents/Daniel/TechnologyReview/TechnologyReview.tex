@@ -2,7 +2,7 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{setspace}
-
+\usepackage{hyperref}
 \usepackage[margin=0.75in]{geometry}
 \geometry{textheight=9.5in, textwidth=7in}
 
@@ -102,7 +102,7 @@ Our web application will provide near-real time data visualizations for energy c
 \item Considered to be ``code-heavy'' and difficult to jump right into as a novice user.
 \item Angular and D3 both attempt to control the DOM and so you have to find a way to make the two work together which is counterintuitive to both framework's APIs. 
 \end{itemize}
-\subsection{vis.js}
+\subsection{Vis.js}
 \textit{Repository Commits: 3,165}\\
 \textit{Contributors: 137}\\
 \textbf{Pros}
@@ -118,8 +118,8 @@ Our web application will provide near-real time data visualizations for energy c
 \item Does not have built in heat map.
 \end{itemize}
 \subsection{Chart.js}
-\textbf{Repository Commits: 2,465}\\ 
-\textbf{Contributors: 236}\\
+\textit{Repository Commits: 2,465}\\ 
+\textit{Contributors: 236}\\
 \textbf{Pros}
 \begin{itemize}
 \item Uses HTML5 canvas element.
@@ -135,43 +135,97 @@ Our web application will provide near-real time data visualizations for energy c
 \end{itemize}
 \subsection{Conclusion}
 In conclusion, despite the steep learning curve associated with D3.js we think it will be the best option for our web application. It has the widest range of available graphs to accomodate all the client's requirments and desired visualizations. There are also a number of wrapper libraries available for D3.js like DC.js and dimple.js to help create charts from D3. This is a great way to get around the clunkiness and downsides to D3.js and reap the benefits of all the other charting libraries. Another benefit to using D3 is the extensive amount of templates, examples, and documentation that exists to help guide the process and implmentation of our application.
-\section{Data-binding Technologies}
-
 \section{Password Hashing Algorithms}
+Our web application will have an authentication layer which will allow administrative users to have access to exclusive parts of the application. Anytime user information is stored into a database, it is important to hash the passwords and keep user credentials encrypted.
 \subsection{PBKDF2}
 \textbf{Pros}
 \begin{itemize}
-    \item Comes included with Node.js and is included with require()
-    \item Uses salt hashing techniques.
-    \item Contains other cryptographic primitives like symmetric and asymmetric encryption.
+    \item PBKDF2 allows for multiple iterations, and adding salted random input on any number of iterations \cite{jarmoc_2015}.
+    \item RSA standard.    
 \end{itemize}
 \textbf{Cons}
 \begin{itemize}
     \item Unsafe because PBKDF2 can be thoroughly optimized with GPU \cite{pornin_2012} 
+    \item Complex API and slow computationally.
 \end{itemize}
 \subsection{Bcrypt}
 \textbf{Pros}
 \begin{itemize}
+    \item Can provide multiple hash iterations to strengthen the security.
     \item Very secure hash that can hash the same password multiple times.
     \item Widely used today and remains unbroken.
     \item Vetted by the entire crypto community as it’s now 15 years old \cite{medium}.
 \end{itemize}
 \textbf{Cons} 
 \begin{itemize}
-    \item Slow and computationally expensive hashing
+    \item Slow and computationally expensive hashing.
     \item Only used for password hashing, not a key-derivation function. 
 \end{itemize}
 \subsection{Scrypt}
 \textbf{Pros}
 \begin{itemize}
-    \item New and 
-    \item Includes hashing capabilities.
-    \item Easily incorporated with Mongoose schemas when storing user data.
+    \item Can provide multiple hash iterations to strengthen the security.
+    \item Newly developed based on focusing on the issues with BCrypt and PBKDF2 involving constant memory.
 \end{itemize}
 \textbf{Cons}
 \begin{itemize}
-    \item 
+    \item New and not widely accepted by security/cryptographic professionals.
+    \item Uses exponential time AND exponential memory which may be overkill for our application.
 \end{itemize}
+\subsection{Conclusion}
+There is a lot of discussion and documentation involving password hashing algorithms and which ones are the ``safest.'' For our web application, we will not be handling sensitive user data like credit card information or personal information, so we do not need the most comprehansive and computationally heavy hashing algorithm to encrypt our user passwords. For this, it would be best to use BCrypt because it is so widely used, has proven to be secure, and easy to implement. BCrypt has its own npm library and can be easily configure to run on a Node.js environment. It also provides secure, salted hashed that can be iterated over a configurable amount to increase the hashes effectiveness.
+\section{Front-end Framework}
+Our web application will be a series of dashboards to display energy data based on different buildings and subsets of buildings on Oregon State University's campus. A key part to designing a clean dashboard is having a well-spaced grid-like layout with different charts and graphs to display a multitude of different datasets and trends. Rather than customizing classic html elements and using div containers to space our dashboard, we wanted to look into bootstrapped dashboard templates that allow easy customization and clean-looking results. 
+\subsection{CSS Bootstrap}
+\textit{Repository Commits: 17,255}\\ 
+\textit{Contributors: 953}\\
+\textbf{Pros}
+\begin{itemize}
+    \item Extensive component list, responsive design, and built-in Javascript functions.\cite{puranjay_2015}
+    \item EFully responsive design.
+    \item Huge developer contrbution and maintainence.
+    \item Used by major companies like Lyft.com, Vogue.com, Vevo.com, and Newsweek.com. \cite{puranjay_2015}
+\end{itemize}
+\textbf{Cons}
+\begin{itemize}
+    \item Unsuitable for small scale projects. \cite{puranjay_2015}
+    \item Not good if you want to have large control over UI.
+    
+\end{itemize}
+\subsection{Pure CSS}
+\textit{Repository Commits: 541}\\ 
+\textit{Contributors: 51}\\
+\textbf{Pros}
+\begin{itemize}
+    \item Meant for small project to get up and running quickly.
+    \item Responsive design by default.
+    \item Pure CSS is modular so you can download only the components you need.
+    \item The complete module is very small so it is quick loading.
+    \item Able to be used complimentary with other frameworks.
+\end{itemize}
+\textbf{Cons} 
+\begin{itemize}
+    \item Not as extensive component list as Bootstrap.
+\end{itemize}
+\subsection{Foundation}
+\textit{Repository Commits: 15,094}\\ 
+\textit{Contributors: 959}\\
+\textbf{Pros}
+\begin{itemize}
+    \item Responsive design by default.
+    \item Easier to customize than bootstrap.
+    \item CSS classes are built in. \cite{team_2015}
+    \item More unique look than the more-popular bootstrap.
+    \item Good grid implementaions with customizable grid layouts.
+\end{itemize}
+\textbf{Cons}
+\begin{itemize}
+    \item Less maintained than bootstrap.
+    \item Lack of support.
+    \item Higher learning curve than bootstrap.
+\end{itemize}
+\subsection{Conclusion}
+A lot of online resources acknowledged the fact that it is hard to make a website not look like bootstrap when using bootstrap css. Despite this, similar to our reasoning behind choosing D3.js, we would like to use a framework that is heavily supported and well-documented as it will be easier to answer questions during development. We think that the time spent restyling Bootstrap to make it look unique will not compare to the time saved by utilizing a well-documented framework. There is also a project called \href{https://angular-ui.github.io/bootstrap/}{UI Bootstrap} that works with AngularJS to create directives for each of the bootstrap components. \cite{sevilayha_2015}
 \bibliographystyle{ieeetr}
 \bibliography{ref}
 \end{document}
