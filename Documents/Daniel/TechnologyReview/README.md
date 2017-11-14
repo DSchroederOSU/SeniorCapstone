@@ -1,1 +1,1 @@
-# Technology Review Directory
+# Individual Technology Review Directory
