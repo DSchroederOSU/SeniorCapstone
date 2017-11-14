@@ -88,6 +88,7 @@ Our web application will provide near-real time data visualizations for energy c
 %https://www.dashingd3js.com/d3-resources/d3-and-angular
 \textit{Repository Commits: 4,104}\\  
 \textit{Contributors: 120}\\
+D3.js is a clunky, massive library that makes use of SVG elements in webpages to append charts and graphics to the DOM. It is extremely well documented and widely used. D3 has a high learning curve for beginners to take head-on, but has a wide array of different visualizations and customization.\\
 \textbf{Pros}
 \begin{itemize}
 \item A lightwight, versatile javascript library that creates SVG elements within web pages and appends them to DOM elements. 
@@ -105,6 +106,7 @@ Our web application will provide near-real time data visualizations for energy c
 \subsection{Vis.js}
 \textit{Repository Commits: 3,165}\\
 \textit{Contributors: 137}\\
+Vis.js is a lightweight charting library that allows users to create clean charts from dynamic datasets. It is responsive and allows for interaction with the data on the page. Vis.js is praised for it's network chart capabilities but is limited in the number of different modules you can create.\\
 \textbf{Pros}
 \begin{itemize}
 \item Easy to use and less of a learning curve than D3.
@@ -120,6 +122,7 @@ Our web application will provide near-real time data visualizations for energy c
 \subsection{Chart.js}
 \textit{Repository Commits: 2,465}\\ 
 \textit{Contributors: 236}\\
+Chart js is a very lightweight library that provides 6 chart types and fully responsive designs. ChartJS is well documented and easy to use, but lacks in variety.\\
 \textbf{Pros}
 \begin{itemize}
 \item Uses HTML5 canvas element.
@@ -138,6 +141,7 @@ In conclusion, despite the steep learning curve associated with D3.js we think i
 \section{Password Hashing Algorithms}
 Our web application will have an authentication layer which will allow administrative users to have access to exclusive parts of the application. Anytime user information is stored into a database, it is important to hash the passwords and keep user credentials encrypted.
 \subsection{PBKDF2}
+The PBKDF2 algorithm is widely accepted as it is published by the RSA (RSA Security LLC). It provides a pseudorandom function and a salt value over many iteartion to create a derived key which is used in conjunction with a known key like a password to effectively hash that value into the database. It's many iterations make it difficult for hackers to break.
 \textbf{Pros}
 \begin{itemize}
     \item PBKDF2 allows for multiple iterations, and adding salted random input on any number of iterations \cite{jarmoc_2015}.
@@ -145,10 +149,11 @@ Our web application will have an authentication layer which will allow administr
 \end{itemize}
 \textbf{Cons}
 \begin{itemize}
-    \item Unsafe because PBKDF2 can be thoroughly optimized with GPU \cite{pornin_2012} 
+    \item Unsafe because PBKDF2 can be thoroughly optimized with GPU \cite{pornin_2012}.
     \item Complex API and slow computationally.
 \end{itemize}
 \subsection{Bcrypt}
+The Bcrypt algorithm performs quite the same way as PBKDF2 except it makes use of table altering in its algorithm that highlights a fault in PBKDF2 where GPU's can break the encryption. Bcrypt has been around for a long time and is widely accepted as an ``unbreakable'' hashing method.\\
 \textbf{Pros}
 \begin{itemize}
     \item Can provide multiple hash iterations to strengthen the security.
@@ -162,6 +167,7 @@ Our web application will have an authentication layer which will allow administr
     \item Only used for password hashing, not a key-derivation function. 
 \end{itemize}
 \subsection{Scrypt}
+Script works the same way as Bcrypt and PBKDF2 by iteratively hashing and using a salt value to create a hashed password. Scrypt is unique in that it take exponential memory to decypher the hash as well as exponential time for every iteration over the hashing algorithm which makes attackers even more unlikely to decypher passwords. Although Scrypt has been proven effective, it is still fairly new to the market and has not been totally varified.\\
 \textbf{Pros}
 \begin{itemize}
     \item Can provide multiple hash iterations to strengthen the security.
@@ -179,6 +185,7 @@ Our web application will be a series of dashboards to display energy data based 
 \subsection{CSS Bootstrap}
 \textit{Repository Commits: 17,255}\\ 
 \textit{Contributors: 953}\\
+CSS Bootstrap is the most widely used CSS framework available. It has the most expansive component list and helps developers create clean and beautiful UX/UI in minimal time frames. Bootstrap allows developers to get their paplications up and running quickly without having to worry about front-end styling. A major issue with Bootstrap is that it tends to look very similar across applications and leaves little room for simple customization.\\
 \textbf{Pros}
 \begin{itemize}
     \item Extensive component list, responsive design, and built-in Javascript functions.\cite{puranjay_2015}
@@ -195,6 +202,7 @@ Our web application will be a series of dashboards to display energy data based 
 \subsection{Pure CSS}
 \textit{Repository Commits: 541}\\ 
 \textit{Contributors: 51}\\
+Pure CSS is known for its lightness and simplicity. Because it's small, it is very fast loading and makes for a lightweight web application. It is also unique in that it allows modules/components to be downloaded individually, reducing its size even more. Pure CSS is good for small projects that need to get up and running quickly and easily.\\
 \textbf{Pros}
 \begin{itemize}
     \item Meant for small project to get up and running quickly.
@@ -210,6 +218,7 @@ Our web application will be a series of dashboards to display energy data based 
 \subsection{Foundation}
 \textit{Repository Commits: 15,094}\\ 
 \textit{Contributors: 959}\\
+Framework is the second most popular css framework on the market behind bootstrap and tends to perform just as well. Unlike bootstrap's very prominent theme, Foundation allows for more customization with the look and feel of web pages \cite{Nick_Pettit}. Foundation also has a very good grid system to make the layout of components clean and responsive \cite{blankenship_2017}.\\ 
 \textbf{Pros}
 \begin{itemize}
     \item Responsive design by default.
