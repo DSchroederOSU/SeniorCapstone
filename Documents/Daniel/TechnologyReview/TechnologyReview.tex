@@ -82,19 +82,96 @@
 \section{Introduction}
 
 \section{Visualization Frameworks}
+Our web application will provide near-real time data visualizations for energy consumption on campus buildings. This application will need to dynamically create charts and graphs based on energy data from the database. A key to choosing a visualization library will be to find one that can be dynmaically created and changed as new data is received from the data acquisition servers, and the ability to create chart templates that can be reused on multiple pages with different input parameters. 
+
 \subsection{D3.js}
-\textbf{Repository Commits: 4,104}
-\textbf{Contributors: 120}
-
+%https://www.dashingd3js.com/d3-resources/d3-and-angular
+\textit{Repository Commits: 4,104}\\  
+\textit{Contributors: 120}\\
+\textbf{Pros}
+\begin{itemize}
+\item A lightwight, versatile javascript library that creates SVG elements within web pages and appends them to DOM elements. 
+\item Makes use of javascript functions and DOM controlling functionality to dynamically change the content of the page. 
+\item Provides a lot of variety and ability to customize graphics.
+\item Widely used and there is a lot of documentation and resources available to assist the learning and development processes.
+\end{itemize}
+\textbf{Cons}
+\begin{itemize}
+\item D3 is essentially an API to to manipulate SVG, it is not a charting library in of itself.
+\item You cannot easily pass a dataset into a specified chart type like other libraries.
+\item Considered to be ``code-heavy'' and difficult to jump right into as a novice user.
+\item Angular and D3 both attempt to control the DOM and so you have to find a way to make the two work together which is counterintuitive to both framework's APIs. 
+\end{itemize}
 \subsection{vis.js}
-\textbf{Repository Commits: 3,165}
-\textbf{Contributors: 137}
-
-\subsection{Chartist.js}
-\textbf{Repository Commits: 841}
-\textbf{Contributors: 65}
-
+\textit{Repository Commits: 3,165}\\
+\textit{Contributors: 137}\\
+\textbf{Pros}
+\begin{itemize}
+\item Easy to use and less of a learning curve than D3.
+\item Allows for interaction and minpulation of data on the chart.
+\item Able to handle large amounts of dynamic data.
+\item Really clean and nice looking graphics.
+\end{itemize}
+\textbf{Cons}
+\begin{itemize}
+\item Limited amount of possible chart types.
+\item Does not have built in heat map.
+\end{itemize}
+\subsection{Chart.js}
+\textbf{Repository Commits: 2,465}\\ 
+\textbf{Contributors: 236}\\
+\textbf{Pros}
+\begin{itemize}
+\item Uses HTML5 canvas element.
+\item Allows for easy creating based on chart type specification.
+\item Library provides Line Charts, Bar Charts, Radar Charts, Pie Charts, Polar Area Charts, and Doughnut Charts.
+\item Very responsive charts based on screen width.
+\item Simple API, easy to use.
+\end{itemize}
+\textbf{Cons}
+\begin{itemize}
+\item Limited amount of possible chart types.
+\item Does not have built in heat map.
+\end{itemize}
+\subsection{Conclusion}
+In conclusion, despite the steep learning curve associated with D3.js we think it will be the best option for our web application. It has the widest range of available graphs to accomodate all the client's requirments and desired visualizations. There are also a number of wrapper libraries available for D3.js like DC.js and dimple.js to help create charts from D3. This is a great way to get around the clunkiness and downsides to D3.js and reap the benefits of all the other charting libraries. Another benefit to using D3 is the extensive amount of templates, examples, and documentation that exists to help guide the process and implmentation of our application.
 \section{Data-binding Technologies}
 
-\section{Encryption Frameworks/Algorithms}
+\section{Password Hashing Algorithms}
+\subsection{PBKDF2}
+\textbf{Pros}
+\begin{itemize}
+    \item Comes included with Node.js and is included with require()
+    \item Uses salt hashing techniques.
+    \item Contains other cryptographic primitives like symmetric and asymmetric encryption.
+\end{itemize}
+\textbf{Cons}
+\begin{itemize}
+    \item Unsafe because PBKDF2 can be thoroughly optimized with GPU \cite{pornin_2012} 
+\end{itemize}
+\subsection{Bcrypt}
+\textbf{Pros}
+\begin{itemize}
+    \item Very secure hash that can hash the same password multiple times.
+    \item Widely used today and remains unbroken.
+    \item Vetted by the entire crypto community as it’s now 15 years old \cite{medium}.
+\end{itemize}
+\textbf{Cons} 
+\begin{itemize}
+    \item Slow and computationally expensive hashing
+    \item Only used for password hashing, not a key-derivation function. 
+\end{itemize}
+\subsection{Scrypt}
+\textbf{Pros}
+\begin{itemize}
+    \item New and 
+    \item Includes hashing capabilities.
+    \item Easily incorporated with Mongoose schemas when storing user data.
+\end{itemize}
+\textbf{Cons}
+\begin{itemize}
+    \item 
+\end{itemize}
+\bibliographystyle{ieeetr}
+\bibliography{ref}
 \end{document}

@@ -2,6 +2,11 @@
 \contentsline {section}{\numberline {2}Visualization Frameworks}{2}
 \contentsline {subsection}{\numberline {2.1}D3.js}{2}
 \contentsline {subsection}{\numberline {2.2}vis.js}{2}
-\contentsline {subsection}{\numberline {2.3}Chartist.js}{2}
-\contentsline {section}{\numberline {3}Data-binding Technologies}{2}
-\contentsline {section}{\numberline {4}Encryption Frameworks/Algorithms}{2}
+\contentsline {subsection}{\numberline {2.3}Chart.js}{3}
+\contentsline {subsection}{\numberline {2.4}Conclusion}{3}
+\contentsline {section}{\numberline {3}Data-binding Technologies}{3}
+\contentsline {section}{\numberline {4}Password Hashing Algorithms}{3}
+\contentsline {subsection}{\numberline {4.1}PBKDF2}{3}
+\contentsline {subsection}{\numberline {4.2}Bcrypt}{3}
+\contentsline {subsection}{\numberline {4.3}Scrypt}{4}
+\contentsline {section}{References}{4}
