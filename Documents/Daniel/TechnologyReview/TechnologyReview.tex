@@ -3,6 +3,8 @@
 \usepackage{url}
 \usepackage{setspace}
 \usepackage{hyperref}
+\usepackage{changepage}% http://ctan.org/pkg/changepage
+
 \def\name{Daniel Schroeder}
 
 %pull in the necessary preamble matter for pygments output
@@ -175,9 +177,9 @@ In conclusion, despite the steep learning curve associated with D3.js we think i
 \section{Means of Incorporating Authentication}
 Our web application will have an authentication layer which will allow users to register for our application and design their own ``stories.'' Our application will also authenticate user roles so that administrative users will have access to exclusive parts of the application. We want a simple way of authenticating users, while keeping personal information safe.
 \subsection{Building Our Own Authentication Layer}
-Node.js has a lot of helpful modules and packages that allow you to create your own password hashing functions and generate a custom authentication layer. There is a ``crypto'' module that is included in NodeJS that ``provides cryptographic functionality that includes a set of wrappers for OpenSSL's hash, HMAC, cipher, decipher, sign and verify functions''\cite{Crypto}. In addition to the crypto module, there are numerous NodeJS extension modules that perform different hashing functions and provide the same functionality as the native crypto module. There are modules like \href{https://www.npmjs.com/package/bcrypt-nodejs}{\textit{bcrypt}} and \href{https://www.npmjs.com/package/scrypt}{\textit{scrypt}} that use different hashing algorithms to salt and hash password into a fixed length string to be stored into the database.
+Node.js has a lot of helpful modules and packages that allow you to create your own password hashing functions and generate a custom authentication layer. There is a ``crypto'' module that is included in Node.js that ``provides cryptographic functionality that includes a set of wrappers for OpenSSL's hash, HMAC, cipher, decipher, sign and verify functions''\cite{Crypto}. In addition to the crypto module, there are numerous Node.js extension modules that perform different hashing functions and provide the same functionality as the native crypto module. There are modules like \href{https://www.npmjs.com/package/bcrypt-Node.js}{\textit{bcrypt}} and \href{https://www.npmjs.com/package/scrypt}{\textit{scrypt}} that use different hashing algorithms to salt and hash password into a fixed length string to be stored into the database.
 \begin{lstlisting}[
-    caption={[An example of how to salt hash passwords using the NodeJS crypto module]An example of how to salt hash passwords using the NodeJS crypto module (Taken from \href{https://ciphertrick.com/2016/01/18/salt-hash-passwords-using-nodejs-crypto/}{\textit{Rahil Shaikh's example}})\cite{Rahil_Shaikh}}
+    caption={[An example of how to salt hash passwords using the Node.js crypto module]An example of how to salt hash passwords using the Node.js crypto module (Taken from \href{https://ciphertrick.com/2016/01/18/salt-hash-passwords-using-Node.js-crypto/}{\textit{Rahil Shaikh's example}})\cite{Rahil_Shaikh}}
     ]
     'use strict';
     var crypto = require('crypto');
@@ -223,32 +225,81 @@ Node.js has a lot of helpful modules and packages that allow you to create your 
     \item A lot of room for error and the possibility of data being compromised.
 \end{itemize}
 \subsection{Outsourcing Authentication to Google}
-Google Authentication is widely used as means of 
+Google oAuth 2.0 is a Google API that authenticates users by signing in with their google accounts. There is a lot of documentation about how to integrate Google's authentication API with Node.js. \href{http://www.passportjs.org/}{\textit{Passport}} is authentication middleware for Node.js that provides simple, integratable authentication using ``A comprehensive set of strategies support authentication using a username and password, Facebook, Twitter,'' and Google \cite{passport}.
+\begin{lstlisting}[
+    caption={[Using passport to include Google oAuth 2.0 authentication] (Taken from \href{http://www.passportjs.org/docs/username-password}{\textit{Passport Documentation}})\cite{passport_doc}}
+    ]
+    var passport = require('passport');
+    var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+    
+    // Use the GoogleStrategy within Passport.
+    //   Strategies in Passport require a `verify` function, which accept
+    //   credentials (in this case, an accessToken, refreshToken, and Google
+    //   profile), and invoke a callback with a user object.
+    passport.use(new GoogleStrategy({
+        clientID: GOOGLE_CLIENT_ID,
+        clientSecret: GOOGLE_CLIENT_SECRET,
+        callbackURL: "http://www.example.com/auth/google/callback"
+      },
+      function(accessToken, refreshToken, profile, done) {
+           User.findOrCreate({ googleId: profile.id }, function (err, user) {
+             return done(err, user);
+           });
+      }
+    ));
+\end{lstlisting}
 \textbf{Pros}
 \begin{itemize}
-    \item Can provide multiple hash iterations to strengthen the security.
-    \item Very secure hash that can hash the same password multiple times.
-    \item Widely used today and remains unbroken.
-    \item Vetted by the entire crypto community as it's now 15 years old \cite{medium}.
+    \item Takes all the security risks out of creating our own authentication.
+    \item Saves a lot of development time. 
+    \item Widely used with a lot of documentation.
+    \item Relieves the need to store user passwords in the database.
+    \item Can use the passport authentication middleware to simplify authentication even further.
 \end{itemize}
 \textbf{Cons} 
 \begin{itemize}
-    \item Slow and computationally expensive hashing.
-    \item Only used for password hashing, not a key-derivation function. 
+    \item Limits users to having a google account.
+    \item Relies on Google API to be working and running.
+    \item Adds dependencies to the project.
 \end{itemize}
 \subsection{Use CAS (Central Authentication Service)}
+CAS is an authentication process that redirects users to a CAS login page like the one that Oregon State University uses for most things like Canvas, Box, and MyDegrees.\\
 
+CAS uses sessions and a CAS Client server to authenticate users throughout a web application:
+\begin{adjustwidth}{2cm}{2cm}
+    \textit{\noindent When CAS redirects the authenticated user back to your application, it will append a \{ticket\} parameter to your url.\\
+    \noindent The ticket returned to your application is opaque, meaning that it includes no useful information to anyone other than the CAS Server. The only thing that your application can do is send this ticket back to CAS for validation.\\
+    \noindent CAS will then either respond that this ticket does not represent a valid user for this service, or will acknowledge that this ticket proves authentication. In the later case, CAS will also supply the user's NetID so that you know the identity of the user \cite{how_cas_works}.}
+\end{adjustwidth} 
 \textbf{Pros}
 \begin{itemize}
-    \item Can provide multiple hash iterations to strengthen the security.
-    \item Newly developed based on focusing on the issues with BCrypt and PBKDF2 involving constant memory.
+    \item Can use the OSU official CAS to provide a nice theme.
+    \item Keeps the same centralized CAS server as the rest of Oregon State University's application.
 \end{itemize}
 \textbf{Cons}
 \begin{itemize}
-    \item New and not widely accepted by security/cryptographic professionals.
-    \item Uses exponential time AND exponential memory which may be overkill for our application.
+    \item Relies on Oregon State University's CAS server to be operational. 
+    \item Adds exteraneous code and implementation.
+    \item Not as modular as the Node.js/Passport implementations of oAuth 2.0.
 \end{itemize}
 \subsection{Conclusion}
+After reviewing the different means of including authentication for our web application, we think that using the Passport middleware to implement Google's oAuth 2.0 API would be the best option. It is easily integratable into Node.js applications, everyone at Oregon State University has a gmail account, and it removes the need to store any passwords into our database. The Google oAuth 2.0 authentication process uses a token that is received from the Google API that we will store along with the user ID and name into our database.\\
+Another large benefit to using the Passport.js and Google oAuth 2.0 authentication process is that passport handles most of the overhead involved with user sessions and per-page aithentication. Using a small cookie set that contains the user id, ``Passport will serialize and deserialize user instances to and from the session'' to handle login sessions throughout the application \cite{passport_session}.
+\begin{lstlisting}[
+    caption={[The user ID is serialized to the session, keeping the amount of data stored within the session small. When subsequent requests are received, this ID is used to find the user, which will be restored to req.user.] (Taken from \href{http://www.passportjs.org/docs}{\textit{Passport Documentation}})\cite{passport_session}}
+    ]
+    passport.serializeUser(function(user, done) {
+        done(null, user.id);
+      });
+      
+      passport.deserializeUser(function(id, done) {
+        User.findById(id, function(err, user) {
+          done(err, user);
+        });
+      });
+\end{lstlisting}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%% Front-end Framework %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -296,7 +347,7 @@ Framework is the second most popular css framework on the market behind bootstra
     \item Easier to customize than bootstrap.
     \item CSS classes are built in. \cite{team_2015}
     \item More unique look than the more-popular bootstrap.
-    \item Good grid implementaions with customizable grid layouts.
+    \item Good grid implementations with customizable grid layouts.
 \end{itemize}
 \textbf{Cons}
 \begin{itemize}
