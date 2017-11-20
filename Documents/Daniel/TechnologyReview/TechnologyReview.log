@@ -1,9 +1,13 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=latex 2016.5.22)  14 NOV 2017 00:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  20 NOV 2017 13:34
 entering extended mode
- \write18 enabled.
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**TechnologyReview.tex
-(./TechnologyReview.tex
+**/Users/DanielSchroederMac/SeniorCapstone/Documents/Daniel/TechnologyReview/Te
+chnologyReview.tex
+
+(/Users/DanielSchroederMac/SeniorCapstone/Documents/Daniel/TechnologyReview/Tec
+hnologyReview.tex
 LaTeX2e <2016/03/31>
 Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
 (./IEEEtran.cls
@@ -24,7 +28,7 @@ File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
 -- Using IEEE Computer Society mode.
 -- Using 8.5in x 11in (letter) paper.
--- Using DVI output.
+-- Using PDF output.
 \@IEEEnormalsizeunitybaselineskip=\dimen105
 -- This is a 10 point document.
 \CLASSINFOnormalsizebaselineskip=\dimen106
@@ -132,10 +136,18 @@ Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 (/usr/local/texlive/2016/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/01/02 v1.10 sample graphics configuration
 )
-Package graphics Info: Driver file: dvips.def on input line 96.
+Package graphics Info: Driver file: pdftex.def on input line 96.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/dvips.def
-File: dvips.def 2015/12/30 v3.0k Driver-dependent file (DPC,SPQR)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+(/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count94
 ))
 \Gin@req@height=\dimen126
 \Gin@req@width=\dimen127
@@ -157,8 +169,8 @@ Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
 (/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
 Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
 Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
-Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
-Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+Package hobsub Info: Skipping package `infwarerr' (already loaded).
+Package hobsub Info: Skipping package `ltxcmds' (already loaded).
 Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
@@ -177,7 +189,7 @@ Package: pdftexcmds 2016/05/10 v0.21 Utility functions of pdfTeX for LuaTeX (HO
 Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode is ignored in DVI mode.
+Package pdftexcmds Info: \pdfdraftmode found.
 Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
 Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
 )
@@ -204,13 +216,13 @@ Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 )
 \@linkdim=\dimen128
-\Hy@linkcounter=\count94
-\Hy@pagecounter=\count95
+\Hy@linkcounter=\count95
+\Hy@pagecounter=\count96
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2016/05/05 v6.83n Hyperref: PDFDocEncoding definition (HO)
 )
-\Hy@SavedSpaceFactor=\count96
+\Hy@SavedSpaceFactor=\count97
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -222,10 +234,10 @@ Package hyperref Info: Plain pages OFF on input line 4461.
 Package hyperref Info: Backreferencing OFF on input line 4466.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4691.
-\c@Hy@tempcnt=\count97
+\c@Hy@tempcnt=\count98
 LaTeX Info: Redefining \url on input line 5044.
 \XeTeXLinkMargin=\dimen129
-\Fld@menulength=\count98
+\Fld@menulength=\count99
 \Field@Width=\dimen130
 \Fld@charsize=\dimen131
 Package hyperref Info: Hyper figures OFF on input line 6298.
@@ -237,23 +249,15 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6323.
 Package hyperref Info: PDF/A mode OFF on input line 6328.
 LaTeX Info: Redefining \ref on input line 6368.
 LaTeX Info: Redefining \pageref on input line 6372.
-\Hy@abspage=\count99
-\c@Item=\count100
-\c@Hfootnote=\count101
+\Hy@abspage=\count100
+\c@Item=\count101
+\c@Hfootnote=\count102
 )
 
-Package hyperref Message: Driver (default): hdvips.
+Package hyperref Message: Driver (autodetected): hpdftex.
 
-(/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/hdvips.def
-File: hdvips.def 2016/05/05 v6.83n Hyperref driver for dvips
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/pdfmark.def
-File: pdfmark.def 2016/05/05 v6.83n Hyperref definitions for pdfmark specials
-\pdf@docset=\toks16
-\pdf@box=\box28
-\pdf@toks=\toks17
-\pdf@defaulttoks=\toks18
-\HyField@AnnotCount=\count102
+(/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2016/05/05 v6.83n Hyperref driver for pdfTeX
 \Fld@listcount=\count103
 \c@bookmark@seq@number=\count104
 
@@ -263,20 +267,76 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
 \Hy@SectionHShift=\skip44
+)
+(./pygments.tex
+(/usr/local/texlive/2016/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2008/02/07
+
+Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
+<2008/02/07> (tvz)
+\FV@CodeLineNo=\count105
+\FV@InFile=\read1
+\FV@TabBox=\box28
+\c@FancyVerbLine=\count106
+\FV@StepNumber=\count107
+\FV@OutFile=\write3
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2016/05/09 v1.1c Standard LaTeX Color (DPC)
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 144.
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2015/03/17 v1.2c Input encoding file
+\inpenc@prehook=\toks16
+\inpenc@posthook=\toks17
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/base/latin1.def
+File: latin1.def 2015/03/17 v1.2c Input encoding file
+)))
+Package hyperref Info: Option `colorlinks' set `true' on input line 22.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count108
+\lst@gtempboxa=\box29
+\lst@token=\toks18
+\lst@length=\count109
+\lst@currlwidth=\dimen132
+\lst@column=\count110
+\lst@pos=\count111
+\lst@lostspace=\dimen133
+\lst@width=\dimen134
+\lst@newlines=\count112
+\lst@lineno=\count113
+\lst@maxwidth=\dimen135
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count114
+\lst@skipnumbers=\count115
+\lst@framebox=\box30
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
 (/usr/local/texlive/2016/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2010/09/12 v5.6 Page Geometry
-\Gm@cnth=\count105
-\Gm@cntv=\count106
-\c@Gm@tempcnt=\count107
-\Gm@bindingoffset=\dimen132
-\Gm@wd@mp=\dimen133
-\Gm@odd@mp=\dimen134
-\Gm@even@mp=\dimen135
-\Gm@layoutwidth=\dimen136
-\Gm@layoutheight=\dimen137
-\Gm@layouthoffset=\dimen138
-\Gm@layoutvoffset=\dimen139
+\Gm@cnth=\count116
+\Gm@cntv=\count117
+\c@Gm@tempcnt=\count118
+\Gm@bindingoffset=\dimen136
+\Gm@wd@mp=\dimen137
+\Gm@odd@mp=\dimen138
+\Gm@even@mp=\dimen139
+\Gm@layoutwidth=\dimen140
+\Gm@layoutheight=\dimen141
+\Gm@layouthoffset=\dimen142
+\Gm@layoutvoffset=\dimen143
 \Gm@dimlist=\toks19
 )
 
@@ -290,45 +350,75 @@ Package geometry Warning: Over-specification in `v'-direction.
 (./TechnologyReview.aux)
 \openout1 = `TechnologyReview.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 92.
+LaTeX Font Info:    ... okay on input line 92.
 
 -- Lines per column: 39 (approximate, difference = 14.73578pt).
-\AtBeginShipoutBox=\box29
-Package hyperref Info: Link coloring OFF on input line 35.
+(/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count119
+\scratchdimen=\dimen144
+\scratchbox=\box31
+\nofMPsegments=\count120
+\nofMParguments=\count121
+\everyMPshowfont=\toks20
+\MPscratchCnt=\count122
+\MPscratchDim=\dimen145
+\MPnumerator=\count123
+\makeMPintoPDFobject=\count124
+\everyMPtoPDFconversion=\toks21
+) (/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+)
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+\AtBeginShipoutBox=\box32
+Package hyperref Info: Link coloring ON on input line 92.
+
 (/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
 (/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count108
+\c@section@level=\count125
 )
-LaTeX Info: Redefining \ref on input line 35.
-LaTeX Info: Redefining \pageref on input line 35.
-LaTeX Info: Redefining \nameref on input line 35.
+LaTeX Info: Redefining \ref on input line 92.
+LaTeX Info: Redefining \pageref on input line 92.
+LaTeX Info: Redefining \nameref on input line 92.
 
 (./TechnologyReview.out) (./TechnologyReview.out)
-\@outlinefile=\write3
-\openout3 = `TechnologyReview.out'.
+\@outlinefile=\write4
+\openout4 = `TechnologyReview.out'.
 
+\c@lstlisting=\count126
 
 *geometry* driver: auto-detecting
-*geometry* detected driver: dvips
+*geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
-* driver: dvips
+* driver: pdftex
 * paper: <default>
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
@@ -359,25 +449,30 @@ LaTeX Info: Redefining \nameref on input line 35.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-File: coe_v_spot1.eps Graphic file (type eps)
-<coe_v_spot1.eps>
-LaTeX Font Info:    Font shape `OT1/ppl/bx/sc' in size <20.075> not available
-(Font)              Font shape `OT1/ppl/b/sc' tried instead on input line 49.
-LaTeX Font Info:    Font shape `OT1/ppl/bx/sc' in size <24.09> not available
-(Font)              Font shape `OT1/ppl/b/sc' tried instead on input line 49.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 67.
-
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 95.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <8.03> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 67.
- [1]
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <24.09> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 95.
+LaTeX Font Info:    Calculating math sizes for size <11.04124> on input line 95
+.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <11.04124> on input line 95.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7.72884> on input line 95.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5.52061> on input line 95.
+LaTeX Font Info:    Try loading font information for U+pzd on input line 95.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/upzd.fd
+File: upzd.fd 2001/06/04 font definitions for U/pzd.
+) [1{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <11.04124> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 75.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 104.
 LaTeX Font Info:    Font shape `OT1/phv/bx/sc' in size <11.04124> not available
 
-(Font)              Font shape `OT1/phv/b/sc' tried instead on input line 75.
+(Font)              Font shape `OT1/phv/b/sc' tried instead on input line 104.
 
 (./TechnologyReview.toc
 LaTeX Font Info:    Calculating math sizes for size <9.53561> on input line 3.
@@ -388,75 +483,74 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <4.7678> on input line 3.
 )
-\tf@toc=\write4
-\openout4 = `TechnologyReview.toc'.
+\tf@toc=\write5
+\openout5 = `TechnologyReview.toc'.
 
- [1]
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.108 \clearpage
+                 [1]
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9.53561> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 87.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 118.
  [2
 
-]
-
-LaTeX Warning: Citation `jarmoc_2015' on page 3 undefined on input line 147.
-
-[3]
-
-LaTeX Warning: Citation `pornin_2012' on page 4 undefined on input line 152.
-
-Missing character: There is no â in font pplr7t!
-Missing character: There is no € in font pplr7t!
-Missing character: There is no ™ in font pplr7t!
-
-LaTeX Warning: Citation `medium' on page 4 undefined on input line 162.
-
-[4]
-
-LaTeX Warning: Citation `puranjay_2015' on page 5 undefined on input line 191.
+] [3]
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
+nput line 181.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 181.
 
 
-LaTeX Warning: Citation `puranjay_2015' on page 5 undefined on input line 194.
-
-
-LaTeX Warning: Citation `puranjay_2015' on page 5 undefined on input line 198.
-
-[5]
-
-LaTeX Warning: Citation `Nick_Pettit' on page 6 undefined on input line 221.
-
-
-LaTeX Warning: Citation `blankenship_2017' on page 6 undefined on input line 22
-1.
-
-
-LaTeX Warning: Citation `team_2015' on page 6 undefined on input line 226.
-
-
-LaTeX Warning: Citation `sevilayha_2015' on page 6 undefined on input line 237.
-
-
-No file TechnologyReview.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 240.
-[6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 240.
+(/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <8.03> not available
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 183.
+LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <8.03> not available
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 213.
+ [4] [5]
+[6] (./TechnologyReview.bbl
+LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 27.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8.03> on input line 27.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5.62097> on input line 27.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <4.015> on input line 27.
+)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 311.
+ [7]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 311.
  (./TechnologyReview.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 240.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 240.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 311.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 311.
 Package rerunfilecheck Info: File `TechnologyReview.out' has not changed.
-(rerunfilecheck)             Checksum: F745D312AFB68439C94CBCC24BEEA312;915.
-
-
-LaTeX Warning: There were undefined references.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 240.
+(rerunfilecheck)             Checksum: 1C6EB487EE535822FC1D9A33E45A04FF;1069.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 311.
  ) 
 Here is how much of TeX's memory you used:
- 5966 strings out of 493015
- 93900 string characters out of 6133377
- 188026 words of memory out of 5000000
- 9501 multiletter control sequences out of 15000+600000
- 29166 words of font info for 72 fonts, out of 8000000 for 9000
+ 8809 strings out of 493014
+ 133379 string characters out of 6133351
+ 314078 words of memory out of 5000000
+ 12199 multiletter control sequences out of 15000+600000
+ 44692 words of font info for 95 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,5n,32p,725b,394s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,6n,40p,953b,1176s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/tex
+live/2016/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/local/texlive/201
+6/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2016/texmf-
+dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2016/texmf-dist/fo
+nts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/typ
+e1/urw/helvetic/uhvro8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw
+/palatino/uplb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palati
+no/uplr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palatino/uplr
+i8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
+Output written on TechnologyReview.pdf (8 pages, 126603 bytes).
+PDF statistics:
+ 253 PDF objects out of 1000 (max. 8388607)
+ 230 compressed objects within 3 object streams
+ 66 named destinations out of 1000 (max. 500000)
+ 137 words of extra memory for PDF output out of 10000 (max. 10000000)
 
-Output written on TechnologyReview.dvi (7 pages, 33608 bytes).

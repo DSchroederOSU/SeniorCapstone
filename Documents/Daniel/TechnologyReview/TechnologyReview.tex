@@ -3,8 +3,61 @@
 \usepackage{url}
 \usepackage{setspace}
 \usepackage{hyperref}
+\def\name{Daniel Schroeder}
+
+%pull in the necessary preamble matter for pygments output
+\input{pygments.tex}
+
+%% The following metadata will show up in the PDF properties
+\hypersetup{
+  colorlinks = true,
+  urlcolor = red,
+  linkcolor = red,
+  citecolor = black,
+  pdfauthor = {\name},
+  pdfkeywords = {CS461 ``Senior Capstone'' Technology Review},
+  pdftitle = {CS461 ``Senior Capstone'' Technology Review},
+  pdfsubject = {CS461 ``Senior Capstone'' Technology Review},
+  pdfpagemode = UseNone
+}
+\usepackage{listings}
+\usepackage{color}
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
 \usepackage[margin=0.75in]{geometry}
 \geometry{textheight=9.5in, textwidth=7in}
+\lstdefinelanguage{JavaScript}{
+    keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+    keywordstyle=\color{blue}\bfseries,
+    ndkeywords={class, export, boolean, throw, implements, import, this},
+    ndkeywordstyle=\color{darkgray}\bfseries,
+    identifierstyle=\color{black},
+    sensitive=false,
+    comment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    commentstyle=\color{purple}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    morestring=[b]',
+    morestring=[b]"
+  }
+  \lstset{
+    language=JavaScript,
+    backgroundcolor=\color{lightgray},
+    extendedchars=true,
+    basicstyle=\footnotesize\ttfamily,
+    linewidth=7in,
+    xleftmargin=.25in,
+    showstringspaces=false,
+    showspaces=false,
+    numbers=left,
+    numberstyle=\footnotesize,
+    numbersep=9pt,
+    tabsize=2,
+    breaklines=true,
+    showtabs=false,
+    captionpos=b
+ }
 
 % 1. Fill in these details
 \def \CapstoneTeamName{		The Dream Team}
@@ -32,44 +85,20 @@
 %\renewcommand{\NameSigPair}[1]{#1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\textbf{Scalable Web Application Framework for Monitoring Energy Usage on Campus} \linebreak \LARGE{Group 57} }
+\author{Daniel Schroeder}
+\date{\today}
+
 \begin{document}
-\begin{titlepage}
-    \pagenumbering{gobble}
-    \begin{singlespace}
-    \includegraphics[height=4cm]{coe_v_spot1.eps}
-        \hfill 
-        % 4. If you have a logo, use this includegraphics command to put it on the coversheet.
-        %\includegraphics[height=4cm]{CompanyLogo}   
-        \par\vspace{.2in}
-        \centering
-        \scshape{
-            \huge CS Capstone \DocType \par
-            {\large\today}\par
-            \vspace{.5in}
-            \textbf{\Huge\CapstoneProjectName}\par
-            \vfill
-            {\large Prepared for}\par
-            \Huge \CapstoneSponsorCompany\par
-            \vspace{5pt}
-            {\Large\NameSigPair{\CapstoneSponsorPerson}\par}
-            {\large Prepared by }\par
-            Group\CapstoneTeamNumber\par
-            % 5. comment out the line below this one if you do not wish to name your team
-            \CapstoneTeamName\par 
-            \vspace{5pt}
-            {\Large
-                \NameSigPair{\GroupMemberOne}\par
-                \NameSigPair{\GroupMemberTwo}\par
-                \NameSigPair{\GroupMemberThree}\par
-            }
-            \vspace{20pt}
-        }
-        \begin{abstract}
-        % 6. Fill in your abstract   
-        This document provides an analysis of different technologies that could be used to satisfy different components of our web application. The purpose of this document is to compare and contrast different technologies in respect to our project's needs and goals and choose the best choice for implementation. 
-        \end{abstract}     
-    \end{singlespace}
-\end{titlepage}
+\maketitle
+%\vspace{2cm}
+\vfill
+\noindent \textbf{Abstract} \\
+            \indent 
+            Data visualization is an important technique for analyzing data trends and identifying problems that may not have been apparent. This document outlines our plan to create a web application which will gather energy data from data aquisition servers and create information management dashboards. Our application will allow users to generate charts and graphs to see energy use over time, compare energy usage across multiple buildings, and create collections of different visualizations.
+            
+            
+
 \newpage
 \pagenumbering{arabic}
 \tableofcontents
@@ -80,7 +109,9 @@
 
 % 8. now you write!
 \section{Introduction}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% Visualization Frameworks %%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Visualization Frameworks}
 Our web application will provide near-real time data visualizations for energy consumption on campus buildings. This application will need to dynamically create charts and graphs based on energy data from the database. A key to choosing a visualization library will be to find one that can be dynmaically created and changed as new data is received from the data acquisition servers, and the ability to create chart templates that can be reused on multiple pages with different input parameters. 
 
@@ -138,6 +169,152 @@ Chart js is a very lightweight library that provides 6 chart types and fully res
 \end{itemize}
 \subsection{Conclusion}
 In conclusion, despite the steep learning curve associated with D3.js we think it will be the best option for our web application. It has the widest range of available graphs to accomodate all the client's requirments and desired visualizations. There are also a number of wrapper libraries available for D3.js like DC.js and dimple.js to help create charts from D3. This is a great way to get around the clunkiness and downsides to D3.js and reap the benefits of all the other charting libraries. Another benefit to using D3 is the extensive amount of templates, examples, and documentation that exists to help guide the process and implmentation of our application.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%% Authentication %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Means of Incorporating Authentication}
+Our web application will have an authentication layer which will allow users to register for our application and design their own ``stories.'' Our application will also authenticate user roles so that administrative users will have access to exclusive parts of the application. We want a simple way of authenticating users, while keeping personal information safe.
+\subsection{Building Our Own Authentication Layer}
+Node.js has a lot of helpful modules and packages that allow you to create your own password hashing functions and generate a custom authentication layer. There is a ``crypto'' module that is included in NodeJS that ``provides cryptographic functionality that includes a set of wrappers for OpenSSL's hash, HMAC, cipher, decipher, sign and verify functions''\cite{Crypto}. In addition to the crypto module, there are numerous NodeJS extension modules that perform different hashing functions and provide the same functionality as the native crypto module. There are modules like \href{https://www.npmjs.com/package/bcrypt-nodejs}{\textit{bcrypt}} and \href{https://www.npmjs.com/package/scrypt}{\textit{scrypt}} that use different hashing algorithms to salt and hash password into a fixed length string to be stored into the database.
+\begin{lstlisting}[
+    caption={[An example of how to salt hash passwords using the NodeJS crypto module]An example of how to salt hash passwords using the NodeJS crypto module (Taken from \href{https://ciphertrick.com/2016/01/18/salt-hash-passwords-using-nodejs-crypto/}{\textit{Rahil Shaikh's example}})\cite{Rahil_Shaikh}}
+    ]
+    'use strict';
+    var crypto = require('crypto');
+    /**
+     * generates random string of characters i.e salt
+     */
+    var genRandomString = function(length){
+        return crypto.randomBytes(Math.ceil(length/2))
+                .toString('hex') /** convert to hexadecimal format */
+                .slice(0,length);   /** return required number of characters */
+    };
+    /** hash password with sha512.
+     * @function
+     * @param {string} password - List of required fields.
+     * @param {string} salt - Data to be validated.
+     */
+    var sha512 = function(password, salt){
+        var hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
+        hash.update(password);
+        var value = hash.digest('hex');
+        return {
+            salt:salt,
+            passwordHash:value
+        };
+    };
+    function saltHashPassword(userpassword) {
+        var salt = genRandomString(16); /** Gives us salt of length 16 */
+        var passwordData = sha512(userpassword, salt);
+        console.log('UserPassword = '+userpassword);
+        console.log('Passwordhash = '+passwordData.passwordHash);
+        console.log('nSalt = '+passwordData.salt);
+    }
+\end{lstlisting}
+\textbf{Pros}
+\begin{itemize}
+    \item Creating our own authentication layer would provide us full control over how passwords are hashed and stored into the database. 
+    \item Provide understanding of every component taht goes into our application's authentication.
+    \item Do not have to rely on another API to authenticate users.
+\end{itemize}
+\textbf{Cons}
+\begin{itemize}
+    \item Laborious work and very time consuming.
+    \item A lot of room for error and the possibility of data being compromised.
+\end{itemize}
+\subsection{Outsourcing Authentication to Google}
+Google Authentication is widely used as means of 
+\textbf{Pros}
+\begin{itemize}
+    \item Can provide multiple hash iterations to strengthen the security.
+    \item Very secure hash that can hash the same password multiple times.
+    \item Widely used today and remains unbroken.
+    \item Vetted by the entire crypto community as it's now 15 years old \cite{medium}.
+\end{itemize}
+\textbf{Cons} 
+\begin{itemize}
+    \item Slow and computationally expensive hashing.
+    \item Only used for password hashing, not a key-derivation function. 
+\end{itemize}
+\subsection{Use CAS (Central Authentication Service)}
+
+\textbf{Pros}
+\begin{itemize}
+    \item Can provide multiple hash iterations to strengthen the security.
+    \item Newly developed based on focusing on the issues with BCrypt and PBKDF2 involving constant memory.
+\end{itemize}
+\textbf{Cons}
+\begin{itemize}
+    \item New and not widely accepted by security/cryptographic professionals.
+    \item Uses exponential time AND exponential memory which may be overkill for our application.
+\end{itemize}
+\subsection{Conclusion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%% Front-end Framework %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Front-end Framework}
+Our web application will be a series of dashboards to display energy data based on different buildings and subsets of buildings on Oregon State University's campus. A key part to designing a clean dashboard is having a well-spaced grid-like layout with different charts and graphs to display a multitude of different datasets and trends. Rather than customizing classic html elements and using div containers to space our dashboard, we wanted to look into bootstrapped dashboard templates that allow easy customization and clean-looking results. 
+\subsection{CSS Bootstrap}
+\textit{Repository Commits: 17,255}\\ 
+\textit{Contributors: 953}\\
+CSS Bootstrap is the most widely used CSS framework available. It has the most expansive component list and helps developers create clean and beautiful UX/UI in minimal time frames. Bootstrap allows developers to get their paplications up and running quickly without having to worry about front-end styling. A major issue with Bootstrap is that it tends to look very similar across applications and leaves little room for simple customization.\\
+\textbf{Pros}
+\begin{itemize}
+    \item Extensive component list, responsive design, and built-in Javascript functions.\cite{puranjay_2015}
+    \item EFully responsive design.
+    \item Huge developer contrbution and maintainence.
+    \item Used by major companies like Lyft.com, Vogue.com, Vevo.com, and Newsweek.com. \cite{puranjay_2015}
+\end{itemize}
+\textbf{Cons}
+\begin{itemize}
+    \item Unsuitable for small scale projects. \cite{puranjay_2015}
+    \item Not good if you want to have large control over UI.
+\end{itemize}
+\subsection{Pure CSS}
+\textit{Repository Commits: 541}\\ 
+\textit{Contributors: 51}\\
+Pure CSS is known for its lightness and simplicity. Because it's small, it is very fast loading and makes for a lightweight web application. It is also unique in that it allows modules/components to be downloaded individually, reducing its size even more. Pure CSS is good for small projects that need to get up and running quickly and easily.\\
+\textbf{Pros}
+\begin{itemize}
+    \item Meant for small project to get up and running quickly.
+    \item Responsive design by default.
+    \item Pure CSS is modular so you can download only the components you need.
+    \item The complete module is very small so it is quick loading.
+    \item Able to be used complimentary with other frameworks.
+\end{itemize}
+\textbf{Cons} 
+\begin{itemize}
+    \item Not as extensive component list as Bootstrap.
+\end{itemize}
+\subsection{Foundation}
+\textit{Repository Commits: 15,094}\\ 
+\textit{Contributors: 959}\\
+Framework is the second most popular css framework on the market behind bootstrap and tends to perform just as well. Unlike bootstrap's very prominent theme, Foundation allows for more customization with the look and feel of web pages \cite{Nick_Pettit}. Foundation also has a very good grid system to make the layout of components clean and responsive \cite{blankenship_2017}.\\ 
+\textbf{Pros}
+\begin{itemize}
+    \item Responsive design by default.
+    \item Easier to customize than bootstrap.
+    \item CSS classes are built in. \cite{team_2015}
+    \item More unique look than the more-popular bootstrap.
+    \item Good grid implementaions with customizable grid layouts.
+\end{itemize}
+\textbf{Cons}
+\begin{itemize}
+    \item Less maintained than bootstrap.
+    \item Lack of support.
+    \item Higher learning curve than bootstrap.
+\end{itemize}
+\subsection{Conclusion}
+A lot of online resources acknowledged the fact that it is hard to make a website not look like bootstrap when using bootstrap css. Despite this, similar to our reasoning behind choosing D3.js, we would like to use a framework that is heavily supported and well-documented as it will be easier to answer questions during development. We think that the time spent restyling Bootstrap to make it look unique will not compare to the time saved by utilizing a well-documented framework. There is also a project called \href{https://angular-ui.github.io/bootstrap/}{UI Bootstrap} that works with AngularJS to create directives for each of the bootstrap components. \cite{sevilayha_2015}
+\bibliographystyle{IEEEtran}
+\bibliography{ref}
+\end{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%% Old Section to Ignore %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\iffalse
 \section{Password Hashing Algorithms}
 Our web application will have an authentication layer which will allow administrative users to have access to exclusive parts of the application. Anytime user information is stored into a database, it is important to hash the passwords and keep user credentials encrypted.
 \subsection{PBKDF2}
@@ -180,61 +357,4 @@ Script works the same way as Bcrypt and PBKDF2 by iteratively hashing and using 
 \end{itemize}
 \subsection{Conclusion}
 There is a lot of discussion and documentation involving password hashing algorithms and which ones are the ``safest.'' For our web application, we will not be handling sensitive user data like credit card information or personal information, so we do not need the most comprehansive and computationally heavy hashing algorithm to encrypt our user passwords. For this, it would be best to use BCrypt because it is so widely used, has proven to be secure, and easy to implement. BCrypt has its own npm library and can be easily configure to run on a Node.js environment. It also provides secure, salted hashed that can be iterated over a configurable amount to increase the hashes effectiveness.
-\section{Front-end Framework}
-Our web application will be a series of dashboards to display energy data based on different buildings and subsets of buildings on Oregon State University's campus. A key part to designing a clean dashboard is having a well-spaced grid-like layout with different charts and graphs to display a multitude of different datasets and trends. Rather than customizing classic html elements and using div containers to space our dashboard, we wanted to look into bootstrapped dashboard templates that allow easy customization and clean-looking results. 
-\subsection{CSS Bootstrap}
-\textit{Repository Commits: 17,255}\\ 
-\textit{Contributors: 953}\\
-CSS Bootstrap is the most widely used CSS framework available. It has the most expansive component list and helps developers create clean and beautiful UX/UI in minimal time frames. Bootstrap allows developers to get their paplications up and running quickly without having to worry about front-end styling. A major issue with Bootstrap is that it tends to look very similar across applications and leaves little room for simple customization.\\
-\textbf{Pros}
-\begin{itemize}
-    \item Extensive component list, responsive design, and built-in Javascript functions.\cite{puranjay_2015}
-    \item EFully responsive design.
-    \item Huge developer contrbution and maintainence.
-    \item Used by major companies like Lyft.com, Vogue.com, Vevo.com, and Newsweek.com. \cite{puranjay_2015}
-\end{itemize}
-\textbf{Cons}
-\begin{itemize}
-    \item Unsuitable for small scale projects. \cite{puranjay_2015}
-    \item Not good if you want to have large control over UI.
-    
-\end{itemize}
-\subsection{Pure CSS}
-\textit{Repository Commits: 541}\\ 
-\textit{Contributors: 51}\\
-Pure CSS is known for its lightness and simplicity. Because it's small, it is very fast loading and makes for a lightweight web application. It is also unique in that it allows modules/components to be downloaded individually, reducing its size even more. Pure CSS is good for small projects that need to get up and running quickly and easily.\\
-\textbf{Pros}
-\begin{itemize}
-    \item Meant for small project to get up and running quickly.
-    \item Responsive design by default.
-    \item Pure CSS is modular so you can download only the components you need.
-    \item The complete module is very small so it is quick loading.
-    \item Able to be used complimentary with other frameworks.
-\end{itemize}
-\textbf{Cons} 
-\begin{itemize}
-    \item Not as extensive component list as Bootstrap.
-\end{itemize}
-\subsection{Foundation}
-\textit{Repository Commits: 15,094}\\ 
-\textit{Contributors: 959}\\
-Framework is the second most popular css framework on the market behind bootstrap and tends to perform just as well. Unlike bootstrap's very prominent theme, Foundation allows for more customization with the look and feel of web pages \cite{Nick_Pettit}. Foundation also has a very good grid system to make the layout of components clean and responsive \cite{blankenship_2017}.\\ 
-\textbf{Pros}
-\begin{itemize}
-    \item Responsive design by default.
-    \item Easier to customize than bootstrap.
-    \item CSS classes are built in. \cite{team_2015}
-    \item More unique look than the more-popular bootstrap.
-    \item Good grid implementaions with customizable grid layouts.
-\end{itemize}
-\textbf{Cons}
-\begin{itemize}
-    \item Less maintained than bootstrap.
-    \item Lack of support.
-    \item Higher learning curve than bootstrap.
-\end{itemize}
-\subsection{Conclusion}
-A lot of online resources acknowledged the fact that it is hard to make a website not look like bootstrap when using bootstrap css. Despite this, similar to our reasoning behind choosing D3.js, we would like to use a framework that is heavily supported and well-documented as it will be easier to answer questions during development. We think that the time spent restyling Bootstrap to make it look unique will not compare to the time saved by utilizing a well-documented framework. There is also a project called \href{https://angular-ui.github.io/bootstrap/}{UI Bootstrap} that works with AngularJS to create directives for each of the bootstrap components. \cite{sevilayha_2015}
-\bibliographystyle{ieeetr}
-\bibliography{ref}
-\end{document}
+\fi
