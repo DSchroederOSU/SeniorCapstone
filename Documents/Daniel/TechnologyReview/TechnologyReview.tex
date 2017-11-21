@@ -116,23 +116,23 @@ My role in this project will be integrating the front-end with the back-end fram
 By taking a dev ops role in this project, I will be able to:
 \begin{itemize}
     \item Transition away from the tasks I've been previously trained on.
-    \item Help my teammates understand things that I have previously learned by not implmenting them myself.
+    \item Help my teammates understand things that I have previously learned by not implementing them myself.
     \item Develop a more comprehensive understanding of NodeJS, Angular, Express, and NOSQL Databases.
     \item Take lead in developing a high-end development environment for my team and I in order to create efficient workflow.
     \item Implement components of our web application that are new to me.
 \end{itemize}
 
 There are a lot of different components that go into making a web application work and it takes a high-level understanding to implement them all. Our web application will act like an admin dashboard that displays specific charts and graphs based on user preference.\\
-Firstly, from a dev ops perspective, we need an architecture that can host a NodeJS application from a single VM. We will be using Amazon Elastic Compute Cloud (EC2) to host our webserver. This EC2 instance will listen for inbound requests and transfer them to our Node server daemon. Our Node server will then have to communicate with our MongoDB to retreive the necessary data.\\
+Firstly, from a dev ops perspective, we need an architecture that can host a NodeJS application from a single VM. We will be using Amazon Elastic Compute Cloud (EC2) to host our web server. This EC2 instance will listen for inbound requests and transfer them to our Node server daemon. Our Node server will then have to communicate with our MongoDB to retrieve the necessary data.\\
 Secondly, we will need a workflow architecture for continuous deployment that can be utilized by all members of the team. We will use Github to create a ``Git-flow'' environment that proceeds as follows:
 \begin{itemize}
     \item The repository master branch is considered to be ``production.''
     \item Developers will create ``feature branches'' branched from master.
     \item Feature branches will be pull requested, reviewed, and merged into the master branch.
 \end{itemize}
-Git-flow allows team members to work on seperate features while building off of the current working application. Feature branches make sure that the master branch is always in working condition and no new code gets merged without review and confirmation that it works.\\
-Thirdly, our web application also hase users with different roles, which adds a lot fo over head to the application. Our app needs to have user authentication, user sessions, user roles, and code to enforce it all. Using Google's oAuth 2.0 authentication, our application will force users to log in with their Google accounts and Google will handle most of the overhead. When a user logs in, ``the Google Authorization Server sends [the] application an access token'' which is then stored in the database instead of a user password \cite{oauth}. Then, through utilizing the Passport.js authentication middleware, we can create user session and manage authentication with this Google token and not have any security issues with passwords.\\
-The final main component of our web application is the actual fucntionality of providing data visualizations to the user in a clean and dynamic way. This will include retrieving and parsing data from Acquisuite data acquisition servers, storing this information in the database, and creating dynamic graphs and charts using a visualization framework that can be manipulated by the user. This will involve developing filters and date ranges that can be applied to all the data to select sub-portions of data based on specific buildings, collections of certain buildings, or time periods. Having a visualization framework that works well with AngularJS and our MongoDB database is essential in creating a smooth, dynamic web application. 
+Git-flow allows team members to work on separate features while building off of the current working application. Feature branches make sure that the master branch is always in working condition and no new code gets merged without review and confirmation that it works.\\
+Thirdly, our web application also has users with different roles, which adds a lot of overhead to the application. Our application needs to have user authentication, user sessions, user roles, and code to enforce it all. Using Google's oAuth 2.0 authentication, our application will force users to log in with their Google accounts and Google will handle most of the overhead. When a user logs in, ``the Google Authorization Server sends [the] application an access token'' which is then stored in the database instead of a user password \cite{oauth}. Then, through utilizing the Passport.js authentication middleware, we can create user sessions and manage authentication with this Google token and not have any security issues with passwords.\\
+The final main component of our web application is the actual functionality of providing data visualizations to the user in a clean and dynamic way. This will include retrieving and parsing data from Acquisuite data acquisition servers, storing this information in the database, and creating dynamic graphs and charts using a visualization framework that can be manipulated by the user. This will involve developing filters and date ranges that can be applied to all the data to select sub-portions of data based on specific buildings, collections of certain buildings, or time periods. Having a visualization framework that works well with AngularJS and our MongoDB database is essential in creating a smooth, dynamic web application. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%% Visualization Frameworks %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -152,7 +152,7 @@ Our web application will provide near-real time data visualizations for energy c
 D3 allows you to bind arbitrary data to a Document Object Model (DOM), and then apply data-driven transformations to the document \cite{d3_home}. It is extremely well documented and widely used. D3 has a high learning curve for beginners to take head-on, but has a wide array of different visualizations and customization.\\
 \textbf{Pros}
 \begin{itemize}
-\item A lightwight, versatile javascript library that uses ``SVG to create the graphical elements'' and appends them to DOM elements \cite{Schwartz}. 
+\item A lightweight, versatile javascript library that uses ``SVG to create the graphical elements'' and appends them to DOM elements \cite{Schwartz}. 
 \item Makes use of javascript functions and DOM controlling functionality to dynamically change the content of the page. 
 \item Provides a lot of variety and ability to customize graphics.
 \item Widely used and there is a lot of documentation and resources available to assist the learning and development processes.
@@ -160,18 +160,18 @@ D3 allows you to bind arbitrary data to a Document Object Model (DOM), and then 
 \textbf{Cons}
 \begin{itemize}
 \item D3 is essentially an API to to manipulate SVG, it is not a charting library in of itself \cite{Sun}.
-\item You cannot easily pass a dataset into a specified chart type like other libraries.
+\item You cannot easily pass a data set into a specified chart type like other libraries.
 \item A large amount of ``up-front investment in time to get a handle on the D3 language''\cite{Jacobson}.
-\item Angular and D3 both attempt to control the DOM and so you have to find a way to make the two work together which is counterintuitive to both framework's APIs. 
+\item Angular and D3 both attempt to control the DOM and so you have to find a way to make the two work together which is counter intuitive to both framework's APIs. 
 \end{itemize}
 \subsection{Vis.js}
 \textit{Repository Commits: 3,165}\\
 \textit{Contributors: 137}\\
-Vis.js is a lightweight charting library that allows users to create clean charts from dynamic datasets \cite{vis}. It is responsive and allows for interaction with the data on the page. Vis.js is praised for it's network chart capabilities but is limited in the number of different modules you can create.\\
+Vis.js is a lightweight charting library that allows users to create clean charts from dynamic data sets \cite{vis}. It is responsive and allows for interaction with the data on the page. Vis.js is praised for it's network chart capabilities but is limited in the number of different modules you can create.\\
 \textbf{Pros}
 \begin{itemize}
 \item Easy to use and less of a learning curve than D3.
-\item Allows for interaction and minpulation of data on the chart.
+\item Allows for interaction and manipulation of data on the chart.
 \item Able to handle large amounts of dynamic data.
 \item Really clean and nice looking graphics.
 \end{itemize}
@@ -198,7 +198,7 @@ Chart js is a very lightweight library that provides 6 chart types and fully res
 \item Does not have built in heat map.
 \end{itemize}
 \subsection{Conclusion}
-In conclusion, despite the steep learning curve associated with D3.js we think it will be the best option for our web application. It has the widest range of available graphs to accomodate all the client's requirments and desired visualizations. There are also a number of wrapper libraries available for D3.js like DC.js and dimple.js to help create charts from D3. This is a great way to get around the clunkiness and downsides to D3.js and reap the benefits of all the other charting libraries. Another benefit to using D3 is the extensive amount of templates, examples, and documentation that exists to help guide the process and implmentation of our application.\\
+In conclusion, despite the steep learning curve associated with D3.js we think it will be the best option for our web application. It has the widest range of available graphs to accommodate all the client's requirements and desired visualizations. There are also a number of wrapper libraries available for D3.js like DC.js and dimple.js to help create charts from D3. This is a great way to get around the inconveniences and downsides to D3.js and reap the benefits of all the other charting libraries. Another benefit to using D3 is the extensive amount of templates, examples, and documentation that exists to help guide the process and implementation of our application.\\
 It is possible that our decision will change as we begin creating the web application and find other libraries to fit our needs. There are a lot of AngularJS libraries that specify unique directives for implementing different charting libraries and we might find one throughout the midst of our development that handles all of our needs swiftly and effectively. One of the main factors that guided our decision towards D3 was the ability to create heatmaps, which was a client requirement. If this requirement falls through, or we simply use D3 only for heatmaps, we may be able to implement a more lightweight charting library to achieve better simplicity.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%% Authentication %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -251,7 +251,7 @@ Node.js has a lot of helpful modules and packages that allow you to create your 
 \textbf{Pros}
 \begin{itemize}
     \item Creating our own authentication layer would provide us full control over how passwords are hashed and stored into the database. 
-    \item Provide understanding of every component taht goes into our application's authentication.
+    \item Provide understanding of every component that goes into our application's authentication.
     \item Do not have to rely on another API to authenticate users.
 \end{itemize}
 \textbf{Cons}
@@ -260,7 +260,7 @@ Node.js has a lot of helpful modules and packages that allow you to create your 
     \item A lot of room for error and the possibility of data being compromised.
 \end{itemize}
 \subsection{Outsourcing Authentication to Google}
-Google oAuth 2.0 is a Google API that authenticates users by signing in with their google accounts. There is a lot of documentation about how to integrate Google's authentication API with Node.js. \href{http://www.passportjs.org/}{\textit{Passport}} is authentication middleware for Node.js that provides simple, integratable authentication using ``A comprehensive set of strategies support authentication using a username and password, Facebook, Twitter,'' and Google \cite{passport}.
+Google oAuth 2.0 is a Google API that authenticates users by signing in with their google accounts. There is a lot of documentation about how to integrate Google's authentication API with Node.js. \href{http://www.passportjs.org/}{\textit{Passport}} is authentication middleware for Node.js that provides simple authentication using ``A comprehensive set of strategies support authentication using a username and password, Facebook, Twitter,'' and Google \cite{passport}.
 \begin{lstlisting}[
     caption={[Using passport to include Google oAuth 2.0 authentication]Using passport to include Google oAuth 2.0 authentication. (Taken from \href{http://www.passportjs.org/docs/username-password}{\textit{Passport Documentation}})\cite{passport_doc}}
     ]
@@ -318,8 +318,8 @@ CAS uses sessions and a CAS Client server to authenticate users throughout a web
     \item Not as modular as the Node.js/Passport implementations of oAuth 2.0.
 \end{itemize}
 \subsection{Conclusion}
-After reviewing the different means of including authentication for our web application, we think that using the Passport middleware to implement Google's oAuth 2.0 API would be the best option. It is easily integratable into Node.js applications, everyone at Oregon State University has a gmail account, and it removes the need to store any passwords into our database. The Google oAuth 2.0 authentication process uses a token that is received from the Google API that we will store along with the user ID and name into our database.\\
-Another large benefit to using the Passport.js and Google oAuth 2.0 authentication process is that passport handles most of the overhead involved with user sessions and per-page aithentication. Using a small cookie set that contains the user id, ``Passport will serialize and deserialize user instances to and from the session'' to handle login sessions throughout the application \cite{passport_session}.
+After reviewing the different means of including authentication for our web application, we think that using the Passport middleware to implement Google's oAuth 2.0 API would be the best option. It can be easily integrated into Node.js applications, everyone at Oregon State University has a Gmail account, and it removes the need to store any passwords into our database. The Google oAuth 2.0 authentication process uses a token that is received from the Google API that we will store along with the user ID and name into our database.\\
+Another large benefit to using the Passport.js and Google oAuth 2.0 authentication process is that passport handles most of the overhead involved with user sessions and per-page authentication. Using a small cookie set that contains the user id, ``Passport will serialize and deserialize user instances to and from the session'' to handle login sessions throughout the application \cite{passport_session}.
 \begin{lstlisting}[
     caption={[The user ID is serialized to the session, keeping the amount of data stored within the session small. When subsequent requests are received, this ID is used to find the user, which will be restored to req.user.]The user ID is serialized to the session, keeping the amount of data stored within the session small. When subsequent requests are received, this ID is used to find the user, which will be restored to req.user. (Taken from \href{http://www.passportjs.org/docs}{\textit{Passport Documentation}})\cite{passport_session}}
     ]
@@ -339,7 +339,7 @@ Using Google authentication and the Passport middleware will drastically simplif
 %%%%%%%%%%%%%%%%%%%%% Front-end Framework %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Front-end Framework}
-Our web application will be a series of dashboards to display energy data based on different buildings and subsets of buildings on Oregon State University's campus. A key part to designing a clean dashboard is having a well-spaced grid-like layout with different charts and graphs to display a multitude of different datasets and trends. Rather than customizing classic html elements and using div containers to space our dashboard, we wanted to look into bootstrapped dashboard templates that allow easy customization and clean-looking results.\\ 
+Our web application will be a series of dashboards to display energy data based on different buildings and subsets of buildings on Oregon State University's campus. A key part to designing a clean dashboard is having a well-spaced grid-like layout with different charts and graphs to display a multitude of different data sets and trends. Rather than customizing classic html elements and using div containers to space our dashboard, we wanted to look into bootstrapped dashboard templates that allow easy customization and clean-looking results.\\ 
 \textbf{Basic Criteria}
 \begin{itemize}
 \item Integrates well with Angular and the entire MEAN stack. 
