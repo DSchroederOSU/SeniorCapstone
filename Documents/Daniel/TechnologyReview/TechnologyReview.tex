@@ -98,7 +98,7 @@
 \vfill
 \noindent \textbf{Abstract} \\
             \indent 
-            The purpose of this document is to provide comprehensive comparisons between different technologies that could be implemented during the development of our web application. This documents seeks to provide pros and cons based on various criteria for each component being reviewed, and selects the best candidate technology to satisfy our needs. Specifically this document focuses on different Visualization Libraries, Authentication Implementations, and Front-end Frameworks.
+            The purpose of this document is to provide comprehensive comparisons between different technologies that could be implemented during the development of our web application. This documents seeks to provide pros and cons based on various criteria for each component being reviewed, and selects the best candidate technology to satisfy our needs. Specifically this document focuses on different Visualization Libraries,Authentication Implementations, and Front-end Frameworks.
             
             
 
@@ -122,7 +122,7 @@ By taking a dev ops role in this project, I will be able to:
     \item Implement components of our web application that are new to me.
 \end{itemize}
 
-There are a lot of different components that go into making a web application work and it takes a high-level understanding to implement them all. Our web application will act like an admin dashboard that displays specific charts and graphs based on user preference.
+There are a lot of different components that go into making a web application work and it takes a high-level understanding to implement them all. Our web application will act like an admin dashboard that displays specific charts and graphs based on user preference.\\
 Firstly, from a dev ops perspective, we need an architecture that can host a NodeJS application from a single VM. We will be using Amazon Elastic Compute Cloud (EC2) to host our webserver. This EC2 instance will listen for inbound requests and transfer them to our Node server daemon. Our Node server will then have to communicate with our MongoDB to retreive the necessary data.\\
 Secondly, we will need a workflow architecture for continuous deployment that can be utilized by all members of the team. We will use Github to create a ``Git-flow'' environment that proceeds as follows:
 \begin{itemize}
@@ -131,7 +131,7 @@ Secondly, we will need a workflow architecture for continuous deployment that ca
     \item Feature branches will be pull requested, reviewed, and merged into the master branch.
 \end{itemize}
 Git-flow allows team members to work on seperate features while building off of the current working application. Feature branches make sure that the master branch is always in working condition and no new code gets merged without review and confirmation that it works.\\
-Thirdly, our web application also hase users with different roles, which adds a lot fo over head to the application. Our app needs to have user authentication, user sessions, user roles, and code to enforce it all. Using Google's oAuth 2.0 authentication, our application will force users to log in with their Google accounts and Google will handle most of the overhead. When a user logs in, ``the Google Authorization Server sends [the] application an access token'' which is then stored in the database instead of a user password \cite{oauth}. Then, through utilizing the Passport.js authentication middleware, we can create user session and manage authentication with this Google token and not have any security issues with passwords.
+Thirdly, our web application also hase users with different roles, which adds a lot fo over head to the application. Our app needs to have user authentication, user sessions, user roles, and code to enforce it all. Using Google's oAuth 2.0 authentication, our application will force users to log in with their Google accounts and Google will handle most of the overhead. When a user logs in, ``the Google Authorization Server sends [the] application an access token'' which is then stored in the database instead of a user password \cite{oauth}. Then, through utilizing the Passport.js authentication middleware, we can create user session and manage authentication with this Google token and not have any security issues with passwords.\\
 The final main component of our web application is the actual fucntionality of providing data visualizations to the user in a clean and dynamic way. This will include retrieving and parsing data from Acquisuite data acquisition servers, storing this information in the database, and creating dynamic graphs and charts using a visualization framework that can be manipulated by the user. This will involve developing filters and date ranges that can be applied to all the data to select sub-portions of data based on specific buildings, collections of certain buildings, or time periods. Having a visualization framework that works well with AngularJS and our MongoDB database is essential in creating a smooth, dynamic web application. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%% Visualization Frameworks %%%%%%%%%%%%%%%%%%%%%

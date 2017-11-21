@@ -8,7 +8,7 @@
 \contentsline {subsection}{\numberline {3.1}Building Our Own Authentication Layer}{5}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Outsourcing Authentication to Google}{6}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Use CAS (Central Authentication Service)}{7}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Conclusion}{7}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.4}Conclusion}{8}{subsection.3.4}
 \contentsline {section}{\numberline {4}Front-end Framework}{8}{section.4}
 \contentsline {subsection}{\numberline {4.1}CSS Bootstrap}{8}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Pure CSS}{10}{subsection.4.2}
