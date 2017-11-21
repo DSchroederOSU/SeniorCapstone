@@ -87,17 +87,18 @@
 %\renewcommand{\NameSigPair}[1]{#1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \title{\textbf{Scalable Web Application Framework for Monitoring Energy Usage on Campus} \linebreak \LARGE{Group 57} }
 \author{Daniel Schroeder}
 \date{\today}
 
 \begin{document}
+
 \maketitle
-%\vspace{2cm}
 \vfill
 \noindent \textbf{Abstract} \\
             \indent 
-            Data visualization is an important technique for analyzing data trends and identifying problems that may not have been apparent. This document outlines our plan to create a web application which will gather energy data from data aquisition servers and create information management dashboards. Our application will allow users to generate charts and graphs to see energy use over time, compare energy usage across multiple buildings, and create collections of different visualizations.
+            The purpose of this document is to provide comprehensive comparisons between different technologies that could be implemented during the development of our web application. This documents seeks to provide pros and cons based on various criteria for each component being reviewed, and selects the best candidate technology to satisfy our needs. Specifically this document focuses on different Visualization Libraries, Authentication Implementations, and Front-end Frameworks.
             
             
 
@@ -116,7 +117,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Visualization Frameworks}
 Our web application will provide near-real time data visualizations for energy consumption by buildings on campus. This application will need to dynamically create charts and graphs based on energy data from the database. A key to choosing a visualization library will be to find one that can be dynamically created and changed as new data is received from the data acquisition servers, and the ability to create chart templates that can be reused on multiple pages with different input parameters. 
-
+\textbf{Basic Criteria}
+\begin{itemize}
+\item Handle dynamic data. 
+\item Allow the user to manipulate data by applying filters or selecting data points. 
+\item Works well with Angular framework.
+\end{itemize}
 \subsection{D3.js}
 %https://www.dashingd3js.com/d3-resources/d3-and-angular
 \textit{Repository Commits: 4,104}\\  
@@ -177,6 +183,12 @@ It is possible that our decision will change as we begin creating the web applic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Means of Incorporating Authentication}
 Our web application will have an authentication layer which will allow users to register for our application and design their own ``stories.'' Our application will also authenticate user roles so that administrative users will have access to exclusive parts of the application. We want a simple way of authenticating users, while keeping personal information safe.
+\textbf{Basic Criteria}
+\begin{itemize}
+\item Remember users across web pages (sessions). 
+\item Allow users to be added to the database. 
+\item Protect sensitive information like passwords.
+\end{itemize}
 \subsection{Building Our Own Authentication Layer}
 Node.js has a lot of helpful modules and packages that allow you to create your own password hashing functions and generate a custom authentication layer. There is a ``crypto'' module that is included in Node.js that ``provides cryptographic functionality that includes a set of wrappers for OpenSSL's hash, HMAC, cipher, decipher, sign and verify functions''\cite{Crypto}. In addition to the crypto module, there are numerous Node.js extension modules that perform different hashing functions and provide the same functionality as the native crypto module. There are modules like \href{https://www.npmjs.com/package/bcrypt-Node.js}{\textit{bcrypt}} and \href{https://www.npmjs.com/package/scrypt}{\textit{scrypt}} that use different hashing algorithms to salt and hash password into a fixed length string to be stored into the database.
 \begin{lstlisting}[
@@ -306,6 +318,12 @@ Using Google authentication and the Passport middleware will drastically simplif
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Front-end Framework}
 Our web application will be a series of dashboards to display energy data based on different buildings and subsets of buildings on Oregon State University's campus. A key part to designing a clean dashboard is having a well-spaced grid-like layout with different charts and graphs to display a multitude of different datasets and trends. Rather than customizing classic html elements and using div containers to space our dashboard, we wanted to look into bootstrapped dashboard templates that allow easy customization and clean-looking results. 
+\textbf{Basic Criteria}
+\begin{itemize}
+\item Integrates well with Angular and the entire MEAN stack. 
+\item Components can be easily integrated with Visualization Framework. 
+\item Customizeable.
+\end{itemize}
 \subsection{CSS Bootstrap}
 \textit{Repository Commits: 17,255}\\ 
 \textit{Contributors: 953}\\
