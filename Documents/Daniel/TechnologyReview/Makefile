@@ -39,6 +39,7 @@ showps: $(PSF)
 	@for i in $(PSF) ; do $(GH) $$i & done
 
 all: pdf
+	rm -f *.fdb_latexmk *.fls
 
 clean:
 	rm -f *.pdf *.ps *.dvi *.out *.log *.aux *.bbl *.blg *.pyg *.fdb_latexmk *.fls

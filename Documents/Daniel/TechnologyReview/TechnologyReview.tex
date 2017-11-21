@@ -14,7 +14,7 @@
 \hypersetup{
   colorlinks = true,
   urlcolor = red,
-  linkcolor = red,
+  linkcolor = black,
   citecolor = black,
   pdfauthor = {\name},
   pdfkeywords = {CS461 ``Senior Capstone'' Technology Review},
@@ -115,31 +115,31 @@
 %%%%%%%%%%%%%%%%%%% Visualization Frameworks %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Visualization Frameworks}
-Our web application will provide near-real time data visualizations for energy consumption on campus buildings. This application will need to dynamically create charts and graphs based on energy data from the database. A key to choosing a visualization library will be to find one that can be dynmaically created and changed as new data is received from the data acquisition servers, and the ability to create chart templates that can be reused on multiple pages with different input parameters. 
+Our web application will provide near-real time data visualizations for energy consumption by buildings on campus. This application will need to dynamically create charts and graphs based on energy data from the database. A key to choosing a visualization library will be to find one that can be dynamically created and changed as new data is received from the data acquisition servers, and the ability to create chart templates that can be reused on multiple pages with different input parameters. 
 
 \subsection{D3.js}
 %https://www.dashingd3js.com/d3-resources/d3-and-angular
 \textit{Repository Commits: 4,104}\\  
 \textit{Contributors: 120}\\
-D3.js is a clunky, massive library that makes use of SVG elements in webpages to append charts and graphics to the DOM. It is extremely well documented and widely used. D3 has a high learning curve for beginners to take head-on, but has a wide array of different visualizations and customization.\\
+D3 allows you to bind arbitrary data to a Document Object Model (DOM), and then apply data-driven transformations to the document \cite{d3_home}. It is extremely well documented and widely used. D3 has a high learning curve for beginners to take head-on, but has a wide array of different visualizations and customization.\\
 \textbf{Pros}
 \begin{itemize}
-\item A lightwight, versatile javascript library that creates SVG elements within web pages and appends them to DOM elements. 
+\item A lightwight, versatile javascript library that uses ``SVG to create the graphical elements'' and appends them to DOM elements \cite{Schwartz}. 
 \item Makes use of javascript functions and DOM controlling functionality to dynamically change the content of the page. 
 \item Provides a lot of variety and ability to customize graphics.
 \item Widely used and there is a lot of documentation and resources available to assist the learning and development processes.
 \end{itemize}
 \textbf{Cons}
 \begin{itemize}
-\item D3 is essentially an API to to manipulate SVG, it is not a charting library in of itself.
+\item D3 is essentially an API to to manipulate SVG, it is not a charting library in of itself \cite{Sun}.
 \item You cannot easily pass a dataset into a specified chart type like other libraries.
-\item Considered to be ``code-heavy'' and difficult to jump right into as a novice user.
+\item A large amount of ``up-front investment in time to get a handle on the D3 language''\cite{Jacobson}.
 \item Angular and D3 both attempt to control the DOM and so you have to find a way to make the two work together which is counterintuitive to both framework's APIs. 
 \end{itemize}
 \subsection{Vis.js}
 \textit{Repository Commits: 3,165}\\
 \textit{Contributors: 137}\\
-Vis.js is a lightweight charting library that allows users to create clean charts from dynamic datasets. It is responsive and allows for interaction with the data on the page. Vis.js is praised for it's network chart capabilities but is limited in the number of different modules you can create.\\
+Vis.js is a lightweight charting library that allows users to create clean charts from dynamic datasets \cite{vis}. It is responsive and allows for interaction with the data on the page. Vis.js is praised for it's network chart capabilities but is limited in the number of different modules you can create.\\
 \textbf{Pros}
 \begin{itemize}
 \item Easy to use and less of a learning curve than D3.
@@ -170,7 +170,8 @@ Chart js is a very lightweight library that provides 6 chart types and fully res
 \item Does not have built in heat map.
 \end{itemize}
 \subsection{Conclusion}
-In conclusion, despite the steep learning curve associated with D3.js we think it will be the best option for our web application. It has the widest range of available graphs to accomodate all the client's requirments and desired visualizations. There are also a number of wrapper libraries available for D3.js like DC.js and dimple.js to help create charts from D3. This is a great way to get around the clunkiness and downsides to D3.js and reap the benefits of all the other charting libraries. Another benefit to using D3 is the extensive amount of templates, examples, and documentation that exists to help guide the process and implmentation of our application.
+In conclusion, despite the steep learning curve associated with D3.js we think it will be the best option for our web application. It has the widest range of available graphs to accomodate all the client's requirments and desired visualizations. There are also a number of wrapper libraries available for D3.js like DC.js and dimple.js to help create charts from D3. This is a great way to get around the clunkiness and downsides to D3.js and reap the benefits of all the other charting libraries. Another benefit to using D3 is the extensive amount of templates, examples, and documentation that exists to help guide the process and implmentation of our application.\\
+It is possible that our decision will change as we begin creating the web application and find other libraries to fit our needs. There are a lot of AngularJS libraries that specify unique directives for implementing different charting libraries and we might find one throughout the midst of our development that handles all of our needs swiftly and effectively. One of the main factors that guided our decision towards D3 was the ability to create heatmaps, which was a client requirement. If this requirement falls through, or we simply use D3 only for heatmaps, we may be able to implement a more lightweight charting library to achieve better simplicity.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%% Authentication %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -299,7 +300,7 @@ Another large benefit to using the Passport.js and Google oAuth 2.0 authenticati
       });
 \end{lstlisting}
 
-
+Using Google authentication and the Passport middleware will drastically simplify the authentication process of our application and keep the amount of sensitive data in our database to a minimum.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%% Front-end Framework %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -308,7 +309,60 @@ Our web application will be a series of dashboards to display energy data based 
 \subsection{CSS Bootstrap}
 \textit{Repository Commits: 17,255}\\ 
 \textit{Contributors: 953}\\
-CSS Bootstrap is the most widely used CSS framework available. It has the most expansive component list and helps developers create clean and beautiful UX/UI in minimal time frames. Bootstrap allows developers to get their paplications up and running quickly without having to worry about front-end styling. A major issue with Bootstrap is that it tends to look very similar across applications and leaves little room for simple customization.\\
+CSS Bootstrap is the most widely used CSS framework available. It has the most expansive component list and helps developers create clean and beautiful UX/UI in minimal time frames. Bootstrap allows developers to get their publications up and running quickly without having to worry about front-end styling. A major issue with Bootstrap is that it tends to look very similar across applications and leaves little room for simple customization.\\
+\begin{lstlisting}[
+    caption={[An example of using UI Bootstrap to create a datepicker object with an Angular controller.] (Taken from \href{https://codepen.io/joe-watkins/pen/KsAgp}{\textit{Angular - Bootstrap UI - Datepicker}})\cite{Watkins}}
+    ]
+    // HTML Declaration
+    <input type="text" class="form-control" 
+        datepicker-popup="{{format}}" 
+        ng-model="dt" 
+        is-open="opened" 
+        min-date="minDate" 
+        max-date="'2015-06-22'"
+        datepicker-options="dateOptions" 
+        date-disabled="disabled(date, mode)" 
+        ng-required="true" 
+        close-text="Close" 
+        id="date-picker" 
+        readonly
+        ng-click="open($event)"
+    />
+
+    // Angular Controller
+    var calPicker = angular.module("calPicker", ['ui.bootstrap']);
+    
+    calPicker.controller("DatepickerDemoCtrl", ["$scope", function($scope){
+        
+        // grab today and inject into field
+        $scope.today = function() {
+        $scope.dt = new Date();
+        };
+        
+        // run today() function
+        $scope.today();
+    
+        // setup clear
+        $scope.clear = function () {
+        $scope.dt = null;
+        };
+    
+        // open min-cal
+        $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+    
+        $scope.opened = true;
+        };
+        
+        // handle formats
+        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        
+        // assign custom format
+        $scope.format = $scope.formats[0];
+        
+    }]);
+\end{lstlisting}
 \textbf{Pros}
 \begin{itemize}
     \item Extensive component list, responsive design, and built-in Javascript functions.\cite{puranjay_2015}
@@ -356,10 +410,24 @@ Framework is the second most popular css framework on the market behind bootstra
     \item Higher learning curve than bootstrap.
 \end{itemize}
 \subsection{Conclusion}
-A lot of online resources acknowledged the fact that it is hard to make a website not look like bootstrap when using bootstrap css. Despite this, similar to our reasoning behind choosing D3.js, we would like to use a framework that is heavily supported and well-documented as it will be easier to answer questions during development. We think that the time spent restyling Bootstrap to make it look unique will not compare to the time saved by utilizing a well-documented framework. There is also a project called \href{https://angular-ui.github.io/bootstrap/}{UI Bootstrap} that works with AngularJS to create directives for each of the bootstrap components. \cite{sevilayha_2015}
+A lot of online resources acknowledged the fact that it is hard to make a website not look like bootstrap when using bootstrap css. Despite this, we are choosing to use bootstrap as the main front-end framework for our application. Similar to our reasoning behind choosing D3.js, we would like to use a framework that is heavily supported and well-documented, as it will be easier to answer questions during development. We think that the time spent restyling Bootstrap to make it look unique will not compare to the time saved by utilizing a well-documented framework. There is also a project called \href{https://angular-ui.github.io/bootstrap/}{UI Bootstrap} that works with AngularJS to create directives for each of the bootstrap components \cite{sevilayha_2015}.
+\hypersetup{
+    colorlinks = true,
+    urlcolor = black,
+    linkcolor = black,
+    citecolor = black,
+    pdfauthor = {\name},
+    pdfkeywords = {CS461 ``Senior Capstone'' Technology Review},
+    pdftitle = {CS461 ``Senior Capstone'' Technology Review},
+    pdfsubject = {CS461 ``Senior Capstone'' Technology Review},
+    pdfpagemode = UseNone
+  }
 \bibliographystyle{IEEEtran}
 \bibliography{ref}
 \end{document}
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
