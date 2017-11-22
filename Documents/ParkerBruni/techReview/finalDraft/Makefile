@@ -1,4 +1,4 @@
-filename=TechDocRoughBruni
+filename=techDocFinal
 
 pdf: ps
 	ps2pdf ${filename}.ps
