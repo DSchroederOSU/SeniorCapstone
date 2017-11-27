@@ -19,7 +19,7 @@ $(TRG): %.dvi: %.tex $(EXAMPLES)
 	
 
 	$(LATEX) $<
-	$(BIBTEX) $(<:%.tex=%)
+	#$(BIBTEX) $(<:%.tex=%)
 	$(LATEX) $<
 	$(LATEX) $<
 	#remove the pygmentized output to avoid cluttering up the directory
@@ -38,7 +38,8 @@ show: $(TRG)
 showps: $(PSF)
 	@for i in $(PSF) ; do $(GH) $$i & done
 
-default: pdf rm -f *.fdb_latexmk *.fls
+all: clean pdf
+	rm -f *.fdb_latexmk *.fls
 
 clean:
 	rm -f *.pdf *.ps *.dvi *.out *.log *.aux *.bbl *.blg *.pyg *.fdb_latexmk *.fls *.synctex.gz

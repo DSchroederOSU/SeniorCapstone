@@ -1,0 +1,155 @@
+\documentclass[journal,10pt,onecolumn,compsoc]{IEEEtran} 
+    \usepackage[margin=0.75in]{geometry} 
+    \usepackage{pdfpages} 
+    \usepackage{graphicx} 
+    \setlength{\parskip}{\baselineskip} \setlength\parindent{24pt} 
+    
+    \usepackage[english]{babel}
+    \usepackage{graphicx}
+    \usepackage{url}
+    \usepackage{setspace}
+    \usepackage{geometry}
+    \usepackage{hyperref}
+    \usepackage{float}
+    \usepackage{pgfgantt}
+    \usepackage{rotating} 
+    \usepackage{ragged2e} % provides \RaggedLeft
+    \hypersetup{
+        colorlinks,
+        citecolor=black,
+        filecolor=black,
+        linkcolor=black,
+        urlcolor=black
+    }
+    \geometry{textheight=9.5in, textwidth=7in}
+    
+    % 1. Fill in these details
+    \def \CapstoneTeamName{		The Dream Team}
+    \def \CapstoneTeamNumber{		57}
+    \def \GroupMemberOne{			Daniel Schroeder}
+    \def \GroupMemberTwo{			Aubrey Thenell}
+    \def \GroupMemberThree{			Parker Bruni}
+    \def \CapstoneProjectName{		A Scalable Web Application Framework for Monitoring Energy Usage on Campus  }
+    \def \CapstoneSponsorCompany{	Oregon State Office of Sustainability}
+    \def \CapstoneSponsorPerson{		Jack Woods}
+    
+    % 2. Uncomment the appropriate line below so that the document type works
+    \def \DocType{		%Problem Statement
+            %Requirements Document
+            %Technology Review
+            Design Document
+            %Progress Report
+            }
+          
+    \newcommand{\NameSigPair}[1]{\par
+    \makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+    \par\vspace{-12pt} \textit{\tiny\noindent
+    \makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+    % 3. If the document is not to be signed, uncomment the RENEWcommand below
+    %\renewcommand{\NameSigPair}[1]{#1}
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \title{Design Document for: \linebreak Scalable Web Application Framework for Monitoring Energy Usage on Campus}
+    \author{Daniel Schroeder, Aubrey Thenell, Parker Bruni}
+    \date{\today}
+    
+    \begin{document}
+    \maketitle
+    \vspace{2cm}
+    \noindent \textbf{Abstract} \\
+                \indent 
+                Data visualization is an important technique for analyzing data trends and identifying problems that may not have been apparent. This document outlines our plan to create a web application which will gather energy data from data aquisition servers and create information management dashboards. Our application will allow users to generate charts and graphs to see energy use over time, compare energy usage across multiple buildings, and create collections of different visualizations.
+                
+                
+    
+    \newpage
+    \pagenumbering{arabic}
+    \tableofcontents
+    % 7. uncomment this (if applicable). Consider adding a page break.
+    %\listoffigures
+    %\listoftables
+    \clearpage
+    
+    % 8. now you write!
+    \section{Introduction}
+    \subsection{Purpose}
+    Identify the purpose of this SDD and its intended audience. (e.g. “This software
+    design document describes the architecture and system design of XX. ….”).
+    \subsection{Scope}
+    Provide a description and scope of the software and explain the goals, objectives and
+    benefits of your project. This will provide the basis for the brief description of your
+    product.
+    \subsection{Overview}
+    Provide an overview of this document and its organization.
+    \subsection{Reference Material}
+    List any documents, if any, which were used as sources of information for the test plan.
+    \subsection{Definitions and Acronyms}
+    Provide definitions of all terms, acronyms, and abbreviations that might exist to
+    properly interpret the SDD. These definitions should be items used in the SDD that
+    are most likely not known to the audience. 
+    \section{System Overview}
+    Give a general description of the functionality, context and design of your project.
+    Provide any background information if necessary. 
+    \section{System Architecture}
+    \subsection{Architectural Design}
+    Develop a modular program structure and explain the relationships between the
+    modules to achieve the complete functionality of the system. This is a high level
+    overview of how responsibilities of the system were partitioned and then assigned to
+    subsystems. Identify each high level subsystem and the roles or responsibilities
+    assigned to it. Describe how these subsystems collaborate with each other in order to
+    achieve the desired functionality. Don’t go into too much detail about the individual
+    subsystems. The main purpose is to gain a general understanding of how and why
+    the system was decomposed, and how the individual parts work together. Provide a
+    diagram showing the major subsystems and data repositories and their
+    interconnections. Describe the diagram if required. 
+    \subsection{Decomposition Description}
+    Provide a decomposition of the subsystems in the architectural design. Supplement
+    with text as needed. You may choose to give a functional description or an object
+    oriented description.
+    For a functional description, put top level data flow diagram (DFD) and structural
+    decomposition diagrams.
+    For an OO description, put subsystem model, object diagrams, generalization
+    hierarchy diagram(s) (if any), aggregation hierarchy diagram(s) (if any), interface
+    specifications, and sequence diagrams here.
+    \subsection{Design Rationale}
+    Discuss the rationale for selecting the architecture described in 3.1 including critical
+    issues and trade/offs that was considered. You may discuss other architectures that
+    were considered, provided that you explain why you didn’t choose them. 
+    \section{Data Design}
+    \subsection{Data Description}
+    Explain how the information domain of your system is transformed into data
+    structures. Describe how the major data or system entities are stored, processed and
+    organized. List any databases or data storage items.
+    \subsection{Data Dictionary}
+    Alphabetically list the system entities or major data along with their types and
+    descriptions. If you provided a functional description in Section 3.2, list all the
+    functions and function parameters. If you provided an OO description, list the objects
+    and its attributes, methods and method parameters.
+    \section{Component Design}
+    In this section, we take a closer look at what each component does in a more
+    systematic way. If you gave a functional description in section 3.2, provide a
+    summary of your algorithm for each function listed in 3.2 in procedural description
+    language (PDL) or pseudo code. If you gave an OO description, summarize each
+    object member function for all the objects listed in 3.2 in PDL or pseudocode.
+    Describe any local data when necessary. 
+    \section{Human Interface Design}
+    \subsection{Overview of User Interface}
+    Describe the functionality of the system from the user’s perspective. Explain how the
+    user will be able to use your system to complete all the expected features and the
+    feedback information that will be displayed for the user.
+    \subsection{Screen Images}
+    Display screenshots showing the interface from the user’s perspective. These can be
+    hand drawn or you can use an automated drawing tool. Just make them as accurate
+    as possible. (Graph paper works well.) 
+    \section{Requirements Matrix}
+    Provide a cross--reference that traces components and data structures to the
+    requirements in your SRS document.
+    Use a tabular format to show which system components satisfy each of the functional
+    requirements from the SRS. Refer to the functional requirements by the
+    numbers/codes that you gave them in the SRS. 
+    \section{Appendixes}
+    Appendices may be included, either directly or by reference, to provide supporting details
+    that could aid in the understanding of the Software Design Document. 
+    %\section{Index}
+    
+    \end{document}
