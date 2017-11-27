@@ -90,6 +90,8 @@
     properly interpret the SDD. These definitions should be items used in the SDD that
     are most likely not known to the audience. 
     \begin{itemize}
+        \item \textbf{Dashboard:}
+            A grid-based information management tool for visually tracking and displaying metrics and data through graphs and charts.
         \item \textbf{Block:} 
             An individual graph or chart depicting time-series data.\\
         \item \textbf{Page:} 
@@ -106,11 +108,15 @@
             Filters are essentially parameters for fetching data from that constrain the subset of data being received to the specifications of the filter parameters (i.e. a date range).\\
         \item \textbf{D3:} 
             D3.js is a visualization framework that appends charts and graphs to DOM elements on a webpage.\\
-
+        \item \textbf{AcquiSuite:} 
+            AcquiSuites are data acquisition servers made by a company called Obvius that post building meter data to a designated IP address.
     \end{itemize}
     \section{System Overview}
     Give a general description of the functionality, context and design of your project.
     Provide any background information if necessary. 
+    Oregon State University is constantly making strides to reduce its carbon footprint and reduce its energy consumption. There is a carbon neutrality goal for 2025 where the university is trying to generate as much energy as it uses and have a net carbon footprint of 0. Our web application aims to monitor the energy use of buildings on campus in order to create a visual representation of each building's consumption and incentivize people to monitor their consumption habits and reduce the campus's overall consumption.
+    Our web application will resemble an administrative dashboard that has charts and graphs of energy use over time for individual buildings and subgroups of buildings on Oregon State's campus. 
+    Our application will have a series of public facing pages that show general data use for all the buildings on campus that have AcquiSuites as well as user generated stories of personalized dashboards. Each page will be a grid-based dashboard with personalized blocks for displaying data through time-series charts or graphs. A user will be able to add different blocks to their pages to create a unique dashboard for their own unique interests and subsets of buildings. An example of this would be a page designated to only residence halls where each block shows a usage over time graph for energy consumption of each residence hall. Users will be able to apply date filters to their blocks to generate different data sets and more explicit visualizations.
     \section{System Architecture}
     \subsection{Architectural Design}
     Develop a modular program structure and explain the relationships between the
