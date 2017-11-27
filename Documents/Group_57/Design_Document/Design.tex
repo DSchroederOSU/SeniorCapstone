@@ -4,7 +4,8 @@
     \usepackage{graphicx} 
     
 
-    
+    \usepackage{tikz}
+    \usetikzlibrary{shapes,arrows}
     \usepackage[english]{babel}
     \usepackage{graphicx}
     \usepackage{url}
@@ -132,6 +133,59 @@
     the system was decomposed, and how the individual parts work together. Provide a
     diagram showing the major subsystems and data repositories and their
     interconnections. Describe the diagram if required. 
+
+    \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5.5em, text centered, rounded corners, minimum height=4em]
+    \tikzstyle{subblock} = [rectangle, draw, fill=blue!20, 
+    text width=6.5em, text centered, rounded corners, minimum height=2em]
+    \tikzstyle{line} = [draw, -latex']  
+        \begin{tikzpicture}[node distance = 2cm, auto]
+        % Place nodes
+        \node (ui)[block] {User Interface}; 
+        \path (ui.east)+(2,5) node (nav) [block] {Navigation}; 
+        \path [line] (ui) -- (nav);
+        \path (ui.east)+(2,2.5) node (block) [block] {Create Block}; 
+        \path [line] (ui) -- (block);
+        \path (ui.east)+(2,0) node (story) [block] {Create Story}; 
+        \path [line] (ui) -- (story);
+        \path (ui.east)+(2,-2.5) node (add) [block] {Add Building/Meter};
+        \path [line] (ui) -- (add);
+        \path (ui.east)+(2,-5) node (log) [block] {Log In}; 
+        \path [line] (ui) -- (log);
+        
+        %Create Block
+        \path (block.east)+(2,0.5) node (ctype) [subblock] {Get Chart Type};
+        \path [line] (block) -- (ctype);
+        \path (block.east)+(2,-0.5) node (bdata)[subblock] {Get Building Data};
+        \path [line] (block) -- (bdata); 
+        \path (block.east)+(5,0) node (template)[subblock] {Retrieve Graph Template}; 
+        \path [line] (bdata) -- (template); 
+        \path [line] (ctype) -- (template); 
+        \path (template.east)+(2,0) node (d3)[subblock] {Build D3}; 
+        \path [line] (template) -- (d3); 
+        
+        %Create Story
+        \path (story.east)+(2,0) node (createblock)[subblock] {Create Blocks};
+        \path [line] (story) -- (createblock); 
+        
+        %Add Building
+        \path (add.east)+(2,0) node (input)[subblock] {Get Input Data};
+        \path [line] (add) -- (input); 
+        \path (input.east)+(2,0) node (storeinput)[subblock] {Store Input Data};
+        \path [line] (input) -- (storeinput); 
+
+        %Log In
+        \path (log.east)+(2,0) node (auth) [subblock]  {Google oAuth 2.0};
+        \path [line] (log) -- (auth);
+        \path (auth.east)+(2,0.5) node (store) [subblock] {Store User};
+        \path [line] (auth) -- (store);
+        \path (auth.east)+(2,-0.5) node (retrieve)[subblock] {Retrieve User}; 
+        \path [line] (auth) -- (retrieve);
+        
+        
+    \end{tikzpicture}
+
+
     \subsection{Decomposition Description}
     Provide a decomposition of the subsystems in the architectural design. Supplement
     with text as needed. You may choose to give a functional description or an object
