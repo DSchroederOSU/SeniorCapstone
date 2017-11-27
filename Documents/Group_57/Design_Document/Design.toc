@@ -17,5 +17,5 @@
 \contentsline {section}{\numberline {6}Human Interface Design}{3}{section.6}
 \contentsline {subsection}{\numberline {6.1}Overview of User Interface}{3}{subsection.6.1}
 \contentsline {subsection}{\numberline {6.2}Screen Images}{3}{subsection.6.2}
-\contentsline {section}{\numberline {7}Requirements Matrix}{3}{section.7}
-\contentsline {section}{\numberline {8}Appendixes}{3}{section.8}
+\contentsline {section}{\numberline {7}Requirements Matrix}{4}{section.7}
+\contentsline {section}{\numberline {8}Appendixes}{4}{section.8}
