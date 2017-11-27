@@ -2,7 +2,8 @@
     \usepackage[margin=0.75in]{geometry} 
     \usepackage{pdfpages} 
     \usepackage{graphicx} 
-    \setlength{\parskip}{\baselineskip} \setlength\parindent{24pt} 
+    
+
     
     \usepackage[english]{babel}
     \usepackage{graphicx}
@@ -56,11 +57,12 @@
     \begin{document}
     \maketitle
     \vspace{2cm}
+    \begin{center}
     \noindent \textbf{Abstract} \\
                 \indent 
-                Data visualization is an important technique for analyzing data trends and identifying problems that may not have been apparent. This document outlines our plan to create a web application which will gather energy data from data aquisition servers and create information management dashboards. Our application will allow users to generate charts and graphs to see energy use over time, compare energy usage across multiple buildings, and create collections of different visualizations.
                 
                 
+    \end{center}         
     
     \newpage
     \pagenumbering{arabic}
@@ -88,14 +90,22 @@
     properly interpret the SDD. These definitions should be items used in the SDD that
     are most likely not known to the audience. 
     \begin{itemize}
-        \item \textbf{Block:} An individual graph or chart depicting time-series data.
-        \item \textbf{Page:} A dashboard of different blocks.
-        \item \textbf{Story:} A user generated collection of pages.
-        \item \textbf{MEAN Stack:} An acronym used to define a full stack application engineered from the MongoDB, Express.js, Angular.js, and Node.js frameworks.
-        \item \textbf{Bootstrap:} Bootstrap CSS is a front-end framework that uses component templates to easily generate different HTML elements like buttons, navigation, or forms.
-        \item \textbf{OAuth 2.0:} OAuth 2.0 is an authorization protocol that grants authentication through tokens rather than credentials.
-        \item \textbf{Filter:} Filters are essentially parameters for fetching data from that constrain the subset of data being received to the specifications of the filter parameters (i.e. a date range).
-        \item \textbf{D3:} D3.js is a visualization framework that appends charts and graphs to DOM elements on a webpage.
+        \item \textbf{Block:} 
+            An individual graph or chart depicting time-series data.\\
+        \item \textbf{Page:} 
+            A dashboard of different blocks.\\
+        \item \textbf{Story:} 
+            A user generated collection of pages.\\
+        \item \textbf{MEAN Stack:} 
+            An acronym used to define a full stack application engineered from the MongoDB, Express.js, Angular.js, and Node.js frameworks.\\
+        \item \textbf{Bootstrap:} 
+            Bootstrap CSS is a front-end framework that uses component templates to easily generate different HTML elements like buttons, navigation, or forms.\\
+        \item \textbf{OAuth 2.0:} 
+            OAuth 2.0 is an authorization protocol that grants authentication through tokens rather than credentials.\\
+        \item \textbf{Filter:} 
+            Filters are essentially parameters for fetching data from that constrain the subset of data being received to the specifications of the filter parameters (i.e. a date range).\\
+        \item \textbf{D3:} 
+            D3.js is a visualization framework that appends charts and graphs to DOM elements on a webpage.\\
 
     \end{itemize}
     \section{System Overview}
