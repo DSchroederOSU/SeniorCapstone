@@ -110,14 +110,9 @@
 
     \noindent Our web application will be constructed using a MEAN Stack framework hosted on AWS. Our application will have a MongoDB database server and a Node.js application server hosted on a single virtual EC2 instance to make deployment easy and reliable.
    
-   \subsection{Reference Material}
-	
-
-	
+    \subsection{Reference Material}
     \subsection{Definitions and Acronyms}
-    Provide definitions of all terms, acronyms, and abbreviations that might exist to
-    properly interpret the SDD. These definitions should be items used in the SDD that
-    are most likely not known to the audience. 
+    This section is aimed towards defining terms and acronyms that are specific to the application that may otherwise be misunderstood or poorly interpreted.
     \begin{itemize}
         \item \textbf{Dashboard:}
             A grid-based information management tool for visually tracking and displaying metrics and data through graphs and charts.
@@ -343,7 +338,7 @@
     \subsection{Design Rationale}
     The system's architecture revolves around a heavily modular system where individual components have their own functionality while also able to work cohesively with other components. The modular architecture also breaks up the back-end components into smaller services which simplifies functionality across the entire application.
     \section{Component Design}
-    This section is designated to describing individual components in greater detail
+    This section is designated to describing individual components in greater detail, including the type of element, designated functionality, and the reasoning behind their design. Overall, this section aims to provide an in-depth view of the application components and describe their individual roles in the application as a whole.
     \subsection{Block}
     A block is a component in our application that acts as a container for a graph, filter options, and  information about the data in the graph.
     \subsubsection{Element} 
@@ -385,19 +380,24 @@
     Having a structure like this simplifies the act of generating graphs by having a series of templates that can be fed data in a specific format. The graph service can take all the data and different filter parameters from the block object and format it into the right structure. All the computationally heavy functionality is black-boxed in the graph service and keeps the functionality handled by the user and front-end at a minimal. Another benefit to the graph component is that it can change the graph dynamically. Our application may include filters in the block component like a date range or a filter to change the graphed variable, which can trigger the graph service to reconstruct the data and create a new graph to serve based on the applied filters.
 	\section{Human Interface Design}
     \subsection{Overview of User Interface}
+    \iffalse
     Describe the functionality of the system from the user’s perspective. Explain how the
     user will be able to use your system to complete all the expected features and the
     feedback information that will be displayed for the user.
+    \fi
     \subsection{Screen Images}
+    \iffalse
     Display screenshots showing the interface from the user’s perspective. These can be
     hand drawn or you can use an automated drawing tool. Just make them as accurate
     as possible. (Graph paper works well.) 
-    \subsubsection{Buildings Page}
+    \fi 
+    \subsubsection{Buildings Page} 
     \begin{figure}[H]
-        \includegraphics[width=\textwidth]{images/buildings.eps}
+        \centering
+        \includegraphics[width=14cm]{images/buildings.eps}
         \caption{A mock-up of the page that shows all buildings.}
     \end{figure}
-	Users will may select the "Buildings" tab in the nav bar to bring up an array of building cards to choose from.
+	Users will may select the ``Buildings'' tab in the nav bar to bring up an array of building cards to choose from.
 	Every building on campus that is gathering metering data associated with this application will have a card in this array.
 	A user may select a building card to bring up a generalized dashboard of information for each specific building. 
 	The user will be able to search for buildings by name in a search bar. Administrators will be able to add buildings
@@ -405,7 +405,8 @@
 	
     \subsubsection{Selected Building Page}
     \begin{figure}[H]
-        \includegraphics[width=\textwidth]{images/Building_Select.eps}
+        \centering
+        \includegraphics[width=14cm]{images/Building_Select.eps}
         \caption{A mock-up of a selected building page.}
     \end{figure}
 	Once a user has selected a building card, a generalized dashboard will be displayed to them.
@@ -415,10 +416,11 @@
 	
 	\subsubsection{Dashboards Page}
     \begin{figure}[H]
-        \includegraphics[width=\textwidth]{images/Dashboards.eps}
+        \centering
+        \includegraphics[width=14cm]{images/Dashboards.eps}
         \caption{A mock-up page of a list of user generated dashboards.}
     \end{figure}
-	Users will may select the "Dashboards" tab in the nav bar to bring up a list of user-generated dashboards.
+	Users will may select the ``Dashboards'' tab in the nav bar to bring up a list of user-generated dashboards.
 	The dashboards will contain user specified arrangements of data cards buildings or groups of buildings. 
 	The list of dashboards will detail the name of each dashboard, the user that created each dashboard, and the date and time of when each was created.
 	The user will be able to search for dashboards by name in a search bar. 
@@ -426,7 +428,8 @@
 	
     \subsubsection{Selected Dashboard Page}
     \begin{figure}[H]
-        \includegraphics[width=\textwidth]{images/Dashboard_Select.eps}
+        \centering
+        \includegraphics[width=14cm]{images/Dashboard_Select.eps}
         \caption{A mock-up of a selected dashboard page.}
     \end{figure}
 	Once a user has selected a dashboard, a user-generated dashboard will be displayed to them.
@@ -435,10 +438,11 @@
 	
     \subsubsection{Story Page}
     \begin{figure}[H]
-        \includegraphics[width=\textwidth]{images/Stories.eps}
+        \centering
+        \includegraphics[width=14cm]{images/Stories.eps}
         \caption{A mock-up of a list of user generated story pages.}
     \end{figure}
-	Users will may select the "My Stories" tab in the nav bar to bring up a list of their personal stories.
+	Users will may select the ``My Stories'' tab in the nav bar to bring up a list of their personal stories.
 	Each story will contain a list of dashboards that was generated by the user to their preference. 
 	The list of stories will detail the name of each story, the user that created each story, and the date and time of when each was created.
 	The user will be able to search for stories by name in a search bar. 
@@ -446,13 +450,13 @@
 	
     \subsubsection{Selected Story Page}
     \begin{figure}[H]
-        \includegraphics[width=\textwidth]{images/Stories_Select.eps}
+        \centering
+        \includegraphics[width=14cm]{images/Stories_Select.eps}
         \caption{A mock-up of a list of user generated dashboard pages as assembled by a user story.}
     \end{figure}
 	Once a user has selected a story, their personalized collection of dashboards associated with that story will be displayed to them.
 	The user may select a specific dashboard from this list to view or use the options menu for more specific tasks.
 	This allows the user a higher level of organization for their personalized dashboards.
-	
 	
     \section{Appendixes}
     Appendices may be included, either directly or by reference, to provide supporting details
