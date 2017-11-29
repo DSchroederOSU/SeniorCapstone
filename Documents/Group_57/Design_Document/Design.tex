@@ -357,7 +357,7 @@
 	\subsubsection{Element}
 	The login function will be a button in the corner of the screen or somewhere in the navbar. The button will not be present if user is already logged in.
 	\subsubsection{Functionality}
-	Clicking it will redirect the user to our authentication service. After the user authenticates with Google Passport, it will return them to the homepage. Once they are logged in, they will have access to additional content on the navigation bar and cards.
+    Clicking the login component will redirect the user to our authentication service. The application will use ``PassportJS'' as an authentication middleware which authenticates the user with Google oAuth 2.0 tokens and sets the req.user upon redirecting to the specified route. Once a user is logged in, they will have access to additional application components and navigation items based on role.
 	\subsubsection{Rationale}
 	From a developer standpoint, requiring users to login for certain features will make separation of privileges much easier. With authentication, users will also be able to have the convenience of Google SSO.
 	
