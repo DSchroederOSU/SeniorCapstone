@@ -2,7 +2,7 @@
     \usepackage[margin=0.75in]{geometry} 
     \usepackage{pdfpages} 
     \usepackage{graphicx}  
-    
+    \graphicspath{/images}
 
     \usepackage{tikz}
     \usetikzlibrary{shapes,arrows}
@@ -399,12 +399,21 @@
     Display screenshots showing the interface from the user’s perspective. These can be
     hand drawn or you can use an automated drawing tool. Just make them as accurate
     as possible. (Graph paper works well.) 
-    \section{Requirements Matrix}
-    Provide a cross--reference that traces components and data structures to the
-    requirements in your SRS document.
-    Use a tabular format to show which system components satisfy each of the functional
-    requirements from the SRS. Refer to the functional requirements by the
-    numbers/codes that you gave them in the SRS. 
+    \subsubsection{Building Selection Page}
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/buildings.eps}
+        \caption{A mock-up of the page that shows all buildings.}
+    \end{figure}
+    \subsubsection{Building Page}
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/Building_Select.eps}
+        \caption{A mock-up of a building page.}
+    \end{figure}
+    \subsubsection{Dashboard Page}
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/Dashboards.eps}
+        \caption{A mock-up of a list of user generated dashboard pages.}
+    \end{figure}
     \section{Appendixes}
     Appendices may be included, either directly or by reference, to provide supporting details
     that could aid in the understanding of the Software Design Document. 
