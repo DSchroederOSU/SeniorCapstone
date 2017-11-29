@@ -336,16 +336,6 @@
     Discuss the rationale for selecting the architecture described in 3.1 including critical
     issues and trade/offs that was considered. You may discuss other architectures that
     were considered, provided that you explain why you didn’t choose them. 
-    \section{Data Design}
-    \subsection{Data Description}
-    Explain how the information domain of your system is transformed into data
-    structures. Describe how the major data or system entities are stored, processed and
-    organized. List any databases or data storage items.
-    \subsection{Data Dictionary}
-    Alphabetically list the system entities or major data along with their types and
-    descriptions. If you provided a functional description in Section 3.2, list all the
-    functions and function parameters. If you provided an OO description, list the objects
-    and its attributes, methods and method parameters.
     \section{Component Design}
     In this section, we take a closer look at what each component does in a more
     systematic way. If you gave a functional description in section 3.2, provide a
@@ -353,6 +343,18 @@
     language (PDL) or pseudo code. If you gave an OO description, summarize each
     object member function for all the objects listed in 3.2 in PDL or pseudocode.
     Describe any local data when necessary. 
+    \subsection{Block}
+    A block is a component in our application that contains a graph and information about the data in the graph. For Example:
+    \begin{itemize}
+    \item A title
+    \item Building(s)
+    \item Date Range
+    \item Variable being plotted
+    \end{itemize}
+    \subsubsection{Element} 
+    A block is an html element that uses the Bootstrap 4 ``card'' component for its design. It will have a title bar with the block's name, then a content container split into a grid. On the left, the block will display the building(s) being graphed, then contain a column of filter buttons, then the D3 graph in the right column. 
+    \subsubsection{Functionality} 
+    \subsubsection{Rationale} 
     \section{Human Interface Design}
     \subsection{Overview of User Interface}
     Describe the functionality of the system from the user’s perspective. Explain how the
