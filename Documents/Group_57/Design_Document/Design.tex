@@ -341,16 +341,9 @@
     \end{figure}
     To render a chart or graph to the page, our application will gather all the parameters from the block component that contains the graph (the building(s), the chart type, and the date range). Then the graph component will fetch a D3 template for its specific chart type, input the data from the block, and serve it to the page. 
     \subsection{Design Rationale}
-    Discuss the rationale for selecting the architecture described in 3.1 including critical
-    issues and trade/offs that was considered. You may discuss other architectures that
-    were considered, provided that you explain why you didn’t choose them. 
+    The system's architecture revolves around a heavily modular system where individual components have their own functionality while also able to work cohesively with other components. The modular architecture also breaks up the back-end components into smaller services which simplifies functionality across the entire application.
     \section{Component Design}
-    In this section, we take a closer look at what each component does in a more
-    systematic way. If you gave a functional description in section 3.2, provide a
-    summary of your algorithm for each function listed in 3.2 in procedural description
-    language (PDL) or pseudo code. If you gave an OO description, summarize each
-    object member function for all the objects listed in 3.2 in PDL or pseudocode.
-    Describe any local data when necessary. 
+    This section is designated to describing individual components in greater detail
     \subsection{Block}
     A block is a component in our application that acts as a container for a graph, filter options, and  information about the data in the graph.
     \subsubsection{Element} 
@@ -409,9 +402,24 @@
         \includegraphics[width=\textwidth]{images/Building_Select.eps}
         \caption{A mock-up of a building page.}
     \end{figure}
+    \subsubsection{Dashboard Selection Page}
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/Dashboard_Select.eps}
+        \caption{A mock-up of a list of user generated dashboard pages.}
+    \end{figure}
     \subsubsection{Dashboard Page}
     \begin{figure}[H]
         \includegraphics[width=\textwidth]{images/Dashboards.eps}
+        \caption{A mock-up of a list of user generated dashboard pages.}
+    \end{figure}
+    \subsubsection{Story Selection Page}
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/Stories.eps}
+        \caption{A mock-up of a list of user generated dashboard pages.}
+    \end{figure}
+    \subsubsection{Story Page}
+    \begin{figure}[H]
+        \includegraphics[width=\textwidth]{images/Stories_Select.eps}
         \caption{A mock-up of a list of user generated dashboard pages.}
     \end{figure}
     \section{Appendixes}
