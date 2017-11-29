@@ -1,7 +1,7 @@
 \documentclass[journal,10pt,onecolumn,compsoc]{IEEEtran} 
     \usepackage[margin=0.75in]{geometry} 
     \usepackage{pdfpages} 
-    \usepackage{graphicx} 
+    \usepackage{graphicx}  
     
 
     \usepackage{tikz}
@@ -19,8 +19,8 @@
     {\
     \end{tikzpicture}\end{center}
     } 
-    \usepackage[english]{babel}
-    \usepackage{graphicx}
+    \usepackage[english]{babel} 
+    \setlength{\parskip}{\baselineskip} \setlength\parindent{24pt}
     \usepackage{url}
     \usepackage{setspace}
     \usepackage{geometry}
@@ -104,9 +104,11 @@
 	
     \subsection{Overview}
     Oregon State University is constantly making strides to reduce its carbon footprint and reduce its energy consumption. There is a carbon neutrality goal for 2025 where the university is trying to generate as much energy as it uses and have a net carbon footprint of 0. Our web application aims to monitor the energy use of buildings on campus in order to create a visual representation of each building's consumption and incentivize people to monitor their consumption habits and reduce the campus's overall consumption.
-    Our web application will resemble an administrative dashboard that has charts and graphs of energy use over time for individual buildings and subgroups of buildings on Oregon State's campus. 
+
+    \noindent Our web application will resemble an administrative dashboard that has charts and graphs of energy use over time for individual buildings and subgroups of buildings on Oregon State's campus. 
     Our application will have a series of public facing pages that show general data use for all the buildings on campus that have AcquiSuites as well as user generated stories of personalized dashboards. Each page will be a grid-based dashboard with personalized blocks for displaying data through time-series charts or graphs. A user will be able to add different blocks to their pages to create a unique dashboard for their own unique interests and subsets of buildings. An example of this would be a page designated to only residence halls where each block shows a usage over time graph for energy consumption of each residence hall. Users will be able to apply date filters to their blocks to generate different data sets and more explicit visualizations.
-    Our web application will be constructed using a MEAN Stack framework hosted on AWS. Our application will have a MongoDB database server and a Node.js application server hosted on a single virtual EC2 instance to make deployment easy and reliable.
+
+    \noindent Our web application will be constructed using a MEAN Stack framework hosted on AWS. Our application will have a MongoDB database server and a Node.js application server hosted on a single virtual EC2 instance to make deployment easy and reliable.
    
    \subsection{Reference Material}
 	
@@ -140,15 +142,14 @@
         \item \textbf{AWS:} 
             AWS is an acronym for Amazon Web Services which offers reliable cloud computing services for building and hosting web applications.
     \end{itemize}
-    \section{System Overview}
-    \textit{Give a general description of the functionality, context and design of your project.
-    Provide any background information if necessary.} 
-    Oregon State University is constantly making strides to reduce its carbon footprint and reduce its energy consumption. There is a carbon neutrality goal for 2025 where the university is trying to generate as much energy as it uses and have a net carbon footprint of 0. Our web application aims to monitor the energy use of buildings on campus in order to create a visual representation of each building's consumption and incentivize people to monitor their consumption habits and reduce the campus's overall consumption.\\
-    Our web application will resemble an administrative dashboard that has charts and graphs of energy use over time for individual buildings and subgroups of buildings on Oregon State's campus.\\
-    Our application will have a series of public facing pages that show general data use for all the buildings on campus that have AcquiSuites as well as user generated stories of personalized dashboards. Each page will be a grid-based dashboard with personalized blocks for displaying data through time-series charts or graphs. A user will be able to add different blocks to their pages to create a unique dashboard for their own unique interests and subsets of buildings. An example of this would be a page designated to only residence halls where each block shows a usage over time graph for energy consumption of each residence hall. Users will be able to apply date filters to their blocks to generate different data sets and more explicit visualizations.\\
-    Our web application will be constructed using a MEAN Stack framework hosted on AWS. Our application will have a MongoDB database server and a Node.js application server hosted on a single virtual EC2 instance to make deployment easy and reliable.
+    \section{System Overview} 
+    Oregon State University is constantly making strides to reduce its carbon footprint and reduce its energy consumption. There is a carbon neutrality goal for 2025 where the university is trying to generate as much energy as it uses and have a net carbon footprint of 0. Our web application aims to monitor the energy use of buildings on campus in order to create a visual representation of each building's consumption and incentivize people to monitor their consumption habits and reduce the campus's overall consumption.
+
+    \noindent Our web application will resemble an administrative dashboard that has charts and graphs of energy use over time for individual buildings and subgroups of buildings on Oregon State's campus.The application will have a series of public facing pages that show general data use for all the buildings on campus that have AcquiSuites as well as user generated stories of personalized dashboards. Each page will be a grid-based dashboard with personalized blocks for displaying data through time-series charts or graphs. A user will be able to add different blocks to their pages to create a unique dashboard for their own unique interests and subsets of buildings. An example of this would be a page designated to only residence halls where each block shows a usage over time graph for energy consumption of each residence hall. Users will be able to apply date filters to their blocks to generate different data sets and more explicit visualizations. 
+    \noindent Our web application will be constructed using a MEAN Stack framework hosted on AWS. Our application will have a MongoDB database server and a Node.js application server hosted on a single virtual EC2 instance to make deployment easy and reliable.
     \section{System Architecture}
     \subsection{Architectural Design}
+    \iffalse
     Develop a modular program structure and explain the relationships between the
     modules to achieve the complete functionality of the system. This is a high level
     overview of how responsibilities of the system were partitioned and then assigned to
@@ -159,20 +160,21 @@
     the system was decomposed, and how the individual parts work together. Provide a
     diagram showing the major subsystems and data repositories and their
     interconnections. Describe the diagram if required. 
-
-    \begin{tikzpicture}[node distance = 2cm, auto]
+    \fi
+    \begin{figure}[H] 
+    \begin{paddedtikzpicture}[node distance = 2cm, auto]
         % Place nodes
         \node (ui)[block] {User Interface}; 
-        \path (ui.east)+(2,5) node (nav) [block] {Navigation}; 
-        \path [line] (ui) -- (nav);
-        \path (ui.east)+(2,2.5) node (block) [block] {Create Block}; 
+        \path (ui.east)+(2,4) node (nav) [block] {Navigation}; 
+        \path [line] (ui)+(-0.3,0.7) -- (nav);
+        \path (ui.east)+(2,2) node (block) [block] {Create Block}; 
         \path [line] (ui) -- (block);
         \path (ui.east)+(2,0) node (story) [block] {Create Story}; 
         \path [line] (ui) -- (story);
-        \path (ui.east)+(2,-2.5) node (add) [block] {Add Building/Meter};
+        \path (ui.east)+(2.3,-2) node (add) [block,  text width=7.5em] {Add Building/Meter};
         \path [line] (ui) -- (add);
-        \path (ui.east)+(2,-5) node (log) [block] {Log In}; 
-        \path [line] (ui) -- (log);
+        \path (ui.east)+(2,-4) node (log) [block] {Log In}; 
+        \path [line] (ui)+(-0.3,-0.7) -- (log);
         
         %Create Block
         \path (block.east)+(2,0.5) node (ctype) [subblock] {Get Chart Type};
@@ -202,8 +204,11 @@
         \path [line] (auth) -- (store);
         \path (auth.east)+(2,-0.5) node (retrieve)[subblock] {Retrieve User}; 
         \path [line] (auth) -- (retrieve);
-    \end{tikzpicture}
+    \end{paddedtikzpicture}
+    \caption{An overview of the application systems.} \label{fig}
+    \end{figure}
     \subsection{Decomposition Description}
+    \iffalse
     Provide a decomposition of the subsystems in the architectural design. Supplement
     with text as needed. You may choose to give a functional description or an object
     oriented description.
@@ -212,6 +217,8 @@
     For an OO description, put subsystem model, object diagrams, generalization
     hierarchy diagram(s) (if any), aggregation hierarchy diagram(s) (if any), interface
     specifications, and sequence diagrams here.
+    \fi
+    All database operations (retrieving data and storing data) are denoted with red fill and will be carried out by an AngularJS ``Service'' within the component's controller. 
     \subsubsection{Log In}
     \begin{figure}[H] 
     \begin{paddedtikzpicture}[node distance = 2cm, auto]
@@ -231,7 +238,7 @@
     \begin{paddedtikzpicture}[node distance = 2cm, auto]
         % Place nodes
         \node (nav)[block] {Navigation Bar}; 
-        \path (nav.east)+(2,0) node (route) [block] {Retrieve Route from Nav Item}; 
+        \path (nav.east)+(2,0) node (route) [block] {Get Route from Nav Item}; 
         \path [line] (nav) -- (route);
         \path (route.east)+(2,0) node (view) [subblock] {Change View Container Content}; 
         \path [line] (route) -- (view);
@@ -247,11 +254,13 @@
     \begin{paddedtikzpicture}[node distance = 2cm]
         % Place nodes
         \node (create)[block] {Create Block}; 
-        \path (create.east)+(2,0.5) node (charts) [datablock] {Pull Charts from Database}; 
-        \path [line] (create) -- (charts);
-        \path (create.east)+(2,-0.5) node (buildings) [datablock] {Pull Buildings from Database}; 
-        \path [line] (create) -- (buildings);
-        \path (create.east)+(5.5,0) node (submit) [subblock, text width=8em] {Handle Form Submit}; 
+        \path (create.east)+(2,0) node (view) [block] {Serve Web Form In View};
+        \path [line] (create) -- (view);
+        \path (view.east)+(2,0.5) node (charts) [datablock] {Pull Charts from Database}; 
+        \path [line] (view) -- (charts);
+        \path (view.east)+(2,-0.5) node (buildings) [datablock] {Pull Buildings from Database}; 
+        \path [line] (view) -- (buildings);
+        \path (view.east)+(5.5,0) node (submit) [subblock, text width=8em] {Get User Form Data}; 
         \path [line] (charts) -- (submit);
         \path [line] (buildings) -- (submit);
         \path (submit.east)+(2,0) node (store) [datablock, text width=8em] {Store Block in User Object}; 
@@ -259,7 +268,6 @@
     \end{paddedtikzpicture} 
     \caption{A functional representation of the block creation subsystem.} \label{fig}
     \end{figure}
-    All database operations (retrieving charts,  retrieving buildings, storing block) will be a ``Service'' of the block view. 
     \subsubsection{View Blocks}
     \begin{figure}[H] 
     \begin{paddedtikzpicture}[node distance = 2cm]
@@ -346,32 +354,34 @@
     \subsection{Block}
     A block is a component in our application that acts as a container for a graph, filter options, and  information about the data in the graph.
     \subsubsection{Element} 
-    A block is an html element that uses the Bootstrap 4 ``card'' component for its design. It will have a title bar with the block's name, then a content container split into a grid. On the left, the block will display the building(s) being graphed, then contain a column of filter buttons, then the D3 graph in the right column. 
+    A block is an HTML element that uses the Bootstrap 4 ``card'' component for its design. It will have a title bar with the block's name, then a content container split into a grid. On the left, the block will display the building(s) being graphed, then contain a column of filter buttons, then the D3 graph in the right column. 
     \subsubsection{Functionality}
     The block component neatly organizes data for the user by encapsulating the data, filters, and graph components into one container. A block needs to pull data from the ``building'' objects that it contains, gather data from any filters, and pass all this data into the correct graph template to generate a D3 graph. There will be a service within the block's AngularJS controller that will gather this data and pass the desired output to the page.
     \subsubsection{Rationale} 
     The block component is an efficient way to create a reusable HTML template that can be reproduced throughout the application. This makes it simple to provide a consistent process for displaying graphs and data. Additionally, the block component yields a compact solution for organizing data from multiple sources. 
     
 	\subsection{Login}
-	The Login is a button that will allow users to login with an account, which will have different permissions and preferences for each user.
+	The Login is an HTML button that will allow users to login with an account, which will have different permissions and preferences for each user.
 	\subsubsection{Element}
 	The login function will be a button in the corner of the screen or somewhere in the navbar. The button will not be present if user is already logged in.
 	\subsubsection{Functionality}
-	Clicking it will redirect the user to our authentication service. After the user authenticates with Google Passport, it will return them to the homepage. Once they are logged in, they will have access to additional content on the navigation bar and cards.
+    Clicking the login component will redirect the user to our authentication service. The application will use ``PassportJS'' as an authentication middleware which authenticates the user with Google oAuth 2.0 tokens and sets the req.user upon redirecting to the specified route. Once a user is logged in, they will have access to additional application components and navigation items based on role.
 	\subsubsection{Rationale}
 	From a developer standpoint, requiring users to login for certain features will make separation of privileges much easier. With authentication, users will also be able to have the convenience of Google SSO.
 	
 	\subsection{Navigation Bar}
-	The Navigation bar is a commonly used UI feature that provides users the ability to navigate to/from commonly used pages and features.
-	\subsubsection{Element}
-	The navigation bar will provide the user with an easy way to get around the website. The navigation bar will be either on the side or the top of the UI. It will be present and the same on every page.
-	\subsubsection{Functionality}
-	Clicking on a button on the navigation bar will navigate the user to the appropriate page. The page itself won’t have to refresh since it’s a dynamic website. The navigation bar will have an indicator on it when the user is on one of its pages.
+	The Navigation bar is a commonly used UI feature that provides users the ability to navigate through different pages of the application.
+    \subsubsection{Element}
+    The navigation bar will be an HTML element with differentiable ``nav-items'' that render different views to the content view space. There will be a fixed-top navigation bar for generic item and a side bar navigation for more explicit functionalities like admin controls. 
+    \subsubsection{Functionality}
+    Clicking on a nav-item has one of two functionalities: 
+    \begin{itemize}
+        \item Redirects the user to a new page by having the route's get function perform a redirect.
+        \item Renders a new view to the page by having the route's get function render a new HTML view.
+    \end{itemize}
+	The navigation bar shows which item is currently being served by changing the style of the active nav-item to be different than the rest.
 	\subsubsection{Rationale}
-	From a user perspective, having a navigation bar to navigate around the main features is an extremely useful UI design decision. From a design perspective, having a dedicated area to insert useful links is much more streamline than listing them.
-	
-	
-	
+	From a user perspective, having a navigation bar to navigate around the main features is an extremely useful UI design decision. From a design perspective, having a dedicated area to insert useful links is much more streamline than listing them. The navigation bar is a very useful tool for serving different content to the view space statically.
 	\section{Human Interface Design}
     \subsection{Overview of User Interface}
     Describe the functionality of the system from the user’s perspective. Explain how the
