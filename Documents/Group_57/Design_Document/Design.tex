@@ -110,14 +110,9 @@
 
     \noindent Our web application will be constructed using a MEAN Stack framework hosted on AWS. Our application will have a MongoDB database server and a Node.js application server hosted on a single virtual EC2 instance to make deployment easy and reliable.
    
-   \subsection{Reference Material}
-	
-
-	
+    \subsection{Reference Material}
     \subsection{Definitions and Acronyms}
-    Provide definitions of all terms, acronyms, and abbreviations that might exist to
-    properly interpret the SDD. These definitions should be items used in the SDD that
-    are most likely not known to the audience. 
+    This section is aimed towards defining terms and acronyms that are specific to the application that may otherwise be misunderstood or poorly interpreted.
     \begin{itemize}
         \item \textbf{Dashboard:}
             A grid-based information management tool for visually tracking and displaying metrics and data through graphs and charts.
@@ -343,7 +338,7 @@
     \subsection{Design Rationale}
     The system's architecture revolves around a heavily modular system where individual components have their own functionality while also able to work cohesively with other components. The modular architecture also breaks up the back-end components into smaller services which simplifies functionality across the entire application.
     \section{Component Design}
-    This section is designated to describing individual components in greater detail
+    This section is designated to describing individual components in greater detail, including the type of element, designated functionality, and the reasoning behind their design. Overall, this section aims to provide an in-depth view of the application components and describe their individual roles in the application as a whole.
     \subsection{Block}
     A block is a component in our application that acts as a container for a graph, filter options, and  information about the data in the graph.
     \subsubsection{Element} 
@@ -385,13 +380,17 @@
     Having a structure like this simplifies the act of generating graphs by having a series of templates that can be fed data in a specific format. The graph service can take all the data and different filter parameters from the block object and format it into the right structure. All the computationally heavy functionality is black-boxed in the graph service and keeps the functionality handled by the user and front-end at a minimal. Another benefit to the graph component is that it can change the graph dynamically. Our application may include filters in the block component like a date range or a filter to change the graphed variable, which can trigger the graph service to reconstruct the data and create a new graph to serve based on the applied filters.
 	\section{Human Interface Design}
     \subsection{Overview of User Interface}
+    \iffalse
     Describe the functionality of the system from the user’s perspective. Explain how the
     user will be able to use your system to complete all the expected features and the
     feedback information that will be displayed for the user.
+    \fi
     \subsection{Screen Images}
+    \iffalse
     Display screenshots showing the interface from the user’s perspective. These can be
     hand drawn or you can use an automated drawing tool. Just make them as accurate
     as possible. (Graph paper works well.) 
+    \fi
     \subsubsection{Building Selection Page}
     \begin{figure}[H]
         \includegraphics[width=\textwidth]{images/buildings.eps}
