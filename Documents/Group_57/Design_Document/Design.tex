@@ -353,8 +353,10 @@
     \end{itemize}
     \subsubsection{Element} 
     A block is an html element that uses the Bootstrap 4 ``card'' component for its design. It will have a title bar with the block's name, then a content container split into a grid. On the left, the block will display the building(s) being graphed, then contain a column of filter buttons, then the D3 graph in the right column. 
-    \subsubsection{Functionality} 
+    \subsubsection{Functionality}
+    The block component neatly organizes data for the user by encapsulating the data, filters, and graph components into one container. A block needs to pull data from the ``building'' objects that it contains, gather data from any filters, and pass all this data into the correct graph template to generate a D3 graph. There will be a service within the block's AngularJS controller that will gather this data and pass the desired output to the page.
     \subsubsection{Rationale} 
+    The block component is an efficient way to create a reusable HTML template that can be reproduced throughout the application. This makes it simple to provide a consistent process for displaying graphs and data. Additionally, the block component yields a compact solution for organizing data from multiple sources. 
     \section{Human Interface Design}
     \subsection{Overview of User Interface}
     Describe the functionality of the system from the user’s perspective. Explain how the
