@@ -305,7 +305,7 @@
             \path (render.east)+(2,0) node (store) [datablock, text width=8em] {Store Data in Building Object};
             \path [line] (parse) -- (store);
         \end{paddedtikzpicture}   
-        \caption{A functional representation for storing new building and meter objects to the database.} \label{fig}
+        \caption{A functional representation for storing AcquiSuite data to a building object.} \label{fig}
     \end{figure}
     Timestamped data entries from Aquisuite Servers will live in the building objects the data came from. Similar to the rational behind storing blocks in the user object that created them, each building will have an array of meter data sorted by timestamp. This will allow our application to use a service to retrieve the data for any graphs or charts directly from the buildings objects in the relative block. A graph service can then fetch the building data, apply filters (like date ranges), and pass it to a D3 graph to render. This minimizes the amount of total data to be parsed and collected by narrowing the data to the relative block.
     \subsection{Design Rationale}
