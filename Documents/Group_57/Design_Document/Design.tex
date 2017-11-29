@@ -381,7 +381,15 @@
     \end{itemize}
 	The navigation bar shows which item is currently being served by changing the style of the active nav-item to be different than the rest.
 	\subsubsection{Rationale}
-	From a user perspective, having a navigation bar to navigate around the main features is an extremely useful UI design decision. From a design perspective, having a dedicated area to insert useful links is much more streamline than listing them. The navigation bar is a very useful tool for serving different content to the view space statically.
+    From a user perspective, having a navigation bar to navigate around the main features is an extremely useful UI design decision. From a design perspective, having a dedicated area to insert useful links is much more streamline than listing them. The navigation bar is a very useful tool for serving different content to the view space statically.
+    \subsection{Graph Component}
+    Our application will contain a graph component that accepts a graph type and data as input and constructs a graph using the D3 visualization framework.
+    \subsubsection{Element}
+    A graph component will be an SVG element, created with D3, that is served to the page inside of a block. 
+    \subsubsection{Functionality}
+    The graph component's functionality involves gathering different input parameters from the parent block component, fetching a template based on the graph type, and creating a unique graph. The graph component should have its own service to handle all the data organization and create a list of uniform parameters than can be passed to a D3 graph template.
+    \subsubsection{Rationale}
+    Having a structure like this simplifies the act of generating graphs by having a series of templates that can be fed data in a specific format. The graph service can take all the data and different filter parameters from the block object and format it into the right structure. All the computationally heavy functionality is black-boxed in the graph service and keeps the functionality handled by the user and front-end at a minimal. Another benefit to the graph component is that it can change the graph dynamically. Our application may include filters in the block component like a date range or a filter to change the graphed variable, which can trigger the graph service to reconstruct the data and create a new graph to serve based on the applied filters.
 	\section{Human Interface Design}
     \subsection{Overview of User Interface}
     Describe the functionality of the system from the user’s perspective. Explain how the
