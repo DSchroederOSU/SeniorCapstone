@@ -172,28 +172,27 @@
     \subsection{Stakeholders and Concerns}
     \subsection{Design Viewpoints}
     \subsubsection{Context Viewpoint}
-        \textbf{Systems services and users}
-        \begin{itemize}
-            \item This section should describe our design decisions to compliment user actions (use cases).
-            \item Potential UML diagram. 
-            \item A black box showing what is to be designed functionally as the only available information about the design subject: a name and an associated set of externally identifiable services.
-        \end{itemize}
-    \subsubsection{Composition Viewpoint}        
-    The Composition viewpoint describes the way the application is (recursively) structured into subsystems, components, and modules and establishes the roles of those parts.
-        \begin{itemize}
-            \item Identify the major design subsystems, components, and modules of the application.
-            \item Localize and allocate functionality, responsibilities, or other design roles to these subsystems, components, and modules.
-        \end{itemize}
-    This is the overview of the modular components of the application. Modular components include the data models like stories, dashboards, and blocks that can be reused and designed independently while providing functionality to the overall application.
-    \subsubsection{Dependency Viewpoint}        
+    The design of this web application will greatly depend upon satisfying the user actions outlined in the requirements document. With that in mind, all components and subsystems should cater towards simplifying the user's experience while performing actions and navigating through the application. This viewpoint provides design constraints for individual component functionality, as well as the overall layout and structure of the application as a whole. Our design implementations should cater to a wide range of users while creating an elegant way for the user to create, edit, and remove content.
+    \subsubsection{Composition Viewpoint}
+    This application contains a number of components that are recurrently used throughout the application and across users. These include the basic data blocks, dashboards, and stories that a user can create. The design of this application should embrace the modularity of these components and provide a consistent model for individual functionality while maintaining the ability to communicate and pass data across different components or objects. 
+    
+    \subsubsection{Dependency Viewpoint}
+    With a design focused around modularity and individualized components, there needs to be designs for services and dependencies so each component can interact. For example how a block component depends on multiple entities contained inside the block object like the building objects stored within the block, the filter's current values, the graph template, and the graphing service. The design of this application should encapsulate the relationships between different modular components and provide intuitive means for inter-component communication.
+
+   \iffalse
     The Dependency viewpoint specifies the relationships of interconnection and access among entities. These relationships include shared information, order of execution, or parameterization of interfaces.
         \begin{itemize}
             \item A description of the relationships of this entity with other entities.
             \item Describe the nature of each interaction including such characteristics as timing and conditions for interaction.
             \item Interactions involve the initiation, order of execution, data sharing, creation, duplicating, usage, storage, or destruction of entities.
         \end{itemize}
-    This is a viewpoint for modeling the dependencies between our components from the composition viewpoint's constituents. For example the dependency between a story and its relative dashboards. Another example would be how a block components depends on multiple entities: the building objects stored within the block, the filter's current states, the graph template, and the graphing service. 
-    \subsubsection{Information Viewpoint}        
+    This is a viewpoint for modeling the dependencies between our components from the composition viewpoint's constituents.
+    \fi 
+    \subsubsection{Information Viewpoint}
+    Our applications design should provide logical ways of storing data and receiving data from building meters. This involves an explicit declaration of individual data models and how how data is created and stored. Our design will attempt to create a modular data structure where data specific to certain entities reside in the entity objects themselves. This allows the application to access data from an individual component as it gets created or moved throughout the application.
+    \textit{Potentially Add Data Schemas}
+
+    \iffalse
     The Information viewpoint is applicable when there is a substantial persistent data content expected with the design subject.
         \begin{itemize}
             \item Concerns include persistent data structure, data content, data management strategies, data access schemes, and definition of metadata.
@@ -202,27 +201,20 @@
             \item Description includes such things as static versus dynamic, whether it is to be shared by transactions, used as a control parameter, or used as a value, loop iteration count, pointer, or link field.
         \end{itemize}
     This section should relay how data is gathered from AcquiSuites, stored in a building object, and inherently passed to a block component to be organized and built into a graph. This section can also describe the data elements consistent for each data model (User, Building, Story, Dashboard). This viewpoint should aim to describe how our application keeps data consistent and modular through the use of Mongo Schema Models, and services to interact with each model.
+    \fi
     \subsubsection{Logical Viewpoint}  
-    The purpose of the Logical viewpoint is to elaborate existing and designed types and their implementations as classes and interfaces with their structural static relationships. This viewpoint also uses examples of instances of types in outlining design ideas.
+    The application should maintain a consistent model for each component which can be used in different ways for different purposes. An entity should contain and provide the necessary information as it is needed throughout various areas of the application. The design of the application as a whole should consider where certain data is needed, and what data models must be present to satisfy the system's requests.
     \begin{figure}[H]
         \centering
         \includegraphics[width=14cm]{images/CapstoneUML.eps}
         \caption{A UML diagram to show how modular components are related.}
     \end{figure}
     \subsubsection{Interface Viewpoint}  
-    Not really sure.
-    \subsubsection{Structure Viewpoint}  
-    The Structure viewpoint is used to document the internal constituents and organization of the application in terms of like elements (recursively).
-
-    This viewpoint describes the structure of independent modular components and with relationships to other entities like connected, part of, enclosed, provided, and required.
+    Users will require a front end interface to interact with the application and utilize its functionality. The design of these interfaces should focus on satisfying all user actions in a simple and appealing manner. Users should be able to intuitivly navigate the application and perform essential tasks without confusion or error.
+    \subsubsection{Structure Viewpoint} 
+    The design of this application describes the structure of independent modular components and their relationships to other entities. From a developer's standpoint, organizing the structure and interdependence of different components is essential when implementing a complex system. This application's design highlights key individual components along with their individual functionality and relationships with other entities. 
     \subsubsection{Interaction Viewpoint}  
-    The Interaction viewpoint defines strategies for interaction among entities, regarding why, where, how, and at what level actions occur. 
-    \subsubsection{Resource Viewpoint} 
-    The purpose of the Resource viewpoint is to model the characteristics and utilization of resources in a design subject.\\
-    Key concerns include resource utilization, resource contention, availability, and performance.\\
-    The resources attribute identifies and describes all of the resources external to the design that are needed by this entity to perform its function.\\
-
-    This section should include information about AcquiSuite and AWS(or a hosting platform in general) as external resources and describe the need for these resources to be functional in order for the application to work properly.
+    Each object component in the application should not need any logic to handle its interactions with other components. This functionality should be performed by services and model functions implemented in the back-end of the application. The design of this application aims to keep data and entities separate from the logical functionality required to extract and share data across different components.
     \section{System Architecture}
     \subsection{Architectural Design}
     \iffalse
