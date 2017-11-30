@@ -27,7 +27,6 @@
     \usepackage{hyperref}
     \usepackage{caption} 
     \usepackage{float}
-    \usepackage{pgfgantt}
     \usepackage{rotating} 
     \usepackage{ragged2e} % provides \RaggedLeft
     \hypersetup{
@@ -185,8 +184,10 @@
         \path [line] (template) -- (d3); 
         
         %Create Story
-        \path (story.east)+(2,0) node (createblock)[subblock] {Create Blocks};
-        \path [line] (story) -- (createblock); 
+        \path (story.east)+(2,0) node (createdash)[datablock] {Get Dashboards};
+        \path [line] (story) -- (createdash); 
+        \path (createdash.east)+(2,0) node (adddash)[subblock] {Add Dashboard};
+        \path [line] (createdash) -- (adddash); 
         
         %Add Building
         \path (add.east)+(2,0) node (input)[subblock] {Get Input Data};
@@ -282,6 +283,21 @@
     \caption{A functional representation of the block view subsystem.} \label{fig}
     \end{figure}
     Blocks are stored in the User object who created them in an array ``Blocks.'' This way a user can keep track of the specific blocks they create and reuse them to create stories.
+    \subsubsection{Create Dashboard}
+    \begin{figure}[H] 
+    \begin{paddedtikzpicture}[node distance = 2cm]
+        % Place nodes
+        \node (view)[block] {Create Dashboard}; 
+        \path (view.east)+(2,0) node (retrieve) [datablock] {Retrieve Blocks From User Object};
+        \path [line] (view) -- (retrieve);
+        \path (retrieve.east)+(2,0) node (render) [datablock] {Store Selected Blocks in Dashboard Object}; 
+        \path [line] (retrieve) -- (render);
+        \path (render.east)+(2,0) node (edit) [datablock, text width=8em] {Store Dashboard in User Object};  
+        \path [line] (render) -- (edit); 
+    \end{paddedtikzpicture}  
+    \caption{A functional representation of creating a dashboard object from user created block.} \label{fig}
+    \end{figure}
+    A dashboard is a collection of blocks. The dashboard component provides a way to group blocks together based on user preference and display them in the content view by simply rendering each block stored.
     \subsubsection{Create Story}
     \begin{figure}[H] 
     \begin{paddedtikzpicture}[node distance = 2cm]
@@ -349,7 +365,14 @@
     The block component neatly organizes data for the user by encapsulating the data, filters, and graph components into one container. A block needs to pull data from the ``building'' objects that it contains, gather data from any filters, and pass all this data into the correct graph template to generate a D3 graph. There will be a service within the block's AngularJS controller that will gather this data and pass the desired output to the page.
     \subsubsection{Rationale} 
     The block component is an efficient way to create a reusable HTML template that can be reproduced throughout the application. This makes it simple to provide a consistent process for displaying graphs and data. Additionally, the block component yields a compact solution for organizing data from multiple sources. 
-    
+    \subsection{Dashboard}
+    The dashboard component acts a way to store block objects in a group based on user preference.
+    \subsubsection{Element} 
+    A dashboard is an object in the database that stores an array of block objects.
+    \subsubsection{Functionality}
+    The dashboard object is a way to conveniently package blocks together into groups so users can reuse the same groups or create unique collections of different blocks. When ``viewing'' a dashboard, the application will simply iterate through the block objects and render them to the view container in a vertical list.
+    \subsubsection{Rationale} 
+    The dashboard components provides a simple way to organize data keep track of user generated collections. The dashboard component will work nicely with AngularJS to render an HTML element for every object in an array, which in this case are the blocks in the dashboard.
 	\subsection{Login}
 	The Login is an HTML button that will allow users to login with an account, which will have different permissions and preferences for each user.
 	\subsubsection{Element}
