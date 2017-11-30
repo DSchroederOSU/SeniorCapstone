@@ -142,10 +142,8 @@
             A grid-based information management tool for visually tracking and displaying metrics and data through graphs and charts.
         \item \textbf{Block:} 
             An individual graph or chart depicting time-series data. More specifically, it is an HTML element one or more buildings, with filter buttons, informative text, and graphs.
-        \item \textbf{Page:} 
-            A dashboard of different blocks. Each Page can have a different number of blocks.
         \item \textbf{Story:} 
-            A user generated collection of pages. What each story displays is based solely on user preferences set. With multiple stories, the user can select between ``presets'' that can show different pages.
+            A user generated collection of dashboards. What each story displays is based solely on user preferences set. With multiple stories, the user can select between ``presets'' that can show different dashboards.
         \item \textbf{MEAN Stack:} 
             An acronym used to define a full stack application engineered from the MongoDB, Express.js, Angular.js, and Node.js frameworks. 
         \item \textbf{Bootstrap:} 
@@ -328,12 +326,10 @@
     \begin{paddedtikzpicture}[node distance = 2cm]
         % Place nodes
         \node (story)[block] {Create Story}; 
-        \path (story.east)+(2,0) node (retrieve) [datablock] {Retrieve Blocks From User Object};
+        \path (story.east)+(2,0) node (retrieve) [datablock] {Retrieve all of user's dashboards};
         \path [line] (story) -- (retrieve);
-        \path (retrieve.east)+(2,0) node (add) [subblock, text width=8em] {Append Selected Block to Content View};
+        \path (retrieve.east)+(2,0) node (add) [datablock, text width=8em] {Save selected dashboards into story};
         \path [line] (retrieve) -- (add);
-        \path (add.east)+(2,0) node (store) [datablock, text width=8em] {Store Block in Story Object};
-        \path [line] (add) -- (store); 
     \end{paddedtikzpicture}   
     \caption{A functional representation of the story creation subsystem.} \label{fig}
     \end{figure}
