@@ -82,10 +82,36 @@
     \newpage
     \pagenumbering{arabic}
     \tableofcontents
+    \newpage
+    \noindent\textbf{Division of work:}
+    \noindent This is a list of tasks and content completed by each team member in order to compose the final document.
+    
+    \noindent\textbf{Daniel Schroeder} contributed to: 
+    \begin{itemize}
+        \item Introduction \{Definitions and Acronyms\}
+        \item Created Document Outline 
+        \item Decomposition Description of Subsystems
+        \item Subsystem Flowcharts
+        \item System Overview Section
+        \item System Architecture Section
+        \item Component Design: Block, Graph, Navigation
+    \end{itemize}
+    \noindent\textbf{Parker Bruni} contributed to:
+    \begin{itemize}
+        \item UI Design Mock-ups
+        \item UI Screenshot Descriptions
+        \item Introduction \{Purpose, Scope\}
+    \end{itemize}
+    \noindent\textbf{Aubrey Thenell} contributed to:
+    \begin{itemize} 
+      \item Component Design: Log In
+    \end{itemize}
+    
+    \newpage
     % 7. uncomment this (if applicable). Consider adding a page break.
     %\listoffigures
     %\listoftables
-    \clearpage
+    %\clearpage
     
     % 8. now you write!
     \section{Introduction}
@@ -102,14 +128,6 @@
 	make informed infrastructure decisions and adjustments or act as a display piece to be presented within buildings on campus.
 	It will serve the OSU office of sustainability as a replacement to an outdated and costly implementation. 
 	
-    \subsection{Overview}
-    Oregon State University is constantly making strides to reduce its carbon footprint and reduce its energy consumption. There is a carbon neutrality goal for 2025 where the university is trying to generate as much energy as it uses and have a net carbon footprint of 0. Our web application aims to monitor the energy use of buildings on campus in order to create a visual representation of each building's consumption and incentivize people to monitor their consumption habits and reduce the campus's overall consumption.
-
-    \noindent Our web application will resemble an administrative dashboard that has charts and graphs of energy use over time for individual buildings and subgroups of buildings on Oregon State's campus. 
-    Our application will have a series of public facing pages that show general data use for all the buildings on campus that have AcquiSuites as well as user generated stories of personalized dashboards. Each page will be a grid-based dashboard with personalized blocks for displaying data through time-series charts or graphs. A user will be able to add different blocks to their pages to create a unique dashboard for their own unique interests and subsets of buildings. An example of this would be a page designated to only residence halls where each block shows a usage over time graph for energy consumption of each residence hall. Users will be able to apply date filters to their blocks to generate different data sets and more explicit visualizations.
-
-    \noindent Our web application will be constructed using a MEAN Stack framework hosted on AWS. Our application will have a MongoDB database server and a Node.js application server hosted on a single virtual EC2 instance to make deployment easy and reliable.
-   
     \subsection{Reference Material}
     \subsection{Definitions and Acronyms}
     This section is aimed towards defining terms and acronyms that are specific to the application that may otherwise be misunderstood or poorly interpreted.
@@ -138,7 +156,7 @@
             AWS is an acronym for Amazon Web Services which offers reliable cloud computing services for building and hosting web applications.
     \end{itemize}
     \section{System Overview} 
-    Oregon State University is constantly making strides to reduce its carbon footprint and reduce its energy consumption. There is a carbon neutrality goal for 2025 where the university is trying to generate as much energy as it uses and have a net carbon footprint of 0. Our web application aims to monitor the energy use of buildings on campus in order to create a visual representation of each building's consumption and incentivize people to monitor their consumption habits and reduce the campus's overall consumption.
+    Oregon State University is constantly making strides to reduce its carbon footprint and reduce its energy consumption. There is a carbon neutrality goal for 2025 where the university is trying to generate as much energy as it uses and have a net carbon footprint of zero. Our web application aims to monitor the energy use of buildings on campus in order to create a visual representation of each building's consumption and incentivize people to monitor their consumption habits and reduce the campus's overall consumption.
 
     \noindent Our web application will resemble an administrative dashboard that has charts and graphs of energy use over time for individual buildings and subgroups of buildings on Oregon State's campus.The application will have a series of public facing pages that show general data use for all the buildings on campus that have AcquiSuites as well as user generated stories of personalized dashboards. Each page will be a grid-based dashboard with personalized blocks for displaying data through time-series charts or graphs. A user will be able to add different blocks to their pages to create a unique dashboard for their own unique interests and subsets of buildings. An example of this would be a page designated to only residence halls where each block shows a usage over time graph for energy consumption of each residence hall. Users will be able to apply date filters to their blocks to generate different data sets and more explicit visualizations. 
     \noindent Our web application will be constructed using a MEAN Stack framework hosted on AWS. Our application will have a MongoDB database server and a Node.js application server hosted on a single virtual EC2 instance to make deployment easy and reliable.
@@ -200,7 +218,7 @@
         \path (auth.east)+(2,-0.5) node (retrieve)[subblock] {Retrieve User}; 
         \path [line] (auth) -- (retrieve);
     \end{paddedtikzpicture}
-    \caption{An overview of the application systems.} \label{fig}
+    \caption{An overview of the application systems.} 
     \end{figure}
     \subsection{Decomposition Description}
     \iffalse
@@ -226,7 +244,7 @@
         \path (googleauth.east)+(2,-0.5) node (retrieve) [datablock] {Retrieve User From Database}; 
         \path [line] (googleauth) -- (retrieve);
     \end{paddedtikzpicture} 
-    \caption{A functional representation of the log in subsystem.} \label{fig}
+    \caption{A functional representation of the log in subsystem.} 
     \end{figure}
     \subsubsection{Navigation} 
     \begin{figure}[H] 
@@ -242,7 +260,7 @@
         \path (view.east)+(2,-0.7) node (angular) [subblock, text width=8em] {Adjust Angular Modules for New View}; 
         \path [line] (view) -- (angular);
     \end{paddedtikzpicture} 
-    \caption{A functional representation of the navigation subsystem.} \label{fig}
+    \caption{A functional representation of the navigation subsystem.} 
     \end{figure}
     \subsubsection{Create Block} 
     \begin{figure}[H] 
@@ -261,7 +279,7 @@
         \path (submit.east)+(2,0) node (store) [datablock, text width=8em] {Store Block in User Object}; 
         \path [line] (submit) -- (store);
     \end{paddedtikzpicture} 
-    \caption{A functional representation of the block creation subsystem.} \label{fig}
+    \caption{A functional representation of the block creation subsystem.} 
     \end{figure}
     \subsubsection{View Blocks}
     \begin{figure}[H] 
@@ -277,7 +295,7 @@
         \path [line] (render) -- (edit);
         \path [line] (render) -- (delete); 
     \end{paddedtikzpicture}  
-    \caption{A functional representation of the block view subsystem.} \label{fig}
+    \caption{A functional representation of the block view subsystem.} 
     \end{figure}
     Blocks are stored in the User object who created them in an array ``Blocks.'' This way a user can keep track of the specific blocks they create and reuse them to create stories.
     \subsubsection{Create Story}
@@ -292,7 +310,7 @@
         \path (add.east)+(2,0) node (store) [datablock, text width=8em] {Store Block in Story Object};
         \path [line] (add) -- (store); 
     \end{paddedtikzpicture}   
-    \caption{A functional representation of the story creation subsystem.} \label{fig}
+    \caption{A functional representation of the story creation subsystem.} 
     \end{figure}
     Stories are stored in the User object who created them in an array ``Stories.'' This allows the application to render stories created by the session user easily and will eliminate the use of SQL style querying to retrieve stories based on a user key.
     \subsubsection{Add Building/Meter}
@@ -305,7 +323,7 @@
             \path (render.east)+(2,0) node (store) [datablock, text width=8em] {Store Form Values As New Object};
             \path [line] (render) -- (store);
         \end{paddedtikzpicture}   
-        \caption{A functional representation for storing new building and meter objects to the database.} \label{fig}
+        \caption{A functional representation for storing new building and meter objects to the database.} 
     \end{figure}
     \subsubsection{Get AcquiSuite Data}
     \begin{figure}[H] 
@@ -317,7 +335,7 @@
             \path (render.east)+(2,0) node (store) [datablock, text width=8em] {Store Data in Building Object};
             \path [line] (parse) -- (store);
         \end{paddedtikzpicture}   
-        \caption{A functional representation for storing AcquiSuite data to a building object.} \label{fig}
+        \caption{A functional representation for storing AcquiSuite data to a building object.} 
     \end{figure}
     Timestamped data entries from Acquisuite Servers will live in the building objects the data came from. Similar to the rational behind storing blocks in the user object that created them, each building will have an array of meter data sorted by timestamp. This will allow our application to use a service to retrieve the data for any graphs or charts directly from the buildings objects in the relative block. A graph service can then fetch the building data, apply filters (like date ranges), and pass it to a D3 graph to render. This minimizes the amount of total data to be parsed and collected by narrowing the data to the relative block.
     \subsubsection{Create Graph}
@@ -332,7 +350,7 @@
             \path (fetch.east)+(2,0) node (render) [subblock, text width=8em] {Serve Graph to HTML};
             \path [line] (fetch) -- (render);
         \end{paddedtikzpicture}   
-        \caption{A functional representation for building a graph in a block.} \label{fig}
+        \caption{A functional representation for building a graph in a block.} 
     \end{figure}
     To render a chart or graph to the page, our application will gather all the parameters from the block component that contains the graph (the building(s), the chart type, and the date range). Then the graph component will fetch a D3 template for its specific chart type, input the data from the block, and serve it to the page. 
     \subsection{Design Rationale}
