@@ -424,6 +424,14 @@
     The graph component's functionality involves gathering different input parameters from the parent block component, fetching a template based on the graph type, and creating a unique graph. The graph component should have its own service to handle all the data organization and create a list of uniform parameters than can be passed to a D3 graph template.
     \subsubsection{Rationale}
     Having a structure like this simplifies the act of generating graphs by having a series of templates that can be fed data in a specific format. The graph service can take all the data and different filter parameters from the block object and format it into the right structure. All the computationally heavy functionality is black-boxed in the graph service and keeps the functionality handled by the user and front-end at a minimal. Another benefit to the graph component is that it can change the graph dynamically. Our application may include filters in the block component like a date range or a filter to change the graphed variable, which can trigger the graph service to reconstruct the data and create a new graph to serve based on the applied filters.
+	\subsection{Stories}
+	A story is a container for user dashboards to be stored and retrieved.
+	\subsubsection{Element}
+	A story will be within the navigation side bar. On the ``Stories'' tab itself, a user can click on all of the created stories.
+	\subsubsection{Functionality}
+    When a user selects a story from the list, it will retrieve all of the stored dashboards. Once the dashboards are retrieved, it will display the relevant data on the screen. If a user clicks a different story, it will remove the current set of data and load the new data.
+	\subsubsection{Rationale}
+	From a user perspective, being able to customize which data pops up would be helpful. This is especially true if there are multiple comparisons that need to be made without completely cluttering the screen. From a developer perspective, having the story objects to store dashboards will be a compact and simple way for storage and retrieval.
 	\section{Human Interface Design}
     \subsection{Overview of User Interface}
     \iffalse
