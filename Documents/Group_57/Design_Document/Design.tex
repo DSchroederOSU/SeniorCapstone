@@ -182,8 +182,10 @@
         \path [line] (template) -- (d3); 
         
         %Create Story
-        \path (story.east)+(2,0) node (createblock)[subblock] {Create Blocks};
-        \path [line] (story) -- (createblock); 
+        \path (story.east)+(2,0) node (createdash)[datablock] {Get Dashboards};
+        \path [line] (story) -- (createdash); 
+        \path (createdash.east)+(2,0) node (adddash)[subblock] {Add Dashboard};
+        \path [line] (createdash) -- (adddash); 
         
         %Add Building
         \path (add.east)+(2,0) node (input)[subblock] {Get Input Data};
