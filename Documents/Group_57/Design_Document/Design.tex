@@ -444,13 +444,13 @@
     \section{Component Design}
     This section is designated to describing individual components in greater detail, including the type of element, designated functionality, and the reasoning behind their design. Overall, this section aims to provide an in-depth view of the application components and describe their individual roles in the application as a whole.
 		\subsection{Block}
-			A block is a component in our application that acts as a container for a graph, filter options, and  information about the data in the graph.
+			A Block is a component in our application that will act as a container for a graph, filter options, and provide information about the data in the graph.
 			\subsubsection{Element} 
-				A block is an HTML element that uses the Bootstrap 4 ``card'' component for its design. It will have a title bar with the block's name, then a content container split into a grid. On the left, the block will display the building(s) being graphed, then contain a column of filter buttons, then the D3 graph in the right column. 
+				A Block is an HTML element that uses the Bootstrap 4 ``card'' component for its design. It will have a title bar with the Block's name, then a content container split into a grid. On the left, the Block will display the building(s) being graphed, contain a column of filter buttons, and display the D3 graph in the right column. 
 			\subsubsection{Functionality}
-				The block component neatly organizes data for the user by encapsulating the data, filters, and graph components into one container. A block needs to pull data from the ``building'' objects that it contains, gather data from any filters, and pass all this data into the correct graph template to generate a D3 graph. There will be a service within the block's AngularJS controller that will gather this data and pass the desired output to the dashboard.
+				The Block component neatly organizes data for the user by encapsulating the data, filters, and graph components into one container. A Block needs to pull data from the ``building'' objects that it contains, gather data from any filters, and pass all this data into the correct graph template to generate a D3 graph. There will be a service within the Block's AngularJS controller that will gather this data and pass the desired output to the dashboard.
 			\subsubsection{Rationale} 
-				The block component is an efficient way to create a reusable HTML template that can be reproduced throughout the application. This makes it simple to provide a consistent process for displaying graphs and data. Additionally, the block component yields a compact solution for organizing data from multiple sources. 
+				The Block component is an efficient way to create a reusable HTML template that can be reproduced throughout the application. This provides a simple and consistent process for displaying graphs and data. Additionally, the block component yields a compact solution for organizing data from multiple sources. 
 		
 		\subsection{Dashboard}
 			The dashboard component acts a way to store block objects in a group based on user preference.
@@ -464,16 +464,16 @@
 		\subsection{Login}
 			The Login is an HTML button that will allow users to login with an account, which will have different permissions and preferences for each user.
 			\subsubsection{Element}
-				The login function will be a button in the corner of the screen or somewhere in the navbar. The button will not be present if user is already logged in.
+				The Login function will be a button in the corner of the screen or somewhere in the navbar. The button will change to ``logout`` if the user is already logged in.
 			\subsubsection{Functionality}
-				Clicking the login component will redirect the user to our authentication service. The application will use ``PassportJS'' as an authentication middleware which authenticates the user with Google oAuth 2.0 tokens and sets the req.user upon redirecting to the specified route. Once a user is logged in, they will have access to additional application components and navigation items based on role.
+				Clicking the Login component will redirect the user to our authentication service. The application will use ``PassportJS'' as an authentication middleware which authenticates the user with Google oAuth 2.0 tokens and sets the req.user variable upon redirecting to the specified route. Once a user is logged in, they will have access to additional application components and navigation items based on role.
 			\subsubsection{Rationale}
 				From a developer standpoint, requiring users to login for certain features will make separation of privileges much easier. With authentication, users will also be able to have the convenience of Google SSO.
 	
 		\subsection{Navigation Bar}
 			The Navigation bar is a commonly used UI feature that provides users the ability to navigate through different webpages of the application.
 			\subsubsection{Element}
-				The navigation bar will be an HTML element with differentiable ``nav-items'' that render different views to the content view space. There will be a fixed-top navigation bar for generic item and a side bar navigation for more explicit functionalities like admin controls. 
+				The navigation bar will be an HTML element with differentiable ``nav-items'' that render different views to the content view space. There will be a fixed-top navigation bar for generic item and a side bar navigation for more explicit functionalities such as admin controls. 
 			\subsubsection{Functionality}
 				Clicking on a nav-item has one of two functionalities: 
 				\begin{itemize}
@@ -491,7 +491,7 @@
 			\subsubsection{Functionality}
 				The graph component's functionality involves gathering different input parameters from the parent block component, fetching a template based on the graph type, and creating a unique graph. The graph component should have its own service to handle all the data organization and create a list of uniform parameters than can be passed to a D3 graph template.
 			\subsubsection{Rationale}
-				Having a structure like this simplifies the act of generating graphs by having a series of templates that can be fed data in a specific format. The graph service can take all the data and different filter parameters from the block object and format it into the right structure. All the computationally heavy functionality is black-boxed in the graph service and keeps the functionality handled by the user and front-end at a minimal. Another benefit to the graph component is that it can change the graph dynamically. Our application may include filters in the block component like a date range or a filter to change the graphed variable, which can trigger the graph service to reconstruct the data and create a new graph to serve based on the applied filters.
+				Having a structure like this simplifies the act of generating graphs by having a series of templates that can be fed data in a specific format. The graph service can take all the data and different filter parameters from the block object and format it into the right structure. All the computationally heavy functionality is black-boxed in the graph service and keeps the functionality handled by the user and front-end at a minimal. Another benefit provided by the graph component is that it can change the graph dynamically. Our application may include filters in the block component like a date range or a filter to change the graphed variable, which can trigger the graph service to reconstruct the data and create a new graph to serve based on the applied filters.
 		
 			\subsection{Story}
 			A story is a container for user dashboards to be stored and retrieved. A story is an abstract object that allows the user to create unique collections of dashboards with general theme or purpose.
@@ -525,13 +525,13 @@
 	user generated dashboards as well as general building dashboards. Essentially, public users will not be able to create personalized data sets or modify elements of the site but will be 
 	allowed to view general public data. 
 	\subsubsection{Authorized User}
-	An authorized user is a user with a registered Oregon State Gmail account but does not have administrative privileges. When an authorized user is logged in 
-	to their account, they have greater privileges than a public user as well as all privileges granted to a public user. They are allowed access to a left side navigation 
-	bar that has special functionality. Unique Functionality granted by the vertical navigation bar include: viewing of personal and public dashboards, viewing of personal and public
+	An authorized user is a user with a registered Oregon State Gmail account but does not have administrative privileges. When an authorized user is logged into their account, 
+	they have greater privileges than a public user as well as all privileges granted to a public user. They are allowed access to a left side navigation 
+	bar that has special functionality. Unique functionality granted by the vertical navigation bar include: viewing of personal and public dashboards, viewing of personal and public
 	stories, and access to personal settings. Authorized users may create personalized dashboards and stories for unique purposes.
 	
 	\subsubsection{Administrative User}
-	Administrative Users will have the highest privileges and control of the website. They have all privileges as a public or authorized user. Administrative users
+	Administrative users will have the highest privileges and control of the website. They have all privileges as a public or authorized user. Administrative users
 	will be able to add or remove buildings, meters, public dashboards, and public stories as well as perform general administration tasks.
 	
 	
@@ -546,21 +546,21 @@
     \begin{figure}[H]
         \centering
         \includegraphics[width=14cm]{images/Home_NOT_Logged_In.eps}
-        \caption{A mock-up of a home page from a general public user access perspective (not logged-in to an account).}
+        \caption{A mock-up of a home page from a general public user access perspective (not logged in to an account).}
     \end{figure}
 	If a general public user does not have an account but wishes to access energy monitoring data, they will
-	have a unique experience with the site that is different than those who are logged-in to authorized accounts. 
+	have a unique experience with the site that is different than those who are logged in to authorized accounts. 
 	For instance, they will not have the ability to create personal dashboards or stories, but will be allowed to view
 	public stories, public dashboards, and general building dashboards. They will not have access to the same navigation 
-	bar on the left side of the screen as a logged-in user. 
+	bar on the left side of the screen as a logged in user. 
 	
-	\subsubsection{Home Webpage (Logged-In Access)}
+	\subsubsection{Home Webpage (Logged in Access)}
     \begin{figure}[H]
         \centering
         \includegraphics[width=14cm]{images/Home_Logged_In.eps}
-        \caption{A mock-up of a home page from an authorized user access perspective (logged-in to an account).}
+        \caption{A mock-up of a home page from an authorized user access perspective (logged in to an account).}
     \end{figure}
-	If a authorized user wishes to access energy monitoring data, they will be able to have special privileges 
+	If an authorized user wishes to access energy monitoring data, they will be able to have special privileges.
 	For instance, they will have the ability to create personal dashboards or stories which they may specify as private or public
 	They will have access to a navigation bar on the left side of the screen which allows for unique data viewing and privileges. 
 	
@@ -571,7 +571,7 @@
         \includegraphics[width=14cm]{images/buildings.eps}
         \caption{A mock-up of the webpage that shows all buildings.}
     \end{figure}
-	Users will may select the ``Buildings'' tab in the navigation bar to bring up an array of building cards to choose from.
+	Users may select the ``Buildings'' tab in the navigation bar to bring up an array of building cards to choose from.
 	Every building on campus that is gathering metering data associated with this application will have a card in this array.
 	A user may select a building card to bring up a generalized dashboard of information for each specific building. 
 	The user will be able to search for buildings by name in a search bar. Administrators will be able to add buildings
@@ -586,7 +586,8 @@
 	Once a user has selected a building card, a generalized dashboard will be displayed to them.
 	All buildings associated with this application will contain the same generalized dashboard to be viewed.
 	These dashboards will display various cards of data detailing the most general information about their respective buildings.
-	A user may full screen the application to remove menu clutter and allow for a more presentable display of the data.
+	A user may full screen the application to remove menu clutter and allow for a more presentable display of the data. 
+	Users will have the option to modify personal dashboards or public dashboards by adding a card, adjusting the organization of cards, or editing the information on the cards.
 	
 	\subsubsection{Dashboards Page}
     \begin{figure}[H]
@@ -594,8 +595,8 @@
         \includegraphics[width=14cm]{images/Dashboards.eps}
         \caption{A mock-up page of a list of user generated dashboards.}
     \end{figure}
-	Users will may select the ``Dashboards'' tab in the navigation bar to bring up a list of user-generated dashboards.
-	The dashboards will contain user specified arrangements of data cards buildings or groups of buildings. 
+	Users may select the ``Dashboards'' tab in the navigation bar to bring up a list of user-generated dashboards.
+	The dashboards will contain user specified arrangements of data cards. 
 	The list of dashboards will detail the name of each dashboard, the user that created each dashboard, and the date and time of when each was created.
 	The user will be able to search for dashboards by name in a search bar. 
 	A user may select a dashboard from the list to view or use the options menu for more specific tasks.
@@ -616,7 +617,7 @@
         \includegraphics[width=14cm]{images/Stories.eps}
         \caption{A mock-up of a list of user generated story Webpages.}
     \end{figure}
-	Users will may select the ``My Stories'' tab in the navigation bar to bring up a drop down list of their personal stories in the left side navigation bar.
+	Users may select the ``My Stories'' tab in the navigation bar to bring up a drop down list of their personal stories in the left side navigation bar.
 	Each story will contain a list of dashboards that was generated by the current user to their preference. 
 	The list of stories will include both their private and public stories.
 	A user may select a story from the list to view or use the options menu for more specific tasks.
