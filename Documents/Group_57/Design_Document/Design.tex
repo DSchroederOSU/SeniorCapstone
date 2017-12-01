@@ -500,14 +500,14 @@
     Within each story will be collections of dashboards. The number stored will be variable amount depending on how many the user has decided to add that given story.
     \subsubsection{Rationale}
     From a user perspective, being able to customize which data pops up would be helpful. This is especially true if there are multiple comparisons that need to be made without completely cluttering the screen. From a developer perspective, having the story objects to store dashboards will be a compact and simple way for storage and retrieval.
-	  \subsection{Context View}
-	The context view is an abstract portion or container of each page’s content. 
+	\subsection{Content View}
+	The content view is a portion of the page where different views can be rendered to provide different content.
     \subsubsection{Element} 
-	The container itself will be empty until it is interacted with by the user. Depending on the context of what the user does, it will load different content within the view.
+	The content view will be an HTML container that resides within the context of the page. The user will be able to change the content of the container by selecting different navigation items.
     \subsubsection{Functionality}
-	When the user clicks on a button or list on the side bar, it will pass a route to the scope variable in the view. Once that route is called, it will use the ``ng-include’’ function with the given route to load and inject the appropriate contents using Angular.
+	When the user clicks on a button or list on the side bar, it will pass a route to the scope variable in the view container. Once that route is called, the Angular function ``ng-include'' will inject the rendered HTML into the context of the page.
     \subsubsection{Rationale} 
-	From a developer standpoint, using context views will dramatically reduce clutter both in the code and in the UI. There will only need to be one function call per container, verses having multiple static calls in the code.
+	From a developer standpoint, having a content view will dramatically reduce clutter both in the code and in the UI. The content view allows the application to serve dynamic content without reloading the page and creates a simple way to perform navigation services.
 
 	\section{Human Interface Design}
     \subsection{Overview of User Interface}
