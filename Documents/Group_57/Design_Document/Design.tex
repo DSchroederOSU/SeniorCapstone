@@ -193,29 +193,9 @@
     \subsubsection{Dependency Viewpoint}
     With a design focused around modularity and individualized components, there needs to be designs for services and dependencies so each component can interact. Some examples of these are: how a block component depends on multiple entities contained inside the block object like the building objects stored within the block, the filter's current values, the graph template, and the graphing service. The design of this application should encapsulate the relationships between different modular components and provide intuitive means for inter-component communication.
 
-   \iffalse
-    The Dependency viewpoint specifies the relationships of interconnection and access among entities. These relationships include shared information, order of execution, or parameterization of interfaces.
-        \begin{itemize}
-            \item A description of the relationships of this entity with other entities.
-            \item Describe the nature of each interaction including such characteristics as timing and conditions for interaction.
-            \item Interactions involve the initiation, order of execution, data sharing, creation, duplicating, usage, storage, or destruction of entities.
-        \end{itemize}
-    This is a viewpoint for modeling the dependencies between our components from the composition viewpoint's constituents.
-    \fi 
     \subsubsection{Information Viewpoint}
     Our applications design should provide logical ways of storing data and receiving data from building meters. This involves an explicit declaration of individual data models and how how data is created and stored. Our design will attempt to create a modular data structure where data specific to certain entities reside in the entity objects themselves. This allows the application to access data from an individual component as it gets created or moved throughout the application.
-    \textit{Potentially Add Data Schemas}
-
-    \iffalse
-    The Information viewpoint is applicable when there is a substantial persistent data content expected with the design subject.
-        \begin{itemize}
-            \item Concerns include persistent data structure, data content, data management strategies, data access schemes, and definition of metadata.
-            \item Data items, data types and classes, data stores, and access mechanisms.
-            \item The meaning and use of data elements should be specified.
-            \item Description includes such things as static versus dynamic, whether it is to be shared by transactions, used as a control parameter, or used as a value, loop iteration count, pointer, or link field.
-        \end{itemize}
-    This section should relay how data is gathered from AcquiSuites, stored in a building object, and inherently passed to a block component to be organized and built into a graph. This section can also describe the data elements consistent for each data model (User, Building, Story, Dashboard). This viewpoint should aim to describe how our application keeps data consistent and modular through the use of Mongo Schema Models, and services to interact with each model.
-    \fi
+    
     \subsubsection{Logical Viewpoint}  
     The application should maintain a consistent model for each component which can be used in different ways for different purposes. An entity should contain and provide the necessary information as it is needed throughout various areas of the application. The design of the application as a whole should consider where certain data is needed, and what data models must be present to satisfy the system's requests.
     \begin{figure}[H]
@@ -231,18 +211,7 @@
     Each object component in the application should not need any logic to handle its interactions with other components. This functionality should be performed by services and model functions implemented in the back-end of the application. The design of this application aims to keep data and entities separate from the logical functionality required to extract and share data across different components.
     \section{System Architecture}
     \subsection{Architectural Design}
-    \iffalse
-    Develop a modular program structure and explain the relationships between the
-    modules to achieve the complete functionality of the system. This is a high level
-    overview of how responsibilities of the system were partitioned and then assigned to
-    subsystems. Identify each high level subsystem and the roles or responsibilities
-    assigned to it. Describe how these subsystems collaborate with each other in order to
-    achieve the desired functionality. Don’t go into too much detail about the individual
-    subsystems. The main purpose is to gain a general understanding of how and why
-    the system was decomposed, and how the individual parts work together. Provide a
-    diagram showing the major subsystems and data repositories and their
-    interconnections. Describe the diagram if required. 
-    \fi
+    
     \begin{figure}[H] 
     \begin{paddedtikzpicture}[node distance = 2cm, auto]
         % Place nodes
@@ -304,16 +273,7 @@
     \caption{An overview of the major application systems.} 
     \end{figure}
     \subsection{Decomposition Description}
-    \iffalse
-    Provide a decomposition of the subsystems in the architectural design. Supplement
-    with text as needed. You may choose to give a functional description or an object
-    oriented description.
-    For a functional description, put top level data flow diagram (DFD) and structural
-    decomposition diagrams.
-    For an OO description, put subsystem model, object diagrams, generalization
-    hierarchy diagram(s) (if any), aggregation hierarchy diagram(s) (if any), interface
-    specifications, and sequence diagrams here.
-    \fi
+    
     All database operations (retrieving data and storing data) are denoted with red fill and will be carried out by an AngularJS ``Service'' within the component's controller. 
     \subsubsection{Log In}
     \begin{figure}[H] 
@@ -543,11 +503,7 @@
 	
 	\section{Human Interface Design}
     \subsection{Overview of User Interface}
-    \iffalse
-    Describe the functionality of the system from the user’s perspective. Explain how the
-    user will be able to use your system to complete all the expected features and the
-    feedback information that will be displayed for the user.
-    \fi
+    
 	\subsubsection{Public User}
 	A public user is a user without a registered account or a user that is not logged in to their registered account. The authentication of a user is based on if 
 	they have a registered Oregon State Gmail domain. Public users will have limited access to features and data on the website. For example, the left side navigation
@@ -566,12 +522,7 @@
 	
 	
     \subsection{Screen Images}
-    \iffalse
-    Display screenshots showing the interface from the user’s perspective. These can be
-    hand drawn or you can use an automated drawing tool. Just make them as accurate
-    as possible. (Graph paper works well.) 
-    \fi 
-	
+    
 	\subsubsection{Home Webpage (Public Access)}
     \begin{figure}[H]
         \centering
