@@ -482,13 +482,13 @@
 				The dashboard component will work nicely with AngularJS to render an HTML element for every object in an array, which in this case are the blocks in the dashboard.
 	
 		\subsection{Login}
-			The Login is an HTML button that will allow users to login with an account, which will have different permissions and preferences for each user.
+			The Login component is an HTML button that will allow users to login with a Gmail account by redirecting the user to Google's oAuth 2.0 API.
 			\subsubsection{Element}
 				The Login function will be a button in the corner of the screen or somewhere in the navbar. The button will change to ``logout'' if the user is already logged in.
 			\subsubsection{Functionality}
 				Clicking the Login component will redirect the user to our authentication service. 
 				The application will use ``PassportJS'' as an authentication middleware which authenticates the user with Google oAuth 2.0 tokens and sets the req.user variable upon redirecting to the specified route. 
-				Once a user is logged in, they will have access to additional application components and navigation items based on role.
+				Once a user is logged in, they will have access to additional application functionality and navigation items based on role.
 			\subsubsection{Rationale}
 				From a developer standpoint, requiring users to login for certain features will make separation of privileges much easier. With authentication, users will also be able to have the convenience of Google SSO.
 	
