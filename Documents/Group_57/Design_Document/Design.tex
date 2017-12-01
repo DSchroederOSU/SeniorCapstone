@@ -164,9 +164,8 @@
 			Passport is authentication middleware for Node.js. Extremely flexible and modular, Passport can be unobtrusively dropped in to any Express-based web application. A comprehensive set of strategies support authentication using a username and password, Facebook, Twitter, etc.
    \end{itemize}
     \section{System Overview} 
-  
-    \noindent Our web application will resemble an administrative dashboard that displays charts and graphs of energy use over time for individual buildings and subgroups of buildings on Oregon State's campus.The application will have a series of public facing dashboards that show general energy usage information for all the buildings on campus that have AcquiSuites as well as user generated stories of personalized dashboards. Each dashboard will be a grid-based dashboard with personalized blocks for displaying data through time-series charts or graphs. A user will be able to add different blocks to create unique dashboards for their own unique interests and subsets of buildings. An example of this would be a dashboard designated to only residence halls where each block shows a usage over time graph for energy consumption of each residence hall. Users will be able to apply date filters to their blocks to generate different data sets and more explicit visualizations. 
-    \noindent Our web application will be constructed using a MEAN Stack framework hosted on AWS. Our application will have a MongoDB database server and a Node.js application server hosted on a single virtual EC2 instance to make deployment easy and reliable.
+    Our web application will provide users with the functionality to create unique dashboard-style collections of charts and graphs to analyze energy use from Oregon State's campus buildings. Our system will be highly modular, containing multiple smaller components that provide their own individual functionality while sharing information across other components. Designing a modular architecture will simplify the code base and allow the developers to encapsulate specific data models as their own entities and keep abstractions in the system differentiable.\\
+    \noindent Our design also stems from the main constructs behind AngularJS and data injection. Most of our components and subsystems are, at large, data models and objects that hold all the necessary information to create graph and charts. With this design, AngularJS services will extract data from the session user and rendered components and generate render the desired graphs and views to the content container. This allows the application to break up back-end services as well as UI components to simplify how data is gathered and processed.
     \section{Design Viewpoints and Concerns}
     \subsection{Stakeholders and Concerns}
     Developers concerns consist of simplifying complex model functions, replicable components, modular subsystems, and simple data access functionality. Addressing and capitalizing on these concerns will create an application design that will enhanced understanding, simplify implementation, and produce a high-end product. From a developer's standpoint, it is also essential to design an application that is ideal for both implementation and usability.
@@ -357,7 +356,7 @@
     \begin{paddedtikzpicture}[node distance = 2cm]
         % Place nodes
         \node (view)[block] {View Blocks}; 
-        \path (view.east)+(2,0) node (retrieve) [datablock] {Retrieve Blocks From User Object};
+        \path (view.east)+(2,0) node (retrieve) [datablock] {Retrieve Blocks from User Object};
         \path [line] (view) -- (retrieve);
         \path (retrieve.east)+(2,0) node (render) [subblock] {Render Blocks to Content View}; 
         \path [line] (retrieve) -- (render);
@@ -456,7 +455,7 @@
 		\subsection{Dashboard}
 			The dashboard component acts a way to store block objects in a group based on user preference.
 			\subsubsection{Element} 
-				A dashboard is an object in the database that stores an array of block objects.
+				A dashboard is an object in the database that holds a collection of block objects.
 			\subsubsection{Functionality}
 				The dashboard object is a way to conveniently package blocks together into groups so users can reuse the same groups or create unique collections of different blocks. When ``viewing'' a dashboard, the application will simply iterate through the block objects and render them to the view container in a vertical list.
 			\subsubsection{Rationale} 
@@ -526,10 +525,10 @@
 	user generated dashboards as well as general building dashboards. Essentially, public users will not be able to create personalized data sets or modify elements of the site but will be 
 	allowed to view general public data. 
 	\subsubsection{Authorized User}
-	An authorized user is a user with a registered Oregon State Gmail domain email but does not have administrative privileges. When an authorized user is logged in 
+	An authorized user is a user with a registered Oregon State Gmail account but does not have administrative privileges. When an authorized user is logged in 
 	to their account, they have greater privileges than a public user as well as all privileges granted to a public user. They are allowed access to a left side navigation 
 	bar that has special functionality. Unique Functionality granted by the vertical navigation bar include: viewing of personal and public dashboards, viewing of personal and public
-	stories, viewing of meters and associated meter data, and access to personal settings. Authorized user personal dashboards and stories have the ability to be made private or public.
+	stories, and access to personal settings. Authorized users may create personalized dashboards and stories for unique purposes.
 	
 	\subsubsection{Administrative User}
 	Administrative Users will have the highest privileges and control of the website. They have all privileges as a public or authorized user. Administrative users
