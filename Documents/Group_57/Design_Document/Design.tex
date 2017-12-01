@@ -444,71 +444,77 @@
     To render a chart or graph to the page, our application will gather all the parameters from the block component that contains the graph (the building(s), the chart type, and the date range). Then the graph component will fetch a D3 template for its specific chart type, input the data from the block, and serve it to the page. 
     \subsection{Design Rationale}
     The system's architecture revolves around a heavily modular system where individual components have their own functionality while also able to work cohesively with other components. The modular architecture also breaks up the back-end components into smaller services which simplifies functionality across the entire application.
-    \section{Component Design}
+   
+   \section{Component Design}
     This section is designated to describing individual components in greater detail, including the type of element, designated functionality, and the reasoning behind their design. Overall, this section aims to provide an in-depth view of the application components and describe their individual roles in the application as a whole.
-    \subsection{Block}
-    A block is a component in our application that acts as a container for a graph, filter options, and  information about the data in the graph.
-    \subsubsection{Element} 
-    A block is an HTML element that uses the Bootstrap 4 ``card'' component for its design. It will have a title bar with the block's name, then a content container split into a grid. On the left, the block will display the building(s) being graphed, then contain a column of filter buttons, then the D3 graph in the right column. 
-    \subsubsection{Functionality}
-    The block component neatly organizes data for the user by encapsulating the data, filters, and graph components into one container. A block needs to pull data from the ``building'' objects that it contains, gather data from any filters, and pass all this data into the correct graph template to generate a D3 graph. There will be a service within the block's AngularJS controller that will gather this data and pass the desired output to the page.
-    \subsubsection{Rationale} 
-    The block component is an efficient way to create a reusable HTML template that can be reproduced throughout the application. This makes it simple to provide a consistent process for displaying graphs and data. Additionally, the block component yields a compact solution for organizing data from multiple sources. 
-    \subsection{Dashboard}
-    The dashboard component acts a way to store block objects in a group based on user preference.
-    \subsubsection{Element} 
-    A dashboard is an object in the database that stores an array of block objects.
-    \subsubsection{Functionality}
-    The dashboard object is a way to conveniently package blocks together into groups so users can reuse the same groups or create unique collections of different blocks. When ``viewing'' a dashboard, the application will simply iterate through the block objects and render them to the view container in a vertical list.
-    \subsubsection{Rationale} 
-    The dashboard components provides a simple way to organize data keep track of user generated collections. The dashboard component will work nicely with AngularJS to render an HTML element for every object in an array, which in this case are the blocks in the dashboard.
-	\subsection{Login}
-	The Login is an HTML button that will allow users to login with an account, which will have different permissions and preferences for each user.
-	\subsubsection{Element}
-	The login function will be a button in the corner of the screen or somewhere in the navbar. The button will not be present if user is already logged in.
-	\subsubsection{Functionality}
-    Clicking the login component will redirect the user to our authentication service. The application will use ``PassportJS'' as an authentication middleware which authenticates the user with Google oAuth 2.0 tokens and sets the req.user upon redirecting to the specified route. Once a user is logged in, they will have access to additional application components and navigation items based on role.
-	\subsubsection{Rationale}
-	From a developer standpoint, requiring users to login for certain features will make separation of privileges much easier. With authentication, users will also be able to have the convenience of Google SSO.
+		\subsection{Block}
+			A block is a component in our application that acts as a container for a graph, filter options, and  information about the data in the graph.
+			\subsubsection{Element} 
+				A block is an HTML element that uses the Bootstrap 4 ``card'' component for its design. It will have a title bar with the block's name, then a content container split into a grid. On the left, the block will display the building(s) being graphed, then contain a column of filter buttons, then the D3 graph in the right column. 
+			\subsubsection{Functionality}
+				The block component neatly organizes data for the user by encapsulating the data, filters, and graph components into one container. A block needs to pull data from the ``building'' objects that it contains, gather data from any filters, and pass all this data into the correct graph template to generate a D3 graph. There will be a service within the block's AngularJS controller that will gather this data and pass the desired output to the page.
+			\subsubsection{Rationale} 
+				The block component is an efficient way to create a reusable HTML template that can be reproduced throughout the application. This makes it simple to provide a consistent process for displaying graphs and data. Additionally, the block component yields a compact solution for organizing data from multiple sources. 
+		
+		\subsection{Dashboard}
+			The dashboard component acts a way to store block objects in a group based on user preference.
+			\subsubsection{Element} 
+				A dashboard is an object in the database that stores an array of block objects.
+			\subsubsection{Functionality}
+				The dashboard object is a way to conveniently package blocks together into groups so users can reuse the same groups or create unique collections of different blocks. When ``viewing'' a dashboard, the application will simply iterate through the block objects and render them to the view container in a vertical list.
+			\subsubsection{Rationale} 
+				The dashboard components provides a simple way to organize data keep track of user generated collections. The dashboard component will work nicely with AngularJS to render an HTML element for every object in an array, which in this case are the blocks in the dashboard.
 	
-	\subsection{Navigation Bar}
-	The Navigation bar is a commonly used UI feature that provides users the ability to navigate through different pages of the application.
-    \subsubsection{Element}
-    The navigation bar will be an HTML element with differentiable ``nav-items'' that render different views to the content view space. There will be a fixed-top navigation bar for generic item and a side bar navigation for more explicit functionalities like admin controls. 
-    \subsubsection{Functionality}
-    Clicking on a nav-item has one of two functionalities: 
-    \begin{itemize}
-        \item Redirects the user to a new page by having the route's get function perform a redirect.
-        \item Renders a new view to the page by having the route's get function render a new HTML view.
-    \end{itemize}
-	The navigation bar shows which item is currently being served by changing the style of the active nav-item to be different than the rest.
-	\subsubsection{Rationale}
-    From a user perspective, having a navigation bar to navigate around the main features is an extremely useful UI design decision. From a design perspective, having a dedicated area to insert useful links is much more streamline than listing them. The navigation bar is a very useful tool for serving different content to the view space statically.
-    \subsection{Graph Component}
-    Our application will contain a graph component that accepts a graph type and data as input and constructs a graph using the D3 visualization framework.
-    \subsubsection{Element}
-    A graph component will be an SVG element, created with D3, that is served to the page inside of a block. 
-    \subsubsection{Functionality}
-    The graph component's functionality involves gathering different input parameters from the parent block component, fetching a template based on the graph type, and creating a unique graph. The graph component should have its own service to handle all the data organization and create a list of uniform parameters than can be passed to a D3 graph template.
-    \subsubsection{Rationale}
-    Having a structure like this simplifies the act of generating graphs by having a series of templates that can be fed data in a specific format. The graph service can take all the data and different filter parameters from the block object and format it into the right structure. All the computationally heavy functionality is black-boxed in the graph service and keeps the functionality handled by the user and front-end at a minimal. Another benefit to the graph component is that it can change the graph dynamically. Our application may include filters in the block component like a date range or a filter to change the graphed variable, which can trigger the graph service to reconstruct the data and create a new graph to serve based on the applied filters.
-    \subsection{Stories}
-    A story is a container for user dashboards to be stored and retrieved.
-    \subsubsection{Element}
-    A story will be an database object that contains collections of dashboards.
-    \subsubsection{Functionality}
-    Within each story will be collections of dashboards. The number stored will be variable amount depending on how many the user has decided to add that given story.
-    \subsubsection{Rationale}
-    From a developer perspective, having the story objects to store dashboards will be a compact and simple way for storage and retrieval.
-	\subsection{Content View}
-	The content view is a portion of the page where different views can be rendered to provide different content.
-    \subsubsection{Element} 
-	The content view will be an HTML container that resides within the context of the page. The user will be able to change the content of the container by selecting different navigation items.
-    \subsubsection{Functionality}
-	When the user clicks on a button or list on the side bar, it will pass a route to the scope variable in the view container. Once that route is called, the Angular function ``ng-include'' will inject the rendered HTML into the context of the page.
-    \subsubsection{Rationale} 
-	From a developer standpoint, having a content view will dramatically reduce clutter both in the code and in the UI. The content view allows the application to serve dynamic content without reloading the page and creates a simple way to perform navigation services.
+		\subsection{Login}
+			The Login is an HTML button that will allow users to login with an account, which will have different permissions and preferences for each user.
+			\subsubsection{Element}
+				The login function will be a button in the corner of the screen or somewhere in the navbar. The button will not be present if user is already logged in.
+			\subsubsection{Functionality}
+				Clicking the login component will redirect the user to our authentication service. The application will use ``PassportJS'' as an authentication middleware which authenticates the user with Google oAuth 2.0 tokens and sets the req.user upon redirecting to the specified route. Once a user is logged in, they will have access to additional application components and navigation items based on role.
+			\subsubsection{Rationale}
+				From a developer standpoint, requiring users to login for certain features will make separation of privileges much easier. With authentication, users will also be able to have the convenience of Google SSO.
+	
+		\subsection{Navigation Bar}
+			The Navigation bar is a commonly used UI feature that provides users the ability to navigate through different pages of the application.
+			\subsubsection{Element}
+				The navigation bar will be an HTML element with differentiable ``nav-items'' that render different views to the content view space. There will be a fixed-top navigation bar for generic item and a side bar navigation for more explicit functionalities like admin controls. 
+			\subsubsection{Functionality}
+				Clicking on a nav-item has one of two functionalities: 
+				\begin{itemize}
+					\item Redirects the user to a new page by having the route's get function perform a redirect.
+					\item Renders a new view to the page by having the route's get function render a new HTML view.
+				\end{itemize}
+				The navigation bar shows which item is currently being served by changing the style of the active nav-item to be different than the rest.
+			\subsubsection{Rationale}
+				From a user perspective, having a navigation bar to navigate around the main features is an extremely useful UI design decision. From a design perspective, having a dedicated area to insert useful links is much more streamline than listing them. The navigation bar is a very useful tool for serving different content to the view space statically.
+		
+		\subsection{Graph Component}
+			Our application will contain a graph component that accepts a graph type and data as input and constructs a graph using the D3 visualization framework.
+			\subsubsection{Element}
+				A graph component will be an SVG element, created with D3, that is served to the page inside of a block. 
+			\subsubsection{Functionality}
+				The graph component's functionality involves gathering different input parameters from the parent block component, fetching a template based on the graph type, and creating a unique graph. The graph component should have its own service to handle all the data organization and create a list of uniform parameters than can be passed to a D3 graph template.
+			\subsubsection{Rationale}
+				Having a structure like this simplifies the act of generating graphs by having a series of templates that can be fed data in a specific format. The graph service can take all the data and different filter parameters from the block object and format it into the right structure. All the computationally heavy functionality is black-boxed in the graph service and keeps the functionality handled by the user and front-end at a minimal. Another benefit to the graph component is that it can change the graph dynamically. Our application may include filters in the block component like a date range or a filter to change the graphed variable, which can trigger the graph service to reconstruct the data and create a new graph to serve based on the applied filters.
+		
+			\subsection{Story}
+			A story is a container for user dashboards to be stored and retrieved. A story is an abstract object that allows the user to create unique collections of dashboards with general theme or purpose.
+			\subsubsection{Element}
+				A story will be an database object that contains collections of dashboards.
+			\subsubsection{Functionality}
+				Each story will have a collections of dashboards. The number of dashboards in the collection will vary from story to story based on user preference.
+		
+		\subsection{Content View}
+			The content view is a portion of the page where different views can be rendered to provide different content.
+			\subsubsection{Element} 
+				The content view will be an HTML container that resides within the context of the page. The user will be able to change the content of the container by selecting different navigation items.
+			\subsubsection{Functionality}
+				When the user clicks on a button or list on the side bar, it will pass a route to the scope variable in the view container. Once that route is called, the Angular function ``ng-include'' will inject the rendered HTML into the context of the page.
+			\subsubsection{Rationale} 
+				From a developer standpoint, having a content view will dramatically reduce clutter both in the code and in the UI. The content view allows the application to serve dynamic content without reloading the page and creates a simple way to perform navigation services.
 
+	
+	
 	\section{Human Interface Design}
     \subsection{Overview of User Interface}
     \iffalse
