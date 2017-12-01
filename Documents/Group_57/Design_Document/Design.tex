@@ -178,11 +178,13 @@
 			Passport is authentication middleware for Node.js. Extremely flexible and modular, Passport can be unobtrusively dropped in to any Express-based web application. A comprehensive set of strategies support authentication using a username and password, Facebook, Twitter, etc.
    \end{itemize}
     \section{System Overview} 
-    Our web application will provide users with the functionality to create unique dashboard-style collections of charts and graphs to analyze energy use from Oregon State's campus buildings. Our system will be highly modular, containing multiple smaller components that provide their own individual functionality while sharing information across other components. Designing a modular architecture will simplify the code base and allow the developers to encapsulate specific data models as their own entities and keep abstractions in the system differentiable.\\
+    Our web application will provide users with the functionality to create unique dashboard-style collections of charts and graphs to analyze energy use from Oregon State's campus buildings. Our system will be highly modular, containing multiple smaller components that provide their own individual functionality while sharing information across other components. Designing a modular architecture will simplify the code base and allow the developers to encapsulate specific data models as their own entities and keep abstractions in the system differentiable.
+    
     \noindent Our design also stems from the main constructs behind AngularJS and data injection. Most of our components and subsystems are, at large, data models and objects that hold all the necessary information to create graph and charts. With this design, AngularJS services will extract data from the session user and rendered components and generate render the desired graphs and views to the content container. This allows the application to break up back-end services as well as UI components to simplify how data is gathered and processed.
     \section{Design Viewpoints and Concerns}
     \subsection{Stakeholders and Concerns}
     Developers concerns consist of simplifying complex model functions, replicable components, modular subsystems, and simple data access functionality. Addressing and capitalizing on these concerns will create an application design that will enhanced understanding, simplify implementation, and produce a high-end product. From a developer's standpoint, it is also essential to design an application that is ideal for both implementation and usability.
+
     \noindent Client concerns revolve around satisfying the requirements of the application and providing all the necessary user functionality. The implementation should adhere to the client's requests and specifications while creating a user-friendly interface to perform all the necessary actions.
     \subsection{Design Viewpoints}
     \subsubsection{Context Viewpoint}
@@ -542,7 +544,7 @@
         \caption{A mock-up of a home page from an authorized user access perspective (logged in to an account).}
     \end{figure}
 	If an authorized user wishes to access energy monitoring data, they will be able to have special privileges.
-	For instance, they will have the ability to create personal dashboards or stories which they may specify as private or public
+	For instance, they will have the ability to create personal dashboards or stories which they may specify as private or public.
 	They will have access to a navigation bar on the left side of the screen which allows for unique data viewing and privileges. 
 	
 	
@@ -555,8 +557,7 @@
 	Users may select the ``Buildings'' tab in the navigation bar to bring up an array of building cards to choose from.
 	Every building on campus that is gathering metering data associated with this application will have a card in this array.
 	A user may select a building card to bring up a generalized dashboard of information for each specific building. 
-	The user will be able to search for buildings by name in a search bar. Administrators will be able to add buildings
-	as the metering system expands to new buildings.
+	The user will be able to search for buildings by name in a search bar. Administrators will be able to add buildings as the metering system expands to new buildings.
 	
     \subsubsection{Selected Building Page}
     \begin{figure}[H]
