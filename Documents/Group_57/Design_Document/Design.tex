@@ -91,7 +91,7 @@
            \item Subsystem Flowcharts
            \item System Overview Section
            \item System Architecture Section
-           \item Component Design: Block, Graph, Navigation
+           \item Component Design: Block, Graph, Navigation, Dashboard
            \item UML diagram
            \item Abstract
            \item Design Viewpoints
@@ -474,16 +474,16 @@
 	\subsection{Navigation Bar}
 	The Navigation bar is a commonly used UI feature that provides users the ability to navigate through different pages of the application.
     \subsubsection{Element}
-    The navigation bar will be an HTML element with differentiable ``nav-items'' that render different views to the content view space. There will be a fixed-top navigation bar for generic item and a side bar navigation for more explicit functionalities like admin controls. 
+    The navigation bar will be an HTML element with differentiable ``nav-items'' that render different views to the content view space. There will be a fixed-top navigation bar for generic items and a side bar navigation for more explicit functionalities like admin controls. 
     \subsubsection{Functionality}
     Clicking on a nav-item has one of two functionalities: 
     \begin{itemize}
         \item Redirects the user to a new page by having the route's get function perform a redirect.
         \item Renders a new view to the page by having the route's get function render a new HTML view.
     \end{itemize}
-	The navigation bar shows which item is currently being served by changing the style of the active nav-item to be different than the rest.
+	The navigation bar shows which item is currently being served by changing the style of the active nav-item to be a different color than the rest.
 	\subsubsection{Rationale}
-    From a user perspective, having a navigation bar to navigate around the main features is an extremely useful UI design decision. From a design perspective, having a dedicated area to insert useful links is much more streamline than listing them. The navigation bar is a very useful tool for serving different content to the view space statically.
+    From a user perspective, having a navigation bar to navigate around the main features is an extremely useful UI design decision. From a design perspective, having a dedicated area to insert useful links is much more streamline than listing them. The navigation bar is a useful tool for serving dynamic content to the view space.
     \subsection{Graph Component}
     Our application will contain a graph component that accepts a graph type and data as input and constructs a graph using the D3 visualization framework.
     \subsubsection{Element}
