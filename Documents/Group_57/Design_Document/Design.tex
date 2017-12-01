@@ -444,8 +444,10 @@
     To render a chart or graph to the page, our application will gather all the parameters from the block component that contains the graph (the building(s), the chart type, and the date range). Then the graph component will fetch a D3 template for its specific chart type, input the data from the block, and serve it to the page. 
     \subsection{Design Rationale}
     The system's architecture revolves around a heavily modular system where individual components have their own functionality while also able to work cohesively with other components. The modular architecture also breaks up the back-end components into smaller services which simplifies functionality across the entire application.
+    
     \section{Component Design}
     This section is designated to describing individual components in greater detail, including the type of element, designated functionality, and the reasoning behind their design. Overall, this section aims to provide an in-depth view of the application components and describe their individual roles in the application as a whole.
+    
     \subsection{Block}
     A block is a component in our application that acts as a container for a graph, filter options, and  information about the data in the graph.
     \subsubsection{Element} 
@@ -454,6 +456,7 @@
     The block component neatly organizes data for the user by encapsulating the data, filters, and graph components into one container. A block needs to pull data from the ``building'' objects that it contains, gather data from any filters, and pass all this data into the correct graph template to generate a D3 graph. There will be a service within the block's AngularJS controller that will gather this data and pass the desired output to the page.
     \subsubsection{Rationale} 
     The block component is an efficient way to create a reusable HTML template that can be reproduced throughout the application. This makes it simple to provide a consistent process for displaying graphs and data. Additionally, the block component yields a compact solution for organizing data from multiple sources. 
+    
     \subsection{Dashboard}
     The dashboard component acts a way to store block objects in a group based on user preference.
     \subsubsection{Element} 
@@ -462,7 +465,17 @@
     The dashboard object is a way to conveniently package blocks together into groups so users can reuse the same groups or create unique collections of different blocks. When ``viewing'' a dashboard, the application will simply iterate through the block objects and render them to the view container in a vertical list.
     \subsubsection{Rationale} 
     The dashboard components provides a simple way to organize data keep track of user generated collections. The dashboard component will work nicely with AngularJS to render an HTML element for every object in an array, which in this case are the blocks in the dashboard.
-	\subsection{Login}
+    
+    \subsection{Stories}
+    A story is a container for user dashboards to be stored and retrieved.
+    \subsubsection{Element}
+    A story will be an database object that contains collections of dashboards.
+    \subsubsection{Functionality}
+    Within each story will be collections of dashboards. The number stored will be variable amount depending on how many the user has decided to add that given story.
+    \subsubsection{Rationale}
+    From a user perspective, being able to customize which data pops up would be helpful. This is especially true if there are multiple comparisons that need to be made without completely cluttering the screen. From a developer perspective, having the story objects to store dashboards will be a compact and simple way for storage and retrieval.
+    
+    \subsection{Login}
 	The Login is an HTML button that will allow users to login with an account, which will have different permissions and preferences for each user.
 	\subsubsection{Element}
 	The login function will be a button in the corner of the screen or somewhere in the navbar. The button will not be present if user is already logged in.
@@ -484,6 +497,7 @@
 	The navigation bar shows which item is currently being served by changing the style of the active nav-item to be a different color than the rest.
 	\subsubsection{Rationale}
     From a user perspective, having a navigation bar to navigate around the main features is an extremely useful UI design decision. From a design perspective, having a dedicated area to insert useful links is much more streamline than listing them. The navigation bar is a useful tool for serving dynamic content to the view space.
+
     \subsection{Graph Component}
     Our application will contain a graph component that accepts a graph type and data as input and constructs a graph using the D3 visualization framework.
     \subsubsection{Element}
@@ -492,14 +506,7 @@
     The graph component's functionality involves gathering different input parameters from the parent block component, fetching a template based on the graph type, and creating a unique graph. The graph component should have its own service to handle all the data organization and create a list of uniform parameters than can be passed to a D3 graph template.
     \subsubsection{Rationale}
     Having a structure like this simplifies the act of generating graphs by having a series of templates that can be fed data in a specific format. The graph service can take all the data and different filter parameters from the block object and format it into the right structure. All the computationally heavy functionality is black-boxed in the graph service and keeps the functionality handled by the user and front-end at a minimal. Another benefit to the graph component is that it can change the graph dynamically. Our application may include filters in the block component like a date range or a filter to change the graphed variable, which can trigger the graph service to reconstruct the data and create a new graph to serve based on the applied filters.
-    \subsection{Stories}
-    A story is a container for user dashboards to be stored and retrieved.
-    \subsubsection{Element}
-    A story will be an database object that contains collections of dashboards.
-    \subsubsection{Functionality}
-    Within each story will be collections of dashboards. The number stored will be variable amount depending on how many the user has decided to add that given story.
-    \subsubsection{Rationale}
-    From a user perspective, being able to customize which data pops up would be helpful. This is especially true if there are multiple comparisons that need to be made without completely cluttering the screen. From a developer perspective, having the story objects to store dashboards will be a compact and simple way for storage and retrieval.
+    
 	\subsection{Content View}
 	The content view is a portion of the page where different views can be rendered to provide different content.
     \subsubsection{Element} 
