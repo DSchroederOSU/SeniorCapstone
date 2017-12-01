@@ -91,7 +91,7 @@
            \item Subsystem Flowcharts
            \item System Overview Section
            \item System Architecture Section
-           \item Component Design: Block, Graph, Navigation
+           \item Component Design: Block, Graph, Navigation, Dashboard
            \item UML diagram
            \item Abstract
            \item Design Viewpoints
@@ -444,8 +444,8 @@
     To render a chart or graph to the page, our application will gather all the parameters from the block component that contains the graph (the building(s), the chart type, and the date range). Then the graph component will fetch a D3 template for its specific chart type, input the data from the block, and serve it to the page. 
     \subsection{Design Rationale}
     The system's architecture revolves around a heavily modular system where individual components have their own functionality while also able to work cohesively with other components. The modular architecture also breaks up the back-end components into smaller services which simplifies functionality across the entire application.
-   
-   \section{Component Design}
+    
+    \section{Component Design}
     This section is designated to describing individual components in greater detail, including the type of element, designated functionality, and the reasoning behind their design. Overall, this section aims to provide an in-depth view of the application components and describe their individual roles in the application as a whole.
 		\subsection{Block}
 			A block is a component in our application that acts as a container for a graph, filter options, and  information about the data in the graph.
