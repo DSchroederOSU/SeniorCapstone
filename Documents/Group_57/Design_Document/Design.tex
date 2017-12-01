@@ -164,8 +164,7 @@
 			Passport is authentication middleware for Node.js. Extremely flexible and modular, Passport can be unobtrusively dropped in to any Express-based web application. A comprehensive set of strategies support authentication using a username and password, Facebook, Twitter, etc.
    \end{itemize}
     \section{System Overview} 
-    Oregon State University is constantly making strides to reduce its carbon footprint and reduce its energy consumption. There is a carbon neutrality goal for 2025 where the university is trying to generate as much energy as it uses and have a net carbon footprint of 0. Our web application aims to monitor the energy use of buildings on campus in order to create a visual representation of each building's consumption and incentivize people to monitor their consumption habits and reduce the campus's overall consumption.
-
+  
     \noindent Our web application will resemble an administrative dashboard that displays charts and graphs of energy use over time for individual buildings and subgroups of buildings on Oregon State's campus.The application will have a series of public facing dashboards that show general energy usage information for all the buildings on campus that have AcquiSuites as well as user generated stories of personalized dashboards. Each dashboard will be a grid-based dashboard with personalized blocks for displaying data through time-series charts or graphs. A user will be able to add different blocks to create unique dashboards for their own unique interests and subsets of buildings. An example of this would be a dashboard designated to only residence halls where each block shows a usage over time graph for energy consumption of each residence hall. Users will be able to apply date filters to their blocks to generate different data sets and more explicit visualizations. 
     \noindent Our web application will be constructed using a MEAN Stack framework hosted on AWS. Our application will have a MongoDB database server and a Node.js application server hosted on a single virtual EC2 instance to make deployment easy and reliable.
     \section{Design Viewpoints and Concerns}
@@ -339,13 +338,13 @@
     \begin{paddedtikzpicture}[node distance = 2cm]
         % Place nodes
         \node (create)[block] {Create Block}; 
-        \path (create.east)+(2,0) node (view) [block] {Serve Web Form In View};
+        \path (create.east)+(2,0) node (view) [block] {Serve Web Form in View};
         \path [line] (create) -- (view);
         \path (view.east)+(2,0.5) node (charts) [datablock] {Pull Charts from Database}; 
         \path [line] (view) -- (charts);
         \path (view.east)+(2,-0.5) node (buildings) [datablock] {Pull Buildings from Database}; 
         \path [line] (view) -- (buildings);
-        \path (view.east)+(5.5,0) node (submit) [subblock, text width=8em] {Get User Form Data}; 
+        \path (view.east)+(5.5,0) node (submit) [subblock, text width=8em] {Get User from Data}; 
         \path [line] (charts) -- (submit);
         \path [line] (buildings) -- (submit);
         \path (submit.east)+(2,0) node (store) [datablock, text width=8em] {Store Block in User Object}; 
@@ -369,13 +368,13 @@
     \end{paddedtikzpicture}  
     \caption{A functional representation of the block view subsystem.} 
     \end{figure}
-    Blocks are stored in the User object who created them in an array ``Blocks.'' This way a user can keep track of the specific blocks they create and reuse them to create stories.
+    Blocks are stored in the User object who created them in an array ``Blocks.'' This allows a user to keep track of the specific blocks they create and reuse them to create stories.
     \subsubsection{Create Dashboard}
     \begin{figure}[H] 
     \begin{paddedtikzpicture}[node distance = 2cm]
         % Place nodes
         \node (view)[block] {Create Dashboard}; 
-        \path (view.east)+(2,0) node (retrieve) [datablock] {Retrieve Blocks From User Object};
+        \path (view.east)+(2,0) node (retrieve) [datablock] {Retrieve Blocks from User Object};
         \path [line] (view) -- (retrieve);
         \path (retrieve.east)+(2,0) node (render) [datablock] {Store Selected Blocks in Dashboard Object}; 
         \path [line] (retrieve) -- (render);
