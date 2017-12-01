@@ -73,7 +73,7 @@
     \vspace{2cm}
     \begin{center}
     \noindent \textbf{Abstract} \\
-                \indent The purpose of this document is to outline the architecture and component design for a Scalable Web Application Framework for Monitoring Energy Usage on Campus. The designs for each modular component is discussed in detail, outlining the data residing in each object and the functionality it holds in the application. Additionally,this document aims to discuss the rationale about each design decision and the interactions between individual components. 
+                \indent The purpose of this document is to outline the architecture and component design for a Scalable Web Application Framework for Monitoring Energy Usage on Campus. The designs for each modular component are discussed in detail, outlining the data residing in each object and the functionality it holds in the application. Additionally, this document aims to discuss the rationale for each design decision and the interactions between individual components. 
     \end{center}         
     
     \newpage
@@ -86,7 +86,7 @@
        \noindent\textbf{Daniel Schroeder} contributed to: 
        \begin{itemize}
            \item Introduction: Definitions and Acronyms
-           \item Created Document Outline 
+           \item Document Outline 
            \item Decomposition Description of Subsystems
            \item Subsystem Flowcharts
            \item System Overview Section
@@ -131,15 +131,16 @@
 	
     \subsection{Scope}
     
-	The software outlined in this document will serve as an interface by which Oregon State students, faculty, and affiliates
+	The software outlined in this document will function as an interface by which Oregon State students, faculty, and affiliates
 	may monitor energy usage of various buildings located on the Oregon State Campus. It will act as a tool for users to 
 	make informed infrastructure decisions and adjustments or act as a display piece to be presented within buildings on campus.
-	It will serve the OSU office of sustainability as a replacement to an outdated and costly implementation. 
+	It will serve the OSU Office of Sustainability as a replacement to an outdated and costly implementation. 
 	
     \subsection{Overview}
-    Oregon State University is constantly making strides to reduce its carbon footprint and reduce its energy consumption. There is a carbon neutrality goal for 2025 where the university is trying to generate as much energy as it uses and have a net carbon footprint of 0. Our web application aims to monitor the energy use of buildings on campus in order to create a visual representation of each building's consumption and incentivize people to monitor their consumption habits and reduce the campus's overall consumption.
-    \noindent Our web application will resemble an administrative dashboard that has charts and graphs of energy use over time for individual buildings and subgroups of buildings on Oregon State's campus. 
-    Our application will have a series of public facing pages that show general data use for all the buildings on campus that have AcquiSuite meters as well as display user generated stories of personalized dashboards. Each page will be a grid-based dashboard with personalized blocks for displaying data through time-series charts or graphs. A user will be able to add different blocks to create unique dashboards for their own unique interests and subsets of buildings. An example of this would be a dashboard designated to only residence halls where each block shows a usage over time graph for energy consumption of each residence hall. Users will be able to apply date filters to their blocks to generate different data sets and more explicit visualizations.
+    Oregon State University is constantly making strides to reduce its carbon footprint and reduce its energy consumption. There is a carbon neutrality goal for 2025 where the university is trying to generate as much energy as it uses and have a net carbon footprint of zero. Our web application aims to monitor the energy use of buildings on campus in order to create a visual representation of each building's consumption and incentivize people to monitor their consumption habits and reduce the campus's overall consumption.
+
+    \noindent Our web application will resemble an administrative dashboard with charts and graphs of energy use over time for individual buildings and subgroups of buildings on Oregon State's campus. 
+    Our application will have a series of public facing pages that will show energy usage for all the buildings on campus that have AcquiSuite meters as well as display user generated stories of personalized dashboards. Each page will be a grid-based dashboard with personalized blocks for displaying data through time-series charts or graphs. A user will be able to add different blocks to create unique dashboards for their own unique interests and subsets of buildings. An example of this would be a dashboard designated to only residence halls where each block shows a usage over time graph for energy consumption of each residence hall. Users will be able to apply date filters to their blocks to generate different data sets and more explicit visualizations.
 
     \noindent Our web application will be constructed using a MEAN Stack framework hosted on AWS. Our application will have a MongoDB database server and a Node.js application server hosted on a single virtual EC2 instance to make deployment easy and reliable.
    
@@ -151,14 +152,14 @@
 	{[5]} ``AcquiSuite'', obvius.com, 2017. [Online]. Available: http://www.obvius.com/Products/A8812. [Accessed 30- Nov- 2017]. \\
 	
     \subsection{Definitions and Acronyms}
-    This section is aimed towards defining terms and acronyms that are specific to the application that may otherwise be misunderstood or poorly interpreted.
+    This section will define terms and acronyms that are specific to the application that may otherwise be misunderstood or poorly interpreted.
     \begin{itemize}
         \item \textbf{Dashboard:}
             A grid-based information management tool for visually tracking and displaying metrics and data through graphs and charts.
         \item \textbf{Block:} 
-            An individual graph or chart depicting time-series data. More specifically, it is an HTML element one or more buildings, with filter buttons, informative text, and graphs.
+            An individual graph or chart depicting time-series data. More specifically, it is an HTML element containing one or more buildings, with filter buttons, informative text, and graphs.
         \item \textbf{Story:} 
-            A user generated collection of dashboards. What each story displays is based solely on user preferences set. With multiple stories, the user can select between ``presets'' that can show different dashboards.
+            A user generated collection of dashboards. What each story displays is based solely on user preferences. With multiple stories, the user can select between ``presets'' that can show different dashboards.
         \item \textbf{MEAN Stack:} 
             An acronym used to define a full stack application engineered from the MongoDB, Express.js, Angular.js, and Node.js frameworks. 
         \item \textbf{Bootstrap:} 
@@ -190,7 +191,7 @@
     This application contains a number of components that are recurrently used throughout the application and across users. These include the basic data blocks, dashboards, and stories that a user can create. The design of this application should embrace the modularity of these components and provide a consistent model for individual functionality while maintaining the ability to communicate and pass data across different components or objects. 
     
     \subsubsection{Dependency Viewpoint}
-    With a design focused around modularity and individualized components, there needs to be designs for services and dependencies so each component can interact. For example how a block component depends on multiple entities contained inside the block object like the building objects stored within the block, the filter's current values, the graph template, and the graphing service. The design of this application should encapsulate the relationships between different modular components and provide intuitive means for inter-component communication.
+    With a design focused around modularity and individualized components, there needs to be designs for services and dependencies so each component can interact. Some examples of these are: how a block component depends on multiple entities contained inside the block object like the building objects stored within the block, the filter's current values, the graph template, and the graphing service. The design of this application should encapsulate the relationships between different modular components and provide intuitive means for inter-component communication.
 
    \iffalse
     The Dependency viewpoint specifies the relationships of interconnection and access among entities. These relationships include shared information, order of execution, or parameterization of interfaces.
