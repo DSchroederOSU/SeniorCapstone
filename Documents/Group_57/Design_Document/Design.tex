@@ -368,7 +368,7 @@
     \end{paddedtikzpicture}  
     \caption{A functional representation of the block view subsystem.} 
     \end{figure}
-    Blocks are stored in the User object who created them in an array ``Blocks.'' This allows a user to keep track of the specific blocks they create and reuse them to create stories.
+   User created blocks will be stored in their respective ``Blocks'' array This allows a user to keep track of the specific blocks they create and reuse them to create stories.
     \subsubsection{Create Dashboard}
     \begin{figure}[H] 
     \begin{paddedtikzpicture}[node distance = 2cm]
@@ -423,13 +423,13 @@
         \end{paddedtikzpicture}   
         \caption{A functional representation for storing AcquiSuite data to a building object.} 
     \end{figure}
-    Timestamped data entries from Acquisuite Servers will live in the building objects the data came from. Similar to the rational behind storing blocks in the user object that created them, each building will have an array of meter data sorted by timestamp. This will allow our application to use a service to retrieve the data for any graphs or charts directly from the buildings objects in the relative block. A graph service can then fetch the building data, apply filters (like date ranges), and pass it to a D3 graph to render. This minimizes the amount of total data to be parsed and collected by narrowing the data to the relative block.
+    Timestamped data entries from Acquisuite Servers will be contained in their respective building objects from which the data was sent. Similar to the rational behind storing blocks in the user object that created them, each building will have an array of meter data sorted by timestamp. This will allow our application to use a service to retrieve the data for any graphs or charts directly from the buildings objects in the relative block. A graph service can then fetch the building data, apply filters (like date ranges), and pass it to a D3 graph to render. This minimizes the amount of total data to be parsed and collected by narrowing the data to the relative block.
     \subsubsection{Create Graph}
     \begin{figure}[H] 
         \begin{paddedtikzpicture}[node distance = 2cm]
             % Place nodes
             \node (graph)[block] {Create Graph}; 
-            \path (graph.east)+(2,0) node (get) [datablock] {Get Data From Parent Block};
+            \path (graph.east)+(2,0) node (get) [datablock] {Get Data from Parent Block};
             \path [line] (graph) -- (get);
             \path (get.east)+(2,0) node (fetch) [datablock, text width=8em] {Fetch Graph Template};
             \path [line] (get) -- (fetch);
@@ -438,9 +438,9 @@
         \end{paddedtikzpicture}   
         \caption{A functional representation for building a graph in a block.} 
     \end{figure}
-    To render a chart or graph to the webpage, our application will gather all the parameters from the block component that contains the graph (the building(s), the chart type, and the date range). Then the graph component will fetch a D3 template for its specific chart type, input the data from the block, and serve it to the dashboard. 
+    To render a chart or graph to the webpage, our application will gather all the parameters from the block component that contains the graph (the building(s), the chart type, and the date range). The the graph component will then fetch a D3 template for its specific chart type, input the data from the block, and serve it to the dashboard. 
     \subsection{Design Rationale}
-    The system's architecture revolves around a heavily modular system where individual components have their own functionality while also able to work cohesively with other components. The modular architecture also breaks up the back-end components into smaller services which simplifies functionality across the entire application.
+    The system's architecture revolves around a heavily modular system where individual components have their own functionality and are able to work cohesively with other components. The modular architecture also breaks up the back-end components into smaller services which simplifies functionality across the entire application.
     
     \section{Component Design}
     This section is designated to describing individual components in greater detail, including the type of element, designated functionality, and the reasoning behind their design. Overall, this section aims to provide an in-depth view of the application components and describe their individual roles in the application as a whole.
