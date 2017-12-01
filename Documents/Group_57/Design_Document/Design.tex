@@ -211,7 +211,7 @@
     \begin{figure}[H]
         \centering
         \includegraphics[width=14cm]{images/CapstoneUML.eps}
-        \caption{A UML diagram to show how modular components are related.}
+        \caption{A UML diagram to show component relationships.}
     \end{figure}
     \subsubsection{Interface Viewpoint}  
     Users will require a front end interface to interact with the application and utilize its functionality. The design of these interfaces should focus on satisfying all user actions in a simple and appealing manner. Users should be able to intuitivly navigate the application and perform essential tasks without confusion or error.
@@ -237,17 +237,25 @@
     \begin{paddedtikzpicture}[node distance = 2cm, auto]
         % Place nodes
         \node (ui)[block] {User Interface}; 
-        \path (ui.east)+(2,4) node (nav) [block] {Navigation}; 
+        \path (ui.east)+(2,5) node (nav) [block] {Navigation}; 
         \path [line] (ui)+(-0.3,0.7) -- (nav);
-        \path (ui.east)+(2,2) node (block) [block] {Create Block}; 
+        \path (ui.east)+(2,3) node (block) [block] {Create Block}; 
         \path [line] (ui) -- (block);
-        \path (ui.east)+(2,0) node (story) [block] {Create Story}; 
+        \path (ui.east)+(2,1) node (dash) [block] {Create Dashboard}; 
+        \path [line] (ui) -- (dash);
+        \path (ui.east)+(2,-1) node (story) [block] {Create Story}; 
         \path [line] (ui) -- (story);
-        \path (ui.east)+(2.3,-2) node (add) [block,  text width=7.5em] {Add Building/Meter};
+        \path (ui.east)+(2.35,-3) node (add) [block,  text width=7.5em] {Add Building/Meter};
         \path [line] (ui) -- (add);
-        \path (ui.east)+(2,-4) node (log) [block] {Log In}; 
+        \path (ui.east)+(2,-5) node (log) [block] {Log In}; 
         \path [line] (ui)+(-0.3,-0.7) -- (log);
         
+        %Create Dashboard
+        \path (nav.east)+(2,0) node (select) [subblock] {Get User Selection};
+        \path [line] (nav) -- (select);
+        \path (select.east)+(2,0) node (route)[datablock] {Pass Selected Route to View};
+        \path [line] (select) -- (route); 
+         
         %Create Block
         \path (block.east)+(2,0.5) node (ctype) [subblock] {Get Chart Type};
         \path [line] (block) -- (ctype);
@@ -258,11 +266,15 @@
         \path [line] (ctype) -- (template); 
         \path (template.east)+(2,0) node (d3)[subblock] {Build D3}; 
         \path [line] (template) -- (d3); 
-        
+        %Create Dashboard
+        \path (dash.east)+(2,0) node (getblocks) [datablock] {Get Blocks};
+        \path [line] (dash) -- (getblocks);
+        \path (getblocks.east)+(2,0) node (saveblock)[datablock] {Add Blocks to Dashboards};
+        \path [line] (getblocks) -- (saveblock); 
         %Create Story
         \path (story.east)+(2,0) node (createdash)[datablock] {Get Dashboards};
         \path [line] (story) -- (createdash); 
-        \path (createdash.east)+(2,0) node (adddash)[subblock] {Add Dashboard};
+        \path (createdash.east)+(2,0) node (adddash)[datablock] {Add Dashboards to Story};
         \path [line] (createdash) -- (adddash); 
         
         %Add Building
@@ -279,7 +291,7 @@
         \path (auth.east)+(2,-0.5) node (retrieve)[subblock] {Retrieve User}; 
         \path [line] (auth) -- (retrieve);
     \end{paddedtikzpicture}
-    \caption{An overview of the application systems.} 
+    \caption{An overview of the major application systems.} 
     \end{figure}
     \subsection{Decomposition Description}
     \iffalse
@@ -314,12 +326,13 @@
         \node (nav)[block] {Navigation Bar}; 
         \path (nav.east)+(2,0) node (route) [block] {Get Route from Nav Item}; 
         \path [line] (nav) -- (route);
-        \path (route.east)+(2,0) node (view) [subblock] {Change View Container Content}; 
+        \path (route.east)+(2,0.5) node (pass) [subblock] {Pass Route to Parent Scope}; 
+        \path [line] (route) -- (pass);
+        \path (route.east)+(2,-0.5) node (view) [datablock] {Call Route's Get Function}; 
         \path [line] (route) -- (view);
-        \path (view.east)+(2,0.7) node (render) [subblock, text width=8em] {Render New View HTML}; 
+        \path (route.east)+(5.5,0) node (render) [subblock, text width=8em] {Render New View HTML}; 
+        \path [line] (pass) -- (render);
         \path [line] (view) -- (render);
-        \path (view.east)+(2,-0.7) node (angular) [subblock, text width=8em] {Adjust Angular Modules for New View}; 
-        \path [line] (view) -- (angular);
     \end{paddedtikzpicture} 
     \caption{A functional representation of the navigation subsystem.} 
     \end{figure}
