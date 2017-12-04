@@ -55,7 +55,7 @@
     \newpage
     \section{Purpose and Goals:}
     \subsection{Purpose} 
-    Our project is to create a web application to monitor energy use on Oregon State University’s campus. The application should serve all the requirements outlined by the client and be easy to use for users of all experience levels.
+    Our project is to create a web application to monitor energy use on Oregon State University's campus. The application should serve all the requirements outlined by the client and be easy to use for users of all experience levels.
     \noindent Some specific functionalities that our application should contain are:
     \begin{itemize}
         \item Receive data from Obvius AcquiSuite data acquisition servers and process this data into interpretable graphs.
@@ -69,7 +69,7 @@
     \end{itemize}
     
     \subsection{Goals}
-    The goals of this term were to research and document the different technologies and methods needed to implement the required functionality of our application. This included researching specific technologies and frameworks as well as designing the architecture of our application's subsystems data models. Our designs revolve around highly modular components that split up the applications overall functionality into smaller components and services. We would like to begin implementing our designs and applications over winter break and start winter term with a good code base already constructed.
+    The goals of this term were to research and document the different technologies and methods needed to implement the required functionality of our application. This included researching specific technologies and frameworks as well as designing the architecture of our application's subsystems and data models. Our designs revolve around highly modular components that split up the applications overall functionality into smaller components and services. We would like to begin implementing our designs and applications over winter break and start winter term with a good code base already constructed.
     
     \section{Past Weekly Events:}
 	%------------------------------------------------------------------------------
@@ -156,7 +156,7 @@
     This week was extremely helpful in understanding all the different components that our application will have and designing modular components and services that will provide the necessary functionality for our application. While designing the application's architecture, our group considered the different subsystems, data models, and elements that are going to be needed in the final product. After designing the architecture, we met with our client to discuss our ideas and gather feedback. This discussion proved to be extremely helpful and we included his recommendations in our final draft of the Design Document.
     \noindent Daniel created a high-scale MEAN stack application to begin implementing a lot of the features from the Design Document and Technology Reviews like:
     \begin{itemize}
-        \item Using Google’s authentication API with Passport.js to store users into a database and create user sessions with passport’s authentication services
+        \item Using Google's authentication API with Passport.js to store users into a database and create user sessions with passport's authentication services
         \item Serving content to the view container by injecting routes to a parent scope variable in the master page by triggering an AngularJS injection to render a new view
         \item Creating a template for our “block” objects using Bootstrap 4 “cards”
         \item Creating modular controllers and services for different components and functionality
@@ -199,7 +199,7 @@
     \section{Current State of the Project:}
     We have began developing local, small-scaled test applications to begin implementing some of the frameworks we will encounter in the final product. These include MEAN stack applications that:
         \begin{itemize}
-            \item Authenticate users with Google’s oAuth 2.0 API and keep track of user sessions
+            \item Authenticate users with Google's oAuth 2.0 API and keep track of user sessions
             \item Use websockets to send intermittent time data from the server to the page
             \item Statically render different views to the content container with Angular 1 ng-include and passing routes from navigation items
             \item Share data across different modular components
