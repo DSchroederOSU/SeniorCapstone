@@ -1,0 +1,45 @@
+<nav id="sidenav" class="d-none d-sm-block bg-light sidebar">
+    <ul id="sideNavList" class="nav nav-pills flex-column">
+        <li class="custom-nav-item ">
+            <div class="nav-item-container container">
+                <a class="custom-nav-link" href="#">Overview<i class="arrow right"></i></a>
+            </div>
+        </li>
+        <li class="custom-nav-item active-nav-item">
+            <div class="nav-item-container container">
+                <a class="custom-nav-link" href="#">Home<i class="arrow right"></i></a>
+            </div>
+        </li>
+        <li class="custom-nav-item ">
+            <div class="nav-item-container container">
+                <a class="custom-nav-link" href="#">Stories<i class="arrow right"></i></a>
+            </div>
+        </li>
+        <li class="custom-nav-item ">
+            <div class="nav-item-container container">
+                <a class="custom-nav-link" href="#viewBlocks">View Blocks<i class="arrow right"></i></a>
+            </div>
+        </li>
+        <li class="custom-nav-item ">
+            <div class="nav-item-container container">
+                <a class="custom-nav-link" href="#createBlock">Add Blocks<i class="arrow right"></i></a>
+            </div>
+        </li>
+
+    </ul>
+</nav>
+<script>
+    $( '#sideNavList a' ).on( 'click', function () {
+        if(this.id == "blockMenu"){
+            $( '#sideNavList' ).find( 'li.active-nav-item' ).removeClass( 'active-nav-item' );
+        }
+        else{
+            $( '#sideNavList' ).find( 'li.active-nav-item' ).removeClass( 'active-nav-item' );
+            $( this ).parent().parent().addClass( 'active-nav-item' );
+        }
+        if(this.id !== "blockMenu" && this.id !== "viewblock" && this.id !== "addblock"){
+            $( '#submenu1' ).attr('class', 'collapse');
+        }
+
+    });
+</script>
