@@ -1,8 +1,11 @@
 
 angular.module('mainController', [])
     .controller('mainController', function($scope) {
-        $scope.showDashboards = function () {
 
+        $scope.dashboardClass = 'hideDash';
+        $scope.showDashboards = function () {
+            console.log("REACHED");
+            $scope.dashboardClass = 'showDash';
         }
 
     })
@@ -11,6 +14,13 @@ angular.module('mainController', [])
             restrict: 'E',
             scope: {model:'='},
             templateUrl: '../../views/side-navigation.html'
+        };
+    })
+    .directive('topNav', function() {
+        return {
+            restrict: 'E',
+            scope: {model:'='},
+            templateUrl: '../../views/top-navigation.html'
         };
     });
 

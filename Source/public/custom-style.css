@@ -1,8 +1,31 @@
+.hideDash{
+    -ms-transform: translate(0px, 0px); /* IE 9 */
+    -webkit-transform: translate(0px, 0px); /* Safari */
+    transform: translate(0px, 0px);
+    transition-duration: 0.5s;
+}
+.showDash{
+    -ms-transform: translate(80px, 0px); /* IE 9 */
+    -webkit-transform: translate(80px, 0px); /* Safari */
+    transform: translate(80px, 0px);
+    transition-duration: 0.5s;
+}
+#dashboardSelector{
+    width: 80px;
+    z-index: 10;
+}
+.dash-item{
+    border-left: 1px solid black !important;
+    background-color: #1c1c1c !important;
+}
+.custom-side-nav{
+    background-color: #3a3d42;
+}
 .nav-item-container{
     height: 49px;
 }
 .custom-nav-item{
-    background-color: #6C7A89;
+    background-color: #3a3d42;
     display:block;
     height: 50px;
     border-left: 0px;
@@ -46,4 +69,73 @@ i {
 }
 .active-nav-item .custom-nav-link{
     padding-left: 6px;
+}
+
+.navbar-fixed-side-left {
+    left: 0;
+}
+.navbar-fixed-side-right {
+    right: 0;
+}
+.navbar-fixed-side {
+    position: fixed;
+    border-width: 0;
+    z-index: 1030;
+    min-height: 5px;
+    min-width: 5px;
+    max-width: 200px;
+    margin-bottom: 0;
+    border: 0px solid transparent;
+}
+.navbar-fixed-side .navbar-toggle {
+    float: none;
+    margin: 0;
+}
+.navbar-fixed-side .nav > li > a {
+    width: 100%;
+    padding: 5px;
+}
+.navbar-fixed-side .dropdown-menu > li > a {
+    padding: 5px;
+}
+.navbar-fixed-side .dropdown-header {
+    padding: 5px;
+}
+.navbar-fixed-side .navbar-nav {
+    margin: 0;
+}
+.navbar-fixed-side .navbar-nav > li {
+    float: none;
+}
+.navbar-fixed-side .navbar-nav > li > a {
+    padding: 5px;
+    line-height: 20px;
+}
+.navbar-fixed-side .navbar-nav .open .dropdown-menu > li > a,
+.navbar-fixed-side .navbar-nav .open .dropdown-menu .dropdown-header {
+    padding: 3px 5px 3px 15px;
+}
+.navbar-fixed-side .container {
+    width: 100%;
+    padding: 0;
+}
+.navbar-fixed-side .navbar-header {
+    float: none;
+    margin: 0;
+}
+.navbar-fixed-side .navbar-collapse {
+    padding: 0 2px;
+}
+.navbar-fixed-side .container .navbar-collapse {
+    margin: 0;
+}
+.navbar-fixed-side .container .navbar-brand {
+    margin: 0;
+}
+.navbar-fixed-side .navbar-brand {
+    float: none;
+    height: 100%;
+    padding: 5px 3px;
+    font-size: 18px;
+    line-height: 20px;
 }
