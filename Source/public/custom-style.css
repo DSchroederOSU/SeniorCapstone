@@ -60,6 +60,8 @@ i {
 .right {
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
+	float: right;
+    margin: 20px;
 }
 .custom-nav-item div{
     border-left: 0px;
