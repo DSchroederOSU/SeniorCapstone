@@ -1,13 +1,13 @@
 .hideDash{
-    -ms-transform: translate(0px, 0px); /* IE 9 */
-    -webkit-transform: translate(0px, 0px); /* Safari */
-    transform: translate(0px, 0px);
+    -ms-transform: translate(0px, 50px); /* IE 9 */
+    -webkit-transform: translate(0px, 50px); /* Safari */
+    transform: translate(0px, 50px);
     transition-duration: 0.5s;
 }
 .showDash{
-    -ms-transform: translate(80px, 0px); /* IE 9 */
-    -webkit-transform: translate(80px, 0px); /* Safari */
-    transform: translate(80px, 0px);
+    -ms-transform: translate(80px, 50px); /* IE 9 */
+    -webkit-transform: translate(80px, 50px); /* Safari */
+    transform: translate(80px, 50px);
     transition-duration: 0.5s;
 }
 #dashboardSelector{
