@@ -35,8 +35,14 @@
             $( '#dashboardSelector' ).addClass( 'hideDash' );
         }
         else{
-            $( '#dashboardSelector' ).removeClass( 'hideDash' );
-            $( '#dashboardSelector' ).addClass( 'showDash' );
+            if($( '#dashboardSelector' ).hasClass( 'showDash' )){
+                $( '#dashboardSelector' ).removeClass( 'showDash' );
+                $( '#dashboardSelector' ).addClass( 'hideDash' );
+            }
+            else{
+                $( '#dashboardSelector' ).removeClass( 'hideDash' );
+                $( '#dashboardSelector' ).addClass( 'showDash' );
+            }
         }
         $( '#sideNavList' ).find( 'li.active-nav-item' ).removeClass( 'active-nav-item' );
         $( this ).parent().parent().addClass( 'active-nav-item' );
