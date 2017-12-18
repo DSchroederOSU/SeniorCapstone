@@ -10,6 +10,9 @@ myApp.config(function($routeProvider, $locationProvider) {
         .when("/editblock", {
             templateUrl : "../views/block/edit-block.html"
         })
+		.when("/editDashboard", {
+            templateUrl : "../views/dashboard/edit-dashboard.html"
+        })
         .when("/deleteblock", {
             templateUrl : "../views/block/delete-block.html"
         })
