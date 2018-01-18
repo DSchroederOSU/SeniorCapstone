@@ -28,9 +28,9 @@ module.exports = function(passport) {
     // GOOGLE ==================================================================
     // =========================================================================
     passport.use(new GoogleStrategy({
-            clientID        : configAuth.googleAuth.clientID,
-            clientSecret    : configAuth.googleAuth.clientSecret,
-            callbackURL     : configAuth.googleAuth.callbackURL,
+            clientID        : process.env.GOOGLE_CLIENT_ID,
+            clientSecret    : process.env.GOOGLE_CLIENT_SECRET,
+            callbackURL     : process.env.GOOGLE_CLIENT_CALLBACK,
         },
         function(token, refreshToken, profile, done) {
             // make the code asynchronous
