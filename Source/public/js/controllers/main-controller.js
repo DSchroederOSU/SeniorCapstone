@@ -1,6 +1,12 @@
 
 angular.module('mainController', [])
-    .controller('mainController', function($scope) {
+    .controller('mainController', function($scope, UserName) {
+
+        UserName.get()
+        .success(function(data) {
+            $scope.google_user = data;
+            $scope.firstname = data.name.split(' ')[0];
+        });
 
         $scope.dashboardClass = 'hideDash';
         $scope.showDashboards = function () {

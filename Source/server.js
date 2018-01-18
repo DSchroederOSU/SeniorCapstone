@@ -25,7 +25,7 @@ db.once('open', function() {
     console.log("We're connected");
 });
 
-//require('./config/passport')(passport); // pass passport for configuration
+require('./config/passport')(passport); // pass passport for configuration
 
 
 // set up our express application
@@ -39,7 +39,7 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use(express.static(__dirname + '/public'));
 // required for passport
-app.use(session({ secret: 'arandomstringtohashthesessioncookie',
+app.use(session({ secret: 'sustainabilityisawesome',
     resave: true,
     saveUninitialized: true})); // session secret
 app.use(passport.initialize());
