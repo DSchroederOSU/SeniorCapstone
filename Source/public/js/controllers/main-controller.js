@@ -4,8 +4,14 @@ angular.module('mainController', [])
 
         UserName.get()
         .success(function(data) {
-            $scope.google_user = data;
-            $scope.firstname = data.name.split(' ')[0];
+            if (data) {
+                console.log(data.name.split(' ')[0]);
+                $scope.google_user = data;
+                $scope.greeting = "Hello " + data.name.split(' ')[0] + "!";
+            }
+            else{
+                $scope.greeting = "";
+            }
         });
 
         $scope.dashboardClass = 'hideDash';

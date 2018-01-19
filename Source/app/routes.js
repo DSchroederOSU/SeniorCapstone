@@ -1,15 +1,27 @@
 var User = require('./models/user');
+
 module.exports = function(app, passport) {
+
+    app.get('/api/google_user', function(req, res) {
+        if (req.user){
+            res.json(req.user.google);
+        }
+        else{
+            res.send(null)
+        }
+
+    });
+
     app.get('/', function (req, res) {
+
         res.render('index.html'); // load the index.html file
     });
 
     app.get('/dashboardNav', function (req, res) {
-
         res.render('dashboard-selector.html'); // load the index.html file
     });
-    app.get('/login', function (req, res) {
 
+    app.get('/login', function (req, res) {
         res.render('login.html'); // load the index.html file
     });
 
@@ -24,11 +36,12 @@ module.exports = function(app, passport) {
             scope : ['profile', 'email']
         })
     );
+
     // the callback after google has authenticated the user
     app.get('/auth/google/callback',
         passport.authenticate('google', {
             successRedirect : '/',
-            failureRedirect : '/login-error'
+            failureRedirect : '/login'
         })
     );
 
@@ -36,7 +49,6 @@ module.exports = function(app, passport) {
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
         return next();

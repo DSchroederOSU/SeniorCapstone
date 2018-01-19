@@ -3,8 +3,7 @@
 var GoogleStrategy  = require('passport-google-oauth').OAuth2Strategy;
 
 // load up the user model
-var User            = require('../app/models/user');
-var configAuth      = require('./auth');
+var User = require('../app/models/user');
 // expose this function to our app using module.exports
 module.exports = function(passport) {
     // =========================================================================
@@ -30,7 +29,7 @@ module.exports = function(passport) {
     passport.use(new GoogleStrategy({
             clientID        : process.env.GOOGLE_CLIENT_ID,
             clientSecret    : process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL     : process.env.GOOGLE_CLIENT_CALLBACK,
+            callbackURL     : process.env.GOOGLE_CLIENT_CALLBACK
         },
         function(token, refreshToken, profile, done) {
             // make the code asynchronous
@@ -40,7 +39,6 @@ module.exports = function(passport) {
                 User.findOne({ 'google.id' : profile.id }, function(err, user) {
                     if (err)
                         return done(err);
-
                     if (user) {
 
                         // if a user is found, log them in

@@ -12,14 +12,14 @@
                     <a class="nav-link" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="#about">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                 </li>
             </ul>
             <span class="navbar-text pr-3 ">
-                Hello, {{firstname}}!
+                {{$parent.greeting}}
             </span>
             <a href="/login" class="btn btn-md" role="button" aria-pressed="true" id="login">Login</a>
 
