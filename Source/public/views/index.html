@@ -16,7 +16,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
     <script src="js/controllers/main-controller.js"></script> <!-- load up our controller -->
+    <script src="js/controllers/block-controller.js"></script> <!-- load up our controller -->
     <script src="js/services/user-service.js"></script> <!--  load our user service -->
+    <script src="js/services/building-service.js"></script> <!--  load our building service -->
 
     <script src="js/core.js"></script> <!-- load our main application -->
     <link rel="stylesheet" type="text/css" href="../custom-style.css">
@@ -41,7 +43,7 @@
 
         <div id="dashboardSelector" class="navbar-fixed-side navbar-fixed-side-left"
              style="width: 80px; left: 80px;"
-             ng-include="'/dashboardNav'"
+             ng-include="'/storyNav'"
              ng-class="dashboardClass">
         </div>
 
