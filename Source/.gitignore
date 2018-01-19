@@ -1,3 +1,5 @@
-#directories
-*node_modules/*
+# Config Files
+.env
 
+# Runtime data
+node_modules/

@@ -1,6 +1,18 @@
 
 angular.module('mainController', [])
-    .controller('mainController', function($scope) {
+    .controller('mainController', function($scope, GetUser) {
+
+        GetUser.get()
+        .success(function(data) {
+            if (data) {
+                $scope.login_status = "Logout";
+                $scope.greeting = "Hello " + data.name.split(' ')[0] + "!";
+            }
+            else{
+                $scope.login_status = "Login";
+                $scope.greeting = "";
+            }
+        });
 
         $scope.dashboardClass = 'hideDash';
         $scope.showDashboards = function () {

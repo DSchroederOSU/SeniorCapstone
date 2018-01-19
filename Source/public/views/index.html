@@ -2,8 +2,8 @@
 <!doctype html>
 <html ng-app="myApp">
 <head>
-    <title>Node Authentication</title>
-    <base href="/">
+    <title>OSU Office of Sustainability</title>
+    <link rel="shortcut icon" href="../assets/logo.png">
     <style>
         body        {word-wrap:break-word; }
     </style>
@@ -16,6 +16,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
     <script src="js/controllers/main-controller.js"></script> <!-- load up our controller -->
+    <script src="js/services/user-service.js"></script> <!--  load our user service -->
+
     <script src="js/core.js"></script> <!-- load our main application -->
     <link rel="stylesheet" type="text/css" href="../custom-style.css">
 
@@ -26,7 +28,7 @@
     <div ng-controller="mainController" ng-include="'/navigation'"></div>
 </div>
 -->
-<div id="nav" class="w-100 p-3 " style="height: 56px;">
+<div id="nav" class="w-100 p-3 " style="height: 56px;" ng-controller="mainController">
     <top-nav model="$parent"></top-nav>
 </div>
 
