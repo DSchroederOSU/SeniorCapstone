@@ -3,7 +3,7 @@ angular.module('userService', [])
 
 // super simple service
 // each function returns a promise object
-    .factory('UserName', function($http) {
+    .factory('GetUser', function($http) {
         return {
             get : function() {
                 return $http.get('/api/google_user');

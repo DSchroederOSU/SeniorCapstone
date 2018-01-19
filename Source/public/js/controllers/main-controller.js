@@ -1,15 +1,15 @@
 
 angular.module('mainController', [])
-    .controller('mainController', function($scope, UserName) {
+    .controller('mainController', function($scope, GetUser) {
 
-        UserName.get()
+        GetUser.get()
         .success(function(data) {
             if (data) {
-                console.log(data.name.split(' ')[0]);
-                $scope.google_user = data;
+                $scope.login_status = "Logout";
                 $scope.greeting = "Hello " + data.name.split(' ')[0] + "!";
             }
             else{
+                $scope.login_status = "Login";
                 $scope.greeting = "";
             }
         });
