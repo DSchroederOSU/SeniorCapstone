@@ -1,6 +1,6 @@
 require('mongoose');
-var User = require('./models/user_schema');
-var Building = require('./models/building_schema');
+var User = require('./models/user-schema');
+var Building = require('./models/building-schema');
 module.exports = function(app, passport) {
 
     app.get('/api/google_user', function(req, res) {

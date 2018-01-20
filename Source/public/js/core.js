@@ -4,12 +4,17 @@ myApp.config(function($routeProvider, $locationProvider) {
     .when("/", {
         templateUrl : "../views/home.html"
     })
+
+    ///////////////////////////
+    ///////TOP NAV ITEMS///////
+    ///////////////////////////
     .when("/about", {
         templateUrl : "../views/top-nav-views/about.html"
     })
     .when("/contact", {
         templateUrl : "../views/top-nav-views/contact.html"
     })
+
     ///////////////////////////
     ////////DASHBOARDS/////////
     ///////////////////////////
@@ -25,6 +30,7 @@ myApp.config(function($routeProvider, $locationProvider) {
     .when("/editdashboard", {
         templateUrl : "../views/dashboard/edit-dashboard.html"
     })
+
     ///////////////////////////
     //////////BLOCKS///////////
     ///////////////////////////
@@ -39,6 +45,24 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when("/deleteblock", {
         templateUrl : "../views/block/delete-block.html"
+    })
+
+    ///////////////////////////
+    /////////STORIES///////////
+    ///////////////////////////
+
+
+
+
+    ///////////////////////////
+    ///////////MISC////////////
+    ///////////////////////////
+
+    .when("/addmeter", {
+        templateUrl : "../views/meter-controls/add-meter-form.html"
+    })
+    .when("/meters", {
+        templateUrl : "../views/meter-controls/meters.html"
     });
     //$locationProvider.html5Mode(true);   //this is what is breaking page reload
 });

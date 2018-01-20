@@ -18,7 +18,8 @@ angular.module('blockController', [])
             $scope.buildings = dropdownBuildings;
             $scope.selectedBuildings = selectedBuildings;
             $scope.buildingSelection = "";
-        }
+            console.log(selectedBuildings);
+        };
 
         $scope.removeBuilding = function(building) {
             dropdownBuildings.push(building);
@@ -29,5 +30,5 @@ angular.module('blockController', [])
             $scope.buildings = dropdownBuildings;
             $scope.selectedBuildings = selectedBuildings;
             $scope.buildingSelection = "";
-        }
+        };
     });

@@ -17,7 +17,7 @@ var session      = require('express-session');
 
 var configDB = require('./config/database.js');
 
-var Building = require('./app/models/building_schema');
+var Building = require('./app/models/building-schema');
 Building.findOne({ name : 'Johnson Hall' }, function(err, building) {
     if (err)
         return done(err);
