@@ -1,5 +1,3 @@
-// app/models/user.js
-// load the things we need
 var mongoose = require('mongoose');
 
 var userSchema = mongoose.Schema({
@@ -8,7 +6,16 @@ var userSchema = mongoose.Schema({
         token        : String,
         email        : String,
         name         : String
-    }
+    },
+    block            : [{
+        building     : [{
+            name     : String,
+            meter_id : Number,
+            type     : String
+        }],
+        chart        : String,
+        variable     : String
+    }]
 });
 
 // create the model for users and expose it to our app

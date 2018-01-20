@@ -1,5 +1,5 @@
 // js/services/user_service.js
-angular.module('userService', [])
+angular.module('UserService', [])
 
 // super simple service
 // each function returns a promise object

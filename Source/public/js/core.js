@@ -1,11 +1,14 @@
-var myApp = angular.module('myApp', ['ngRoute', 'mainController', 'userService']);
+var myApp = angular.module('myApp', ['ngRoute', 'mainController', 'blockController', 'UserService', 'BuildingService']);
 myApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
     .when("/", {
         templateUrl : "../views/home.html"
     })
     .when("/about", {
-        templateUrl : "../views/about.html"
+        templateUrl : "../views/top-nav-views/about.html"
+    })
+    .when("/contact", {
+        templateUrl : "../views/top-nav-views/contact.html"
     })
     ///////////////////////////
     ////////DASHBOARDS/////////

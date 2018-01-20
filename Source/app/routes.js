@@ -1,5 +1,6 @@
-var User = require('./models/user');
-
+require('mongoose');
+var User = require('./models/user_schema');
+var Building = require('./models/building_schema');
 module.exports = function(app, passport) {
 
     app.get('/api/google_user', function(req, res) {
@@ -12,13 +13,19 @@ module.exports = function(app, passport) {
 
     });
 
+    app.get('/api/buildings', function(req, res) {
+        Building.find({}, function (err, buildings) {
+            res.json(buildings); // return all buildings in JSON format
+        });
+    });
+
     app.get('/', function (req, res) {
 
         res.render('index.html'); // load the index.html file
     });
 
-    app.get('/dashboardNav', function (req, res) {
-        res.render('dashboard-selector.html'); // load the index.html file
+    app.get('/storyNav', function (req, res) {
+        res.render('./story/story-selector.html'); // load the index.html file
     });
 
     app.get('/login', function (req, res) {

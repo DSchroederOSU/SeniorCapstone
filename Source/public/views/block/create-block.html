@@ -1,1 +1,34 @@
-<h3>Create a New Block</h3>
+<h3>Create New Block</h3>
+<div class="row mt-4" ng-controller="blockController">
+    <div class="col-sm-5 col-md-5">
+        <h4>Edit Information</h4>
+        <div class="form-group row mt-4">
+            <label for="inputName" class="ml-3">Name</label>
+            <div class="col-sm-12">
+                <input type="name" class="form-control" id="inputName" placeholder="Name">
+            </div>
+        </div>
+        <select id="dropdownBuildings" class="form-control mt-4"
+                ng-model="buildingSelection"
+                required ng-options="building.name for building in buildings"
+                ng-change="selection(buildingSelection)">
+        </select>
+    </div>
+    <div class="col-sm-1 col-md-1">
+    </div>
+    <div class="col-sm-5 col-md-5">
+        <h4>Current Buildings</h4>
+        <ul class="list-group mt-4 mb-4">
+            <div ng-repeat="buildings in selectedBuildings track by buildings._id">
+                <li class="list-group-item">
+                    {{buildings.name}}
+                    <button ng-model="buildings" type="button" style="" class="btn-sml btn-danger float-right" ng-click="removeBuilding(buildings)">
+                        <span class="" aria-hidden="false">&times;</span>
+                    </button>
+                </li>
+            </div>
+
+
+        </ul>
+    </div>
+</div>
