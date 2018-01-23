@@ -1,7 +1,7 @@
 var Building = require('../app/models/building-schema');
 
 var academic_halls = ['Dryden Hall','Kelley Engineering Center', 'Milam Hall', 'Nash Hall', 'Weniger Hall'];
-var res_halls = ['Bloss', 'Buxton', 'Callahan Hall', 'Cauthorn Hall', 'Finley Hall', 'Halsell Hall', 'Hawley Hall',
+var res_halls = ['Bloss Hall', 'Buxton Hall', 'Callahan Hall', 'Cauthorn Hall', 'Finley Hall', 'Halsell Hall', 'Hawley Hall',
         'International Living Learning Center', 'McNary Hall', 'Poling Hall', 'Sackett Hall', 'Tebeau Hall',
         'Weatherford Hall', 'West Hall', 'Wilson Hall'];
 var data_center = ['Marketplace West Dining Center', 'Milne Computing Center'];

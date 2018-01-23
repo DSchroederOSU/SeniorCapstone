@@ -4,4 +4,8 @@ angular.module('buildingController', [])
             .success(function (data) {
                 $scope.buildings = data;
             });
+
+        $scope.getImage = function(building) {
+            return "arnold-dining-center.jpg";
+        }
     });
