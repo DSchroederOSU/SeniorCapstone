@@ -6,6 +6,7 @@ angular.module('buildingController', [])
             });
 
         $scope.getImage = function(building) {
-            return "arnold-dining-center.jpg";
+            console.log(building.name.replace(/\s+/g, '-').toLowerCase());
+            return "../assets/buildings/"+ building.name.replace(/\s+/g, '-').toLowerCase() + ".jpg";
         }
     });
