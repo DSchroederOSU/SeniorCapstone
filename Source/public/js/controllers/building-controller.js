@@ -5,8 +5,7 @@ angular.module('buildingController', [])
                 $scope.buildings = data;
             });
 
-        $scope.getImage = function(building) {
-            console.log(building.name.replace(/\s+/g, '-').toLowerCase());
+        $scope.getImageAddress = function(building) {
             return "../assets/buildings/"+ building.name.replace(/\s+/g, '-').toLowerCase() + ".jpg";
         }
     });
