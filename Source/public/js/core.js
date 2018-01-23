@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ngRoute', 'mainController', 'blockController', 'UserService', 'BuildingService']);
+var myApp = angular.module('myApp', ['ngRoute', 'mainController', 'blockController', 'buildingController', 'UserService', 'BuildingService']);
 myApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
     .when("/", {
@@ -52,6 +52,12 @@ myApp.config(function($routeProvider, $locationProvider) {
     ///////////////////////////
 
 
+    ///////////////////////////
+    ////////BUILDINGS//////////
+    ///////////////////////////
+    .when("/viewBuildings", {
+        templateUrl : "../views/buildings.html"
+    })
 
 
     ///////////////////////////
