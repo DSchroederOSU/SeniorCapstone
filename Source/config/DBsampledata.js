@@ -104,7 +104,7 @@ for (din in dining_facility){
             // if the building is not in our database, create a new building
             var dinBuilding = new Building();
             // set all of the relevant information
-            dinBuilding.name  = data_center[din_count];
+            dinBuilding.name  = dining_facility[din_count];
             dinBuilding.building_type = 'Dining Facility';
             dinBuilding.meter_id  = Math.floor(Math.random() * 20000)+10000;
             dinBuilding.data_entry = {date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000};
