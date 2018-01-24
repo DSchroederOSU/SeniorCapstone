@@ -1,5 +1,5 @@
 <h3>Create New Block</h3>
-<div class="row mt-4" ng-controller="blockController">
+<div class="row mt-4 pl-2" ng-controller="blockController">
     <div class="col-sm-5 col-md-5">
         <h4>Edit Information</h4>
         <div class="form-group row mt-4">
@@ -8,11 +8,18 @@
                 <input type="name" class="form-control" id="inputName" placeholder="Name">
             </div>
         </div>
-        <select id="dropdownBuildings" class="form-control mt-4"
-                ng-model="buildingSelection"
-                required ng-options="building.name for building in buildings"
-                ng-change="selection(buildingSelection)">
-        </select>
+        <div class="form-group row mt-4">
+            <label for="dropdownBuildings" class="ml-3">Select Buildings:</label>
+            <div class="col-sm-12">
+                <select id="dropdownBuildings" class="form-control "
+                        ng-model="buildingSelection"
+                        required ng-options="building.name for building in buildings"
+                        ng-change="selection(buildingSelection)">
+                </select>
+            </div>
+        </div>
+
+
     </div>
     <div class="col-sm-1 col-md-1">
     </div>

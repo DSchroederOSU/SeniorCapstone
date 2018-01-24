@@ -55,8 +55,11 @@ myApp.config(function($routeProvider, $locationProvider) {
     ///////////////////////////
     ////////BUILDINGS//////////
     ///////////////////////////
-    .when("/viewBuildings", {
-        templateUrl : "../views/buildings.html"
+    .when("/allBuildings", {
+        templateUrl : "../views/building/buildings.html"
+    })
+    .when("/viewBuilding", {
+        templateUrl : "../views/building/view-building.html"
     })
 
 

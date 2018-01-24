@@ -24,7 +24,10 @@ for (res in res_halls){
             res.name  = res_halls[count];
             res.building_type = 'Residence Hall/Dormitory';
             res.meter_id  = Math.floor(Math.random() * 20000)+10000;
-            res.data_entry = {date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000};
+            res.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            res.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            res.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            res.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
             // save the building
             res.save(function(err) {
                 if (err)
@@ -54,7 +57,10 @@ for (ac in academic_halls){
             acBuilding.name  = academic_halls[ac_count];
             acBuilding.building_type = 'Academic';
             acBuilding.meter_id  = Math.floor(Math.random() * 20000)+10000;
-            acBuilding.data_entry = {date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000};
+            acBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            acBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            acBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            acBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
             // save the building
             acBuilding.save(function(err) {
                 if (err)
@@ -80,7 +86,10 @@ for (dc in data_center){
             dcBuilding.name  = data_center[dc_count];
             dcBuilding.building_type = 'Data Center';
             dcBuilding.meter_id  = Math.floor(Math.random() * 20000)+10000;
-            dcBuilding.data_entry = {date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000};
+            dcBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            dcBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            dcBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            dcBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
             // save the building
             dcBuilding.save(function(err) {
                 if (err)
@@ -107,7 +116,10 @@ for (din in dining_facility){
             dinBuilding.name  = dining_facility[din_count];
             dinBuilding.building_type = 'Dining Facility';
             dinBuilding.meter_id  = Math.floor(Math.random() * 20000)+10000;
-            dinBuilding.data_entry = {date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000};
+            dinBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            dinBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            dinBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            dinBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
             // save the building
             dinBuilding.save(function(err) {
                 if (err)
@@ -134,7 +146,10 @@ for (lib in library){
             libBuilding.name  = library[lib_count];
             libBuilding.building_type = 'Library';
             libBuilding.meter_id  = Math.floor(Math.random() * 20000)+10000;
-            libBuilding.data_entry = {date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000};
+            libBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            libBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            libBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            libBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
             // save the building
             libBuilding.save(function(err) {
                 if (err)
@@ -161,7 +176,10 @@ for (rec in rec_center){
             recBuilding.name  = rec_center[rec_count];
             recBuilding.building_type = 'Recreation Center';
             recBuilding.meter_id  = Math.floor(Math.random() * 20000)+10000;
-            recBuilding.data_entry = {date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000};
+            recBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            recBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            recBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            recBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
             // save the building
             recBuilding.save(function(err) {
                 if (err)
@@ -188,7 +206,10 @@ for (o in other){
             oBuilding.name  = other[o_count];
             oBuilding.building_type = 'Other';
             oBuilding.meter_id  = Math.floor(Math.random() * 20000)+10000;
-            oBuilding.data_entry = {date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000};
+            oBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            oBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            oBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
+            oBuilding.data_entry.push({date_time : new Date(), kw_hour : Math.floor(Math.random() * 4000)+1000});
             // save the building
             oBuilding.save(function(err) {
                 if (err)
