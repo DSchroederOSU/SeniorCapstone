@@ -32,6 +32,26 @@ module.exports = function(app, passport) {
         res.render('login.html'); // load the index.html file
     });
 
+    app.post('/api/addBlock', function(req, res) {
+        console.log(req);
+        var user = req.user;
+        var new_block = {
+                name        : req.body.name,
+                building    : req.body.buildings,
+                chart       : req.body.chart,
+                variable    : "Killowatts/Hr"
+            };
+        user.block.push(new_block);
+        user.save(function(err) {
+            if (err)
+                throw err;
+            var result = user.block.filter(function( block ) {
+                return block.name == new_block.name;
+            });
+            res.json(result);
+        });
+    });
+
     // =====================================
     // GOOGLE ROUTES =======================
     // =====================================
