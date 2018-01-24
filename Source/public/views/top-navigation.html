@@ -9,7 +9,7 @@
             <ul class="navbar-nav mr-auto">
 			
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <a id="topHome" class="nav-link" href="#">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#about">About</a>
@@ -26,3 +26,15 @@
         </div>
     </nav>
 </header>
+<script>
+    $( '#navBarDefault a' ).on( 'click', function () {
+        if( this.id == 'topHome'){
+            $( '#sideNavList' ).find( 'li.active-nav-item' ).removeClass( 'active-nav-item' );
+            $( '#sideNavList' ).find('#sideHome').parent().parent().addClass( 'active-nav-item' );
+        }
+        else{
+            $( '#sideNavList' ).find( 'li.active-nav-item' ).removeClass( 'active-nav-item' );
+        }
+
+    });
+</script>

@@ -1,6 +1,6 @@
 require('mongoose');
-var User = require('./models/user_schema');
-var Building = require('./models/building_schema');
+var User = require('./models/user-schema');
+var Building = require('./models/building-schema');
 module.exports = function(app, passport) {
 
     app.get('/api/google_user', function(req, res) {
@@ -30,6 +30,26 @@ module.exports = function(app, passport) {
 
     app.get('/login', function (req, res) {
         res.render('login.html'); // load the index.html file
+    });
+
+    app.post('/api/addBlock', function(req, res) {
+        console.log(req);
+        var user = req.user;
+        var new_block = {
+                name        : req.body.name,
+                building    : req.body.buildings,
+                chart       : req.body.chart,
+                variable    : "Killowatts/Hr"
+            };
+        user.block.push(new_block);
+        user.save(function(err) {
+            if (err)
+                throw err;
+            var result = user.block.filter(function( block ) {
+                return block.name == new_block.name;
+            });
+            res.json(result);
+        });
     });
 
     // =====================================

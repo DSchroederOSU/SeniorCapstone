@@ -1,0 +1,28 @@
+<div class="row mt-4" ng-model="buildingModel" ng-controller="buildingController">
+    <div class="col-sm-4">
+        <h3 class="ml-3">{{buildingModel.name}}</h3>
+        <div class="rounded ml-3" style="height: 200px; width: 200px;">
+            <img class="rounded text-white bg-primary w-100 h-100" ng-src="{{getImageAddress(buildingModel)}}" alt="">
+        </div>
+        <p class="mt-3"><b>Type:</b>{{buildingModel.building_type}}</p>
+        <p><b>Meter ID:</b>{{buildingModel.meter_id}}</p>
+    </div>
+    <div class="col-sm-8 pb-4" >
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Entry</th>
+                <th scope="col">Date</th>
+                <th scope="col">KW/hr Reading</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="entry in buildingModel.data_entry track by entry._id">
+                <th scope="row">{{ $index + 1 }}</th>
+                <td>{{entry.date_time}}</td>
+                <td>{{entry.kw_hour}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

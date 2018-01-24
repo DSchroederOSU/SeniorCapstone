@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-
 var userSchema = mongoose.Schema({
     google           : {
         id           : String,
@@ -8,11 +7,8 @@ var userSchema = mongoose.Schema({
         name         : String
     },
     block            : [{
-        building     : [{
-            name     : String,
-            meter_id : Number,
-            type     : String
-        }],
+        name         : String,
+        building     : [{type:mongoose.Schema.ObjectId, ref: 'Building'}],
         chart        : String,
         variable     : String
     }]
