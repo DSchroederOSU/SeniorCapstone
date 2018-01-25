@@ -1,7 +1,7 @@
 var selectedBuildings = [];
 var dropdownBuildings = [];
 angular.module('blockController', [])
-    .controller('blockController', function($scope, GetBuildings, AddBlock) {
+    .controller('blockController', function($scope, GetBuildings, AddBlock, GetUserBlocks) {
 
         GetBuildings.get()
             .success(function (data) {
@@ -45,10 +45,16 @@ angular.module('blockController', [])
                 AddBlock.create(BlockData)
                 // if successful creation
                     .success(function(data) {
-                        console.log(data);
                         $scope.nameForm = "";
                         $scope.chartForm = "";
                     });
             }
         };
+        GetUserBlocks.get()
+            .success(function(data) {
+                $scope.userBlocks = data;
+            });
+
+
+
     });

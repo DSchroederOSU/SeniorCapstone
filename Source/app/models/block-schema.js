@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var buildingSchema = mongoose.Schema({
+var blockSchema = mongoose.Schema({
     name            : String,
     building_type   : String,
     meter_id        : Number,
@@ -11,4 +11,4 @@ var buildingSchema = mongoose.Schema({
 });
 
 // create the model for users and expose it to our app
-module.exports = mongoose.model('Building', buildingSchema);
+module.exports = mongoose.model('Block', blockSchema);

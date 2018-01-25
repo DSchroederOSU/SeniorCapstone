@@ -7,6 +7,14 @@ angular.module('BlockService', [])
         return {
             create : function(blockData) {
                 return $http.post('/api/addBlock', blockData);
-            },
+            }
+        }
+    })
+    .factory('GetUserBlocks', function($http) {
+        return {
+            get : function() {
+                return $http.get('/api/getUserBlocks');
+            }
         }
     });
+
