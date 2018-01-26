@@ -3,3 +3,6 @@
 
 # Runtime data
 node_modules/
+
+# Temporary Acquisuite data folder
+public/acquisuite-data
