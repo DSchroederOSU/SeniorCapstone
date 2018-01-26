@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-
 var buildingSchema = mongoose.Schema({
     name            : String,
     building_type   : String,

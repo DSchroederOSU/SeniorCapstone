@@ -32,8 +32,17 @@ module.exports = function(app, passport) {
         res.render('login.html'); // load the index.html file
     });
 
+    app.get('/api/getUserBlocks', function(req, res) {
+        User.findOne({_id : req.user._id})
+            .populate('block.building').
+            exec(function (err, user) {
+            if (err) return handleError(err);
+            res.json(user.block);
+        });
+    });
+
     app.post('/api/addBlock', function(req, res) {
-        console.log(req);
+
         var user = req.user;
         var new_block = {
                 name        : req.body.name,
