@@ -86,7 +86,7 @@ module.exports = function(app, passport) {
       'New Acquisuite Data from '
       + req.params.id
       + ':\n'
-      + res.body,
+      + postData,
       function(err) {
         if (err) throw err;
       });
