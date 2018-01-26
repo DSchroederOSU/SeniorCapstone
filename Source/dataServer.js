@@ -27,8 +27,8 @@ db.once('open', function() {
 app.use(morgan('dev'));
 
 // Obtain DB schema
-var User = require('./models/user-schema');
-var Building = require('./models/building-schema');
+var User = require('./app/models/user-schema');
+var Building = require('./app/models/building-schema');
 
 // Routes ======================================================================
 
