@@ -14,6 +14,15 @@ var morgan       = require('morgan');
 // Connect to and configure the database connection.
 var configDB = require('./config/database.js');
 
+// configuration ===============================================================
+
+mongoose.connect(configDB.url, { useMongoClient: true }); // connect to our database
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log("We're connected");
+});
+
 // log every request to the console
 app.use(morgan('dev'));
 

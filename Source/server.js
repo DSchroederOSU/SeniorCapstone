@@ -20,6 +20,14 @@ var configDB = require('./config/database.js');
 
 require('./config/passport')(passport); // pass passport for configuration
 
+// configuration ===============================================================
+
+mongoose.connect(configDB.url, { useMongoClient: true }); // connect to our database
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log("We're connected");
+});
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
