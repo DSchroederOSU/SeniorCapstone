@@ -17,7 +17,7 @@ var session      = require('express-session');
 
 var configDB = require('./config/database.js');
 
-
+require('./config/passport')(passport); // pass passport for configuration
 
 // configuration ===============================================================
 
@@ -27,9 +27,6 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
     console.log("We're connected");
 });
-
-require('./config/passport')(passport); // pass passport for configuration
-
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
