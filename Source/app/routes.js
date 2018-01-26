@@ -72,26 +72,6 @@ module.exports = function(app, passport) {
         })
     );
 
-    //=====================================
-    // Data Collection
-    //=====================================
-    // Collects POST data from acquisuites,
-    // converts it to JSON, and saves it to
-    // the database.
-    app.post('/acquisuite/upload/:id', function (req, res) {
-      var postData = req.body;
-
-      // TEMP - A file with post data will be created, and data will be dumped.
-      fs.appendFile('./acquisuite-data/postData.txt',
-      'New Acquisuite Data from '
-      + req.params.id
-      + ':\n'
-      + postData,
-      function(err) {
-        if (err) throw err;
-      });
-    });
-
 };
 
 // route middleware to make sure a user is logged in
