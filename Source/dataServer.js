@@ -4,6 +4,7 @@
 
 // set up ======================================================================
 // get all the tools we need
+var dotenv   = require('dotenv').config();
 var express  = require('express');
 var app      = express();
 var mongoose = require('mongoose');
@@ -13,7 +14,7 @@ var morgan       = require('morgan');
 
 // configuration ===============================================================
 
-mongoose.connect(z, { useMongoClient: true }); // connect to our database
+mongoose.connect(process.env.MONGO_DATABASE_URL, { useMongoClient: true }); // connect to our database
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
