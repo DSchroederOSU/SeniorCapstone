@@ -15,13 +15,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
-var configDB = require('./config/database.js');
-
 require('./config/passport')(passport); // pass passport for configuration
 
 // configuration ===============================================================
 
-mongoose.connect(configDB.url, { useMongoClient: true }); // connect to our database
+mongoose.connect(process.env.MONGO_DATABASE_URL, { useMongoClient: true }); // connect to our database
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {

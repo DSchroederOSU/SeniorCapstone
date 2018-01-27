@@ -4,6 +4,7 @@
 
 // set up ======================================================================
 // get all the tools we need
+var dotenv   = require('dotenv').config();
 var express  = require('express');
 var app      = express();
 var mongoose = require('mongoose');
@@ -11,12 +12,9 @@ var fs       = require('fs'); // TEMP - for saving acquisuite POST data\
 var bodyParser   = require('body-parser');
 var morgan       = require('morgan');
 
-// Connect to and configure the database connection.
-var configDB = require('./config/database.js');
-
 // configuration ===============================================================
 
-mongoose.connect(configDB.url, { useMongoClient: true }); // connect to our database
+mongoose.connect(process.env.MONGO_DATABASE_URL, { useMongoClient: true }); // connect to our database
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
