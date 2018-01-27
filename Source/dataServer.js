@@ -27,9 +27,9 @@ db.once('open', function() {
 app.use(morgan('dev'));
 
 // Parse post bodies
-app.use(bodyParser.urlencoded({
-  extended: true;
-}));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());// get information from html forms
+app.use(bodyParser.text({type: "*/*", limit: '50mb'}));// get information from html forms
 
 // Obtain DB schema
 var User = require('./app/models/user-schema');
@@ -45,7 +45,7 @@ var Building = require('./app/models/building-schema');
 // the database.
 app.post('/acquisuite/upload/:id', function (req, res) {
 
-  console.log(req);
+  console.log(req.body);
 
   // TEMP - A file with post data will be created, and data will be dumped.
   fs.appendFile('./acquisuite-data/postData.txt',
@@ -59,7 +59,11 @@ app.post('/acquisuite/upload/:id', function (req, res) {
   });
 
   res.status("200");
-  res.send("Thanks!"); // Prevents the client from timing out.
+  res.set({'content-type': 'text/xml', 'Connection': 'close'});
+  res.send("<?xml version='1.0' encoding='UTF-8' ?>\n"
+          +"<result>SUCCESS</result>\n"
+          +"<DAS></DAS>"
+          +"</xml>");
 });
 
 // launch ======================================================================
