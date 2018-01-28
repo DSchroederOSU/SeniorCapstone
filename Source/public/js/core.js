@@ -1,7 +1,11 @@
-var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController', 'buildingController',
+var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController', 'buildingController', 'mapController',
     'BlockService', 'UserService', 'BuildingService', 'ngRoute']);
 myApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
+	
+	///////////////////////////
+    ///////HOME PAGE///////
+    ///////////////////////////
     .when("/", {
         templateUrl : "../views/home.html"
     })
