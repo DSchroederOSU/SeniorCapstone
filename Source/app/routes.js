@@ -1,19 +1,23 @@
-    require('mongoose');
-    var User = require('./models/user-schema');
-    var Building = require('./models/building-schema');
-    module.exports = function(app, passport) {
+require('mongoose');
 
-    app.get('/api/google_user', function(req, res) {
-        if (req.user){
+var User = require('./models/user-schema');
+var Building = require('./models/building-schema');
+var xmlparser = require('express-xml-bodyparser');
+var parseString = require('xml2js').parseString;
+
+module.exports = function (app, passport) {
+  
+    app.get('/api/google_user', function (req, res) {
+        if (req.user) {
             res.json(req.user.google);
         }
-        else{
+        else {
             res.send(null)
         }
 
     });
 
-    app.get('/api/buildings', function(req, res) {
+    app.get('/api/buildings', function (req, res) {
         Building.find({}, function (err, buildings) {
             res.json(buildings); // return all buildings in JSON format
         });
@@ -32,29 +36,29 @@
         res.render('login.html'); // load the index.html file
     });
 
-    app.get('/api/getUserBlocks', function(req, res) {
-        User.findOne({_id : req.user._id})
+    app.get('/api/getUserBlocks', function (req, res) {
+        User.findOne({ _id: req.user._id })
             .populate('block.building').
             exec(function (err, user) {
-            if (err) return handleError(err);
-            res.json(user.block);
-        });
+                if (err) return handleError(err);
+                res.json(user.block);
+            });
     });
 
-    app.post('/api/addBlock', function(req, res) {
+    app.post('/api/addBlock', function (req, res) {
 
         var user = req.user;
         var new_block = {
-                name        : req.body.name,
-                building    : req.body.buildings,
-                chart       : req.body.chart,
-                variable    : "Killowatts/Hr"
-            };
+            name: req.body.name,
+            building: req.body.buildings,
+            chart: req.body.chart,
+            variable: "Killowatts/Hr"
+        };
         user.block.push(new_block);
-        user.save(function(err) {
+        user.save(function (err) {
             if (err)
                 throw err;
-            var result = user.block.filter(function( block ) {
+            var result = user.block.filter(function (block) {
                 return block.name == new_block.name;
             });
             res.json(result);
@@ -69,19 +73,28 @@
     // email gets their emails
     app.get('/auth/google',
         passport.authenticate('google', {
-            scope : ['profile', 'email']
+            scope: ['profile', 'email']
         })
     );
 
     // the callback after google has authenticated the user
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect : '/',
-            failureRedirect : '/login'
+            successRedirect: '/',
+            failureRedirect: '/login'
         })
     );
+    // Function for handling xml post requests
+    // Receives post requests, converts from XML to JSON
+    // the 'xmlparser' in parameters takes care of everything
+    // Currently just sends result to body, but will change to target DB
+    app.post('/receive-xml', xmlparser({ trim: false, explicitArray: false }),function (req, res) {
+        res.send(req.body);
+    });
+  
+}
 
-};
+
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
@@ -91,4 +104,4 @@ function isLoggedIn(req, res, next) {
 
     // if they aren't redirect them to the home page
     res.redirect('/');
-}
+    };

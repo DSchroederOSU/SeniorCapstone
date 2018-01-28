@@ -19,7 +19,7 @@ require('./config/passport')(passport); // pass passport for configuration
 
 // configuration ===============================================================
 
-mongoose.connect(process.env.MONGO_DATABASE_URL, { useMongoClient: true }); // connect to our database
+//mongoose.connect(process.env.MONGO_DATABASE_URL, { useMongoClient: true }); // connect to our database
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
