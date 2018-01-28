@@ -6,7 +6,7 @@ var xmlparser = require('express-xml-bodyparser');
 var parseString = require('xml2js').parseString;
 
 module.exports = function (app, passport) {
-  
+   
     app.get('/api/google_user', function (req, res) {
         if (req.user) {
             res.json(req.user.google);
@@ -33,8 +33,16 @@ module.exports = function (app, passport) {
     });
 
     app.get('/login', function (req, res) {
-        res.render('login.html'); // load the index.html file
+        res.render('login.html'); // load the login.html file
     });
+    /*
+    app.get('/About', function (req, res) {
+        res.render('views/top-nav-views/about.html'); // load the about.html file
+    });
+    app.get('/Contact', function (req, res) {
+        res.render('views/top-nav-views/login.html'); // load the about.html file
+    });
+   */
 
     app.get('/api/getUserBlocks', function (req, res) {
         User.findOne({ _id: req.user._id })
@@ -84,6 +92,7 @@ module.exports = function (app, passport) {
             failureRedirect: '/login'
         })
     );
+
     // Function for handling xml post requests
     // Receives post requests, converts from XML to JSON
     // the 'xmlparser' in parameters takes care of everything
