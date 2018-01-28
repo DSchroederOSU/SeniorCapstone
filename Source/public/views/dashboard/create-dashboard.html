@@ -15,36 +15,31 @@
                 <textarea class="form-control" id="inputDashboardDescription" rows="4"></textarea>
             </div>
         </div>
-        <select class="form-control mt-4">
-            <option selected>Block 1</option>
-            <option>Block 2</option>
-            <option>Block 3</option>
-            <option>Block 4</option>
-        </select>
+        <div class="form-group row mt-4">
+            <label for="dropdownBlocks" class="ml-3">Select Blocks:</label>
+            <div class="col-sm-12">
+                <select id="dropdownBlocks" class="form-control "
+                        ng-model="buildingSelection"
+                        required ng-options="block.name for block in userBlocks"
+                        ng-change="selection(block)">
+                </select>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-1 col-md-1">
-    </div>
+
     <div class="col-sm-5 col-md-5">
-        <h4>Current Blocks</h4>
+        <h4>Current Buildings</h4>
         <ul class="list-group mt-4 mb-4">
-            <li class="list-group-item">
-                Block 1
-                <button type="button" style="" class="btn-sml btn-danger float-right">
-                    <span class="" aria-hidden="false">&times;</span>
-                </button>
-            </li>
-            <li class="list-group-item">
-                Block 2
-                <button type="button" style="" class="btn-sml btn-danger float-right">
-                    <span class="" aria-hidden="false">&times;</span>
-                </button>
-            </li>
-            <li class="list-group-item">
-                Block 3
-                <button type="button" style="" class="btn-sml btn-danger float-right">
-                    <span class="" aria-hidden="false">&times;</span>
-                </button>
-            </li>
+            <div ng-repeat="buildings in selectedBuildings track by buildings._id">
+                <li class="list-group-item">
+                    {{buildings.name}}
+                    <button ng-model="buildings" type="button" style="" class="btn-sml btn-danger float-right" ng-click="removeBuilding(buildings)">
+                        <span class="" aria-hidden="false">&times;</span>
+                    </button>
+                </li>
+            </div>
         </ul>
     </div>
+</div>
+<button type="submit" class="btn btn-success" ng-click="CreateBlock()">Create Block</button>
 </div>
