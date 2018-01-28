@@ -40,6 +40,15 @@
             res.json(user.block);
         });
     });
+    app.get('/api/getDashboards', function(req, res) {
+        User.findOne({_id : req.user._id})
+            .populate('block.building').
+        exec(function (err, user) {
+            if (err) return handleError(err);
+            res.json(user.block);
+        });
+    });
+
 
     app.post('/api/addBlock', function(req, res) {
 

@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController', 'buildingController',
-    'BlockService', 'UserService', 'BuildingService', 'ngRoute']);
+    'BlockService', 'UserService', 'BuildingService', 'DashboardService', 'ngRoute']);
 myApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
     .when("/", {
