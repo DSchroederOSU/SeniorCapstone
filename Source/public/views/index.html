@@ -19,15 +19,18 @@
     <script src="js/controllers/block-controller.js"></script> <!-- load up our controller -->
     <script src="js/controllers/building-controller.js"></script> <!-- load up our controller -->
     <script src="js/controllers/dashboard-controller.js"></script> <!-- load up our controller -->
+	<script src="js/controllers/map-controller.js"></script> <!-- load up our controller -->
     <script src="js/services/user-service.js"></script> <!--  load our user service -->
     <script src="js/services/building-service.js"></script> <!--  load our building service -->
     <script src="js/services/block-service.js"></script> <!--  load our block service -->
     <script src="https://d3js.org/d3.v4.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="js/core.js"></script> <!-- load our main application -->
     <link rel="stylesheet" type="text/css" href="../custom-style.css">
 
 </head>
-<body>
+<body class="body">
+
 <!--
 <div id="nav" class="w-100 p-3 " style="height: 56px;">
     <div ng-controller="mainController" ng-include="'/navigation'"></div>
@@ -38,9 +41,9 @@
 </div>
 
 
-<div class="container-fluid" ng-controller="mainController">
-    <div class="row" >
-        <div class="custom-side-nav navbar-fixed-side navbar-fixed-side-left pl-0 pr-0 col-sm-2 col-md-2" style="width: 160px; height: 100vh;">
+<div class="container-fluid" ng-controller="mainController" style=" border-top: 2px solid #DC4405;">
+    <div class="row">
+        <div class="custom-side-nav navbar-fixed-side navbar-fixed-side-left pl-0 pr-0 col-sm-2 col-md-2" style="width: 162px; height: 100vh;">
             <side-nav model="$parent"></side-nav>
         </div>
 
