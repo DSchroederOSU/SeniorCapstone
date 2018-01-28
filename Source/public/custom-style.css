@@ -178,9 +178,6 @@ i {
 	margin-top: 5px;
 }
 #map {
-    position: absolute; 
-    width: 105%; 
-    height: 400%;    
 	border-style: outset;
 	border-width: 4px;
 	border-radius: 3px;
