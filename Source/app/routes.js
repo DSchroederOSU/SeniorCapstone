@@ -1,5 +1,5 @@
 require('mongoose');
-
+var DB = require('../config/DBsampledata');
 var User = require('./models/user-schema');
 var Building = require('./models/building-schema');
 var xmlparser = require('express-xml-bodyparser');
@@ -35,6 +35,8 @@ module.exports = function (app, passport) {
     app.get('/login', function (req, res) {
         res.render('login.html'); // load the login.html file
     });
+
+    // Commented out routing for now since top-nav has alternative routing using basic in-html-file JS
     /*
     app.get('/About', function (req, res) {
         res.render('views/top-nav-views/about.html'); // load the about.html file
@@ -97,12 +99,15 @@ module.exports = function (app, passport) {
     // Receives post requests, converts from XML to JSON
     // the 'xmlparser' in parameters takes care of everything
     // Currently just sends result to body, but will change to target DB
-    app.post('/receive-xml', xmlparser({ trim: false, explicitArray: false }),function (req, res) {
+    app.post('/receive-xml', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
+       
+        console.log(req.body.das.devices.device.name);
+        DB.addEntryToDatabase(req.body);
         res.send(req.body);
+
     });
   
 }
-
 
 
 // route middleware to make sure a user is logged in

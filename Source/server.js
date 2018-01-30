@@ -19,7 +19,7 @@ require('./config/passport')(passport); // pass passport for configuration
 
 // configuration ===============================================================
 
-//mongoose.connect(process.env.MONGO_DATABASE_URL, { useMongoClient: true }); // connect to our database
+mongoose.connect(process.env.MONGO_DATABASE_URL, { useMongoClient: true }); // connect to our database
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
@@ -47,7 +47,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-require('./config/DBsampledata');
+
 
 // launch ======================================================================
 app.listen(port);
