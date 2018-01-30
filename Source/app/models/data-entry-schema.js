@@ -3,7 +3,7 @@ var dataEntrySchema = mongoose.Schema({
     meter_serial: String,
 
    
-        entry: [{
+      
             point: [{
                 number: Number,
                 name: String,
@@ -11,8 +11,7 @@ var dataEntrySchema = mongoose.Schema({
                 value: Number
             }],
             timestamp: { type: Date, required: true }
-        }]
-       
+
 
    
 });

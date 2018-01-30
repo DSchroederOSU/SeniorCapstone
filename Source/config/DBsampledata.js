@@ -12,66 +12,49 @@ var rec_center = ['Dixon Recreation Center'];
 var other = ['CH2M Hill Alumni Center', 'Memorial Union', 'Student Experience Center'];
 var exports = module.exports = {};
 
-exports.addEntryToDatabase = function (entry) {
-    addLibraryData('a');                                  
+exports.addBuildingToDatabase = (entry) => {
+    console.log(entry.das.devices.device.name);
+    console.log(Building.find({ serial: entry.serial }));
+    Building.findOne({ serial: entry.serial }, function (err, building) {
+        if (err)
+            return done(err);
+        if (building) {
+            return null;
+        } else {
+            console.log('Hello from inside if statement');
+            // if the building is not in our database, create a new building
+            var build = new Building();
+            // set all of the relevant information
+            build.name = entry.name
+            build.building_type = entry.building_type;
+            // serial can be used as identifier when adding data (data has serial # of AcquiSuite)
+            build.serial = entry.serial;
+            // save the building
+            build.save(function (err) {
+                if (err)
+                    throw err;
+                console.log("The building '" + build.name + "' has been added.");
+            });
+        }
+
+    });
+};
+
+exports.addEntryToDatabase = (entry) => {
+    /*
+    var data = new DataEntry();
+    data.point = entry.das.devices.device.records.record.point;
+    data.timestamp = entry.das.devices.device.records.record.time._;
+    res 
+    */
+};  
+    
    // var test = Building.count({ name: entry.das.devices.device.name });
     // console.log(test);
   
-};
-function addLibraryData(data) {
-   
-    /*
-    // if the building is not in our database, create a new building
-    var libBuilding = new Building();
-    // set all of the relevant information
-    libBuilding.name = library[0];
-    libBuilding.building_type = 'Library';
-    libBuilding.meter_id = Math.floor(Math.random() * 20000) + 10000;
-    libBuilding.data_entry.push({ date_time: new Date(), kw_hour: Math.floor(Math.random() * 4000) + 1000 });
-    libBuilding.data_entry.push({ date_time: new Date(), kw_hour: Math.floor(Math.random() * 4000) + 1000 });
-    libBuilding.data_entry.push({ date_time: new Date(), kw_hour: Math.floor(Math.random() * 4000) + 1000 });
-    libBuilding.data_entry.push({ date_time: new Date(), kw_hour: Math.floor(Math.random() * 4000) + 1000 });
-    // save the building
-    libBuilding.save(function (err) {
-        if (err)
-            throw err;
-        console.log("Document " + libBuilding.name + " added.");
 
-    });*/
-            
-    var count = 0;
-    for (res in res_halls) {
-        Building.findOne({ name: res_halls[count] }, function (err, building) {
-            if (err)
-                return done(err);
-            if (building) {
-                return null;
-            } else {
-                // if the building is not in our database, create a new building
-                var res = new Building();
-                // set all of the relevant information
-                res.name = res_halls[count];
-                res.building_type = 'Residence Hall/Dormitory';
-                res.meter_id = Math.floor(Math.random() * 20000) + 10000;
-                res.data_entry.push({ date_time: new Date(), kw_hour: Math.floor(Math.random() * 4000) + 1000 });
-                res.data_entry.push({ date_time: new Date(), kw_hour: Math.floor(Math.random() * 4000) + 1000 });
-                res.data_entry.push({ date_time: new Date(), kw_hour: Math.floor(Math.random() * 4000) + 1000 });
-                res.data_entry.push({ date_time: new Date(), kw_hour: Math.floor(Math.random() * 4000) + 1000 });
-                // save the building
-                res.save(function (err) {
-                    if (err)
-                        throw err;
-                    console.log("Document " + res.name + " added.");
 
-                });
-            }
-            count++;
 
-        });
-    }        
-        
-    
-}
 
 
 /*

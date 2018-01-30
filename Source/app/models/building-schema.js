@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 var buildingSchema = mongoose.Schema({
     name: String,
+    building_type: String,
     serial: String,
-    build_type: String,
     data_entry: [{
-        entry: { type: mongoose.Schema.ObjectId, ref: 'DataEntry' },
-       timestamp: { type: Date, required: true }
+        entry:      { type: mongoose.Schema.ObjectId, ref: 'DataEntry' },
+        timestamp:  { type: Date }
     }]
 });
 

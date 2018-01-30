@@ -101,12 +101,19 @@ module.exports = function (app, passport) {
     // Currently just sends result to body, but will change to target DB
     app.post('/receive-xml', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
        
-        console.log(req.body.das.devices.device.name);
+        //console.log(req.body.das.devices.device.name);
         DB.addEntryToDatabase(req.body);
         res.send(req.body);
 
     });
-  
+    app.post('/addBuilding', function (req, res) {
+
+       
+        DB.addBuildingDatabase(req.body);
+        res.send(req.body);
+
+    });
+
 }
 
 
