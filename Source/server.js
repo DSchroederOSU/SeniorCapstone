@@ -14,6 +14,8 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
+var mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost:27017/");
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -47,7 +49,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
-require('./config/DBsampledata');
+
 
 // launch ======================================================================
 app.listen(port);
