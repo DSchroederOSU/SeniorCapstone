@@ -183,9 +183,10 @@ i {
 	border-radius: 3px;
 }
 .body {
-	font-family: 'Open sans',sans-serif;
+	font-family: 'Open sans',sans-serif; 
+	background-image: url("assets/dust.png"); 
 }
 
 .text-orange{
-    color: #DC4405;
+    color: #DC4405; 
 }
