@@ -1,10 +1,11 @@
 require('mongoose');
-var DB = require('../config/DBsampledata');
+var DB = require('../config/DBFuncs.js');
 var User = require('./models/user-schema');
 var Building = require('./models/building-schema');
 var xmlparser = require('express-xml-bodyparser');
 var parseString = require('xml2js').parseString;
-
+var mongojs = require('mongojs');
+var db = mongojs('buildings');
 module.exports = function (app, passport) {
    
     app.get('/api/google_user', function (req, res) {
@@ -107,6 +108,12 @@ module.exports = function (app, passport) {
         res.send(req.body);
        
 
+    });
+    app.get('/showBuildings' ,function (req,res) {
+        db.buildings.find(function (err, docs) {
+            console.log(docs);
+            res.json(docs);
+        })
     });
     app.post('/addBuilding', function (req, res) {
 
