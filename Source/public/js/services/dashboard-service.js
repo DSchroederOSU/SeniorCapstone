@@ -3,10 +3,10 @@ angular.module('DashboardService', [])
 
 // super simple service
 // each function returns a promise object
-    .factory('AddBlock', function($http) {
+    .factory('AddDashboard', function($http) {
         return {
-            create : function(blockData) {
-                return $http.post('/api/addBlock', blockData);
+            create : function(dashboardData) {
+                return $http.post('/api/addDashboard', dashboardData);
             }
         }
     })

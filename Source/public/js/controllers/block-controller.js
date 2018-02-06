@@ -54,7 +54,4 @@ angular.module('blockController', [])
             .success(function(data) {
                 $scope.userBlocks = data;
             });
-
-
-
     });
