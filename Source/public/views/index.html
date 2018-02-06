@@ -2,7 +2,7 @@
 <!doctype html>
 <html ng-app="myApp">
 <head>
-    <title>(TEMP SITE NAME)</title>
+    <title>OSU Energy Dashboard</title>
     <link rel="shortcut icon" href="../assets/logo.png">
     <style>
         body        {word-wrap:break-word; }
@@ -19,15 +19,19 @@
     <script src="js/controllers/block-controller.js"></script> <!-- load up our controller -->
     <script src="js/controllers/building-controller.js"></script> <!-- load up our controller -->
     <script src="js/controllers/dashboard-controller.js"></script> <!-- load up our controller -->
+	<script src="js/controllers/map-controller.js"></script> <!-- load up our controller -->
     <script src="js/services/user-service.js"></script> <!--  load our user service -->
     <script src="js/services/building-service.js"></script> <!--  load our building service -->
     <script src="js/services/block-service.js"></script> <!--  load our block service -->
+    <script src="js/services/dashboard-service.js"></script> <!--  load our dashboard service -->
     <script src="https://d3js.org/d3.v4.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="js/core.js"></script> <!-- load our main application -->
     <link rel="stylesheet" type="text/css" href="../custom-style.css">
 
 </head>
-<body>
+<body class="body container-fluid p-0">
+
 <!--
 <div id="nav" class="w-100 p-3 " style="height: 56px;">
     <div ng-controller="mainController" ng-include="'/navigation'"></div>
@@ -38,9 +42,9 @@
 </div>
 
 
-<div class="container-fluid" ng-controller="mainController">
-    <div class="row" >
-        <div class="custom-side-nav navbar-fixed-side navbar-fixed-side-left pl-0 pr-0 col-sm-2 col-md-2" style="width: 160px; height: 100vh;">
+<div class="container-fluid" ng-controller="mainController" style=" border-top: 2px solid #DC4405;">
+    <div class="row">
+        <div class="custom-side-nav navbar-fixed-side navbar-fixed-side-left pl-0 pr-0 col-sm-2 col-md-2" style="width: 162px; height: 100vh;">
             <side-nav model="$parent"></side-nav>
         </div>
 
@@ -50,9 +54,10 @@
              ng-class="dashboardClass">
         </div>
 
-        <main role="main" class="col-sm-10 col-md-10 pt-3" style="margin-left: 160px;">
-            <div ng-view></div>
+        <main role="main" class="container-fluid pt-3" style="margin-left: 160px;">
+            <div class="p-0 ml-4 mr-4" ng-view>
 
+            </div>
         </main>
     </div>
 </div>

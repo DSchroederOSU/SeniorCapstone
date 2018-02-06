@@ -1,15 +1,22 @@
+
 require('mongoose');
 var DB = require('../config/DBFuncs.js');
-var User = require('./models/user-schema');
-var Building = require('./models/building-schema');
 var xmlparser = require('express-xml-bodyparser');
 var parseString = require('xml2js').parseString;
-var mongojs = require('mongojs');
-var db = mongojs('buildings');
-module.exports = function (app, passport) {
-   
-    app.get('/api/google_user', function (req, res) {
-        if (req.user) {
+var User = require('./models/user-schema');
+var Building = require('./models/building-schema');
+var Dashboard = require('./models/dashboard-schema');
+var Block = require('./models/block-schema');
+module.exports = function(app, passport) {
+
+    app.get('/', function (req, res) {
+
+        res.render('index.html'); // load the index.html file
+    });
+
+    app.get('/api/google_user', function(req, res) {
+        if (req.user){
+
             res.json(req.user.google);
         }
         else {
@@ -24,11 +31,6 @@ module.exports = function (app, passport) {
         });
     });
 
-    app.get('/', function (req, res) {
-
-        res.render('index.html'); // load the index.html file
-    });
-
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
     });
@@ -36,6 +38,7 @@ module.exports = function (app, passport) {
     app.get('/login', function (req, res) {
         res.render('login.html'); // load the login.html file
     });
+
 
     // Commented out routing for now since top-nav has alternative routing using basic in-html-file JS
     /*
@@ -47,18 +50,54 @@ module.exports = function (app, passport) {
     });
    */
 
-    app.get('/api/getUserBlocks', function (req, res) {
-        User.findOne({ _id: req.user._id })
-            .populate('block.building').
-            exec(function (err, user) {
+
+    // =====================================================================
+    ///////////////////////////////BLOCK API////////////////////////////////
+    // =====================================================================
+    app.get('/api/getUserBlocks', function(req, res) {
+        User.findOne({_id : req.user._id})
+            .populate({
+                path: 'blocks',
+                populate: {path: 'building'}
+            })
+            .exec(function (err, user) {
                 if (err) return handleError(err);
-                res.json(user.block);
-            });
+                res.json(user.blocks);
+        });
     });
 
-    app.post('/api/addBlock', function (req, res) {
-
+    app.post('/api/addBlock', function(req, res) {
         var user = req.user;
+        var block = new Block();
+        // set all of the relevant information
+        block.name = req.body.name;
+        block.created_by = user;
+        block.building = req.body.buildings;
+        block.chart = req.body.chart;
+        block.variable  = "Killowatts/Hr";
+        // save the building
+        block.save(function(err, savedBlock) {
+            if (err)
+                throw err;
+            else {
+                user.blocks.push(savedBlock);
+                user.save(function(err) {
+                    if (err)
+                        throw err;
+                });
+                res.json(user);
+            }
+        });
+    });
+
+
+    // =====================================================================
+    /////////////////////////////DASHBOARD API//////////////////////////////
+    // =====================================================================
+    app.post('/api/addDashboard', function(req, res) {
+        console.log(req.body);
+        var user = req.user;
+
         var new_block = {
             name: req.body.name,
             building: req.body.buildings,
@@ -73,7 +112,35 @@ module.exports = function (app, passport) {
                 return block.name == new_block.name;
             });
             res.json(result);
-        });
+   });
+
+        var dashboard = new Dashboard();
+        dashboard.name = req.body.name;
+        dashboard.description = req.body.description;
+        dashboard.created_by = user;
+        dashboard.blocks = req.body.blocks;
+        dashboard.save(function(err, savedDashboard) {
+            if (err)
+                throw err;
+            else{
+                user.dashboards.push(savedDashboard);
+                user.save(function(err) {
+                    if (err)
+                        throw err;
+                });
+                res.json(user);
+            }
+
+     
+    });
+
+    app.get('/api/getDashboards', function(req, res) {
+        User.findOne({_id : req.user._id})
+            .populate('dashboards')
+            .exec(function (err, user) {
+                if (err) return handleError(err);
+                res.json(user.dashboards);
+            });
     });
 
     // =====================================
@@ -134,4 +201,11 @@ function isLoggedIn(req, res, next) {
 
     // if they aren't redirect them to the home page
     res.redirect('/');
-    };
+
+}
+
+
+function saveBlock(blockData){
+
+}
+

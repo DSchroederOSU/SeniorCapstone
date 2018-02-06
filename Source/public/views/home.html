@@ -1,32 +1,17 @@
-<br>
-<h1 style="text-align: center;">Oregon State University</h1>
-<h3 style="text-align: center;">Campus Building Energy Usage Information</h3>
-<br>
-
-<!-- CODE BELOW TAKEN FROM GOOGLE MAPS API TUTORIAL-->
-<style>
-       #map {
-        height: 400px;
-        width: 100%;
-       }
-    </style>
-
-
-    <h3>My Google Maps Demo</h3>
-    <div id="map"></div>
-    <script>
-      function initMap() {
-        var uluru = {lat: -25.363, lng: 131.044};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKxW3DyqWrROr75kUe7yW75_qXkrQ_fTQ&callback=initMap">
-    </script>
+<div class="container-fluid p-0">
+<div class="row w-100 m-0" >
+	<div class="col-sm-6 mx-auto text-center">
+	<h1 class="header">Oregon State University</h1>
+	<h5 class="header" >Campus Building Energy Usage Information</h5>
+	</div>
+</div>
+<div class="row pt-3 w-100 m-0" >
+<div class="col-sm-10 mx-auto">
+	<div class="container" style="height:450px;">
+	<ons-navigator ng-controller="mapController">
+		<div class="d-block" style="height: 100%" id="map"></div>
+	</ons-navigator>
+	</div>
+</div>
+</div>
+</div>
