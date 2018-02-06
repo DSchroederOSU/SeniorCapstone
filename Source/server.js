@@ -14,8 +14,7 @@ var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
-var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/");
+
 
 require('./config/passport')(passport); // pass passport for configuration
 
