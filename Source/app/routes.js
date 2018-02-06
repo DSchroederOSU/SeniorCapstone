@@ -97,23 +97,6 @@ module.exports = function(app, passport) {
     app.post('/api/addDashboard', function(req, res) {
         console.log(req.body);
         var user = req.user;
-
-        var new_block = {
-            name: req.body.name,
-            building: req.body.buildings,
-            chart: req.body.chart,
-            variable: "Killowatts/Hr"
-        };
-        user.block.push(new_block);
-        user.save(function (err) {
-            if (err)
-                throw err;
-            var result = user.block.filter(function (block) {
-                return block.name == new_block.name;
-            });
-            res.json(result);
-   });
-
         var dashboard = new Dashboard();
         dashboard.name = req.body.name;
         dashboard.description = req.body.description;
