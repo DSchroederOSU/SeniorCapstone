@@ -1,44 +1,54 @@
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
 var Building = require('../app/models/building-schema');
 var DataEntry = require('../app/models/data-entry-schema');
+var mongojs = require('mongojs');
+var db = mongojs('buildings');
 
-var academic_halls = ['Dryden Hall','Kelley Engineering Center', 'Milam Hall', 'Nash Hall', 'Weniger Hall'];
-var res_halls = ['Bloss Hall', 'Buxton Hall', 'Callahan Hall', 'Cauthorn Hall', 'Finley Hall', 'Halsell Hall', 'Hawley Hall',
-        'International Living Learning Center', 'McNary Hall', 'Poling Hall', 'Sackett Hall', 'Tebeau Hall',
-        'Weatherford Hall', 'West Hall', 'Wilson Hall'];
-var data_center = ['Marketplace West Dining Center', 'Milne Computing Center'];
-var dining_facility = ['Arnold Dining Center'];
-var library = ['Valley Library'];
-var rec_center = ['Dixon Recreation Center'];
-var other = ['CH2M Hill Alumni Center', 'Memorial Union', 'Student Experience Center'];
 var exports = module.exports = {};
+var mongoose = require("mongoose");
+mongoose.createConnection("mongodb://localhost:27017/");
 
 exports.addBuildingToDatabase = (entry) => {
-    console.log(entry.das.devices.device.name);
-    console.log(Building.find({ serial: entry.serial }));
-    Building.findOne({ serial: entry.serial }, function (err, building) {
-        if (err)
-            return done(err);
-        if (building) {
-            return null;
+    console.log(entry.building.name);
+    console.log(entry.building.serial);
+    
+    // If entry exists in DB already, using serial as match, return from function
+    /*db.collection('buildingsqwerw', (err,collection) => {
+        if (err){
+            throw err;
         } else {
-            console.log('Hello from inside if statement');
-            // if the building is not in our database, create a new building
-            var build = new Building();
-            // set all of the relevant information
-            build.name = entry.name
-            build.building_type = entry.building_type;
-            // serial can be used as identifier when adding data (data has serial # of AcquiSuite)
-            build.serial = entry.serial;
-            // save the building
-            build.save(function (err) {
-                if (err)
-                    throw err;
-                console.log("The building '" + build.name + "' has been added.");
-            });
+            console.log("no error");
+            collection.find();
         }
-
-    });
+    })*/
+    //db.buildings.find();
+    var test = new Building();
+//    db.buildings.findOne({
+//     name:   mongojs.toString('Valley Lib')
+// }, function(err, doc) {
+//    console.log(doc);
+  
+// });
+    db.building.find(function (err, docs) {
+        console.log(docs)
+    })
+    // if the building is not in our database, create a new building
+    var build = new Building();
+    // set all of the relevant information
+    build.name = entry.building.name
+    build.building_type = entry.building.building_type;
+    // serial can be used as identifier when adding data (data has serial # of AcquiSuite)
+    build.serial = entry.building.serial;
+    // save the building
+    build.save()
+        .catch( err => {res.status(400).send("unable to save to database");})
+       
+    console.log("The building '" + entry.building.name + "' has been added.");
+    
 };
+
+  
 
 exports.addEntryToDatabase = (entry) => {
     /*
