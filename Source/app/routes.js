@@ -69,9 +69,29 @@
                     if (err)
                         throw err;
                 });
-                res.json(user);
+                res.send("success");
             }
         });
+    });
+
+    app.post('/api/deleteBlock', function(req, res) {
+        User.findOne({_id : req.user._id}, function(err, user) {
+            console.log(user);
+            console.log(user.blocks);
+            console.log(req.body);
+            user.blocks.pull(req.body._id);
+            user.save(function (err) {
+                if (err) return handleError(err);
+                console.log('the sub-doc was removed')
+            });
+            Block.remove({_id : req.body._id}, function (err) {
+                if (err) return handleError(err);
+                console.log('the sub-doc was removed')
+            });
+        });
+
+
+
     });
 
     // =====================================================================
@@ -107,6 +127,7 @@
                 res.json(user.dashboards);
             });
     });
+
 
     // =====================================
     // GOOGLE ROUTES =======================
