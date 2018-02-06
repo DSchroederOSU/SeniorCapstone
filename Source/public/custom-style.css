@@ -183,9 +183,42 @@ i {
 	border-radius: 3px;
 }
 .body {
-	font-family: 'Open sans',sans-serif;
+	font-family: 'Stratum2-Light';
+	background-image: url("assets/dust.png"); 
 }
-
-.text-orange{
-    color: #DC4405;
+.rufina-stencil-regular {
+	font-family: 'rufina-stencil-regular';
+}
+.Stratum2-Light {
+	font-family: 'Stratum2-Light';
+}
+.Stratum2-Thin {
+	font-family: 'Stratum2-Thin';
+}
+.text-orange {
+    color: #DC4405; 
+}
+.border-orange{
+	border: 2px solid #DC4405;"
+}
+.border-bottom-orange{
+	border-bottom: 2px solid #DC4405;"
+}
+@font-face {
+  font-family: 'rufina-stencil-regular';
+  src: url('assets/fonts/rufina-stencil-regular.otf') format('opentype'),
+       url('assets/fonts/rufina-stencil-regular.woff') format('opentype'),
+       url('assets/fonts/rufina-stencil-regular.woff2') format('opentype');
+}
+@font-face {
+  font-family: 'Stratum2-Thin';
+  src: url('assets/fonts/Stratum2-Thin.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Stratum2-Light';
+  src: url('assets/fonts/Stratum2-Light.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Stratum2-Bold';
+  src: url('assets/fonts/Stratum2-Bold.otf') format('opentype');
 }

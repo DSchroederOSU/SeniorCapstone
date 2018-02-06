@@ -1,11 +1,15 @@
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #121212;  border-bottom: 2px solid #DC4405;">
-        <a class="navbar-brand" href="#" style="width: 90px; font-size: 80%; font-weight: bold;">OSU Energy Dashboard</a>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top border-bottom-orange" style="background-color: #121212;">
+		<div style="width: 150px; font-family: 'Stratum2-Bold';">
+			<a class="navbar-brand" href="#" style="font-size: 80%; font-weight: bold; position: absolute; top: 0%; left: 10px;">OSU</a>
+			<a class="navbar-brand" href="#" style="font-size: 80%; font-weight: bold; position: absolute; top: 25%; left: 10px;">Energy</a>
+			<a class="navbar-brand" href="#" style="font-size: 80%; font-weight: bold; position: absolute; top: 50%; left: 10px;">Dashboard</a>
+		</div>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navBarDefault" aria-controls="navBarDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 		<img src="assets/logo.png" alt="HTML5 Icon" id="logo">
-        <div class="collapse navbar-collapse" id="navBarDefault" style="margin-left: 40px;">
+        <div class="collapse navbar-collapse" id="navBarDefault" style="margin-left: 0;">
             <ul class="navbar-nav mr-auto">
 			
                 <li class="nav-item">
@@ -26,6 +30,7 @@
         </div>
     </nav>
 </header>
+
 <script>
     $( '#navBarDefault a' ).on( 'click', function () {
         if( this.id == 'topHome'){
