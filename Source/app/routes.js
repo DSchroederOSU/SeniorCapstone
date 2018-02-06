@@ -149,12 +149,13 @@ module.exports = function(app, passport) {
     // Receives post requests, converts from XML to JSON
     // the 'xmlparser' in parameters takes care of everything
     // Currently just sends result to body, but will change to target DB
-    app.post('/receive-xml', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
+    app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
        
         // console.log(req.body.das.devices.device.name);
-    //    DB.addEntryToDatabase(req.body);
+        //    DB.addEntryToDatabase(req.body);
        // using addBuilding right now to test xml since it's more simple
-        addBuildingToDatabase(req.body);
+       // addBuildingToDatabase(req.body);
+       findBuilding(req.body);
         res.send(req.body);
        
 
@@ -166,9 +167,9 @@ module.exports = function(app, passport) {
         })
     });
     app.post('/addBuilding', function (req, res) {
-
-       
-        addBuildingDatabase(req.body);
+        
+      console.log(req.body.name);
+       addBuildingDatabase(req.body);
         res.send(req.body);
 
     });
@@ -202,6 +203,12 @@ function addBuildingToDatabase(entry) {
               console.log('Nothing was added');     
         });
   };
+  function findBuilding(entry){
+      console.log(entry.das.devices.device.name);
+      Building.findOne({name: entry.das.devices.device.name}, function (err, docs) {
+          console.log(docs);
+      });
+  }
   
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
