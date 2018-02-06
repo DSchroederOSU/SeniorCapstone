@@ -181,14 +181,12 @@ i {
 	border-style: outset;
 	border-width: 4px;
 	border-radius: 3px;
-}   
-h1, h2, h3, h4, h5, h6 {
-	font-family: "Rufina Stencil Bold" !important;
-	text-align: center;
-	font-weight: bold;
+}
+.body {
+	font-family: 'Open sans',sans-serif; 
+	background-image: url("assets/dust.png"); 
 }
 
-.body {
-	font-family: 'Open sans',sans-serif;
-	background-image: url("assets/dust.png");
+.text-orange{
+    color: #DC4405; 
 }
