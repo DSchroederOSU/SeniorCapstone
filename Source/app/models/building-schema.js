@@ -5,7 +5,7 @@ var buildingSchema = mongoose.Schema({
     serial: String,
     data_entry: [{
         entry:      { type: mongoose.Schema.ObjectId, ref: 'DataEntry' },
-        timestamp:   Date
+        timestamp: { type: Date, required: true }
     }]
 });
 
