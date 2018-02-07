@@ -7,7 +7,7 @@ var Building = require('./models/building-schema');
 var Dashboard = require('./models/dashboard-schema');
 var Block = require('./models/block-schema');
 module.exports = function(app, passport) {
-
+    
     app.get('/', function (req, res) {
 
         res.render('index.html'); // load the index.html file
@@ -79,12 +79,24 @@ module.exports = function(app, passport) {
             if (err)
                 throw err;
             else {
-                user.blocks.push(savedBlock);
-                user.save(function(err) {
-                    if (err)
-                        throw err;
-                });
-                res.json(user);
+            
+                User.findByIdAndUpdate(
+                    { _id: user._id},
+                    { $push:{
+                        blocks: savedBlock
+                        }
+                    },
+                    {
+                        safe: true,
+                        upsert: true,
+                        new: true
+                    },
+                    function (err,res){
+                        if (err)
+                            throw(err);
+                    }
+                 );
+              
             }
         });
     });
@@ -150,12 +162,8 @@ module.exports = function(app, passport) {
     // the 'xmlparser' in parameters takes care of everything
     // Currently just sends result to body, but will change to target DB
     app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
-       
-        // console.log(req.body.das.devices.device.name);
-        //    DB.addEntryToDatabase(req.body);
-       // using addBuilding right now to test xml since it's more simple
-       // addBuildingToDatabase(req.body);
-       findBuilding(req.body);
+      
+       console.log(findBuilding(req.body.das.devices.device.name,req.body.das.serial));
         res.send(req.body);
        
 
@@ -203,10 +211,12 @@ function addBuildingToDatabase(entry) {
               console.log('Nothing was added');     
         });
   };
-  function findBuilding(entry){
-      console.log(entry.das.devices.device.name);
-      Building.findOne({name: entry.das.devices.device.name}, function (err, docs) {
-          console.log(docs);
+  function findBuilding(name, serial){
+      console.log(name);
+      console.log(serial);
+      Building.findOne({serial: serial}, function (err, docs) {
+        console.log(docs) 
+        // return JSON.parse(docs);
       });
   }
   
