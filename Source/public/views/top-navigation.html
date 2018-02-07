@@ -1,30 +1,42 @@
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: #121212;  border-bottom: 2px solid #DC4405;">
-        <a class="navbar-brand" href="#" style="width: 90px; font-size: 80%; font-weight: bold;">OSU Energy Dashboard</a>
-        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navBarDefault" aria-controls="navBarDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-		<img src="assets/logo.png" alt="HTML5 Icon" id="logo">
-        <div class="collapse navbar-collapse" id="navBarDefault" style="margin-left: 40px;">
-            <ul class="navbar-nav mr-auto">
-			
-                <li class="nav-item">
-                    <a id="topHome" class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#about">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contact</a>
-                </li>
-            </ul>
-            <span class="navbar-text pr-3 ">
-                {{$parent.greeting}}
-            </span>
-            <a href="/login" class="btn btn-md" role="button" aria-pressed="true" id="login">{{$parent.login_status}}</a>
 
-        </div>
-    </nav>
+	<div class="row">
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top border-bottom-orange px-2" style="background-color: #121212; padding: 28px;">
+		
+			<object class="svg" type="image/svg+xml" data="assets/svg/logo.svg">
+				Your browser does not support SVG
+			</object>
+
+			<div class="Stratum2-Light text-center select-none text-orange absolute container-fluid" style="margin-left: 71px">
+					<h5 class="m-auto" id="top-nav-title"><a class="nav-link text-orange select-none" onMouseOver="this.style.color='#DC4405'" href="#">OSU Energy Dashboard</a></h5>
+			</div>
+			
+			<div class="collapse navbar-collapse text-center ml-sidenav absolute">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a id="topHome" class="nav-link" href="#">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#about">About</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#contact">Contact</a>
+					</li>
+				</ul>
+			</div>
+			
+			
+			
+			<button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navBarDefault" aria-controls="navBarDefault" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<span class="navbar-text pr-3" id="login-greeting">
+				{{$parent.greeting}}
+			</span>
+			<a href="/login" class="btn btn-md py-1 px-4 Stratum2-Bold" role="button" aria-pressed="true" id="login">{{$parent.login_status}}</a>
+		</nav>
+	</div>
 </header>
 
 <script>
