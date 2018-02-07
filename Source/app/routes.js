@@ -74,7 +74,7 @@ module.exports = function(app, passport) {
         block.building = req.body.buildings;
         block.chart = req.body.chart;
         block.variable  = "Killowatts/Hr";
-        // save the building
+        // save the blocks
         block.save(function(err, savedBlock) {
             if (err)
                 throw err;
