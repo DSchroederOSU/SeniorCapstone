@@ -1,55 +1,92 @@
 \documentclass[letterpaper,10pt,serif,draftclsnofoot,onecolumn,compsoc,titlepage]{IEEEtran}
-
-\usepackage{graphicx}                                        
-\usepackage{amssymb}                                         
-\usepackage{amsmath}                                         
-\usepackage{amsthm}                                          
-\usepackage{cite}
-\usepackage{alltt}                                           
+\usepackage[margin=0.75in]{geometry} 
+\usepackage{pdfpages} 
+\usepackage{graphicx}  
+\usepackage{caption} 
 \usepackage{float}
-\usepackage{color}
-\usepackage[hyphens]{url}
-\usepackage{pgfgantt}
-\usepackage{rotating}
-\usepackage{enumitem}
-\usepackage{gensymb}
-\usepackage[T1]{fontenc}
-
-\usepackage{balance}
-\usepackage[TABBOTCAP, tight]{subfigure}
-\usepackage{enumitem}
-
-\usepackage{geometry}
-\geometry{margin=.75in}
+\graphicspath{/images}
+\usepackage{url}
+\usepackage{setspace}
 \usepackage{hyperref}
-\usepackage{breakurl}
-%\usetikzlibrary{shapes, positioning, calc}
-\usepackage{caption}
-\usepackage{listings}
-%\usepackage[utf8]{inputenc}
-%pull in the necessary preamble matter for pygments output
+\usepackage{changepage}% http://ctan.org/pkg/changepage
 
-\usepackage{listings}
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
+  %pull in the necessary preamble matter for pygments output
+\input{pygments.tex}
 
-\lstset{frame=tb,
-  %language=Java,
-  aboveskip=3mm,
-  belowskip=3mm,
-  showstringspaces=false,
-  columns=flexible,
-  basicstyle={\small\ttfamily},
-  numbers=none,
-  %numberstyle=\tiny\color{gray},
-  %keywordstyle=\color{blue},
-  %commentstyle=\color{dkgreen},
-  %stringstyle=\color{mauve},
-  breaklines=true,
-  breakatwhitespace=true,
-  tabsize=3
+%% The following metadata will show up in the PDF properties
+\usepackage{listings}
+\usepackage{color}
+\definecolor{lightgray}{rgb}{0.95, 0.95, 0.95}
+\definecolor{darkgray}{rgb}{0.4, 0.4, 0.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+\definecolor{ocherCode}{rgb}{1, 0.5, 0} % #FF7F00 -> rgb(239, 169, 0)
+\definecolor{blueCode}{rgb}{0, 0, 0.93} % #0000EE -> rgb(0, 0, 238)
+\definecolor{greenCode}{rgb}{0, 0.6, 0} % #009900 -> rgb(0, 153, 0) 
+\usepackage{upquote}
+\usepackage{listings}
+\makeatletter
+\lstdefinelanguage{HTML5}{
+sensitive=true,
+keywords={%
+% JavaScript
+ng-src, ng-repeat, typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break,
+% HTML
+html, title, meta, style, head, body, script, canvas,
+% CSS
+border:, transform:, -moz-transform:, transition-duration:, transition-property:,
+transition-timing-function:
+},
+% http://texblog.org/tag/otherkeywords/
+otherkeywords={<, >, \/},   
+ndkeywords={class, export, boolean, throw, implements, import, this},   
+comment=[l]{//}, 
+% morecomment=[s][keywordstyle]{<}{>},  
+morecomment=[s]{/*}{*/},
+morecomment=[s]{<!}{>},
+morestring=[b]',
+morestring=[b]",    
+alsoletter={-},
+alsodigit={:}
 }
+\lstset{%
+% Basic design
+backgroundcolor=\color{lightgray},
+basicstyle={\small\ttfamily},   
+frame=l,
+% Line numbers
+xleftmargin={0.75cm},
+numbers=left,
+stepnumber=1,
+firstnumber=1,
+numberfirstline=true,
+% Code design
+identifierstyle=\color{black},
+keywordstyle=\color{blue}\bfseries,
+ndkeywordstyle=\color{greenCode}\bfseries,
+stringstyle=\color{ocherCode}\ttfamily,
+commentstyle=\color{darkgray}\ttfamily, 
+% Code 
+tabsize=1,
+showtabs=false,
+showspaces=false,
+showstringspaces=false,
+extendedchars=true,
+breaklines=true
+}
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+} 
 
 %% The following metadata will show up in the PDF properties
 \hypersetup{
@@ -59,7 +96,7 @@
    urlcolor = black,
    breaklinks = true,
    pdfauthor = {Daniel Schroeder, Aubrey Thenell, Parker Bruni},
-   pdfkeywords = {CS462 "Senior Project" Progress Report},
+   pdfkeywords = {CS462 Senior Project Progress Report},
    pdftitle = {CS462 Winter Midterm Progress Report},
    pdfsubject = {CS462 Winter Midterm Progress Report},
    pdfpagemode = UseNone
@@ -107,23 +144,126 @@
 \newpage
 
 \section{Introduction}
-
 \subsection{Purpose}
-
-
 \subsection{Scope}
-
 \subsection{Overview}
-This document provides a recap of the progress made on our project during the 
-Winter 2018 term. \\
-
+This document provides a recap of the progress made on our project during the Winter 2018 term. \\
 Update this section \\ 
-
 \section{Contributor: Daniel Schroeder} 
 \subsection{Describe where you are currently on the project}
+Since the end of fall term, I have implemented 3/4 main components of the application with database functionality and data-binding working. These components include Buildings, Blocks, and Dashboards. In addition, I generated important mongoose.js and AngularJS code for listing and binding User-stored data to the page and saving documents created by the user. I got Google oAuth working on the application with user objects referenced by Google API tokens and generated user sessions throughout the application with passport.js. 
+\subsubsection{Buildings}
+The building components are data models stored in the database with a name, type, id, serial, and array of data points. To generate these components, we needed to store the data along with building images and create a page to display them all. To accomplish this, I scraped the internet for a photo of each building we needed in the application and stored them in our assets folder with a name that corresponds to the document name in the database. On the ``/buildings'' page, a building service retrieves all the building objects from the database which are then iterated and repeated using AngularJS directives. The outcome is a precise, columned list of card components that link to specific building pages and display the object's name and photo. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=17cm]{images/buildings.eps}
+  \caption{A screen shot of the building components being listed by the ng-repeat AngularJS directive.}
+\end{figure}
+Some clever code used for the building components includes a regular expression used to parse the building name and convert it to the image address for the photo. As shown below, each building component has an ``\textless img\textgreater'' tag inside its card which calls a controller function ``getImageAddress''. This function executes a regular expression in the controller based on the building object passed in from the view.
+
+\begin{lstlisting}[language=HTML5]
+<!--buildings.html-->
+<div class="card-body ml-3">
+  <h5 class="card-title">{{building.name}}</h5>
+  <div class="rounded mx-auto mt-3" style="height: 100px; width: 100px;">
+      <img class="rounded" ng-src="{{getImageAddress(building)}}" alt="">
+  </div>
+  <p class="mt-3"><b>Type: </b>{{building.building_type}}</p>
+  <p><b>Meter ID: </b>{{building.meter_id}}</p>
+  <a ng-click="viewBuilding(building)" href="#viewBuilding" class="...">View</a>
+</div>
+\end{lstlisting}
+\begin{lstlisting}[language=JavaScript]
+//building-controller.js
+$scope.getImageAddress = function(building) {
+  return "../assets/buildings/"+building.name.replace(/\s+/g, '-').toLowerCase()+".jpg";
+};
+\end{lstlisting}
+These building components will be publicly viewable and each building card has a ``view'' button which links to the individualized building page. These individual pages will contain (have yet to be completed) information about the building like photos, name, and type, and a personalized report for the specific building with consumption information and charts.
+\subsubsection{Blocks}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=17cm]{images/block-example.eps}
+  \caption{A screen shot of a block component created by the user with three building objects.}
+\end{figure}
+The block components I built are the ``building blocks'' of user dashboard and the hub for user created graphs/reports. A Block object contains an array of buildings, a graph, and a name. A block generates a specific type of graph based on the building(s) selected and the type of graph the user selected. The D3.js visualizations have not been implemented yet, but each block will retrieve and parse the data for each building it holds and generate a D3.js visualization. These graphs can range from simple consumption over time line graphs, to comparison graphs between multiple buildings.\\
+
+\noindent To implement these components, I had to create a model schema, build a create form page, and design the UI. Additionally, I needed to create controller functions and AngularJS services to handle data creation, retrieval, and storing. We wanted a way to keep track of which blocks were created by which users, so in addition to a Blocks table in the database, each user has an array of type Block within their user object that gets pushed to and pulled from on creation or deletion. This architecture make data retrieval much simpler for a few reasons:
+\begin{itemize}
+  \item Do not need to iterate through the entire Block table when retrieving user blocks.
+  \item Mongoose.js has a .populate function that populates sub-documents referenced by other documents. 
+  \item Block retrieval service can be user-specific.
+\end{itemize}
+To elaborate more on this style of NoSQL database management, I will show our User and Block schemas and explain how I implemented the storing and retrieval.
+\begin{lstlisting}[language=JavaScript]
+var blockSchema = mongoose.Schema({
+  name         : String,
+  created_by   : {type:mongoose.Schema.ObjectId, ref: 'User'},
+  building     : [{type:mongoose.Schema.ObjectId, ref: 'Building'}],
+  chart        : String,
+  variable     : String
+});
+
+var userSchema = mongoose.Schema({
+  google           : {
+      id           : String,
+      token        : String,
+      email        : String,
+      name         : String
+  },
+  blocks           : [{type:mongoose.Schema.ObjectId, ref: 'Block'}],
+  dashboards       : [{type:mongoose.Schema.ObjectId, ref: 'Dashboard'}]
+});
+\end{lstlisting}
+The User schema defines a User as having an array of block objects and an array of Dashboard objects (defined by the ``[ ]'' in the attribute definition). One thing to notice is the mongoose syntax for referencing another schema with the definition mongoose.Schema.ObjectId. This is the mongoose equivalent of setting a foreign key. When we push a document to the User.block array, the Building.\_id will be stored in this building array, effectively creating what mongoose likes to call a subdocument. More explicitly: ``Subdocuments are documents embedded in other documents. In Mongoose, this means you can nest schemas in other schemas''\cite{mongoose}. Creating a ``relational database'' like this with NoSQL allowed me to generate simple queries in our API route handlers that found a User, populated all the referencing sub-documents, and returned the resulting JSON back to the controller. From here, we are able to store references to buildings in the block objects, references to blocks in the dashboard objects, and only populate data when we need it in the application. 
+\subsubsection{Dashboards} 
+The dashboard components are the last thing I worked on and are not yet fully complete. What I wanted to get finished before the midterm milestone was creating dashboards and storing dashboards, which I accomplished. There is a ``create-dashboard'' form that data-binds all user blocks to a drop down menu using AngularJS directive ``ng-options'' so that a user is able select which blocks they want to include in the dashboard. In addition, the form has a text-box for a dashboard name and a multi-line text-box for a description attribute, all of which are rounded up by the dashboard controller and passed to an API route-handler that stores the new Dashboard object in the database.\\
+
+\noindent The dashboards followed the same suit as the Block objects as they were stored in an array within the creating User's object and in their own table in the database. This generated some difficulty when querying updates and deletes as we had to ensure that both references were updated for a successful return. I still have to implement the ``view dahsboard'' feature which will consist of iterating over each Block stored in the Dashboard and rending its content/graphs in a sequential order. Our dashboards are essentially the same as the ``view blocks'' page with block components listen one after the other, except it contains a user generated subset of blocks for a specific analysis. 
+\subsubsection{Important Data-Binding Code}
+Throughout the application, I have implemented AngularJS directives/services to retrieve and render data to the screen. There are a few specific code samples I want to share that were either duplicated and used for multiple pages, or I just thought they were impressive implementations of satisfying what we needed to do.\\
+
+\noindent First is the ``ng-repeat'' directive we use for buildings, dashboards, and blocks to iterate through a dataset and produce multiple HTML elements ``for-each'' object in the set. This implementation requires a dataset to be provided by the controller and an HTML template to be repeated. A particularly interesting example of this was a nested ``ng-repeat'' use to display all the user blocks, and all the buildings inside each block. 
+\begin{lstlisting}[language=HTML5]
+<!--blocks.html-->
+<div ng-controller="blockController">
+<div class="card mb-3" style="width: 90%;" ng-repeat="block in userBlocks">
+  <div class="card-header h-100">
+    <div class="h-100 d-inline-flex">
+      <span class=" align-middle ">
+        {{block.name}}
+      </span>
+    </div>
+    ...
+    <h3>Buildings:</h3>
+    <ul>
+      <li ng-repeat="building in block.building">
+        {{building.name}}
+      </li>
+    </ul>
+  ...
+\end{lstlisting}
+On line 13 of the listing, we see that the data model being repeated is being taken from the block object returned by the ``ng-repeat'' directive on line 3. This essentially allows a double for loop of data-binding to occur in the view and allows us to display all the necessary information to the user with a couple lines of code.\\
+
+\noindent Next, I wanted to share how I was able to create a functioning relation database with MongoDB and mongoose.js using sub-documents and the mongoose.js ``.populate()'' function in our API. In order to keep our object sizes small, we store references (ObjectId's) into model arrays like Block.buildings or User.dashboards. In order to retrieve this data and render it for the user, we need to dereference the ObjectId's in the back-end before returning the JSON to the controller. To do this, we have to populate the sub-documents so mongoose can retrieve the actual objects from the database and return all the necessary information. I'm going to share the API query for achieving this for the same situation as the nested ``ng-repeat'' above, as it also required a nested ``.populate()'' call to dereference sub-documents and sub-sub-documents.
+\begin{lstlisting}[language=JavaScript]
+app.get('/api/getUserBlocks', function(req, res) {
+  User.findOne({_id : req.user._id})
+    .populate({ path: 'blocks',
+        populate: {path: 'building'}
+    })
+    .exec(function (err, user) {
+      if (err) return handleError(err);
+      res.json(user.blocks); });
+});
+\end{lstlisting}
+As seen on line 4 of the listing, we call a populate from within a populate which dereferences the sub-sub-documents ``building'' that are being referenced by the sub-documents ``blocks.'' This ensures that we have access to the building name and type attributes when returning the user blocks which we need to render in our block elements. If we did not populate these sub-documents, the query would only return the ObjectId's with now relevant information for display.
+\subsubsection{Authentication}
 \subsection{Describe what you have left to do}
+Stories
+Filtering on building page
+View/Edit pages.
 \subsection{Describe any problems that have impeded your progress, with any solutions}
-\subsection{Include particularly interesting pieces of code}
 \subsection{Images of our Project} 
 
 
@@ -142,11 +282,7 @@ Update this section \\
 \subsection{Images of our Project} 
 
 
-
-
-
-\nocite{*}
 \newpage
 \bibliographystyle{ieeetr}
-\bibliography{WMPR_Group51}
+\bibliography{refs.bib}
 \end{document}

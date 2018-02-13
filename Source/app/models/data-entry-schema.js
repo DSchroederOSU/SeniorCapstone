@@ -1,9 +1,6 @@
 var mongoose = require('mongoose');
 var dataEntrySchema = mongoose.Schema({
     meter_serial: String,
-
-   
-      
             point: [{
                 number: Number,
                 name: String,
