@@ -257,16 +257,45 @@ app.get('/api/getUserBlocks', function(req, res) {
       res.json(user.blocks); });
 });
 \end{lstlisting}
-As seen on line 4 of the listing, we call a populate from within a populate which dereferences the sub-sub-documents ``building'' that are being referenced by the sub-documents ``blocks.'' This ensures that we have access to the building name and type attributes when returning the user blocks which we need to render in our block elements. If we did not populate these sub-documents, the query would only return the ObjectId's with now relevant information for display.
+As seen on line 4 of the listing, we call a populate from within a populate which dereferences the sub-sub-documents ``building'' that are being referenced by the sub-documents ``blocks.'' This ensures that we have access to the building name and type attributes when returning the user blocks which we need to render in our block elements. If we did not populate these sub-documents, the query would only return the ObjectId's with now relevant information for display.\\
+
+\noindent 
 \subsubsection{Authentication}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=17cm]{images/login.eps}
+  \caption{A screen shot of the login page that uses Google oAuth to authenticate users.}
+\end{figure}
+In addition to component functionality and implementation, I was able to get Google oAuth2.0 authentication to work with our application and authenticate users based on Google token. I had our client (Jack Woods) generate a Google API key under a Office of Sustainability Gmail account and used that API key to set up our authentication protocol. I used passport.js as an authentication middleware which handles most of the session authentication and oAuth protocol functionality. We store the token that Google's API returns in the user object which is what we use instead of a password. The next steps on authentication is limiting access to certain pages depending on user role and generating ``per-page'' authentication middleware to track users across pages.
+\subsubsection{Other Features I Accomplished}
+Despite the big features mentioned above, other tasks I accomplished since last term are:
+\begin{itemize}
+  \item Stored all sensitive information as ENV variables accessible through ``dotenv'' npm library.
+  \item Created User, Block, Dashboard, and Building services to call API route handlers and access data.
+  \item Formatted ``Our Team'' section into tri-column sections with colored job-titles and blank avatar images.
+  \item Generated angular routes in the core.js file to create SPA (single page application) protocols for linking and navigation.
+  \item Built the pop-out story menu in sidebar.
+  \item Built side navigation.
+  \item Added all building images in assets folder.
+  \item Created highlighting effects and border removal AJAX functionality for navigation selection.
+  \item Created the dynamic population of ``selected buildings'' in create block form. 
+  \item Created the dynamic population of ``selected blocks'' in create dashboard form. 
+  \item Implemented delete block functionality (button, back-end query, and redirect).
+  \item Implemented delete dashboard functionality (button, back-end query, and redirect).
+  \item Generated mock-up table for data records in individual building pages.
+  \item Created a database configuration file to generate all the buildings with example data.
+\end{itemize}
 \subsection{Describe what you have left to do}
-Stories
-Filtering on building page
-View/Edit pages.
-\subsection{Describe any problems that have impeded your progress, with any solutions}
-\subsection{Images of our Project} 
-
-
+Some things I still need to accomplish:
+\begin{itemize}
+  \item Implement story functionality.
+  \item Create ``edit'' pages for block, dashboard, and story components.
+  \item Filter settings on buildings page.
+  \item Limit viewable content based on user roles and authentication.
+  \item Make public vs. private flag on user items.
+  \item Create public facing application distinction.
+  \item Generate D3.js templates for different graph types.
+\end{itemize}
 \section{Contributor: Aubrey Thenell}
 \subsection{Describe where you are currently on the project}
 \subsection{Describe what you have left to do}

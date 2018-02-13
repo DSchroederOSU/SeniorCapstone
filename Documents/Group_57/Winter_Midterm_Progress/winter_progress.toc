@@ -9,19 +9,18 @@
 \contentsline {subsubsection}{\numberline {2.1.3}Dashboards}{5}{subsubsection.2.1.3}
 \contentsline {subsubsection}{\numberline {2.1.4}Important Data-Binding Code}{6}{subsubsection.2.1.4}
 \contentsline {subsubsection}{\numberline {2.1.5}Authentication}{7}{subsubsection.2.1.5}
-\contentsline {subsection}{\numberline {2.2}Describe what you have left to do}{7}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Describe any problems that have impeded your progress, with any solutions}{7}{subsection.2.3}
-\contentsline {subsection}{\numberline {2.4}Images of our Project}{7}{subsection.2.4}
-\contentsline {section}{\numberline {3}Contributor: Aubrey Thenell}{7}{section.3}
-\contentsline {subsection}{\numberline {3.1}Describe where you are currently on the project}{7}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Describe what you have left to do}{7}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Describe any problems that have impeded your progress, with any solutions}{7}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Include particularly interesting pieces of code}{7}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Images of our Project}{7}{subsection.3.5}
-\contentsline {section}{\numberline {4}Contributor: Parker Bruni}{7}{section.4}
-\contentsline {subsection}{\numberline {4.1}Describe where you are currently on the project}{7}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Describe what you have left to do}{7}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Describe any problems that have impeded your progress, with any solutions}{7}{subsection.4.3}
-\contentsline {subsection}{\numberline {4.4}Include particularly interesting pieces of code}{7}{subsection.4.4}
-\contentsline {subsection}{\numberline {4.5}Images of our Project}{7}{subsection.4.5}
-\contentsline {section}{References}{8}{section*.4}
+\contentsline {subsubsection}{\numberline {2.1.6}Other Features I Accomplished}{7}{subsubsection.2.1.6}
+\contentsline {subsection}{\numberline {2.2}Describe what you have left to do}{8}{subsection.2.2}
+\contentsline {section}{\numberline {3}Contributor: Aubrey Thenell}{8}{section.3}
+\contentsline {subsection}{\numberline {3.1}Describe where you are currently on the project}{8}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Describe what you have left to do}{8}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Describe any problems that have impeded your progress, with any solutions}{8}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Include particularly interesting pieces of code}{8}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Images of our Project}{8}{subsection.3.5}
+\contentsline {section}{\numberline {4}Contributor: Parker Bruni}{8}{section.4}
+\contentsline {subsection}{\numberline {4.1}Describe where you are currently on the project}{8}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Describe what you have left to do}{8}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Describe any problems that have impeded your progress, with any solutions}{8}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Include particularly interesting pieces of code}{8}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}Images of our Project}{8}{subsection.4.5}
+\contentsline {section}{References}{9}{section*.5}
