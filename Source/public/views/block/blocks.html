@@ -3,9 +3,15 @@
 </h3>
 <div ng-controller="blockController">
 <div class="card mb-3" style="width: 90%;" ng-repeat="block in userBlocks">
-    <div class="card-header">
-        {{block.name}}
-        <a href="#deleteblock" ng-click="DeleteBlock(block)" class="btn btn-danger float-right">Delete</a>
+    <div class="card-header h-100">
+        <div class="h-100 d-inline-flex">
+        <span class=" align-middle ">
+            {{block.name}}
+        </span>
+        </div>
+
+
+        <button type="submit" class="btn btn-danger float-right" ng-click="DeleteBlock(block)">Delete</button>
         <a href="#editblock" class="btn btn-success float-right">Edit</a>
 
     </div>

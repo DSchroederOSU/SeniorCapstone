@@ -1,7 +1,7 @@
 var selectedBuildings = [];
 var dropdownBuildings = [];
 angular.module('blockController', [])
-    .controller('blockController', function($scope, $location, GetBuildings, AddBlock, GetUserBlocks, DeleteBlock) {
+    .controller('blockController', function($route, $scope, $location, GetBuildings, AddBlock, GetUserBlocks, DeleteBlock) {
 
         GetBuildings.get()
         .success(function (data) {
@@ -46,10 +46,19 @@ angular.module('blockController', [])
                 AddBlock.create(BlockData)
                 // if successful creation
                 .success(function(data) {
+                    console.log(selectedBuildings);
+                    selectedBuildings.forEach(function(b) {
+                        console.log(b);
+                        dropdownBuildings.push(b);
+                    });
+
                     $scope.nameForm = "";
                     $scope.chartForm = "";
+                    selectedBuildings = [];
+                    $scope.selectedBuildings = selectedBuildings;
+                    console.log(selectedBuildings);
                     $location.path('/blocks');
-                    $scope.selectedBuildings = [];
+
                 });
             }
         };
@@ -61,7 +70,7 @@ angular.module('blockController', [])
         $scope.DeleteBlock = function(block){
             DeleteBlock.delete(block)
                 .success(function() {
-                    $location.path('/blocks');
+                    $route.reload();
                 });
         }
     });

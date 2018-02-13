@@ -78,34 +78,35 @@ module.exports = function(app, passport) {
         block.save(function(err, savedBlock) {
             if (err)
                 throw err;
-            else {
-                user.blocks.push(savedBlock);
-                user.save(function(err) {
-                    if (err)
-                        throw err;
-                });
-                res.send("success");
-            }
+            else
+                User.findByIdAndUpdate(
+                    { _id: user._id},
+                    { $push:{blocks: savedBlock}},
+                    {safe: true, upsert: true, new: true}, function(err, user) {
+                        if (err)
+                            throw(err);
+                        else{
+                            res.json(user);
+                        }
+                    });
+
+
         });
     });
 
     app.post('/api/deleteBlock', function(req, res) {
-        User.findOne({_id : req.user._id}, function(err, user) {
-            console.log(user);
-            console.log(user.blocks);
-            console.log(req.body);
-            user.blocks.pull(req.body._id);
-            user.save(function (err) {
-                if (err) return handleError(err);
-                console.log('the sub-doc was removed')
+        User.findByIdAndUpdate(
+            { _id: req.user._id},
+            { $pull:{blocks: req.body._id}}, function(err, user) {
+                if (err)
+                    throw(err);
+                else{
+                    Block.remove({_id : req.body._id}, function (err) {
+                        if (err) return handleError(err);
+                        res.json({message: "success"});
+                    });
+                }
             });
-            Block.remove({_id : req.body._id}, function (err) {
-                if (err) return handleError(err);
-                console.log('the sub-doc was removed')
-            });
-        });
-
-
 
     });
     // =====================================================================
@@ -119,21 +120,20 @@ module.exports = function(app, passport) {
         dashboard.description = req.body.description;
         dashboard.created_by = user;
         dashboard.blocks = req.body.blocks;
+
         dashboard.save(function(err, savedDashboard) {
             if (err)
                 throw err;
-            else{
-                user.dashboards.push(savedDashboard);
-                user.save(function(err) {
-                    if (err)
-                        throw err;
-                });
-                res.json(user);
-            }
+            else
+                User.findByIdAndUpdate(
+                    { _id: user._id},
+                    { $push:{dashboards: savedDashboard}},
+                    {safe: true, upsert: true, new: true},
+                    (err) => {if (err) throw(err); });
+        });
 
-     
     });
-})
+
     app.get('/api/getDashboards', function(req, res) {
         User.findOne({_id : req.user._id})
             .populate('dashboards')
