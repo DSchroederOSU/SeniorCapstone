@@ -1,13 +1,14 @@
 var selectedBuildings = [];
 var dropdownBuildings = [];
 angular.module('blockController', [])
-    .controller('blockController', function($scope, GetBuildings, AddBlock, GetUserBlocks) {
+    .controller('blockController', function($route, $scope, $location, GetBuildings, AddBlock, GetUserBlocks, DeleteBlock) {
 
         GetBuildings.get()
-            .success(function (data) {
-                dropdownBuildings = data;
-                $scope.buildings = dropdownBuildings;
-            });
+        .success(function (data) {
+            dropdownBuildings = data;
+            $scope.buildings = dropdownBuildings;
+            $scope.selectedBuildings = "";
+        });
 
         $scope.selection = function(building) {
             selectedBuildings.push(building);
@@ -44,14 +45,32 @@ angular.module('blockController', [])
                 };
                 AddBlock.create(BlockData)
                 // if successful creation
-                    .success(function(data) {
-                        $scope.nameForm = "";
-                        $scope.chartForm = "";
+                .success(function(data) {
+                    console.log(selectedBuildings);
+                    selectedBuildings.forEach(function(b) {
+                        console.log(b);
+                        dropdownBuildings.push(b);
                     });
+
+                    $scope.nameForm = "";
+                    $scope.chartForm = "";
+                    selectedBuildings = [];
+                    $scope.selectedBuildings = selectedBuildings;
+                    console.log(selectedBuildings);
+                    $location.path('/blocks');
+
+                });
             }
         };
         GetUserBlocks.get()
             .success(function(data) {
                 $scope.userBlocks = data;
             });
+
+        $scope.DeleteBlock = function(block){
+            DeleteBlock.delete(block)
+                .success(function() {
+                    $route.reload();
+                });
+        }
     });

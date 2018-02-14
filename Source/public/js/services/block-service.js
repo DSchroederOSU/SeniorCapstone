@@ -16,5 +16,12 @@ angular.module('BlockService', [])
                 return $http.get('/api/getUserBlocks');
             }
         }
+    })
+    .factory('DeleteBlock', function($http) {
+        return {
+            delete : function(block) {
+                return $http.post('/api/deleteBlock', block);
+            }
+        }
     });
 

@@ -74,22 +74,41 @@ module.exports = function(app, passport) {
         block.building = req.body.buildings;
         block.chart = req.body.chart;
         block.variable  = "Killowatts/Hr";
-        // save the building
+        // save the blocks
         block.save(function(err, savedBlock) {
             if (err)
                 throw err;
-            else {
-                user.blocks.push(savedBlock);
-                user.save(function(err) {
-                    if (err)
-                        throw err;
-                });
-                res.json(user);
-            }
+            else
+                User.findByIdAndUpdate(
+                    { _id: user._id},
+                    { $push:{blocks: savedBlock}},
+                    {safe: true, upsert: true, new: true}, function(err, user) {
+                        if (err)
+                            throw(err);
+                        else{
+                            res.json(user);
+                        }
+                    });
+
+
         });
     });
 
+    app.post('/api/deleteBlock', function(req, res) {
+        User.findByIdAndUpdate(
+            { _id: req.user._id},
+            { $pull:{blocks: req.body._id}}, function(err, user) {
+                if (err)
+                    throw(err);
+                else{
+                    Block.remove({_id : req.body._id}, function (err) {
+                        if (err) return handleError(err);
+                        res.json({message: "success"});
+                    });
+                }
+            });
 
+    });
     // =====================================================================
     /////////////////////////////DASHBOARD API//////////////////////////////
     // =====================================================================
@@ -101,21 +120,20 @@ module.exports = function(app, passport) {
         dashboard.description = req.body.description;
         dashboard.created_by = user;
         dashboard.blocks = req.body.blocks;
+
         dashboard.save(function(err, savedDashboard) {
             if (err)
                 throw err;
-            else{
-                user.dashboards.push(savedDashboard);
-                user.save(function(err) {
-                    if (err)
-                        throw err;
-                });
-                res.json(user);
-            }
+            else
+                User.findByIdAndUpdate(
+                    { _id: user._id},
+                    { $push:{dashboards: savedDashboard}},
+                    {safe: true, upsert: true, new: true},
+                    (err) => {if (err) throw(err); });
+        });
 
-     
     });
-})
+
     app.get('/api/getDashboards', function(req, res) {
         User.findOne({_id : req.user._id})
             .populate('dashboards')
@@ -124,6 +142,7 @@ module.exports = function(app, passport) {
                 res.json(user.dashboards);
             });
     });
+
 
     // =====================================
     // GOOGLE ROUTES =======================
