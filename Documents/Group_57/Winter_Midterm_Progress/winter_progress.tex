@@ -294,18 +294,12 @@ Some things I still need to accomplish:
   \item Create public facing application distinction.
   \item Generate D3.js templates for different graph types.
 \end{itemize}
-
-
-
 \section{Contributor: Aubrey Thenell}
 \subsection{Describe where you are currently on the project}
 \subsection{Describe what you have left to do}
 \subsection{Describe any problems that have impeded your progress, with any solutions}
 \subsection{Include particularly interesting pieces of code}
 \subsection{Images of our Project} 
-
-
-
 
 \section{Contributor: Parker Bruni}
 \subsection{Describe where you are currently on the project}
@@ -317,8 +311,8 @@ Some things I still need to accomplish:
 	to the interface. 
 	
 	\subsubsection{Fonts and CSS Classes}
-	The font of our application utilizes a directory of Oregon State Marketing approved font files of type ".otf", ".woff", and ".woff2". The font family that 
-	these files include are 'rufina-stencil-regular' for the main heading of the application and 'Stratum2' for other headers. Our body paragraphs will utilize "Open-Sans" 
+	The font of our application utilizes a directory of Oregon State Marketing approved font files of type ``.otf'', ``.woff'', and ``.woff2.'' The font family that 
+	these files include are ``rufina-stencil-regular'' for the main heading of the application and ``Stratum2'' for other headers. Our body paragraphs will utilize ``Open-Sans''
 	for paragraph elements and elements of lesser importance, as per OSU Marketing guidelines. These font files 
 	are implemented within our CSS file so that they may be accessed by the HTML elements of our page directly from the CSS file. This is demonstrated in the code below
 	
@@ -339,60 +333,57 @@ Some things I still need to accomplish:
 \end{lstlisting}
 
 	As you can see from the code, the HTML element is assigned a class which has the desired font associated with it. Each font that we have available can be 
-	implemented in an element by adding the class name, essentially functioning as an "argument" by which that element should behave. In this way, we can simply
+	implemented in an element by adding the class name, essentially functioning as an ``argument'' by which that element should behave. In this way, we can simply
 	add arguments to our elements via class names to give it certain CSS attributes without having to hard code the CSS style directly into the element. This method is used in our application for many
 	different types desired CSS attributes, such as font, alignment, background-color, position, etc. It allows us great control when customizing CSS attributes without 
 	needing to add a specific class for every element. Many of our HTML elements use this technique but utilizing Bootstrap libraries as well, such as generating CSS for 
 	our login button element. 
-	sub
-	
 	\subsubsection{Top Navigation}
 	Our application top navigation bar has various elements within it. Specifically, in order from left to right, the top navigation bar contains a application logo, 
-	selectable elements that redirect the user to our "Home", "About", and "Contacts" page, our applications title, and our login button. The top navigation bar 
+	selectable elements that redirect the user to our ``Home'', ``About'', and ``Contacts'' page, our applications title, and our login button. The top navigation bar 
 	is a fixed size and position on the page and will exist on all pages until the application is put into presentation mode. It's background color is a very dark gray to achieve
 	a modern look and contrast with the white body of our page and the lighter gray side navigation bar. 
 	
-		\subsubsubsection{Logo}
-			\begin{figure}[H]
-				\centering
-				\includegraphics[width=17cm]{images/logo.eps}
-				\caption{Our current logo for the application, located in the left-most region of the top nav.}
-			\end{figure}
+	\subsubsection{Logo}
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=17cm]{images/logo.eps}
+      \caption{Our current logo for the application, located in the left-most region of the top nav.}
+    \end{figure}
+  In the current version of our application, our logo has been decided by our client to be an Oregon State official logo. The logo was requested and has been provided for us 
+  in the format of a ``.svg'' file by our client. Having the logo as a scalable vector graphics file will allow the logo adjust to the size of its parent element without loss 
+  of resolution or quality if the parent element is to scale up. We do not necessarily have to worry about this as the parent element of our logo will be a fixed
+  size because our top navigation is a fixed size. I have requested to our client that we get a logo that is tailored to our website by a member of the OSU marketing
+  team because it would be much more fitting that our logo includes our application name. Another reason to get a customized logo is because the font of the logo contains
+  black letters which blend in with the dark background of our top navigation bar.
 		
-		In the current version of our application, our logo has been decided by our client to be an Oregon State official logo. The logo was requested and has been provided for us 
-		in the format of a ".svg" file by our client. Having the logo as a scalable vector graphics file will allow the logo adjust to the size of its parent element without loss 
-		of resolution or quality if the parent element is to scale up. We do not necessarily have to worry about this as the parent element of our logo will be a fixed
-		size because our top navigation is a fixed size. I have requested to our client that we get a logo that is tailored to our website by a member of the OSU marketing
-		team because it would be much more fitting that our logo includes our application name. Another reason to get a customized logo is because the font of the logo contains
-		black letters which blend in with the dark background of our top navigation bar.
-		
-		\subsubsubsection{Selectable Elements}
+		\subsubsection{Selectable Elements}
 		The top navigation bar also includes selectable elements so the user can navigate the pages. The elements text highlights on hover but perform no special UI functions
 		when clicked. 
-			\subsubsubsubsection{Home}
-			The first element is the "Home" tab. When this tab is clicked, the user is redirected to the homepage of our application. This page contains the title of our 
+			\subsubsection{Home}
+			The first element is the ``Home'' tab. When this tab is clicked, the user is redirected to the homepage of our application. This page contains the title of our 
 			application as well as a Google Maps API angular.js implementation. The map will contain a KML layer of all of the buildings with metering systems installed, and 
 			when a user selects one of these buildings from the map, they will be redirected to that buildings energy dashboard page. Ideally, this homepage will be used
 			mostly by the public where our application will be displayed on a monitor located in buildings on campus.
-			\subsubsubsubsection{About}
+			\subsubsection{About}
 			Our about page contains information about the goal of the application, the history of the Office of Sustainability, the mission of of the Office of Sustainability,
 			and links to the social media websites related to the Office of Sustainability.
-			\subsubsubsubsection{Contact}
+			\subsubsection{Contact}
 			Our about page contains the basic contact information of a select few OSU Office of Sustainability members as well as the developers of the application.
 			
 	\subsubsection{Side Navigation}
 	The side navigation was implemented by another member of our team, but I have contributed to the overall look and feel of the side navigation. I have added small
 	animations that indicate to the user which tab has been selected. The first animation fluidly indents the title of the tab when it is being displayed by the 
-	body of our page. This is achieved by increasing the "padding-left" of the element from 0px to 6px over the course of 0.2 seconds. The second animation changes the 
+	body of our page. This is achieved by increasing the ``padding-left'' of the element from 0px to 6px over the course of 0.2 seconds. The second animation changes the 
 	left side border from dark gray to OSU orange over the course of 0.2 seconds. The code and images below demonstrate this effect.
 	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=17cm]{images/side-nav-css.eps}
-		\caption{Side navigation tab selection CSS (orange border and text indent).}
-	\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=17cm]{images/side-nav-css.eps}
+  \caption{Side navigation tab selection CSS (orange border and text indent).}
+\end{figure}
 	
-	\begin{lstlisting}[caption={CSS Implementation} language=CSS]
+\begin{lstlisting}[caption={CSS Implementation} language=CSS]
 .custom-nav-item div{
     border-left: 4px solid;
 	
@@ -407,13 +398,13 @@ Some things I still need to accomplish:
 	-webkit-transition: all 0.2s ease-in-out 0s;
     transition: all 0.2s ease-in-out 0s;
 }
-	\end{lstlisting}
+\end{lstlisting}
 	
 	These combined CSS animations give modern feel yet clear indication of which tab is selected.
 	
 \subsection{Describe what you have left to do}
-\begin{itemize}
 Some things that I still need to accomplish:
+\begin{itemize}
   \item Add KML layer to Google Maps API
   \item Change body font
   \item Adjust top nav title design
@@ -423,14 +414,12 @@ Some things that I still need to accomplish:
   \item Format My Stories page CSS and UI
   \item Format Meters page CSS and UI
   \item Format Settings page CSS and UI
-  \item Add "Presentation Mode" to remove navigation bars and create a more presentable view of application for public access
+  \item Add ``Presentation Mode'' to remove navigation bars and create a more presentable view of application for public access
   \item Create an official color scheme with set hex color values
-
-  
 \end{itemize}
 \subsection{Describe any problems that have impeded your progress, with any solutions}
 One problem that I had was with our Google Maps API. I had followed a tutorial for adding the Google Maps API but the map was not functioning. I thought this could 
-be because I did not have a valid Map "key" but I tried many different valid keys and this was not the case. I transferred the code that I was using from our application
+be because I did not have a valid Map ``key'' but I tried many different valid keys and this was not the case. I transferred the code that I was using from our application
 to a simple test implementation and the code worked. For whatever reason, the format of our application was breaking the map. This could be due to our page being a 
 MEAN stack single page application. My solution was to simply look for tutorials on how to implement a Google Map on this style of application. I found a good example and 
 adjusted the code to fit our website. Essentially, I needed to make a controller for this API and eventually the map was functional and displaying properly.
