@@ -350,7 +350,6 @@ Some things I still need to accomplish:
       \includegraphics[width=17cm]{images/logo.eps}
       \caption{Our current logo for the application, located in the left-most region of the top nav.}
     \end{figure}
-		
   In the current version of our application, our logo has been decided by our client to be an Oregon State official logo. The logo was requested and has been provided for us 
   in the format of a ``.svg'' file by our client. Having the logo as a scalable vector graphics file will allow the logo adjust to the size of its parent element without loss 
   of resolution or quality if the parent element is to scale up. We do not necessarily have to worry about this as the parent element of our logo will be a fixed
@@ -378,13 +377,13 @@ Some things I still need to accomplish:
 	body of our page. This is achieved by increasing the ``padding-left'' of the element from 0px to 6px over the course of 0.2 seconds. The second animation changes the 
 	left side border from dark gray to OSU orange over the course of 0.2 seconds. The code and images below demonstrate this effect.
 	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=17cm]{images/side-nav-css.eps}
-		\caption{Side navigation tab selection CSS (orange border and text indent).}
-	\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=17cm]{images/side-nav-css.eps}
+  \caption{Side navigation tab selection CSS (orange border and text indent).}
+\end{figure}
 	
-	\begin{lstlisting}[caption={CSS Implementation} language=CSS]
+\begin{lstlisting}[caption={CSS Implementation} language=CSS]
 .custom-nav-item div{
     border-left: 4px solid;
 	
@@ -399,7 +398,7 @@ Some things I still need to accomplish:
 	-webkit-transition: all 0.2s ease-in-out 0s;
     transition: all 0.2s ease-in-out 0s;
 }
-	\end{lstlisting}
+\end{lstlisting}
 	
 	These combined CSS animations give modern feel yet clear indication of which tab is selected.
 	
@@ -417,8 +416,6 @@ Some things that I still need to accomplish:
   \item Format Settings page CSS and UI
   \item Add ``Presentation Mode'' to remove navigation bars and create a more presentable view of application for public access
   \item Create an official color scheme with set hex color values
-
-  
 \end{itemize}
 \subsection{Describe any problems that have impeded your progress, with any solutions}
 One problem that I had was with our Google Maps API. I had followed a tutorial for adding the Google Maps API but the map was not functioning. I thought this could 
