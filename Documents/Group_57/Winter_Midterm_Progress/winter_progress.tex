@@ -135,7 +135,10 @@ breaklines=true
  \vspace{2cm}
  \begin{center}
  \noindent \textbf{Abstract} \\
-			 \indent 
+			 \indent The purpose of this progress report document is to outline the progress made on the Scalable Web Application
+Framework for Monitoring Energy Usage on Campus project over the past six weeks. Provided in this outline
+are the accomplishments and problems, our project's goals and
+purpose, and the current status of our project.
  \end{center}         
  
  \newpage
@@ -144,11 +147,24 @@ breaklines=true
 \newpage
 
 \section{Introduction}
-\subsection{Purpose}
+\subsection{Purpose} 
+    Our project is to create a web application to monitor energy use on Oregon State University's campus. The application should serve all the requirements outlined by the client and be easy to use for users of all experience levels.
+    \noindent Some specific functionalities that our application should contain are:
+    \begin{itemize}
+        \item Receive data from Obvius AcquiSuite data acquisition servers and process this data into interpretable graphs.
+        \item Allow administrative users to add buildings and meters to the database as monitoring efforts expand to more buildings on campus.
+        \item Allow users to create unique dashboards and dashboard collections in an effort to organize data into related subsets.
+        \item Have a public facing interface where administrators can produce content for anyone to see.
+        \item Contain modular components with individualized functionality and the ability to share data across components.
+        \item Update graphs being displayed as new data is received.
+        \item Undergo usability testing and produce an interface that is user friendly and easily navigable.
+        \item Embrace AngularJS concepts to inject content to the page as new requests are made.
+    \end{itemize}
 \subsection{Scope}
+The scope of this report is Winter term 2018 between weeks zero through sixth.
 \subsection{Overview}
-This document provides a recap of the progress made on our project during the Winter 2018 term. \\
-Update this section \\ 
+This document provides a recap of the progress made on our project during the Winter 2018 term. Overall, we have seen some great progress. We went from a basic template website to something that has some great functionality. \\
+
 \section{Contributor: Daniel Schroeder} 
 \subsection{Describe where you are currently on the project}
 Since the end of fall term, I have implemented 3/4 main components of the application with back-end functionality and data-binding working. These components include Buildings, Blocks, and Dashboards. In addition, I generated important mongoose.js and AngularJS code for repeated iterations and element generation of User-stored data and saving documents created by the user. I got Google oAuth working on the application with user objects stored by Google API tokens and create user sessions throughout the application with passport.js. 
@@ -296,10 +312,100 @@ Some things I still need to accomplish:
 \end{itemize}
 \section{Contributor: Aubrey Thenell}
 \subsection{Describe where you are currently on the project}
+Since the last progress report, I've done a lot of work on the heavier side of the backend. Specifically, I am talking about parsing XML data received by our server as a POST request and then dealing with it appropriately. This mainly revolved the ``Building'' component, as all the data coming in will be added to that database. I also redesigned the schemas for both the ``Building'' and ``DataEntry'' components for how data should be entered into each respective database. I also have helped with the implementation of a couple other components as well, but not nearly to the same extent.
+
+\subsubsection{XML Parsing}
+As mentioned above, I implemented functionality to parse XML data that is sent to our server via POST. When I say parsed, I would like to specify that the XML object is being parsed and converted into a JSON object. As the functionality is currently set up, once the data is parsed, it will call a separate function after this asynchronous parsing function resolves and returns the JSON. 
+
+\subsubsection{Buildings}
+
+One of the first things I needed to develop was a schema for the building and data entries. Changing them from the template to what they are now will serve as a much simpler solution for when adding non hardcoded entries.
+This section is where I spent most of my hours thus far in the term. Where Dan left off with example building data, I took over.  After the parse, it will check the data to see if there are any duplicates. It will use the AcquiSuite's serial number as well as the timestamp of the data entry. This functionality is especially important because multiple entries for the same data could unevenly weigh some of the averages. There is also the issue that could arise of how to handle the data GET request if more than one entry was returned for any given serial and timestamp coupling. 
+While checking for duplicates, there will be a check to see if the building and meter exists in our database in the first place. If not, it will create one with all the appropriate name and serial. The implementation of the ``add building'' function is rather flexible. Inside the asynchronous function that checks to see if the building exists yet, if it doesn't exist, will create a special object to be passed as a parameter for the ``add building'' function. This object will match the same format as the user side ``add building'' will. \\
+\begin{lstlisting}[language=JavaScript]
+Building.findOne({serial: req.body.das.serial}, function (err, doc) {
+	if(doc === null){
+		var entry = {
+			name: req.body.das.devices.device.name,
+			building_type: 'Academic',
+			serial: req.body.das.serial
+		}
+\end{lstlisting}
+\noindent You may notice in this figure that ``building\_type'' is hard coded. This is because the building is being added to the database through the XML POST data. The only information that is relevant to the nomenclature of building properties is the name and serial / meter\_id. The building type isn't included in the XML. I set it to ``Academic'' as the default because most of the buildings on campus will be academic in nature. If this needs to be changed, the user will be able to edit the entries of each building as needed. Once the object is formed, the ``add building'' will be called. \\
+\begin{lstlisting}[language=JavaScript]
+function addBuildingToDatabase(entry) {
+    Building.findOne({name: entry.name}, function (err, docs) {
+	  if(docs === null){ // ensure building doesn't exist
+		  var build = new Building();
+		  build.name = entry.name
+		  build.building_type = entry.building_type;
+		  build.serial = entry.serial;
+		  build.save()
+			   .catch( err => {res.status(400)
+			   .send("unable to save to database");})
+		  console.log("The building '" + entry.name + "' has been added.");
+	  }
+	  else
+		  console.log('Nothing was added');     
+	});
+  };
+
+\end{lstlisting}
+\noindent Once a new building is made, or if it already existed, it will take the data from the JSON object and push it into the data entry array of that respective building. It completes this with the following function.
+
+\begin{lstlisting}[language=JavaScript]
+data = new DataEntry();
+data.meter_id = req.body.das.serial;
+	data.timestamp = new Date(pathShortener.time._);
+	pathShortener.point.forEach((e,i) => {data.point[i] = e.$;});
+	data.save(function(err, savedBlock) {
+		if (err)
+			throw err;
+		else {
+			Building.findOneAndUpdate({meter_id: req.body.das.serial},
+			{$push:{data_entry: data, timestamp: data.timestamp}},
+			{safe: true, upsert: true, new: true},
+			(err) =>{if (err) throw(err);})
+            }
+        });
+
+
+\end{lstlisting}
+
+\noindent This function is a bit dense at first glance. For the timestamp, we have to cast the ``pathShortner.time.\_'' from a string into a date type. This process is generally relatively straightforward. In the POST data, the timestamp itself isn't formatted like you would expect. It is formatted as an object which includes the timezone and the date as ``time.\$'' and ``time.\_'' respectfully. Due to the way the XML gets parsed into JSON, the actual time component ends up with a couple of characters appended inside the timestamp. Luckily the ``Date()'' function in javascript will parse through that and extract only what we need. For the line after that, we simple iterate over all of the data points inside the report and add them to the the data's array. Finally, when we go to save the data entry, we look for the building to be updated and push it directly to the array. The findOneAndUpdate step may not be required if I were to move it within the scope of my first code snippet.
+
+
+
+
+
+\subsubsection{Other}
+Besides the building component, I also did some minor tweaks to the Block and Dashboard component. Specifically, there was an error with the ``addBlock'' function and it would crash our console when block components were interacted with. 
+\begin{lstlisting}[language=JavaScript]
+
+\end{lstlisting}
+\noindent The issue stemmed from the block being pushed directly to the user's block array, without checking if the user entry was defined. Another issue with it is it called the ``.save'' function twice for two different databases which caused a ``Maximum call stack size exceeded'' error. That error occurs when an infinite loop occurs. As a solution, instead of pushing the data directly to the user array, I implemented it to use the ``findByIdAndUpdate'' function through Mongoose. The below snippet replaces the above section in the ``else'' scope.\\
+\begin{lstlisting}[language=JavaScript]
+User.findByIdAndUpdate(
+    { _id: user._id},
+    { $push:{blocks: savedBlock}},
+    {safe: true, upsert: true, new: true},
+    (err) =>{if (err) throw(err);});
+\end{lstlisting}
+
+\noindent This function will find an entry in the database and update it with the new block. If the user doesn't exist somehow, it should create a new entry. However, this is extremely unlikely to happen since users must be logged in to even create a block. This method was also implemented into the ``Dashboard'' component since it had a duplicate problem.
+
+
 \subsection{Describe what you have left to do}
+\begin{itemize}
+\item There is still much to do for the backend side of this project. One of the main things I still need to implement is duplicate data prevention in the data entry function. This is currently a work in progress, but unexpected results are currently being returned from the data entry array for the timestamp object. 
+\item I also need to add a frontend way for users to add, edit, and delete buildings. This should be rather simple and similar in functionality to the block, dashboards, and stories. I will be collaborating with Dan on this portion, so we can get a consistent and working function for each.
+\item Fix building entries. When POST data is sent to our application, it adds the building to the database just fine. However, there is an issue where if there are any other buildings in the database, it will add two objects. One object is a blank shell with the name and meter ID, while the other one contains a placeholder image and the data entry. I think this issue is caused by the image retrieval function in the building-controller file. But it could be due to several reasons.
+\item Add backend functionality to sort buildings by attributes.
+\item Implement data sanitation to all of our database entries. As of right now, our database sits completely unprotected minus any built in protections. Although most data entered would require knowledge of the schema to really do much damage. I would still like to play it safe here.
+\end{itemize}
 \subsection{Describe any problems that have impeded your progress, with any solutions}
-\subsection{Include particularly interesting pieces of code}
-\subsection{Images of our Project} 
+When I was first trying to get connected to the building database. This was due to my scope being slightly off when I referenced it. Once I figured it out, it all started to work together. Other than that, I haven't run into any major in relation to the project. I did have quite a few staggered hardware problems occur this term. While not directly related to the project, it definitely set my progress back quite a bit.
+
 
 \section{Contributor: Parker Bruni}
 \subsection{Describe where you are currently on the project}
@@ -422,11 +528,10 @@ One problem that I had was with our Google Maps API. I had followed a tutorial f
 be because I did not have a valid Map ``key'' but I tried many different valid keys and this was not the case. I transferred the code that I was using from our application
 to a simple test implementation and the code worked. For whatever reason, the format of our application was breaking the map. This could be due to our page being a 
 MEAN stack single page application. My solution was to simply look for tutorials on how to implement a Google Map on this style of application. I found a good example and 
-adjusted the code to fit our website. Essentially, I needed to make a controller for this API and eventually the map was functional and displaying properly.
+adjusted the code to fit our website. Essentially, I needed to make a controller for this API and eventually the map was functional and displaying properly. \\
 
-\subsection{Include particularly interesting pieces of code}
-\subsection{Images of our Project} 
-
+\section{Current State of the Project:}
+    We have still been doing local development for the most part. We do have an Amazon EC2 instance spun up at this point, but we would like to not burden our instance with an incomplete software. We will be pushing known stable versions of our application from our master branch to our production branch. We want to make sure our application is working before that. Something as simple as a memory leak occurring on our instance could begin racking up a data bill for our client quickly.\\
 
 \newpage
 \bibliographystyle{ieeetr}
