@@ -159,12 +159,12 @@ module.exports = function(app, passport) {
         var pathShortener = req.body.das.devices.device.records.record;
         // Checks to see if new meter reports in without entry first being created
         // Creates new Building if does not exist
-        Building.findOne({serial: req.body.das.serial}, function (err, doc) {
+        Building.findOne({meter_id: req.body.das.serial}, function (err, doc) {
             if(doc === null){
                 var entry = {
                     name: req.body.das.devices.device.name,
                     building_type: 'Academic',
-                    serial: req.body.das.serial
+                    meter_id: req.body.das.serial
                 }
                 addBuildingToDatabase(entry);
             }
@@ -181,14 +181,14 @@ module.exports = function(app, passport) {
         });
         
         data = new DataEntry();
-        data.meter_serial = req.body.das.serial;
+        data.meter_id = req.body.das.serial;
         data.timestamp = new Date(pathShortener.time._);
         pathShortener.point.forEach((e,i) => {data.point[i] = e.$;});
         data.save(function(err, savedBlock) {
             if (err)
                 throw err;
             else {
-                Building.findOneAndUpdate({serial: req.body.das.serial},
+                Building.findOneAndUpdate({meter_id: req.body.das.serial},
                 {$push:{data_entry: data, timestamp: data.timestamp}},
                 {safe: true, upsert: true, new: true},
                 (err) =>{if (err) throw(err);})
@@ -220,8 +220,8 @@ function addBuildingToDatabase(entry) {
                // set all of the relevant information
               build.name = entry.name
               build.building_type = entry.building_type;
-              // serial can be used as identifier when adding data (data has serial # of AcquiSuite)
-              build.serial = entry.serial;
+              // meter_id can be used as identifier when adding data (data has serial # of AcquiSuite)
+              build.meter_id = entry.meter_id;
               // save the building
               build.save()
                    .catch( err => {res.status(400)
