@@ -1,14 +1,14 @@
 var mongoose = require('mongoose');
 var dataEntrySchema = mongoose.Schema({
     meter_serial: String,
-            point: [{
-                number: Number,
-                name: String,
-                units: String,
-                value: Number
-            }],
-            timestamp: { type: Date, required: true }
 
+    timestamp: { type: Date, required: true },
+    point: [{
+        number: Number,
+        name: String,
+        units: String,
+        value: Number
+    }]
 
    
 });
