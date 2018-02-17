@@ -12,7 +12,7 @@
 			</div>
 			
 			<div class="collapse navbar-collapse text-center ml-sidenav absolute">
-				<ul class="navbar-nav">
+				<ul id="topNavBar" class="navbar-nav">
 					<li class="nav-item">
 						<a id="topHome" class="nav-link" href="#">Home</a>
 					</li>
@@ -31,16 +31,16 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			
-			<span class="navbar-text pr-3" id="login-greeting">
+			<span class="navbar-text pr-3" style="margin-right: 60px;" id="login-greeting">
 				{{$parent.greeting}}
 			</span>
-			<a href="/login" class="btn btn-md py-1 px-4 Stratum2-Bold" role="button" aria-pressed="true" id="login">{{$parent.login_status}}</a>
+			<a href="/login" class="mb-2 pb-2 px-4 Stratum2-Bold" style="text-decoration: none;" role="button" aria-pressed="true" id="login">{{$parent.login_status}}</a>
 		</nav>
 	</div>
 </header>
 
 <script>
-    $( '#navBarDefault a' ).on( 'click', function () {
+    $( '#topNavBar a' ).on( 'click', function () {
         if( this.id == 'topHome'){
             $( '#sideNavList' ).find( 'li.active-nav-item' ).removeClass( 'active-nav-item' );
             $( '#sideNavList' ).find('#sideHome').parent().parent().addClass( 'active-nav-item' );

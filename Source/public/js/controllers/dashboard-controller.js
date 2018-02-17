@@ -1,11 +1,10 @@
 var selectedBlocks = [];
 var dropdownBlocks = [];
 angular.module('dashboardController', [])
-    .controller('dashboardController', function($scope, GetDashboards, GetUserBlocks, AddDashboard) {
+    .controller('dashboardController', function($scope, $location, GetDashboards, GetUserBlocks, AddDashboard) {
 
         GetDashboards.get()
             .success(function (data) {
-                console.log(data);
                 $scope.dashboards = data;
 
             });
@@ -54,6 +53,7 @@ angular.module('dashboardController', [])
                     .success(function(data) {
                         $scope.nameForm = "";
                         $scope.descriptionForm = "";
+                        $location.path('/dashboards');
                     });
             }
         };

@@ -19,7 +19,7 @@
             <div class="col-sm-12">
                 <select id="dropdownBuildings" class="form-control "
                         ng-model="buildingSelection"
-                        required ng-options="building.name for building in buildings"
+                        required ng-options="building.name for building in buildings track by building._id"
                         ng-change="selection(buildingSelection)">
                 </select>
             </div>

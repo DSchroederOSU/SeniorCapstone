@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var dataEntrySchema = mongoose.Schema({
     meter_serial: String,
+
     timestamp: { type: Date, required: true },
     point: [{
         number: Number,
@@ -8,6 +9,7 @@ var dataEntrySchema = mongoose.Schema({
         units: String,
         value: Number
     }]
+
    
 });
 
