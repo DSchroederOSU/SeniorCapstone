@@ -156,19 +156,36 @@ module.exports = function(app, passport) {
     // the 'xmlparser' in parameters takes care of everything
      app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
        
-        var pathShortener = req.body.das.devices.device.records.record;
+        pathShortener = req.body.das.devices.device.records.record;
         // Checks to see if new meter reports in without entry first being created
         // Creates new Building if does not exist
-        Building.findOne({meter_id: req.body.das.serial}, function (err, doc) {
+
+        Building.findOne({meter_id: req.body.das.serial, name:req.body.das.devices.device.name}, function (err, doc) {
+            build = new Building();
+           
+            build.name = req.body.das.devices.device.name;
+            build.building_type = 'Academic';
+            build.meter_id = req.body.das.serial;
+            data = new DataEntry();
+            data.meter_id = req.body.das.serial;
+            data.timestamp = new Date(pathShortener.time._);
+            pathShortener.point.forEach((e,i) => {data.point[i] = e.$;});
+           
             if(doc === null){
-                var entry = {
-                    name: req.body.das.devices.device.name,
-                    building_type: 'Academic',
-                    meter_id: req.body.das.serial
-                }
-                addBuildingToDatabase(entry);
+               build.save()
+                   .catch( err => {res.status(400)
+                   .send("unable to save to database");})
+                  console.log("The building '" + build.name + "' has been added.");
+                doc = build;
+                // Building.findOneAndUpdate({meter_id: req.body.das.serial,name:req.body.das.devices.device.name},
+                //     {$push:{data_entry: data}},
+                //     {safe: true, upsert: true, new: true},
+                //     (err) =>{if (err) throw(err)}); 
+              
             }
             else{  // else statement to prevent duplicates, work in progress
+              
+                
                 /*
                 doc.data_entry.forEach((e) => {
                     console.log(Date(e.timestamp))
@@ -177,24 +194,24 @@ module.exports = function(app, passport) {
                     if (e.timestamp === pathShortener.time._)
                         console.log('There\'s a match!')
                 });*/
+            
+           
             }
+            Building.findOneAndUpdate({meter_id: req.body.das.serial,name:req.body.das.devices.device.name},
+                {$push:{data_entry: data}},
+                {safe: true, upsert: true, new: true},
+                (err) =>{if (err) throw(err)}); 
+            console.log("doc._id")
+            console.log(doc._id)
+            
+           //  Building.update({id: doc._id}, {$push:{data_entry: data}},{safe: true, upsert: true, new: true});
+            
+          
         });
         
-        data = new DataEntry();
-        data.meter_id = req.body.das.serial;
-        data.timestamp = new Date(pathShortener.time._);
-        pathShortener.point.forEach((e,i) => {data.point[i] = e.$;});
-        data.save(function(err, savedBlock) {
-            if (err)
-                throw err;
-            else {
-                Building.findOneAndUpdate({meter_id: req.body.das.serial},
-                {$push:{data_entry: data, timestamp: data.timestamp}},
-                {safe: true, upsert: true, new: true},
-                (err) =>{if (err) throw(err);})
-            }
-        });
-        res.send(req.body);
+            
+
+       res.send(req.body);
     });
 
     app.get('/showBuildings' ,function (req,res) {
