@@ -175,15 +175,16 @@ module.exports = function(app, passport) {
                build.save()
                    .catch( err => {res.status(400)
                    .send("unable to save to database");})
+                   .then(()=> Building.findOneAndUpdate({meter_id: req.body.das.serial,name:req.body.das.devices.device.name},
+                    {$push:{data_entry: data}},
+                    {safe: true, upsert: true, new: true},
+                    (err) =>{if (err) throw(err)}))
                   console.log("The building '" + build.name + "' has been added.");
                 doc = build;
-                // Building.findOneAndUpdate({meter_id: req.body.das.serial,name:req.body.das.devices.device.name},
-                //     {$push:{data_entry: data}},
-                //     {safe: true, upsert: true, new: true},
-                //     (err) =>{if (err) throw(err)}); 
+               
               
             }
-            else{  // else statement to prevent duplicates, work in progress
+            else if(false){  // else statement to prevent duplicates, work in progress
               
                 
                 /*
@@ -197,13 +198,14 @@ module.exports = function(app, passport) {
             
            
             }
-            Building.findOneAndUpdate({meter_id: req.body.das.serial,name:req.body.das.devices.device.name},
-                {$push:{data_entry: data}},
-                {safe: true, upsert: true, new: true},
-                (err) =>{if (err) throw(err)}); 
-            console.log("doc._id")
-            console.log(doc._id)
-            
+            else{
+                Building.findOneAndUpdate({meter_id: req.body.das.serial,name:req.body.das.devices.device.name},
+                    {$push:{data_entry: data}},
+                    {safe: true, upsert: true, new: true},
+                    (err) =>{if (err) throw(err)}); 
+                console.log("doc._id")
+                console.log(doc._id)
+            }
            //  Building.update({id: doc._id}, {$push:{data_entry: data}},{safe: true, upsert: true, new: true});
             
           
