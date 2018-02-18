@@ -176,27 +176,15 @@ module.exports = function(app, passport) {
                    .catch( err => {res.status(400)
                    .send("unable to save to database");})
                    .then(()=> Building.findOneAndUpdate({meter_id: req.body.das.serial,name:req.body.das.devices.device.name},
-                    {$push:{data_entry: data}},
-                    {safe: true, upsert: true, new: true},
-                    (err) =>{if (err) throw(err)}))
-                  console.log("The building '" + build.name + "' has been added.");
-                doc = build;
-               
+                        {$push:{data_entry: data}},
+                        {safe: true, upsert: true, new: true},
+                        (err) =>{if (err) throw(err)}))
+                  console.log("The building '" + build.name + "' has been added.");             
               
             }
-            else if(false){  // else statement to prevent duplicates, work in progress
-              
-                
-                /*
-                doc.data_entry.forEach((e) => {
-                    console.log(Date(e.timestamp))
-                    console.log(pathShortener.time._)
-                    
-                    if (e.timestamp === pathShortener.time._)
-                        console.log('There\'s a match!')
-                });*/
-            
-           
+            else if(duplicateDetection(data.timestamp)){
+                console.log("Duplicate found, returning")
+                return;
             }
             else{
                 Building.findOneAndUpdate({meter_id: req.body.das.serial,name:req.body.das.devices.device.name},
@@ -207,7 +195,7 @@ module.exports = function(app, passport) {
                 console.log(doc._id)
             }
            //  Building.update({id: doc._id}, {$push:{data_entry: data}},{safe: true, upsert: true, new: true});
-            
+           
           
         });
         
@@ -251,7 +239,20 @@ function addBuildingToDatabase(entry) {
               console.log('Nothing was added');     
         });
   };
+function duplicateDetection(entry){
+   
+    console.log(entry)
+    Building.find({data_entry: {$elemMatch:{ timestamp: Date(entry)}}}, (err,docs) =>{
+        if(docs === null){
+            console.log("No dupe found")
+        }
+        else {
+            console.log("docs is:")
+            console.log(docs)
+        }
+    }
 
+)}
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
     // if user is authenticated in the session, carry on
