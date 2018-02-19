@@ -128,8 +128,12 @@ module.exports = function(app, passport) {
                 User.findByIdAndUpdate(
                     { _id: user._id},
                     { $push:{dashboards: savedDashboard}},
-                    {safe: true, upsert: true, new: true},
-                    (err) => {if (err) throw(err); });
+                    {safe: true, upsert: true, new: true}, function(err, user) {
+                        if (err)
+                            throw(err);
+                        else{
+                            res.json(user);
+                        }});
         });
 
     });
