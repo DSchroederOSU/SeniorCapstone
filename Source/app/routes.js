@@ -4,10 +4,11 @@ var xmlparser = require('express-xml-bodyparser');
 var parseString = require('xml2js').parseString;
 var User = require('./models/user-schema');
 var Building = require('./models/building-schema');
+var DataEntry = require('./models/data-entry-schema');
 var Dashboard = require('./models/dashboard-schema');
 var Block = require('./models/block-schema');
 module.exports = function(app, passport) {
-
+    
     app.get('/', function (req, res) {
 
         res.render('index.html'); // load the index.html file
@@ -38,18 +39,6 @@ module.exports = function(app, passport) {
         res.render('login.html'); // load the login.html file
     });
 
-
-    // Commented out routing for now since top-nav has alternative routing using basic in-html-file JS
-    /*
-    app.get('/About', function (req, res) {
-        res.render('views/top-nav-views/about.html'); // load the about.html file
-    });
-    app.get('/Contact', function (req, res) {
-        res.render('views/top-nav-views/login.html'); // load the about.html file
-    });
-   */
-
-
     // =====================================================================
     ///////////////////////////////BLOCK API////////////////////////////////
     // =====================================================================
@@ -61,7 +50,7 @@ module.exports = function(app, passport) {
             })
             .exec(function (err, user) {
                 if (err) return handleError(err);
-                res.json(user.blocks);
+                    res.json(user.blocks);
         });
     });
 
@@ -78,18 +67,13 @@ module.exports = function(app, passport) {
         block.save(function(err, savedBlock) {
             if (err)
                 throw err;
-            else
+
+            else 
                 User.findByIdAndUpdate(
                     { _id: user._id},
                     { $push:{blocks: savedBlock}},
-                    {safe: true, upsert: true, new: true}, function(err, user) {
-                        if (err)
-                            throw(err);
-                        else{
-                            res.json(user);
-                        }
-                    });
-
+                    {safe: true, upsert: true, new: true},
+                    (err) =>{if (err) throw(err);});
 
         });
     });
@@ -168,64 +152,91 @@ module.exports = function(app, passport) {
         })
     );
 
+    // =====================================
+    // XML POST PARSING ====================
+    // =====================================
     // Function for handling xml post requests
     // Receives post requests, converts from XML to JSON
     // the 'xmlparser' in parameters takes care of everything
-    // Currently just sends result to body, but will change to target DB
-    app.post('/receive-xml', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
+     app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
        
-        // console.log(req.body.das.devices.device.name);
-    //    DB.addEntryToDatabase(req.body);
-       // using addBuilding right now to test xml since it's more simple
-        addBuildingToDatabase(req.body);
+        var pathShortener = req.body.das.devices.device.records.record;
+        // Checks to see if new meter reports in without entry first being created
+        // Creates new Building if does not exist
+        Building.findOne({serial: req.body.das.serial}, function (err, doc) {
+            if(doc === null){
+                var entry = {
+                    name: req.body.das.devices.device.name,
+                    building_type: 'Academic',
+                    serial: req.body.das.serial
+                }
+                addBuildingToDatabase(entry);
+            }
+            else{  // else statement to prevent duplicates, work in progress
+                /*
+                doc.data_entry.forEach((e) => {
+                    console.log(Date(e.timestamp))
+                    console.log(pathShortener.time._)
+                    
+                    if (e.timestamp === pathShortener.time._)
+                        console.log('There\'s a match!')
+                });*/
+            }
+        });
+        
+        data = new DataEntry();
+        data.meter_serial = req.body.das.serial;
+        data.timestamp = new Date(pathShortener.time._);
+        pathShortener.point.forEach((e,i) => {data.point[i] = e.$;});
+        data.save(function(err, savedBlock) {
+            if (err)
+                throw err;
+            else {
+                Building.findOneAndUpdate({serial: req.body.das.serial},
+                {$push:{data_entry: data, timestamp: data.timestamp}},
+                {safe: true, upsert: true, new: true},
+                (err) =>{if (err) throw(err);})
+            }
+        });
         res.send(req.body);
-       
-
     });
+
     app.get('/showBuildings' ,function (req,res) {
-        db.buildings.find(function (err, docs) {
+       Building.find(function (err, docs) {
             console.log(docs);
             res.json(docs);
         })
     });
-    app.post('/addBuilding', function (req, res) {
 
-       
-        addBuildingDatabase(req.body);
+    // adding xml parser for testing and debugging purposes until we get client side POST setup
+    // to be called from "Add Building" feature
+    app.post('/addBuilding', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
+        addBuildingToDatabase(req.body);
         res.send(req.body);
-
     });
 
 }
-function addEntryToDatabase(entry) {
-    console.log('Inside addEntryToDatabase')
-    /*
-    var data = new DataEntry();
-    data.point = entry.das.devices.device.records.record.point;
-    data.timestamp = entry.das.devices.device.records.record.time._;
-    res 
-    */
-};  
+
 function addBuildingToDatabase(entry) {
-    Building.findOne({name: entry.building.name}, function (err, docs) {
+    Building.findOne({name: entry.name}, function (err, docs) {
           if(docs === null){ // ensure building doesn't exist
               var build = new Building();
                // set all of the relevant information
-              build.name = entry.building.name
-              build.building_type = entry.building.building_type;
+              build.name = entry.name
+              build.building_type = entry.building_type;
               // serial can be used as identifier when adding data (data has serial # of AcquiSuite)
-              build.serial = entry.building.serial;
+              build.serial = entry.serial;
               // save the building
               build.save()
                    .catch( err => {res.status(400)
                    .send("unable to save to database");})
-              console.log("The building '" + entry.building.name + "' has been added.");
+              console.log("The building '" + entry.name + "' has been added.");
           }
           else
               console.log('Nothing was added');     
         });
   };
-  
+
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
     // if user is authenticated in the session, carry on
