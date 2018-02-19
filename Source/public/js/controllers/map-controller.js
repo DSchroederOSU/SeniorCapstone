@@ -6,7 +6,7 @@ angular.module('mapController', [])
 			$scope.markers = [];
 			$scope.markerId = 1;
 			//Map initialization  
-            var latlng = new google.maps.LatLng(44.563780557193354, -123.27947616577148);
+            var latlng = new google.maps.LatLng(44.563823618710714, -123.27824699896155);
 			var myStyles = [{featureType: "poi",elementType: "labels", stylers: [{ visibility: "off" }]}];
             var myOptions = {
                 zoom: 16,
