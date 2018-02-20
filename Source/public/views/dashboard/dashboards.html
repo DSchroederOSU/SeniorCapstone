@@ -4,17 +4,26 @@
 <div ng-controller="dashboardController">
 <ul class="list-group mt-4 mb-4">
     <li class="list-group-item pb-2 pt-2" ng-repeat="dashboard in dashboards">
-        <span class="align-middle">{{dashboard.name}}</span>
-        <a href="#deletedashboard" class="btn-sm btn-danger float-right ml-2" style="text-decoration: none !important">Delete</a>
-        <a href="#editdashboard" class="btn-sm btn-success float-right ml-2" style="text-decoration: none !important">Edit</a>
-        <a href="#viewdashboard" class="btn-sm btn-secondary float-right ml-2" style="text-decoration: none !important">View</a>
+        <div class="w-100 h-100">
+            <span class="align-middle">{{dashboard.name}}</span>
+            <button type="submit" class="btn btn-danger float-right" ng-click="DeleteDashboard(dashboard)">Delete</button>
+            <a href="#editdashboard" class="btn-sm btn-success float-right ml-2" style="text-decoration: none !important">Edit</a>
+            <a href="#viewdashboard" class="btn-sm btn-secondary float-right ml-2" style="text-decoration: none !important">View</a>
+        </div>
+
     </li>
 </ul>
 
 
 <h3>Public Dashboards</h3>
-
-<ul class="list-group mt-4 mb-4">
-    <li class="list-group-item pb-2 pt-2">Public Dashboard 1</li>
-</ul>
+    <ul class="list-group mt-4 mb-4">
+        <li class="list-group-item d-inline-flex p-2">
+            <div class="w-100 h-100">
+                <span class="" style="margin-top: 50%;">Balls</span>
+                <button type="submit" class="btn btn-danger float-right" ng-click="DeleteDashboard(dashboard)">Delete</button>
+                <a href="#editdashboard" class="btn-sm btn-success float-right ml-2" style="text-decoration: none !important">Edit</a>
+                <a href="#viewdashboard" class="btn-sm btn-secondary float-right ml-2" style="text-decoration: none !important">View</a>
+            </div>
+        </li>
+    </ul>
 </div>

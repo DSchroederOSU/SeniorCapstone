@@ -1,7 +1,7 @@
 var selectedBlocks = [];
 var dropdownBlocks = [];
 angular.module('dashboardController', [])
-    .controller('dashboardController', function($scope, $location, GetDashboards, GetUserBlocks, AddDashboard) {
+    .controller('dashboardController', function($route, $scope, $location, GetDashboards, GetUserBlocks, AddDashboard, DeleteDashboard) {
 
         GetDashboards.get()
             .success(function (data) {
@@ -36,7 +36,6 @@ angular.module('dashboardController', [])
             $scope.blockSelection = "";
         };
         $scope.CreateDashboard = function() {
-            console.log("REACHED");
             // validate the formData to make sure that something is there
             // if form is empty, nothing will happen
             // people can't just hold enter to keep adding the same to-do anymore
@@ -57,5 +56,10 @@ angular.module('dashboardController', [])
                     });
             }
         };
-
+        $scope.DeleteDashboard = function(dashboard){
+            DeleteDashboard.delete(dashboard)
+                .success(function() {
+                    $route.reload();
+                });
+        }
     });
