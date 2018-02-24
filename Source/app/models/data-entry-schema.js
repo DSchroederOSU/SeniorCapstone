@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 var dataEntrySchema = mongoose.Schema({
-    meter_id: String,
+    building:   {type:mongoose.Schema.ObjectId, ref: 'Building'},
+    meter_id:   {type:mongoose.Schema.ObjectId, ref: 'Meter'},
 
-    timestamp: { type: Date, required: true },
+    timestamp: { type: String, required: true },
     point: [{
         number: Number,
         name: String,
