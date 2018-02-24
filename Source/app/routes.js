@@ -203,8 +203,7 @@ module.exports = function(app, passport) {
             else{
                 entry.meter_id = doc1._id;
                 DataEntry.findOne({timestamp:pathShortener.time._, meter_id: entry.meter_id}, (err,doc2) =>{
-                    if (doc2 === null || doc2 === undefined){
-                        
+                    if (doc2 === null || doc2 === undefined){  
                         entry.timestamp = pathShortener.time._
                         entry.building = doc1.building;
                         console.log('entry before points')
