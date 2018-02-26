@@ -117,10 +117,13 @@ module.exports = function(app, passport) {
                 User.findByIdAndUpdate(
                     { _id: user._id},
                     { $push:{dashboards: savedDashboard}},
-                    {safe: true, upsert: true, new: true},
-                    (err) => {if (err) throw(err); });
+                    {safe: true, upsert: true, new: true}, function(err, user) {
+                        if (err)
+                            throw(err);
+                        else{
+                            res.json(user);
+                        }});
         });
-
     });
 
     app.get('/api/getDashboards', function(req, res) {
@@ -132,6 +135,20 @@ module.exports = function(app, passport) {
             });
     });
 
+    app.post('/api/deleteDashboard', function(req, res) {
+        User.findByIdAndUpdate(
+            { _id: req.user._id},
+            { $pull:{dashboards: req.body._id}}, function(err) {
+                if (err)
+                    throw(err);
+                else{
+                    Dashboard.remove({_id : req.body._id}, function (err) {
+                        if (err) return handleError(err);
+                        res.json({message: "success"});
+                    });
+                }
+            });
+    });
 
     // =====================================
     // GOOGLE ROUTES =======================

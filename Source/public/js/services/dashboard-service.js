@@ -17,6 +17,13 @@ angular.module('DashboardService', [])
             }
         }
     })
+    .factory('DeleteDashboard', function($http) {
+        return {
+            delete : function(dashboard) {
+                return $http.post('/api/deleteDashboard', dashboard);
+            }
+        }
+    });
 
 
 
