@@ -1,14 +1,15 @@
 var selectedBlocks = [];
 var dropdownBlocks = [];
 angular.module('dashboardController', [])
-    .controller('dashboardController', function($route, $scope, $location, GetDashboards, GetUserBlocks, AddDashboard, DeleteDashboard) {
-
+    .controller('dashboardController', function($route, $scope, $location, GetDashboards, Block, AddDashboard, DeleteDashboard) {
+        selectedBlocks = [];
+        $scope.blocks = [];
         GetDashboards.get()
             .success(function (data) {
                 $scope.dashboards = data;
 
             });
-        GetUserBlocks.get()
+        Block.get()
             .success(function(data) {
                 dropdownBlocks = data;
                 $scope.userBlocks = data;

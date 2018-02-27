@@ -72,8 +72,12 @@ module.exports = function(app, passport) {
                 User.findByIdAndUpdate(
                     { _id: user._id},
                     { $push:{blocks: savedBlock}},
-                    {safe: true, upsert: true, new: true},
-                    (err) =>{if (err) throw(err);});
+                    {safe: true, upsert: true, new: true}, function(err, user) {
+                        if (err)
+                            throw(err);
+                        else{
+                            res.json(user);
+                        }});
 
         });
     });
@@ -93,6 +97,17 @@ module.exports = function(app, passport) {
             });
 
     });
+    app.get('/api/getBlockById', function(req, res) {
+        Block.findOne({_id : req.query.block_id})
+        .populate({
+             path: 'building'
+        })
+        .exec(function (err, block) {
+            if (err) return handleError(err);
+            res.json(block);
+        });
+    });
+
     // =====================================================================
     /////////////////////////////DASHBOARD API//////////////////////////////
     // =====================================================================

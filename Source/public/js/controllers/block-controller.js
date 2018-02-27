@@ -1,14 +1,22 @@
 var selectedBuildings = [];
 var dropdownBuildings = [];
+var title = "";
+var buttontext = "";
 angular.module('blockController', [])
-    .controller('blockController', function($route, $scope, $location, GetBuildings, AddBlock, GetUserBlocks, DeleteBlock) {
+    .controller('blockController', function($route, $scope, $location, GetBuildings, Block, GetBlockByID) {
+        $scope.title = title;
+        $scope.button_text = buttontext;
+        $scope.buildings = [];
+        selectedBuildings = [];
+        if(title == "Create Block"){
+            GetBuildings.get()
+                .success(function (data) {
+                    dropdownBuildings = data;
+                    $scope.buildings = dropdownBuildings;
+                    $scope.selectedBuildings = "";
+                });
+        }
 
-        GetBuildings.get()
-        .success(function (data) {
-            dropdownBuildings = data;
-            $scope.buildings = dropdownBuildings;
-            $scope.selectedBuildings = "";
-        });
 
         $scope.selection = function(building) {
             selectedBuildings.push(building);
@@ -32,7 +40,63 @@ angular.module('blockController', [])
             $scope.buildingSelection = "";
         };
 
-        $scope.CreateBlock = function() {
+
+        Block.get()
+            .success(function(data) {
+                $scope.userBlocks = data;
+            });
+
+        $scope.DeleteBlock = function(block){
+            Block.delete(block)
+                .success(function() {
+                    $route.reload();
+                });
+        };
+        $scope.create = function(){
+            console.log("HERE");
+            title = "Create Block";
+            buttontext = "Create";
+        };
+
+        $scope.EditBlock = function(block){
+            console.log("Inside");
+            title = "Update Block";
+            buttontext = "Update";
+
+            GetBlockByID.get(block)
+                .success(function(block) {
+                    console.log("Block received");
+                    $scope.nameForm = block.name;
+                    for(b in block.building){
+                        var index = $scope.buildings.findIndex(x => x._id === block.building[b]._id);
+                        console.log(index);
+                        if (index > -1) {
+                            $scope.buildings.splice(index, 1);
+                            selectedBuildings.push(block.building[b]);
+                        }
+                    }
+                    //$scope.buildings = dropdownBuildings;
+                    $scope.selectedBuildings = selectedBuildings;
+                    $scope.buildingSelection = "";
+                    console.log($scope.buildings);
+                    console.log(dropdownBuildings);
+                    console.log(selectedBuildings);
+
+                });
+            $location.path('/createblock');
+        };
+
+        $scope.submit = function(){
+            if(buttontext == "Update"){
+                console.log("WE ARE UPDATING");
+            }
+            else{
+                CreateBlock();
+            }
+        };
+
+
+        function CreateBlock() {
             // validate the formData to make sure that something is there
             // if form is empty, nothing will happen
             // people can't just hold enter to keep adding the same to-do anymore
@@ -43,34 +107,20 @@ angular.module('blockController', [])
                     "chart": $scope.chartForm,
                     "buildings": selectedBuildings
                 };
-                AddBlock.create(BlockData)
+                Block.create(BlockData)
                 // if successful creation
-                .success(function(data) {
-                    console.log(selectedBuildings);
-                    selectedBuildings.forEach(function(b) {
-                        console.log(b);
-                        dropdownBuildings.push(b);
+                    .success(function(data) {
+                        selectedBuildings.forEach(function(b) {
+                            dropdownBuildings.push(b);
+                        });
+                        selectedBuildings = [];
+                        $scope.selectedBuildings = selectedBuildings;
+                        $scope.nameForm = "";
+                        $scope.chartForm = "";
+                        $location.path('/blocks');
+
                     });
-
-                    $scope.nameForm = "";
-                    $scope.chartForm = "";
-                    selectedBuildings = [];
-                    $scope.selectedBuildings = selectedBuildings;
-                    console.log(selectedBuildings);
-                    $location.path('/blocks');
-
-                });
             }
         };
-        GetUserBlocks.get()
-            .success(function(data) {
-                $scope.userBlocks = data;
-            });
 
-        $scope.DeleteBlock = function(block){
-            DeleteBlock.delete(block)
-                .success(function() {
-                    $route.reload();
-                });
-        }
     });
