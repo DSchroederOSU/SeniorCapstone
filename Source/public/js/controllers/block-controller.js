@@ -53,19 +53,16 @@ angular.module('blockController', [])
                 });
         };
         $scope.create = function(){
-            console.log("HERE");
             title = "Create Block";
             buttontext = "Create";
         };
 
         $scope.EditBlock = function(block){
-            console.log("Inside");
             title = "Update Block";
             buttontext = "Update";
 
             GetBlockByID.get(block)
                 .success(function(block) {
-                    console.log("Block received");
                     $scope.nameForm = block.name;
                     for(b in block.building){
                         var index = $scope.buildings.findIndex(x => x._id === block.building[b]._id);
