@@ -8,7 +8,7 @@
             <span class="align-middle">{{dashboard.name}}</span>
             <button type="submit" class="btn btn-danger float-right" ng-click="DeleteDashboard(dashboard)">Delete</button>
             <a href="#editdashboard" class="btn-sm btn-success float-right ml-2" style="text-decoration: none !important">Edit</a>
-            <a href="#viewdashboard" class="btn-sm btn-secondary float-right ml-2" style="text-decoration: none !important">View</a>
+            <a href="#viewdashboard" ng-click="viewDashboard(dashboard)" class="btn-sm btn-secondary float-right ml-2" style="text-decoration: none !important">View</a>
         </div>
 
     </li>
@@ -22,7 +22,7 @@
                 <span class="" style="margin-top: 50%;">Balls</span>
                 <button type="submit" class="btn btn-danger float-right" ng-click="DeleteDashboard(dashboard)">Delete</button>
                 <a href="#editdashboard" class="btn-sm btn-success float-right ml-2" style="text-decoration: none !important">Edit</a>
-                <a href="#viewdashboard" class="btn-sm btn-secondary float-right ml-2" style="text-decoration: none !important">View</a>
+                <a href="#viewdashboard"  class="btn-sm btn-secondary float-right ml-2" style="text-decoration: none !important">View</a>
             </div>
         </li>
     </ul>

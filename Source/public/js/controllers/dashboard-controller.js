@@ -1,9 +1,13 @@
 var selectedBlocks = [];
 var dropdownBlocks = [];
+var viewDashboard;
 angular.module('dashboardController', [])
     .controller('dashboardController', function($route, $scope, $location, Dashboard, Block) {
         selectedBlocks = [];
         $scope.blocks = [];
+
+        $scope.selectedDashboard = viewDashboard;
+
         Dashboard.get()
             .success(function (data) {
                 $scope.dashboards = data;
@@ -63,4 +67,11 @@ angular.module('dashboardController', [])
                     $route.reload();
                 });
         }
+
+        $scope.viewDashboard = function(dashboard) {
+            console.log(dashboard);
+            viewDashboard = dashboard;
+            $route.reload();
+        }
+
     });

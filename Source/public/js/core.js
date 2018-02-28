@@ -33,8 +33,8 @@ myApp.config(function($routeProvider, $locationProvider) {
     .when("/deletedashboard", {
         templateUrl : "../views/dashboard/delete-dashboard.html"
     })
-    .when("/editdashboard", {
-        templateUrl : "../views/dashboard/edit-dashboard.html"
+    .when("/viewdashboard", {
+        templateUrl : "../views/dashboard/view-dashboard.html"
     })
 
     ///////////////////////////

@@ -144,7 +144,10 @@ module.exports = function(app, passport) {
 
     app.get('/api/getDashboards', function(req, res) {
         User.findOne({_id : req.user._id})
-            .populate('dashboards')
+            .populate({
+                path: 'dashboards',
+                populate: {path: 'blocks'}
+            })
             .exec(function (err, user) {
                 if (err) return handleError(err);
                 res.json(user.dashboards);

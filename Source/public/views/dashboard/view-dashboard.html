@@ -1,0 +1,6 @@
+<div ng-controller="dashboardController" ng-model="selectedDashboard">
+    <h3> {{selectedDashboard.name}} </h3>
+
+    <h1>Blocks</h1>
+    <h5 ng-repeat="b in selectedDashboard.blocks">{{b.name}}, {{b.created_by}}</h5>
+</div>
