@@ -8,6 +8,7 @@ var Meter = require('./models/meter-schema');
 var DataEntry = require('./models/data-entry-schema');
 var Dashboard = require('./models/dashboard-schema');
 var Block = require('./models/block-schema');
+var Story = require('./models/story-schema');
 module.exports = function(app, passport) {
     
     app.get('/', function (req, res) {
@@ -164,6 +165,44 @@ module.exports = function(app, passport) {
                 }
             });
     });
+
+    // =====================================================================
+    ///////////////////////////////STORY API////////////////////////////////
+    // =====================================================================
+    app.get('/api/getUserStories', function(req, res) {
+        User.findOne({_id : req.user._id})
+            .populate('stories')
+            .exec(function (err, user) {
+                if (err) return handleError(err);
+                res.json(user.dashboards);
+            });
+    });
+
+    app.post('/api/addStory', function(req, res) {
+        console.log(req.body);
+        var user = req.user;
+        var story = new Story();
+        story.name = req.body.name;
+        story.created_by = user;
+        story.dashboards = req.body.dashboards;
+
+        story.save(function(err, savedStory) {
+            if (err)
+                throw err;
+            else
+                User.findByIdAndUpdate(
+                    { _id: user._id},
+                    { $push:{stories: savedStory}},
+                    {safe: true, upsert: true, new: true}, function(err, user) {
+                        if (err)
+                            throw(err);
+                        else{
+                            res.json(user);
+                        }});
+        });
+    });
+
+
 
     // =====================================
     // GOOGLE ROUTES =======================

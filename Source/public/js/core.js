@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController', 'buildingController', 'mapController',
-    'BlockService', 'UserService', 'BuildingService', 'DashboardService', 'ngRoute']);
+    'storyController', 'BlockService', 'UserService', 'BuildingService', 'DashboardService', 'StoryService', 'ngRoute']);
 
 myApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
@@ -56,7 +56,9 @@ myApp.config(function($routeProvider, $locationProvider) {
     ///////////////////////////
     /////////STORIES///////////
     ///////////////////////////
-
+    .when("/createStory", {
+        templateUrl : "../views/story/create-story.html"
+    })
 
     ///////////////////////////
     ////////BUILDINGS//////////

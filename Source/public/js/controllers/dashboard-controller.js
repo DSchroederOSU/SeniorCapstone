@@ -1,10 +1,10 @@
 var selectedBlocks = [];
 var dropdownBlocks = [];
 angular.module('dashboardController', [])
-    .controller('dashboardController', function($route, $scope, $location, GetDashboards, Block, AddDashboard, DeleteDashboard) {
+    .controller('dashboardController', function($route, $scope, $location, Dashboard, Block) {
         selectedBlocks = [];
         $scope.blocks = [];
-        GetDashboards.get()
+        Dashboard.get()
             .success(function (data) {
                 $scope.dashboards = data;
 
@@ -48,7 +48,7 @@ angular.module('dashboardController', [])
                     "blocks": selectedBlocks
                 };
 
-                AddDashboard.create(DashboardData)
+                Dashboard.create(DashboardData)
                 // if successful creation
                     .success(function(data) {
                         $scope.nameForm = "";
@@ -58,7 +58,7 @@ angular.module('dashboardController', [])
             }
         };
         $scope.DeleteDashboard = function(dashboard){
-            DeleteDashboard.delete(dashboard)
+            Dashboard.delete(dashboard)
                 .success(function() {
                     $route.reload();
                 });

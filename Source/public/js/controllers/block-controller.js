@@ -2,6 +2,7 @@ var selectedBuildings = [];
 var dropdownBuildings = [];
 var title = "";
 var buttontext = "";
+
 angular.module('blockController', [])
     .controller('blockController', function($route, $scope, $location, GetBuildings, Block, GetBlockByID) {
         $scope.title = title;
@@ -16,8 +17,6 @@ angular.module('blockController', [])
                     $scope.selectedBuildings = "";
                 });
         }
-
-
         $scope.selection = function(building) {
             selectedBuildings.push(building);
             var index = dropdownBuildings.indexOf(building);
@@ -65,7 +64,7 @@ angular.module('blockController', [])
                 .success(function(block) {
                     $scope.nameForm = block.name;
                     for(b in block.building){
-                        var index = $scope.buildings.findIndex(x => x._id === block.building[b]._id);
+                        //var index = $scope.buildings.findIndex(x => x._id === block.building[b]._id);
                         console.log(index);
                         if (index > -1) {
                             $scope.buildings.splice(index, 1);
