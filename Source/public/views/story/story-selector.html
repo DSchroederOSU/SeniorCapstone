@@ -1,5 +1,5 @@
-<nav id="sidenav" class="d-none d-sm-block bg-light sidebar">
-    <ul id="sideNavList" class="nav nav-pills flex-column">
+<nav id="storynav" class="d-none d-sm-block bg-light sidebar" ng-controller="mainController">
+    <ul id="storyNavList" class="nav nav-pills flex-column">
         <li class="custom-nav-item dash-item">
             <div class="nav-item-container container">
                 <a class="custom-nav-link" href="#createStory">Create +</a>
@@ -7,8 +7,16 @@
         </li>
         <li class="custom-nav-item dash-item" ng-repeat="story in stories">
             <div class="nav-item-container container">
-                <a class="custom-nav-link" href="#">{{story.name}}</a>
+                <a ng-controller="storyController" class="custom-nav-link ml-1" ng-click="viewStory(story)"
+                   href="#viewStory" style="font-size: 10%;">{{story.name}}</a>
             </div>
         </li>
     </ul>
 </nav>
+<script>
+
+    $('#storyNavList' ).on( 'click', function () {
+        $( '#dashboardSelector' ).removeClass( 'showDash' );
+        $( '#dashboardSelector' ).addClass( 'hideDash' );
+    });
+</script>

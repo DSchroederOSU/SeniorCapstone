@@ -1,0 +1,6 @@
+<div ng-controller="storyController" ng-model="selectedStory">
+    <h3> {{selectedStory.name}} </h3>
+
+    <h1>Dashboards</h1>
+    <h5 ng-repeat="d in selectedStory.dashboards">{{d.name}}, {{d.created_by}}</h5>
+</div>

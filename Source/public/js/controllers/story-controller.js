@@ -1,8 +1,9 @@
 var selectedDashboards = [];
 var dropdownDashboards = [];
+var viewStory;
 angular.module('storyController', [])
     .controller('storyController', function($route, $scope, $location, Dashboard, Story) {
-
+        $scope.selectedStory = viewStory;
         selectedDashboards = [];
         $scope.user_dashboards = [];
 
@@ -11,7 +12,6 @@ angular.module('storyController', [])
             $scope.user_dashboards = data;
             dropdownDashboards = data;
         });
-
         $scope.selection = function(dashboard) {
             selectedDashboards.push(dashboard);
             var index = dropdownDashboards.indexOf(dashboard);
@@ -44,15 +44,19 @@ angular.module('storyController', [])
                     "name": $scope.nameForm,
                     "dashboards": selectedDashboards
                 };
-
                 Story.create(StoryData)
                 // if successful creation
-                    .success(function(data) {
-                        $scope.nameForm = "";
-                        $location.path('/');
-                    });
+                .success(function(data) {
+                    $scope.nameForm = "";
+                    $location.path('/');
+                });
             }
         };
+
+        $scope.viewStory = function(story) {
+            viewStory = story;
+            $route.reload();
+        }
 
 
     });

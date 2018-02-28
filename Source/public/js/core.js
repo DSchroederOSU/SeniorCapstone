@@ -59,7 +59,9 @@ myApp.config(function($routeProvider, $locationProvider) {
     .when("/createStory", {
         templateUrl : "../views/story/create-story.html"
     })
-
+    .when("/viewStory", {
+        templateUrl : "../views/story/view-story.html"
+    })
     ///////////////////////////
     ////////BUILDINGS//////////
     ///////////////////////////

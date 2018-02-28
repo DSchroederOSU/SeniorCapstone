@@ -171,10 +171,13 @@ module.exports = function(app, passport) {
     // =====================================================================
     app.get('/api/getUserStories', function(req, res) {
         User.findOne({_id : req.user._id})
-            .populate('stories')
+            .populate({
+                path: 'stories',
+                populate: {path: 'dashboards'}
+            })
             .exec(function (err, user) {
                 if (err) return handleError(err);
-                res.json(user.dashboards);
+                res.json(user.stories);
             });
     });
 
