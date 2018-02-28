@@ -25,13 +25,13 @@ angular.module('mapController', [])
             $scope.overlay.setMap($scope.map);
             $scope.element = document.getElementById('map');
 			
-
+			//info window pop up variable when polygon is clicked
+			var infoWindow = new google.maps.InfoWindow;
+			//list of polygons
 			var shapes = [];
 			
 			//Arnold Dining Center
 			var arnold_dining_center = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
-			arnold_dining_center.setMap($scope.map);
-			shapes.push(arnold_dining_center);
 			var path = [
 			new google.maps.LatLng(44.56064873786082, -123.27814686300826),
 			new google.maps.LatLng(44.56057038288392, -123.27815759184432),
@@ -47,6 +47,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.560651031140644, -123.27806746960505)];
 			var arnold_dining_center = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			arnold_dining_center.setMap($scope.map);
+			google.maps.event.addListener(arnold_dining_center, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Arnold Dining Center" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(arnold_dining_center);
 			
 			//Bloss
@@ -68,6 +76,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.5602109041452, -123.27769437432494)];
 			var Bloss = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Bloss.setMap($scope.map);
+			google.maps.event.addListener(Bloss, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Bloss Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Bloss);
 			
 			//Buxton
@@ -86,6 +102,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56435232346354, -123.28211385018221)];
 			var Buxton = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Buxton.setMap($scope.map);
+			google.maps.event.addListener(Buxton, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Buxton Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Buxton);
 			
 			//Callahan
@@ -102,6 +126,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56407981791348, -123.27392452954427)];
 			var Callahan = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Callahan.setMap($scope.map);
+			google.maps.event.addListener(Callahan, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Callahan Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Callahan);
 			
 			//Cauthorn
@@ -116,6 +148,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56405994366929, -123.28265833861224)];
 			var Cauthorn = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Cauthorn.setMap($scope.map);
+			google.maps.event.addListener(Cauthorn, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Cauthorn Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Cauthorn);
 			
 			//CH2M Hill Alumni Center
@@ -130,6 +170,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.55996265039702, -123.2793967724092)];
 			var CH2M = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			CH2M.setMap($scope.map);
+			google.maps.event.addListener(CH2M, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "CH2M Hill Alumni Center" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(CH2M);
 			
 			//Dixon Rec Center
@@ -182,6 +230,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56357569843555, -123.27905935050694)];
 			var Dixon = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Dixon.setMap($scope.map);
+			google.maps.event.addListener(Dixon, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Dixon Recreation Center" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Dixon);
 			
 			//Dryden
@@ -202,26 +258,48 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56317171170715, -123.2849741578184)];
 			var Dryden = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Dryden.setMap($scope.map);
+			google.maps.event.addListener(Dryden, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Dryden Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Dryden);
 			
 			//Finley 
 			var path = [
-			new google.maps.LatLng(44.56322598446386, -123.2849756331234),
-			new google.maps.LatLng(44.56322569779472, -123.285184711267),
-			new google.maps.LatLng(44.563220920266865, -123.28518571709537),
-			new google.maps.LatLng(44.563221398019664, -123.2852896526947),
-			new google.maps.LatLng(44.56314758516507, -123.28528931741857),
-			new google.maps.LatLng(44.56314686853495, -123.28518772875213),
-			new google.maps.LatLng(44.562932834597596, -123.2851860523715),
-			new google.maps.LatLng(44.56293259572, -123.28519342844629),
-			new google.maps.LatLng(44.56287478731172, -123.28519342840536),
-			new google.maps.LatLng(44.56287478731172, -123.28497449309452),
-			new google.maps.LatLng(44.56293104301569, -123.28497469425201),
-			new google.maps.LatLng(44.562931162454475, -123.28498153389319),
-			new google.maps.LatLng(44.56317171170715, -123.28498086334093),
-			new google.maps.LatLng(44.56317171170715, -123.2849741578184)];
+			new google.maps.LatLng(44.56114339102153, -123.277897283441),
+			new google.maps.LatLng(44.56115915742497, -123.277897283441),
+			new google.maps.LatLng(44.56116011296443, -123.27790734172481),
+			new google.maps.LatLng(44.5612045455322, -123.2779060006203),
+			new google.maps.LatLng(44.56120000672307, -123.27754524349757),
+			new google.maps.LatLng(44.56115557415184, -123.2775455787737),
+			new google.maps.LatLng(44.56115581303671, -123.27755798399039),
+			new google.maps.LatLng(44.561140524402255, -123.27755898981877),
+			new google.maps.LatLng(44.56113861332267, -123.27734977751561),
+			new google.maps.LatLng(44.56107889204662, -123.27734977751561),
+			new google.maps.LatLng(44.56107889204662, -123.2773658707697),
+			new google.maps.LatLng(44.56103541492073, -123.2773672118742),
+			new google.maps.LatLng(44.56103613157685, -123.27754759043046),
+			new google.maps.LatLng(44.56102275399443, -123.27754759043046),
+			new google.maps.LatLng(44.56102633727573, -123.2779130414292),
+			new google.maps.LatLng(44.56103947597198, -123.27791203560082),
+			new google.maps.LatLng(44.56104210371089, -123.27818293871132),
+			new google.maps.LatLng(44.56111544147767, -123.27818193288294),
+			new google.maps.LatLng(44.56111424705241, -123.27815276385991),
+			new google.maps.LatLng(44.561146018755736, -123.27815209330765)];
 			var Finley = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Finley.setMap($scope.map);
+			google.maps.event.addListener(Finley, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Finley Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Finley);
 			
 			//Halsell 
@@ -308,6 +386,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56113931404118, -123.277226932355)];
 			var Halsell = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Halsell.setMap($scope.map);
+			google.maps.event.addListener(Halsell, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Halsell Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Halsell);
 			
 			//Hawley 
@@ -322,6 +408,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.5643291051358, -123.28283120701599)];
 			var Hawley = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Hawley.setMap($scope.map);
+			google.maps.event.addListener(Hawley, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Hawley Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Hawley);
 			
 			//ILLC 
@@ -368,6 +462,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.560011575059015, -123.27628460536289)];
 			var ILLC = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			ILLC.setMap($scope.map);
+			google.maps.event.addListener(ILLC, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "ILLC" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(ILLC);
 			
 			//KEC 
@@ -398,6 +500,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56710587632182, -123.2793110088005)];
 			var KEC = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			KEC.setMap($scope.map);
+			google.maps.event.addListener(KEC, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Kelley Engineering Center" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(KEC);
 			
 			//MPW Dining Center 
@@ -412,6 +522,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56404255379124, -123.28402304636256)];
 			var MPW = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			MPW.setMap($scope.map);
+			google.maps.event.addListener(MPW, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Marketplace West Dining Center" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(MPW);
 			
 			//Mcnary 
@@ -428,6 +546,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.5644218829242, -123.27194640060043)];
 			var Mcnary = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Mcnary.setMap($scope.map);
+			google.maps.event.addListener(Mcnary, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Mcnary Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Mcnary);
 			
 			//MU 
@@ -498,6 +624,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56469997635625, -123.27978160232306)];
 			var MU = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			MU.setMap($scope.map);
+			google.maps.event.addListener(MU, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Memorial Union" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(MU);
 			
 			//Milam 
@@ -526,6 +660,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56630826805064, -123.27958144247532)];
 			var Milam = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Milam.setMap($scope.map);
+			google.maps.event.addListener(Milam, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Milam Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Milam);
 			
 			//Milne_Comp_Center 
@@ -536,6 +678,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.566239952985114, -123.27554002404213)];
 			var Milne_Comp_Center = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Milne_Comp_Center.setMap($scope.map);
+			google.maps.event.addListener(Milne_Comp_Center, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Milne Computer Center" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Milne_Comp_Center);
 			
 			//Nash 
@@ -546,6 +696,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56602401952316, -123.28291743993759)];
 			var Nash = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Nash.setMap($scope.map);
+			google.maps.event.addListener(Nash, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Nash Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Nash);
 			
 			//Poling 
@@ -560,6 +718,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56375523653272, -123.2816132158041)];
 			var Poling = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Poling.setMap($scope.map);
+			google.maps.event.addListener(Poling, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Poling Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Poling);
 			
 			//Sackett 
@@ -615,6 +781,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.564850225599336, -123.28393399715424)];
 			var Sackett = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Sackett.setMap($scope.map);
+			google.maps.event.addListener(Sackett, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Sackett Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Sackett);
 			
 			//SEC 
@@ -633,6 +807,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.564736045764775, -123.27767707407475)];
 			var SEC = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			SEC.setMap($scope.map);
+			google.maps.event.addListener(SEC, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Student Experience Center" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(SEC);
 			
 			//Tebeau 
@@ -679,6 +861,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56346237601594, -123.27242597937584)];
 			var Tebeau = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Tebeau.setMap($scope.map);
+			google.maps.event.addListener(Tebeau, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Tebeau Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Tebeau);
 			
 			//Valley Library
@@ -722,6 +912,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.565194196968115, -123.27654853463173)];
 			var Library = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Library.setMap($scope.map);
+			google.maps.event.addListener(Library, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Valley Library" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Library);
 			
 			//Weatherford 
@@ -810,6 +1008,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56438681651165, -123.28118674457073)];
 			var Weatherford = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Weatherford.setMap($scope.map);
+			google.maps.event.addListener(Weatherford, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Weatherford Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Weatherford);
 			
 			//Weniger 
@@ -836,6 +1042,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56811978233477, -123.27771194279194)];
 			var Weniger = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Weniger.setMap($scope.map);
+			google.maps.event.addListener(Weniger, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Weniger Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Weniger);
 			
 			//West 
@@ -862,6 +1076,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56349749069077, -123.28415628522635)];
 			var West = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			West.setMap($scope.map);
+			google.maps.event.addListener(West, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "West Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(West);
 			
 			//Wilson 
@@ -878,6 +1100,14 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.56382116577694, -123.27288933098316)];
 			var Wilson = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			Wilson.setMap($scope.map);
+			google.maps.event.addListener(Wilson, 'click', function (event) {
+				infoWindow.setContent(
+				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Wilson Hall" + "</h5>" +
+				"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});  
 			shapes.push(Wilson);
 			
         },100);

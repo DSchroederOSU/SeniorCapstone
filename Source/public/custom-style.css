@@ -211,6 +211,9 @@ i {
 .border-orange {
 	border: 2px solid #DC4405;"
 }
+.border-orange-thin {
+	border: 1px solid #DC4405;"
+}
 .border-bottom-orange {
 	border-bottom: 2px solid #DC4405;"
 }
@@ -227,6 +230,10 @@ i {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+}
+.orange-button {
+	color: white; 
+	background-color: #DC4405 !important;
 }
 @font-face {
   font-family: 'rufina-stencil-regular';
