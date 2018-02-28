@@ -253,3 +253,6 @@ i {
   font-family: 'Stratum2-Bold';
   src: url('assets/fonts/Stratum2-Bold.otf') format('opentype');
 }
+
+.grow { transition: all .2s ease-in-out; }
+.grow:hover { transform: scale(1.05); }

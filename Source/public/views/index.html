@@ -32,19 +32,14 @@
     <link rel="stylesheet" type="text/css" href="../custom-style.css">
 
 </head>
-<body class="body container-fluid p-0">
+<body class="body container-fluid p-0" ng-controller="mainController">
 
-<!--
-<div id="nav" class="w-100 p-3 " style="height: 56px;">
-    <div ng-controller="mainController" ng-include="'/navigation'"></div>
-</div>
--->
-<div id="nav" class="w-100 p-3 " style="height: 56px;" ng-controller="mainController">
+<div id="nav" class="w-100 p-3 " style="height: 56px;" >
     <top-nav model="$parent"></top-nav>
 </div>
 
 
-<div class="container-fluid" ng-controller="mainController">
+<div class="container-fluid">
     <div class="row">
         <div class="custom-side-nav navbar-fixed-side navbar-fixed-side-left pl-0 pr-0 col-sm-2 col-md-2 Stratum2-Light" style="width: 162px; height: 100vh;">
             <side-nav model="$parent"></side-nav>

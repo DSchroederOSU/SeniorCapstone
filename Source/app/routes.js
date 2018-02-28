@@ -146,7 +146,12 @@ module.exports = function(app, passport) {
         User.findOne({_id : req.user._id})
             .populate({
                 path: 'dashboards',
-                populate: {path: 'blocks'}
+                populate: {
+                    path: 'blocks',
+                    populate: {
+                        path: 'building'
+                    }
+                }
             })
             .exec(function (err, user) {
                 if (err) return handleError(err);
@@ -174,9 +179,10 @@ module.exports = function(app, passport) {
     // =====================================================================
     app.get('/api/getUserStories', function(req, res) {
         User.findOne({_id : req.user._id})
-            .populate({
-                path: 'stories',
-                populate: {path: 'dashboards'}
+            .populate({path: 'stories',
+                populate: {path: 'dashboards',
+                    populate: {path: 'blocks',
+                        populate: {path: 'building'}}}
             })
             .exec(function (err, user) {
                 if (err) return handleError(err);
