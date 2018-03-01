@@ -31,7 +31,6 @@ angular.module('mapController', [])
 			var shapes = [];
 			
 			//Arnold Dining Center
-			var arnold_dining_center = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			var path = [
 			new google.maps.LatLng(44.56064873786082, -123.27814686300826),
 			new google.maps.LatLng(44.56057038288392, -123.27815759184432),
@@ -47,6 +46,7 @@ angular.module('mapController', [])
 			new google.maps.LatLng(44.560651031140644, -123.27806746960505)];
 			var arnold_dining_center = new google.maps.Polygon({path:path, strokeColor: "#DC4405", strokeOpacity: 1.0, strokeWeight: 2});
 			arnold_dining_center.setMap($scope.map);
+			shapes.push(arnold_dining_center);
 			google.maps.event.addListener(arnold_dining_center, 'click', function (event) {
 				infoWindow.setContent(
 				"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Arnold Dining Center" + "</h5>" +
@@ -55,7 +55,6 @@ angular.module('mapController', [])
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});  
-			shapes.push(arnold_dining_center);
 			
 			//Bloss
 			var path = [
