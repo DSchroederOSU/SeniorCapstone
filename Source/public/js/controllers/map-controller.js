@@ -1,7 +1,7 @@
 angular.module('mapController', [])
-    .controller('mapController', function($scope, $timeout){
+    .controller('mapController', function($scope){
 
-		$timeout(function(){  
+		$scope.loadMap = function(){  
 			$scope.map;
 			$scope.markers = [];
 			$scope.markerId = 1;
@@ -29,6 +29,7 @@ angular.module('mapController', [])
 			var infoWindow = new google.maps.InfoWindow;
 			//list of polygons
 			var shapes = [];
+			
 			
 			//Arnold Dining Center
 			var path = [
@@ -1109,7 +1110,7 @@ angular.module('mapController', [])
 			});  
 			shapes.push(Wilson);
 			
-        },100);
+        };
 
 	});
 	
