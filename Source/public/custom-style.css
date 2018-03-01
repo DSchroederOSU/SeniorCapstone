@@ -1,21 +1,39 @@
 .hideDash{
-    -ms-transform: translate(0px, 50px); /* IE 9 */
-    -webkit-transform: translate(0px, 50px); /* Safari */
-    transform: translate(0px, 50px);
+    -ms-transform: translate(-10px, 150px); /* IE 9 */
+    -webkit-transform: translate(-10px, 150px); /* Safari */
+    transform: translate(-10px, 150px);
     transition-duration: 0.5s;
+	-webkit-filter: blur(0.000001px);
 }
 .showDash{
-    -ms-transform: translate(80px, 50px); /* IE 9 */
-    -webkit-transform: translate(80px, 50px); /* Safari */
-    transform: translate(80px, 50px);
+    -ms-transform: translate(147px, 150px); /* IE 9 */
+    -webkit-transform: translate(147px, 150px); /* Safari */
+    transform: translate(147px, 150px);
     transition-duration: 0.5s;
+	-webkit-filter: blur(0.000001px);
 }
 #dashboardSelector{
-    width: 80px;
+    width: 160px;
     z-index: 10;
-    height: 100%;
-    left: 80px;
+    left: 10px;
+	height: 60%;
+	visibility: hidden;
 }
+#storynav{
+	overflow-y: auto;
+	width: 160px;
+	height: 100%;
+	visibility: visible; 
+	background-color: transparent !important;
+}
+#storyNavList{
+	visibility: visible;
+	overflow-y: auto;
+}
+/*hides popout nav scrollbar for google chrome
+#dashboardSelector::-webkit-scrollbar { 
+    display: none; 
+}*/
 .dash-item{
     border-left: 1px solid black !important;
     background-color: #1c1c1c !important;
@@ -24,7 +42,7 @@
     background-color: #3a3d42;
 }
 .nav-item-container{
-    height: 49px;
+    height: 50px;
 }
 .custom-nav-item{
     background-color: #3a3d42;
@@ -40,6 +58,9 @@
     cursor: pointer;
     vertical-align: middle;
     line-height: 50px;
+	text-overflow:ellipsis;
+    overflow:hidden;
+    white-space: nowrap;
 
 }
 .custom-nav-link:hover{
@@ -211,6 +232,9 @@ i {
 .border-orange {
 	border: 2px solid #DC4405;"
 }
+.border-black{
+	border: 2px solid #3a3d42;"
+}
 .border-orange-thin {
 	border: 1px solid #DC4405;"
 }
@@ -254,5 +278,12 @@ i {
   src: url('assets/fonts/Stratum2-Bold.otf') format('opentype');
 }
 
-.grow { transition: all .2s ease-in-out; }
-.grow:hover { transform: scale(1.05); }
+.grow { 
+	transition: all .2s ease-in-out; 
+}
+.grow:hover { 
+	transform: scale(1.05);
+}
+#card-story:hover { 
+	border: 2px solid #DC4405;	
+}
