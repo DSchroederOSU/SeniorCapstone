@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController', 'buildingController', 'mapController',
-    'BlockService', 'UserService', 'BuildingService', 'DashboardService', 'ngRoute']);
+    'storyController', 'BlockService', 'UserService', 'BuildingService', 'DashboardService', 'StoryService', 'ngRoute']);
 
 myApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
@@ -33,8 +33,8 @@ myApp.config(function($routeProvider, $locationProvider) {
     .when("/deletedashboard", {
         templateUrl : "../views/dashboard/delete-dashboard.html"
     })
-    .when("/editdashboard", {
-        templateUrl : "../views/dashboard/edit-dashboard.html"
+    .when("/viewdashboard", {
+        templateUrl : "../views/dashboard/view-dashboard.html"
     })
 
     ///////////////////////////
@@ -56,8 +56,12 @@ myApp.config(function($routeProvider, $locationProvider) {
     ///////////////////////////
     /////////STORIES///////////
     ///////////////////////////
-
-
+    .when("/createStory", {
+        templateUrl : "../views/story/create-story.html"
+    })
+    .when("/viewStory", {
+        templateUrl : "../views/story/view-story.html"
+    })
     ///////////////////////////
     ////////BUILDINGS//////////
     ///////////////////////////

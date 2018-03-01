@@ -1,5 +1,5 @@
-<h3 class="mb-4">User Blocks
-    <a href="#createblock" class="btn btn-success float-right">Create Block</a>   <!--CHANGE EDIT TO CREATE AND HREF -->
+<h3 class="mb-4" ng-controller="blockController">User Blocks
+    <a href="#createblock" ng-click="create()" class="btn btn-success float-right">Create Block</a>   <!--CHANGE EDIT TO CREATE AND HREF -->
 </h3>
 <div ng-controller="blockController">
 <div class="card mb-3" style="width: 90%;" ng-repeat="block in userBlocks">
@@ -10,8 +10,7 @@
         </span>
         </div>
         <button type="submit" class="btn btn-danger float-right" ng-click="DeleteBlock(block)">Delete</button>
-        <a href="#editblock" class="btn btn-success float-right">Edit</a>
-
+        <button type="submit" class="btn btn-success float-right" ng-click="EditBlock(block)">Edit</button>
     </div>
     <div class="card-body p-3">
         <div class="row">

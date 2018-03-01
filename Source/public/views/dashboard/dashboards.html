@@ -2,20 +2,23 @@
 	<a href="#createdashboard" class="btn btn-success float-right">Create Dashboard</a>   <!--CHANGE EDIT TO CREATE AND HREF -->
 </h3>
 <div ng-controller="dashboardController">
-<ul class="list-group mt-4 mb-4 Stratum2-Light">
-    <li class="list-group-item pb-2 pt-2" ng-repeat="dashboard in dashboards">
-        <div class="w-100 h-100">
-            <span class="align-middle">{{dashboard.name}}</span>
-            <button type="submit" class="btn btn-danger float-right" ng-click="DeleteDashboard(dashboard)">Delete</button>
-            <a href="#editdashboard" class="btn-sm btn-success float-right ml-2" style="text-decoration: none !important">Edit</a>
-            <a href="#viewdashboard" class="btn-sm btn-secondary float-right ml-2" style="text-decoration: none !important">View</a>
-        </div>
+    <ul class="list-group mt-4 mb-4 Stratum2-Light">
+        <li class="list-group-item border-orange-thin p-2" ng-repeat="dashboard in dashboards">
+            <div class="row p-2 mb-5">
+                <div class="col-sm-8">
+                    <h4 class="m-0">Dashboard Name: {{dashboard.name}}</h4>
+                    <h5 class="m-0">Description: {{dashboard.description}}<p></p></h5>
+                </div>
+                <div class="col-sm-4">
+                    <button type="submit" class="btn btn-danger float-right ml-2" ng-click="DeleteDashboard(dashboard)">Delete</button>
+                    <a href="#editdashboard" class="btn orange-button float-right ml-2">Edit</a>
+                    <a href="#viewdashboard" ng-click="viewDashboard(dashboard)" class="btn btn-secondary float-right ml-2" style="text-decoration: none !important">View</a>
+                </div>
+            </div>
+        </li>
+    </ul>
 
-    </li>
-</ul>
-
-
-<h3 class="Stratum2-Light">Public Dashboards</h3>
+    <h3 class="Stratum2-Light">Public Dashboards</h3>
     <ul class="list-group mt-4 mb-4 Stratum2-Light">
         <li class="list-group-item border-orange-thin p-2">
             <div class="row p-2 mb-5">
@@ -26,7 +29,7 @@
 				<div class="col-sm-4">
 					<button type="submit" class="btn btn-danger float-right ml-2" ng-click="DeleteDashboard(dashboard)">Delete</button>
 					<a href="#editdashboard" class="btn orange-button float-right ml-2">Edit</a>
-					<a href="#viewdashboard" class="btn orange-button float-right ml-2">View</a>
+					<a href="#viewdashboard" class="btn btn-secondary float-right ml-2">View</a>
 				</div>
             </div>
         </li>
@@ -39,7 +42,7 @@
 				<div class="col-sm-4">
 					<button type="submit" class="btn btn-danger float-right ml-2" ng-click="DeleteDashboard(dashboard)">Delete</button>
 					<a href="#editdashboard" class="btn orange-button float-right ml-2">Edit</a>
-					<a href="#viewdashboard" class="btn orange-button float-right ml-2">View</a>
+					<a href="#viewdashboard" class="btn btn-secondary float-right ml-2">View</a>
 				</div>
             </div>
         </li>

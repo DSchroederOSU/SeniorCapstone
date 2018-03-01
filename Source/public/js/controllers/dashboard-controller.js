@@ -1,14 +1,19 @@
 var selectedBlocks = [];
 var dropdownBlocks = [];
+var viewDashboard;
 angular.module('dashboardController', [])
-    .controller('dashboardController', function($route, $scope, $location, GetDashboards, GetUserBlocks, AddDashboard, DeleteDashboard) {
+    .controller('dashboardController', function($route, $scope, $location, Dashboard, Block) {
+        selectedBlocks = [];
+        $scope.blocks = [];
 
-        GetDashboards.get()
+        $scope.selectedDashboard = viewDashboard;
+
+        Dashboard.get()
             .success(function (data) {
                 $scope.dashboards = data;
 
             });
-        GetUserBlocks.get()
+        Block.get()
             .success(function(data) {
                 dropdownBlocks = data;
                 $scope.userBlocks = data;
@@ -47,7 +52,7 @@ angular.module('dashboardController', [])
                     "blocks": selectedBlocks
                 };
 
-                AddDashboard.create(DashboardData)
+                Dashboard.create(DashboardData)
                 // if successful creation
                     .success(function(data) {
                         $scope.nameForm = "";
@@ -57,9 +62,16 @@ angular.module('dashboardController', [])
             }
         };
         $scope.DeleteDashboard = function(dashboard){
-            DeleteDashboard.delete(dashboard)
+            Dashboard.delete(dashboard)
                 .success(function() {
                     $route.reload();
                 });
         }
+
+        $scope.viewDashboard = function(dashboard) {
+            console.log(dashboard);
+            viewDashboard = dashboard;
+            $route.reload();
+        }
+
     });
