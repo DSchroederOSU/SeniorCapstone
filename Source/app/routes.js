@@ -28,10 +28,15 @@ module.exports = function(app, passport) {
 
     app.get('/api/buildings', function (req, res) {
         Building.find({}, function (err, buildings) {
+            //console.log(buildings);
             res.json(buildings); // return all buildings in JSON format
         });
     });
-    app.get('/api/buildingsMeters', function (req, res) {
+    app.post('/api/buildingMeters', function (req, res) {
+       
+        console.log('-----------------')
+        console.log(req.body)
+        console.log('hi')
         Building.find({}, function (err, buildings) {
             res.json(buildings); // return all buildings in JSON format
         });
@@ -179,28 +184,28 @@ module.exports = function(app, passport) {
      app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
        
         pathShortener = req.body.das.devices.device.records.record;
-        // Checks to see if new meter reports in without entry first being created
-        // Creates new Building if does not exist
-
-/********************************************************************/
+      /********************************************************************/
 
         // Used for creating test building with meters
         // comment out when not in use
-
-        // metername = 'Test meter '
+        
+        // metername = 'Test meter'
         // index = 0
         // for (let i = 0; i < 5; i++){
         //     meter = new Meter({
         //         name: metername + index,
-        //         building: '5a912011f3c7ff0ed0084228',
+        //        // building: '5a98fc4bb5ef652d9004f26b', //change to building desired
         //         meter_id: index++
         //     });
+        //     bleh = {name: metername + index, meter_id: index};
         //     console.log('Saving meter')
-        //     meter.save().catch( err => {res.status(400).send("unable to save to database");})
-        //     Building.findOneAndUpdate({_id: '5a912011f3c7ff0ed0084228'},
-        //     {$push:{meters: meter}},
+        //     Building.findOneAndUpdate({_id: '5a98fdd7ec42871748d2260d'},
+        //     {$push:{meters: bleh}},
         //     {safe: true, upsert: true, new: true},
         //     (err) =>{if (err) throw(err)})
+        //     meter.building = '5a98fdd7ec42871748d2260d'
+        //     meter.save().catch( err => {res.status(400).send("unable to save to database");})
+           
                 
         // }
 /********************************************************************/
@@ -213,7 +218,8 @@ module.exports = function(app, passport) {
         console.log(pathShortener.time._)
         entry = new DataEntry();
      
-        Meter.findOne({meter_id: req.body.das.serial},(err,doc1) => {
+        // Checks if meter exists. If it doesn't adds one.
+        Meter.findOne({meter_id: req.body.das.serial},(err,doc1) => { 
             if (doc1 === null || doc1 === undefined){
                 addMeter(req.body.das)
             }
@@ -226,14 +232,16 @@ module.exports = function(app, passport) {
                         console.log('entry before points')
                         console.log(entry)
                         pathShortener.point.forEach((e,i) => {entry.point[i] = e.$;});
+                        // save it to data entries
                         entry.save().catch( err => {res.status(400)})
+                        // add it to building
                         Building.findOneAndUpdate({_id: entry.building},
                             {$push:{data_entries: entry}},
                             {safe: true, upsert: true, new: true},
                             (err) =>{if (err) throw(err)})
                     }
                     else{
-                        console.log('Duplicate detected')
+                        console.log('Duplicate detected and nothing has been added!')
                     }
             
                 })
@@ -262,9 +270,10 @@ module.exports = function(app, passport) {
 
 }
 function addMeter(entry){
-
+    // add meter building reference == null
 }
 
+// to be used with front end if we ever implement
 function addBuildingToDatabase(entry) {
     Building.findOne({name: entry.name}, function (err, docs) {
           if(docs === null){ // ensure building doesn't exist
@@ -284,20 +293,7 @@ function addBuildingToDatabase(entry) {
               console.log('Nothing was added');     
         });
   };
-function duplicateDetection(entry){
-   
-    console.log(entry)
-    Building.find({data_entry: {$elemMatch:{ timestamp: Date(entry)}}}, (err,docs) =>{
-        if(docs === null){
-            console.log("No dupe found")
-        }
-        else {
-            console.log("docs is:")
-            console.log(docs)
-        }
-    }
 
-)}
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
