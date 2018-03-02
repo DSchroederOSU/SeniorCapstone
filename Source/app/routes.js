@@ -29,10 +29,15 @@ module.exports = function(app, passport) {
 
     app.get('/api/buildings', function (req, res) {
         Building.find({}, function (err, buildings) {
+            //console.log(buildings);
             res.json(buildings); // return all buildings in JSON format
         });
     });
-    app.get('/api/buildingsMeters', function (req, res) {
+    app.post('/api/buildingMeters', function (req, res) {
+       
+        console.log('-----------------')
+        console.log(req.body)
+        console.log('hi')
         Building.find({}, function (err, buildings) {
             res.json(buildings); // return all buildings in JSON format
         });
@@ -236,88 +241,7 @@ module.exports = function(app, passport) {
         })
     );
 
-    // =====================================
-    // XML POST PARSING ====================
-    // =====================================
-    // Function for handling xml post requests
-    // Receives post requests, converts from XML to JSON
-    // the 'xmlparser' in parameters takes care of everything
-     app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
-       
-        pathShortener = req.body.das.devices.device.records.record;
-        // Checks to see if new meter reports in without entry first being created
-        // Creates new Building if does not exist
-
-/********************************************************************/
-
-        // Used for creating test building with meters
-        // comment out when not in use
-
-        // metername = 'Test meter '
-        // index = 0
-        // for (let i = 0; i < 5; i++){
-        //     meter = new Meter({
-        //         name: metername + index,
-        //         building: '5a912011f3c7ff0ed0084228',
-        //         meter_id: index++
-        //     });
-        //     console.log('Saving meter')
-        //     meter.save().catch( err => {res.status(400).send("unable to save to database");})
-        //     Building.findOneAndUpdate({_id: '5a912011f3c7ff0ed0084228'},
-        //     {$push:{meters: meter}},
-        //     {safe: true, upsert: true, new: true},
-        //     (err) =>{if (err) throw(err)})
-                
-        // }
-/********************************************************************/
-       
-
-    // TODO:  
-    //     - implement controllers for /api/buildingsMeters
-        
-        console.log('Time:')
-        console.log(pathShortener.time._)
-        entry = new DataEntry();
-     
-        Meter.findOne({meter_id: req.body.das.serial},(err,doc1) => {
-            if (doc1 === null || doc1 === undefined){
-                addMeter(req.body.das)
-            }
-            else{
-                entry.meter_id = doc1._id;
-                DataEntry.findOne({timestamp:pathShortener.time._, meter_id: entry.meter_id}, (err,doc2) =>{
-                    if (doc2 === null || doc2 === undefined){  
-                        entry.timestamp = pathShortener.time._
-                        entry.building = doc1.building;
-                        console.log('entry before points')
-                        console.log(entry)
-                        pathShortener.point.forEach((e,i) => {entry.point[i] = e.$;});
-                        entry.save().catch( err => {res.status(400)})
-                        Building.findOneAndUpdate({_id: entry.building},
-                            {$push:{data_entries: entry}},
-                            {safe: true, upsert: true, new: true},
-                            (err) =>{if (err) throw(err)})
-                    }
-                    else{
-                        console.log('Duplicate detected')
-                    }
-            
-                })
-            }
-          
-     
-        });
-            
-
-       res.send(req.body);
-    });
-
-    app.get('/showBuildings' ,function (req,res) {
-       Building.find(function (err, docs) {
-            console.log(docs);
-            res.json(docs);
-        })
-    });
+   
 
     // adding xml parser for testing and debugging purposes until we get client side POST setup
     // to be called from "Add Building" feature
@@ -328,9 +252,10 @@ module.exports = function(app, passport) {
 
 }
 function addMeter(entry){
-
+    // add meter building reference == null
 }
 
+// to be used with front end if we ever implement
 function addBuildingToDatabase(entry) {
     Building.findOne({name: entry.name}, function (err, docs) {
           if(docs === null){ // ensure building doesn't exist
@@ -350,20 +275,7 @@ function addBuildingToDatabase(entry) {
               console.log('Nothing was added');     
         });
   };
-function duplicateDetection(entry){
-   
-    console.log(entry)
-    Building.find({data_entry: {$elemMatch:{ timestamp: Date(entry)}}}, (err,docs) =>{
-        if(docs === null){
-            console.log("No dupe found")
-        }
-        else {
-            console.log("docs is:")
-            console.log(docs)
-        }
-    }
 
-)}
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
