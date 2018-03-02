@@ -229,8 +229,22 @@ i {
 .text-orange {
     color: #DC4405; 
 }
+.text-black {
+    color: black; 
+	text-decoration: none;
+}
+.text-white {
+    color: white; 
+	text-decoration: none;
+}
+.background-orange {
+    background-color: #DC4405; 
+}
 .border-orange {
 	border: 2px solid #DC4405;"
+}
+.border-curve-button {    
+	border-radius: 4px;
 }
 .border-black{
 	border: 2px solid #3a3d42;"
@@ -277,7 +291,6 @@ i {
   font-family: 'Stratum2-Bold';
   src: url('assets/fonts/Stratum2-Bold.otf') format('opentype');
 }
-
 .grow { 
 	transition: all .2s ease-in-out; 
 }
@@ -287,3 +300,41 @@ i {
 #card-story:hover { 
 	border: 2px solid #DC4405;	
 }
+.fa-gear{
+	cursor: pointer;
+	
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 80px;
+    box-shadow: 5px 5px 8px 2px rgba(0,0,0,0.5);
+    z-index: 1;
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {
+	background-color: #ECF0F1;
+	-webkit-transition: all 0.1s ease-in-out 0s;
+    transition: all 0.1s ease-in-out 0s;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown:hover .dropbtn {
+    background-color: #ECF0F1;
+	-webkit-transition: all 0.1s ease-in-out 0s;
+    transition: all 0.1s ease-in-out 0s;
+}
+
+
+
