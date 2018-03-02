@@ -6,19 +6,20 @@
     <ul class="list-group mt-4 mb-4 Stratum2-Light">
         <li class="list-group-item border-orange-thin p-2" ng-repeat="dashboard in dashboards">
             <div class="row px-2 mb-2">
-                <div class="col-sm-11">
-                    <h4 class="m-0 font-weight-bold">{{dashboard.name}}</h4>
+                <div class="col-sm-12">
+                    <h4 class="m-0 font-weight-bold">{{dashboard.name}}
+						<div class="float-right pr-3 dropdown" style="font-size:18px">
+							<button class="fa fa-gear border-orange-thin border-curve-button" style="font-size:24px"></button>
+							<div class="dropdown-content border-orange font-weight-normal">
+								<a class="" href="#editdashboard">Edit</a>
+								<a class="" href="#viewdashboard" ng-click="viewDashboard(dashboard)">View</a>
+								<a class="" ng-click="DeleteDashboard(dashboard)">Delete</a>
+							</div>
+						</div>
+					</h4>
                     <h6 class="m-0">Description: {{dashboard.description}}<p></p></h6>
+					
                 </div>
-				
-                <div class="col-sm-1 dropdown">
-					<button class="fa fa-gear border-orange-thin border-curve-button" style="font-size:24px"></button>
-					<div class="dropdown-content border-orange">
-						<a class="" href="#editdashboard">Edit</a>
-						<a class="" href="#viewdashboard" ng-click="viewDashboard(dashboard)">View</a>
-						<a class="" ng-click="DeleteDashboard(dashboard)">Delete</a>
-					</div>
-				</div>
             </div>
         </li>
     </ul>
