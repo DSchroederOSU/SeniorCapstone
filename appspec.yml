@@ -4,4 +4,4 @@ os: linux
 
 files:
   - source: ./
-    destination: /home/bitnami/apps
+    destination: /home/bitnami/apps/SeniorCapstone
