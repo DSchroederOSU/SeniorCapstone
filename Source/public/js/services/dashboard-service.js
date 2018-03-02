@@ -3,27 +3,23 @@ angular.module('DashboardService', [])
 
 // super simple service
 // each function returns a promise object
-    .factory('AddDashboard', function($http) {
+    .factory('Dashboard', function($http) {
         return {
             create : function(dashboardData) {
                 return $http.post('/api/addDashboard', dashboardData);
-            }
-        }
-    })
-    .factory('GetDashboards', function($http) {
-        return {
+            },
+            delete : function(dashboard) {
+                return $http.post('/api/deleteDashboard', dashboard);
+            },
+            edit : function(dashboard) {
+                return $http.post('/api/editDashboard', dashboard);
+            },
             get : function() {
                 return $http.get('/api/getDashboards');
             }
         }
     })
-    .factory('DeleteDashboard', function($http) {
-        return {
-            delete : function(dashboard) {
-                return $http.post('/api/deleteDashboard', dashboard);
-            }
-        }
-    });
+
 
 
 

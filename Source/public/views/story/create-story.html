@@ -1,0 +1,40 @@
+<h3>Create Story</h3>
+<div class="row mt-4" ng-controller="storyController">
+    <div class="col-sm-5 col-md-5">
+        <h4>Edit Information</h4>
+        <div class="form-group row mt-4">
+            <label for="inputDashboardName" class="ml-3">Story Name</label>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" maxlength="35" id="inputDashboardName" ng-model="nameForm" placeholder="Name">
+            </div>
+        </div>
+        <div class="form-group row mt-4">
+            <label for="dropdownDashboards" class="ml-3">Select Dashboards:</label>
+            <div class="col-sm-12">
+                <select id="dropdownDashboards" class="form-control "
+                        ng-model="dashboardSelection"
+                        required ng-options="dashboard.name for dashboard in user_dashboards"
+                        ng-change="selection(dashboardSelection)">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-1 col-md-1">
+    </div>
+    <div class="col-sm-5 col-md-5">
+        <h4>Current Dashboards</h4>
+        <ul class="list-group mt-4 mb-4">
+            <div ng-repeat="dashboards in selectedDashboards track by dashboards._id">
+                <li class="list-group-item">
+                    {{dashboards.name}}
+                    <button ng-model="dashboards" type="button" style="" class="btn-sml btn-danger float-right" ng-click="removeDashboard(dashboards)">
+                        <span class="" aria-hidden="false">&times;</span>
+                    </button>
+                </li>
+            </div>
+        </ul>
+    </div>
+    <button type="submit" class="btn btn-success" ng-click="CreateStory()">Create Story</button>
+</div>
+
+

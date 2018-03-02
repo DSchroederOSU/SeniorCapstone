@@ -1,19 +1,39 @@
 .hideDash{
-    -ms-transform: translate(0px, 50px); /* IE 9 */
-    -webkit-transform: translate(0px, 50px); /* Safari */
-    transform: translate(0px, 50px);
+    -ms-transform: translate(-10px, 150px); /* IE 9 */
+    -webkit-transform: translate(-10px, 150px); /* Safari */
+    transform: translate(-10px, 150px);
     transition-duration: 0.5s;
+	-webkit-filter: blur(0.000001px);
 }
 .showDash{
-    -ms-transform: translate(80px, 50px); /* IE 9 */
-    -webkit-transform: translate(80px, 50px); /* Safari */
-    transform: translate(80px, 50px);
+    -ms-transform: translate(147px, 150px); /* IE 9 */
+    -webkit-transform: translate(147px, 150px); /* Safari */
+    transform: translate(147px, 150px);
     transition-duration: 0.5s;
+	-webkit-filter: blur(0.000001px);
 }
 #dashboardSelector{
-    width: 80px;
+    width: 160px;
     z-index: 10;
+    left: 10px;
+	height: 60%;
+	visibility: hidden;
 }
+#storynav{
+	overflow-y: auto;
+	width: 160px;
+	height: 100%;
+	visibility: visible; 
+	background-color: transparent !important;
+}
+#storyNavList{
+	visibility: visible;
+	overflow-y: auto;
+}
+/*hides popout nav scrollbar for google chrome
+#dashboardSelector::-webkit-scrollbar { 
+    display: none; 
+}*/
 .dash-item{
     border-left: 1px solid black !important;
     background-color: #1c1c1c !important;
@@ -22,7 +42,7 @@
     background-color: #3a3d42;
 }
 .nav-item-container{
-    height: 49px;
+    height: 50px;
 }
 .custom-nav-item{
     background-color: #3a3d42;
@@ -38,6 +58,9 @@
     cursor: pointer;
     vertical-align: middle;
     line-height: 50px;
+	text-overflow:ellipsis;
+    overflow:hidden;
+    white-space: nowrap;
 
 }
 .custom-nav-link:hover{
@@ -206,8 +229,28 @@ i {
 .text-orange {
     color: #DC4405; 
 }
+.text-black {
+    color: black; 
+	text-decoration: none;
+}
+.text-white {
+    color: white; 
+	text-decoration: none;
+}
+.background-orange {
+    background-color: #DC4405; 
+}
 .border-orange {
 	border: 2px solid #DC4405;"
+}
+.border-curve-button {    
+	border-radius: 4px;
+}
+.border-black{
+	border: 2px solid #3a3d42;"
+}
+.border-orange-thin {
+	border: 1px solid #DC4405;"
 }
 .border-bottom-orange {
 	border-bottom: 2px solid #DC4405;"
@@ -225,6 +268,10 @@ i {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
+}
+.orange-button {
+	color: white; 
+	background-color: #DC4405 !important;
 }
 @font-face {
   font-family: 'rufina-stencil-regular';
@@ -244,3 +291,50 @@ i {
   font-family: 'Stratum2-Bold';
   src: url('assets/fonts/Stratum2-Bold.otf') format('opentype');
 }
+.grow { 
+	transition: all .2s ease-in-out; 
+}
+.grow:hover { 
+	transform: scale(1.05);
+}
+#card-story:hover { 
+	border: 2px solid #DC4405;	
+}
+.fa-gear{
+	cursor: pointer;
+	
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 80px;
+    box-shadow: 5px 5px 8px 2px rgba(0,0,0,0.5);
+    z-index: 1;
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {
+	background-color: #ECF0F1;
+	-webkit-transition: all 0.1s ease-in-out 0s;
+    transition: all 0.1s ease-in-out 0s;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown:hover .dropbtn {
+    background-color: #ECF0F1;
+	-webkit-transition: all 0.1s ease-in-out 0s;
+    transition: all 0.1s ease-in-out 0s;
+}
+
+
+

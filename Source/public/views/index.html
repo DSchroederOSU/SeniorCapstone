@@ -4,6 +4,7 @@
 <head>
     <title>OSU Energy Dashboard</title>
     <link rel="shortcut icon" href="../assets/logo.png">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- Cog edit icon -->
     <style>
         body        {word-wrap:break-word; }
     </style>
@@ -20,36 +21,32 @@
     <script src="js/controllers/building-controller.js"></script> <!-- load up our controller -->
     <script src="js/controllers/dashboard-controller.js"></script> <!-- load up our controller -->
 	<script src="js/controllers/map-controller.js"></script> <!-- load up our controller -->
+    <script src="js/controllers/story-controller.js"></script> <!-- load up our controller -->
+    <script src="js/services/story-service.js"></script> <!--  load our user service -->
     <script src="js/services/user-service.js"></script> <!--  load our user service -->
     <script src="js/services/building-service.js"></script> <!--  load our building service -->
     <script src="js/services/block-service.js"></script> <!--  load our block service -->
     <script src="js/services/dashboard-service.js"></script> <!--  load our dashboard service -->
     <script src="https://d3js.org/d3.v4.min.js"></script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnwhbP1SCZAauiBQv5TRi2JbODrBQ5hqE"></script>
     <script src="js/core.js"></script> <!-- load our main application -->
     <link rel="stylesheet" type="text/css" href="../custom-style.css">
 
 </head>
-<body class="body container-fluid p-0">
+<body class="body container-fluid p-0" ng-controller="mainController">
 
-<!--
-<div id="nav" class="w-100 p-3 " style="height: 56px;">
-    <div ng-controller="mainController" ng-include="'/navigation'"></div>
-</div>
--->
-<div id="nav" class="w-100 p-3 " style="height: 56px;" ng-controller="mainController">
+<div id="nav" class="w-100 p-3 " style="height: 56px;" >
     <top-nav model="$parent"></top-nav>
 </div>
 
 
-<div class="container-fluid" ng-controller="mainController">
+<div class="container-fluid">
     <div class="row">
         <div class="custom-side-nav navbar-fixed-side navbar-fixed-side-left pl-0 pr-0 col-sm-2 col-md-2 Stratum2-Light" style="width: 162px; height: 100vh;">
             <side-nav model="$parent"></side-nav>
         </div>
 
-        <div id="dashboardSelector" class="navbar-fixed-side navbar-fixed-side-left"
-             style="width: 80px; left: 80px;"
+        <div id="dashboardSelector" class="navbar-fixed-side navbar-fixed-side-left bg-dark"
              ng-include="'/storyNav'"
              ng-class="dashboardClass">
         </div>

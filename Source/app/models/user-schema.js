@@ -7,7 +7,8 @@ var userSchema = mongoose.Schema({
         name         : String
     },
     blocks           : [{type:mongoose.Schema.ObjectId, ref: 'Block'}],
-    dashboards       : [{type:mongoose.Schema.ObjectId, ref: 'Dashboard'}]
+    dashboards       : [{type:mongoose.Schema.ObjectId, ref: 'Dashboard'}],
+    stories          : [{type:mongoose.Schema.ObjectId, ref: 'Story'}]
 });
 
 // create the model for users and expose it to our app
