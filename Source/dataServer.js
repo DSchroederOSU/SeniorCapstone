@@ -8,9 +8,13 @@ var dotenv   = require('dotenv').config();
 var express  = require('express');
 var app      = express();
 var mongoose = require('mongoose');
+var Building = require('./app/models/building-schema');
+var Meter = require('./app/models/meter-schema');
+var DataEntry = require('./app/models/data-entry-schema');
 var fs       = require('fs'); // TEMP - for saving acquisuite POST data\
 var bodyParser   = require('body-parser');
 var morgan       = require('morgan');
+var xmlparser = require('express-xml-bodyparser');
 
 // configuration ===============================================================
 
@@ -27,12 +31,8 @@ app.use(morgan('dev'));
 // Parse post bodies
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());// get information from html forms
-app.use(bodyParser.text({type: "*/*", limit: '50mb'}));// get information from html forms
 
 // Obtain DB schema
-var User = require('./app/models/user-schema');
-var Building = require('./app/models/building-schema');
-
 // Routes ======================================================================
 
 //=====================================
@@ -69,10 +69,13 @@ app.post('/acquisuite/upload/:id', function (req, res) {
     // =====================================
     // Function for handling xml post requests
     // Receives post requests, converts from XML to JSON
-    // the 'xmlparser' in parameters takes care of everything
+    // the 'xmlparser' in parameters converts XML to String
+    // then bodyParser converts this string to JSON 
     app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
+        
+
        
-      pathShortener = req.body.das.devices.device.records.record;
+     pathShortener = req.body.das.devices.device.records.record;
     /********************************************************************/
 
       // Used for creating test building with meters
@@ -99,8 +102,7 @@ app.post('/acquisuite/upload/:id', function (req, res) {
       // }
 /********************************************************************/
      
-      console.log('Time:')
-      console.log(pathShortener.time._)
+
       entry = new DataEntry();
    
       // Checks if meter exists. If it doesn't adds one.
@@ -134,18 +136,16 @@ app.post('/acquisuite/upload/:id', function (req, res) {
         
    
       });
-          
-
-     res.send(req.body);
+      res.send(req.body); // used for testing, below is required for acquisuites because they require that specifc return
+    //   res.status("200");
+    //   res.set({'content-type': 'text/xml', 'Connection': 'close'});
+    //   res.send("<?xml version='1.0' encoding='UTF-8' ?>\n"
+    //           +"<result>SUCCESS</result>\n"
+    //           +"<DAS></DAS>"
+    //           +"</xml>");
   });
 
-  app.get('/showBuildings' ,function (req,res) {
-     Building.find(function (err, docs) {
-          console.log(docs);
-          res.json(docs);
-      })
-  });
-
+    
 
 // launch ======================================================================
 app.listen(6121); // 6121 is open on most PCs

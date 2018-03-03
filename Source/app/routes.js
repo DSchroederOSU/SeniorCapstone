@@ -1,6 +1,6 @@
 
 require('mongoose');
-var xmlparser = require('express-xml-bodyparser');
+
 var parseString = require('xml2js').parseString;
 var User = require('./models/user-schema');
 var Building = require('./models/building-schema');
@@ -241,14 +241,6 @@ module.exports = function(app, passport) {
         })
     );
 
-   
-
-    // adding xml parser for testing and debugging purposes until we get client side POST setup
-    // to be called from "Add Building" feature
-    app.post('/addBuilding', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
-        addBuildingToDatabase(req.body);
-        res.send(req.body);
-    });
 
 }
 function addMeter(entry){
