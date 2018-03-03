@@ -4,13 +4,13 @@ var title = "";
 var buttontext = "";
 
 angular.module('blockController', [])
-    .controller('blockController', function($route, $scope, $location, GetBuildings, Block, GetBlockByID) {
+    .controller('blockController', function($route, $scope, $location, Building, Block, GetBlockByID) {
         $scope.title = title;
         $scope.button_text = buttontext;
         $scope.buildings = [];
         selectedBuildings = [];
         if(title == "Create Block"){
-            GetBuildings.get()
+            Building.get()
                 .success(function (data) {
                     dropdownBuildings = data;
                     $scope.buildings = dropdownBuildings;

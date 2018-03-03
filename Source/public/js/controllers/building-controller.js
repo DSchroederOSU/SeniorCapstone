@@ -1,10 +1,21 @@
 var selectedBuilding;
-
+var selectedMeters = [];
+var dropdownMeters = [];
 angular.module('buildingController', [])
-    .controller('buildingController', function($scope, GetBuildings) {
+    .controller('buildingController', function($scope, Building, Meter) {
+
+        selectedMeters = [];
+        $scope.meters = [];
         $scope.buildingModel = selectedBuilding;
 
-        GetBuildings.get()
+        Meter.get()
+            .success(function (data) {
+                $scope.meterSelection = data[0];
+                dropdownMeters = data;
+                $scope.meters = data;
+        });
+
+        Building.get()
             .success(function (data) {
                 $scope.buildings = data;
             });
@@ -29,5 +40,48 @@ angular.module('buildingController', [])
         $scope.getDataDay = function(date){
             console.log(date.substring(9,10));
             return parseInt(date.substring(9,10))
-        }
+        };
+
+        $scope.selection = function(meter) {
+            selectedMeters.push(meter);
+            var index = dropdownMeters.indexOf(meter);
+            if (index > -1) {
+                dropdownMeters.splice(index, 1);
+            }
+            $scope.meters = dropdownMeters;
+            $scope.selectedMeters = selectedMeters;
+            $scope.meterSelection = "";
+        };
+
+        $scope.removeMeter = function(meter) {
+            dropdownMeters.push(meter);
+            var index = selectedMeters.indexOf(meter);
+            if (index > -1) {
+                selectedMeters.splice(index, 1);
+            }
+            $scope.meters = dropdownMeters;
+            $scope.selectedMeters = selectedMeters;
+            $scope.meterSelection = "";
+        };
+
+        $scope.CreateBuilding = function() {
+            // validate the formData to make sure that something is there
+            // if form is empty, nothing will happen
+            // people can't just hold enter to keep adding the same to-do anymore
+            if (!$.isEmptyObject($scope.nameForm))  {
+                // call the create function from our service (returns a promise object)
+                var buildingData = {
+                    "name": $scope.nameForm,
+                    "building_type": $scope.buildingSelection,
+                    "meters": selectedMeters
+                };
+                Building.create(buildingData)
+                // if successful creation
+                    .success(function(building) {
+                        $scope.nameForm = "";
+                        $scope.serialForm = "";
+                        //$location.path('/meters');
+                    });
+            }
+        };
     });

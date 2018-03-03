@@ -1,2 +1,32 @@
-<h3>Add New Meter
-    </h3>
+<h3>Add New Meter</h3>
+<div class="row mt-4" ng-controller="meterController">
+    <div class="col-sm-6 col-md-6">
+        <h4>Edit Information</h4>
+        <div class="form-group row mt-4">
+            <label for="inputSerialName" class="ml-3">Meter Name</label>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" maxlength="30" id="inputSerialName" ng-model="nameForm" placeholder="Name">
+            </div>
+        </div>
+
+        <div class="form-group row mt-4">
+            <label for="inputSerial" class="ml-3">Meter Serial</label>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" maxlength="30" id="inputSerial" ng-model="serialForm" placeholder="Name">
+            </div>
+        </div>
+        <!--
+        <div class="form-group row mt-4">
+            <label for="dropdownBlocks" class="ml-3">Select Building:</label>
+            <div class="col-sm-12">
+                <select id="dropdownBlocks" class="form-control "
+                        ng-model="buildingSelection"
+                        required ng-options="building.name for building in buildings">
+                </select>
+            </div>
+        </div>
+        -->
+    </div>
+    <div class="col-sm-6 col-md-6"></div>
+    <button type="submit" class="btn btn-success" ng-click="CreateMeter()">Add Meter</button>
+</div>
