@@ -54,6 +54,7 @@ angular.module('storyController', [])
         };
 
         $scope.viewStory = function(story) {
+            console.log(story);
             viewStory = story;
             $route.reload();
         }
