@@ -1,5 +1,7 @@
-var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController', 'buildingController', 'mapController',
-    'storyController', 'BlockService', 'UserService', 'BuildingService', 'DashboardService', 'StoryService', 'ngRoute']);
+var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController',
+    'buildingController', 'mapController', 'meterController', 'storyController',
+    'BlockService', 'UserService', 'MeterService','BuildingService',
+    'DashboardService', 'StoryService', 'ngRoute']);
 
 myApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
@@ -74,8 +76,12 @@ myApp.config(function($routeProvider, $locationProvider) {
 
 
     ///////////////////////////
-    ///////////MISC////////////
+    ///////////METERS////////////
     ///////////////////////////
+    .when("/addBuilding", {
+        templateUrl : "../views/building/create-building.html"
+    })
+
 
     .when("/addmeter", {
         templateUrl : "../views/meter-controls/add-meter-form.html"

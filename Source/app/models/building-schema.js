@@ -2,10 +2,7 @@ var mongoose = require('mongoose');
 var buildingSchema = mongoose.Schema({
     name: String,
     building_type: String,
-    meters: [{
-        name:   String,
-        meter_id:   String
-        }],
+    meters: [{type:mongoose.Schema.ObjectId, ref: 'Meter'}],
     data_entries: [{
         meter_id:   {type:mongoose.Schema.ObjectId, ref: 'Meter'},
         timestamp: { type: String, required: true },

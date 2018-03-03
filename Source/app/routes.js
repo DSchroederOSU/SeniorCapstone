@@ -27,6 +27,30 @@ module.exports = function(app, passport) {
 
     });
 
+    app.post('/api/addBuilding', function(req, res) {
+        var building = new Building();
+        building.name = req.body.name;
+        building.building_type = req.body.building_type;
+        building.meters = req.body.meters;
+        building.save(function(err, savedBuilding) {
+            if (err)
+                throw err;
+            else{
+                savedBuilding.meters.forEach(function(meter){
+                    Meter.findByIdAndUpdate(
+                        { _id: meter},
+                        { $set:{building: savedBuilding}},
+                        {safe: true, upsert: true, new: true}, function(err, meter) {
+                            if (err)
+                                throw(err);
+                            else{
+                                console.log("Meter: "+meter.name+ " set building to: "+savedBuilding.name);
+                            }});
+                });
+            }
+        });
+    });
+
     app.get('/api/buildings', function (req, res) {
         Building.find({}, function (err, buildings) {
             //console.log(buildings);
@@ -35,7 +59,7 @@ module.exports = function(app, passport) {
     });
     app.post('/api/buildingMeters', function (req, res) {
        
-        console.log('-----------------')
+        console.log('-----------------');
         console.log(req.body)
         console.log('hi')
         Building.find({}, function (err, buildings) {
@@ -219,6 +243,28 @@ module.exports = function(app, passport) {
         });
     });
 
+    // =====================================================================
+    /////////////////////////////METER API//////////////////////////////
+    // =====================================================================
+    app.post('/api/addMeter', function(req, res) {
+        var user = req.user;
+        var meter = new Meter();
+        meter.name = req.body.name;
+        meter.meter_id = req.body.meter_id;
+        meter.building = null;
+        meter.save(function(err, savedMeter) {
+            if (err)
+                throw err;
+            else
+                res.json(savedMeter);
+        });
+    });
+    app.get('/api/getMeters', function(req, res) {
+        Meter.find({}, function (err, meters) {
+            res.json(meters); // return all buildings in JSON format
+        });
+    });
+
 
 
     // =====================================
@@ -246,28 +292,6 @@ module.exports = function(app, passport) {
 function addMeter(entry){
     // add meter building reference == null
 }
-
-// to be used with front end if we ever implement
-function addBuildingToDatabase(entry) {
-    Building.findOne({name: entry.name}, function (err, docs) {
-          if(docs === null){ // ensure building doesn't exist
-              var build = new Building();
-               // set all of the relevant information
-              build.name = entry.name
-              build.building_type = entry.building_type;
-              // meter_id can be used as identifier when adding data (data has serial # of AcquiSuite)
-              build.meter_id = entry.meter_id;
-              // save the building
-              build.save()
-                   .catch( err => {res.status(400)
-                   .send("unable to save to database");})
-              console.log("The building '" + entry.name + "' has been added.");
-          }
-          else
-              console.log('Nothing was added');     
-        });
-  };
-
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
