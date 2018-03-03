@@ -28,18 +28,26 @@ module.exports = function(app, passport) {
     });
 
     app.post('/api/addBuilding', function(req, res) {
-        console.log(req.body);
         var building = new Building();
         building.name = req.body.name;
         building.building_type = req.body.building_type;
         building.meters = req.body.meters;
-
         building.save(function(err, savedBuilding) {
             if (err)
                 throw err;
-            else
-                res.json(savedBuilding);
-
+            else{
+                savedBuilding.meters.forEach(function(meter){
+                    Meter.findByIdAndUpdate(
+                        { _id: meter},
+                        { $set:{building: savedBuilding}},
+                        {safe: true, upsert: true, new: true}, function(err, meter) {
+                            if (err)
+                                throw(err);
+                            else{
+                                console.log("Meter: "+meter.name+ " set building to: "+savedBuilding.name);
+                            }});
+                });
+            }
         });
     });
 
