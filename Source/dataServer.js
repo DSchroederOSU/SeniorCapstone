@@ -136,7 +136,7 @@ app.post('/acquisuite/upload/:id', function (req, res) {
         
    
       });
-      res.send(req.body);
+      res.send(req.body); // used for testing, below is required for acquisuites because they require that specifc return
     //   res.status("200");
     //   res.set({'content-type': 'text/xml', 'Connection': 'close'});
     //   res.send("<?xml version='1.0' encoding='UTF-8' ?>\n"
