@@ -30,20 +30,30 @@ module.exports = function(app, passport) {
         building.name = req.body.name;
         building.building_type = req.body.building_type;
         building.meters = req.body.meters;
+    
         building.save(function(err, savedBuilding) {
             if (err)
                 throw err;
             else{
-                savedBuilding.meters.forEach(function(meter){
+                savedBuilding.meters.forEach(async function(meter){            
+                    Building.findOneAndUpdate({meters: {"$in" : [meter]}, "_id":{$ne: building._id}},{$pull:{meters: meter}},function(err,oldBuilding){
+                        if (err){
+                            console.log('hecc')
+                            throw(err);
+                        }
+                        else {
+                            if (oldBuilding){console.log("Old Building '"+oldBuilding.name+"' has had the following meter removed: " + meter);}
+                        }
+                    });
                     Meter.findByIdAndUpdate(
                         { _id: meter},
                         { $set:{building: savedBuilding}},
                         {safe: true, upsert: true, new: true}, function(err, meter) {
                             if (err)
                                 throw(err);
-                            else{
-                                console.log("Meter: "+meter.name+ " set building to: "+savedBuilding.name);
-                            }});
+                            else{console.log("Meter: "+meter.name+ " set building to: "+savedBuilding.name);}
+                        }
+                    );
                 });
             }
         });
@@ -55,15 +65,7 @@ module.exports = function(app, passport) {
             res.json(buildings); // return all buildings in JSON format
         });
     });
-    app.post('/api/buildingMeters', function (req, res) {
-       
-        console.log('-----------------');
-        console.log(req.body)
-        console.log('hi')
-        Building.find({}, function (err, buildings) {
-            res.json(buildings); // return all buildings in JSON format
-        });
-    });
+ 
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
     });
@@ -315,6 +317,9 @@ module.exports = function(app, passport) {
 
 
 }
+
+
+
 function addMeter(entry){
     // add meter building reference == null
 }

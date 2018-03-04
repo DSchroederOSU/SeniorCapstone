@@ -56,7 +56,7 @@ for (ac in academic_halls){
             // set all of the relevant information
             acBuilding.name  = academic_halls[ac_count];
             acBuilding.building_type = 'Academic';
-            acBuilding.meter_id  = Math.floor(Math.random() * 20000)+10000;
+            acBuilding.meter_id  = null;
             acBuilding.data_entry = null;
             acBuilding.data_entry = null;
             acBuilding.data_entry = null;
@@ -85,7 +85,7 @@ for (dc in data_center){
             // set all of the relevant information
             dcBuilding.name  = data_center[dc_count];
             dcBuilding.building_type = 'Data Center';
-            dcBuilding.meter_id  = Math.floor(Math.random() * 20000)+10000;
+            dcBuilding.meter_id  = null;
             dcBuilding.data_entry = null;
             dcBuilding.data_entry = null;
             dcBuilding.data_entry = null;
@@ -115,7 +115,7 @@ for (din in dining_facility){
             // set all of the relevant information
             dinBuilding.name  = dining_facility[din_count];
             dinBuilding.building_type = 'Dining Facility';
-            dinBuilding.meter_id  = Math.floor(Math.random() * 20000)+10000;
+            dinBuilding.meter_id  = null;
             dinBuilding.data_entry = null;
             dinBuilding.data_entry = null;
             dinBuilding.data_entry = null;
@@ -145,7 +145,7 @@ for (lib in library){
             // set all of the relevant information
             libBuilding.name  = library[lib_count];
             libBuilding.building_type = 'Library';
-            libBuilding.meter_id  = Math.floor(Math.random() * 20000)+10000;
+            libBuilding.meter_id  = null;
             libBuilding.data_entry = null;
             libBuilding.data_entry = null;
             libBuilding.data_entry = null;
@@ -175,7 +175,7 @@ for (rec in rec_center){
             // set all of the relevant information
             recBuilding.name  = rec_center[rec_count];
             recBuilding.building_type = 'Recreation Center';
-            recBuilding.meter_id  = Math.floor(Math.random() * 20000)+10000;
+            recBuilding.meter_id  = null;
             recBuilding.data_entry = null;
             recBuilding.data_entry = null;
             recBuilding.data_entry = null;
@@ -205,7 +205,7 @@ for (o in other){
             // set all of the relevant information
             oBuilding.name  = other[o_count];
             oBuilding.building_type = 'Other';
-            oBuilding.meter_id  = Math.floor(Math.random() * 20000)+10000;
+            oBuilding.meter_id  = null;
             oBuilding.data_entry = null;
             oBuilding.data_entry = null;
             oBuilding.data_entry = null;
