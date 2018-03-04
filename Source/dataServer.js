@@ -106,7 +106,7 @@ app.post('/acquisuite/upload/:id', function (req, res) {
       entry = new DataEntry();
    
       // Checks if meter exists. If it doesn't adds one.
-      Meter.findOne({meter_id: req.body.das.serial},(err,doc1) => { 
+      Meter.findOne({meter_id: req.body.das.serial},(err, doc1) => {
           if (doc1 === null || doc1 === undefined){
               addMeter(req.body.das)
           }
