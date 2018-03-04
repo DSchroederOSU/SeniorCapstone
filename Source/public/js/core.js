@@ -110,7 +110,6 @@ myApp.controller('meterEditController', function($scope, $location, $route, Mete
     $scope.meterSerialForm =  editmeter.meter_id;
 
     $scope.submit = function() {
-        console.log("this is a ballsack");
         if (!$.isEmptyObject($scope.meterNameForm) && !$.isEmptyObject($scope.meterSerialForm))  {
             // call the create function from our service (returns a promise object)
             var meterData = {
