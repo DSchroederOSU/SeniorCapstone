@@ -1,5 +1,26 @@
 <br>
 <h1 class="Stratum2-Light font-weight-bold">Meters
-    <a href="#addmeter" class="btn border-orange-thin background-orange text-white float-right">Add New Meter</a>   <!--CHANGE EDIT TO CREATE AND HREF -->
+    <a ng-click="addMeter()" class="btn border-orange-thin background-orange text-white float-right">Add New Meter</a>   <!--CHANGE EDIT TO CREATE AND HREF -->
 </h1>
 <br>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Meter Name</th>
+        <th scope="col">Meter Serial</th>
+        <th scope="col">Connected Building</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="meter in meters track by meter._id">
+        <th scope="row">{{ $index + 1 }}</th>
+        <td>{{meter.name}}</td>
+        <td>{{meter.meter_id}}</td>
+        <td>{{meter.building.name}}</td>
+        <td><a ng-href="#/editmeter/{{meter._id}}"><button class="fa fa-gear border-orange-thin border-curve-button" style="font-size:24px"
+                    ng-click="editMeter(meter)"></button></a></td>
+    </tr>
+    </tbody>
+</table>

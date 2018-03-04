@@ -2,7 +2,8 @@ var selectedBuilding;
 var selectedMeters = [];
 var dropdownMeters = [];
 angular.module('buildingController', [])
-    .controller('buildingController', function($scope, Building, Meter) {
+    .controller('buildingController', function($scope,$location, $route, Building, Meter) {
+
 
         selectedMeters = [];
         $scope.meters = [];

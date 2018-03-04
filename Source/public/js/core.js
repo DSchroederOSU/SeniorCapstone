@@ -5,7 +5,6 @@ var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'b
 
 myApp.config(function($routeProvider, $locationProvider) {
     $routeProvider
-	
 	///////////////////////////
     ///////HOME PAGE///////
     ///////////////////////////
@@ -82,12 +81,52 @@ myApp.config(function($routeProvider, $locationProvider) {
         templateUrl : "../views/building/create-building.html"
     })
 
-
+    .when("/editmeter/:id", {
+        templateUrl : "../views/meter-controls/add-meter-form.html",
+        controller : "meterEditController",
+        reloadOnSearch: false,
+        resolve: {
+            editmeter: function (Meter, $route) {
+                return Meter.getById($route.current.params.id);
+            }
+        }
+    })
     .when("/addmeter", {
-        templateUrl : "../views/meter-controls/add-meter-form.html"
+        templateUrl : "../views/meter-controls/add-meter-form.html",
+        controller : "meterController"
     })
     .when("/meters", {
-        templateUrl : "../views/meter-controls/meters.html"
+        templateUrl : "../views/meter-controls/meters.html",
+        controller : "meterController"
     });
     //$locationProvider.html5Mode(true);   //this is what is breaking page reload
+});
+
+myApp.controller('meterEditController', function($scope, $location, $route, Meter, Building, editmeter) {
+
+    $scope.meterFormTitle = "Update Meter";
+    $scope.buttonText = "Update";
+    $scope.meterNameForm = editmeter.name;
+    $scope.meterSerialForm =  editmeter.meter_id;
+
+    $scope.submit = function() {
+        console.log("this is a ballsack");
+        if (!$.isEmptyObject($scope.meterNameForm) && !$.isEmptyObject($scope.meterSerialForm))  {
+            // call the create function from our service (returns a promise object)
+            var meterData = {
+                "name": $scope.meterNameForm,
+                "meter_id": $scope.meterSerialForm,
+                "id"    :   editmeter._id
+            };
+
+            Meter.update(meterData)
+            // if successful creation
+                .success(function(meter) {
+                    $scope.nameForm = "";
+                    $scope.serialForm = "";
+                    $location.path('/meters');
+                });
+        }
+
+    }
 });
