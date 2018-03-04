@@ -320,9 +320,6 @@ module.exports = function(app, passport) {
 
 
 
-function addMeter(entry){
-    // add meter building reference == null
-}
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {

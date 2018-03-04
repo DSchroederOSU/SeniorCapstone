@@ -8,9 +8,10 @@ angular.module('buildingController', [])
         selectedMeters = [];
         $scope.meters = [];
         $scope.buildingModel = selectedBuilding;
-
+       
         Meter.get()
             .success(function (data) {
+               
                 $scope.meterSelection = data[0];
                 dropdownMeters = data;
                 $scope.meters = data;
@@ -41,6 +42,9 @@ angular.module('buildingController', [])
         $scope.getDataDay = function(date){
             console.log(date.substring(9,10));
             return parseInt(date.substring(9,10))
+        };
+        $scope.editBuilding = function(building){
+
         };
 
         $scope.selection = function(meter) {
@@ -81,7 +85,7 @@ angular.module('buildingController', [])
                     .success(function(building) {
                         $scope.nameForm = "";
                         $scope.serialForm = "";
-                        //$location.path('/meters');
+                        // $location.path('/meters');
                     });
             }
         };
