@@ -1,57 +1,55 @@
-.hideDash{
-    -ms-transform: translate(-10px, 150px); /* IE 9 */
-    -webkit-transform: translate(-10px, 150px); /* Safari */
-    transform: translate(-10px, 150px);
+.hideDash {
+    -ms-transform: translate(-15px, 150px); /* IE 9 */
+    -webkit-transform: translate(-15px, 150px); /* Safari */
+    transform: translate(-15px, 150px);
     transition-duration: 0.5s;
+	/*needed for bug in chrome*/
 	-webkit-filter: blur(0.000001px);
 }
-.showDash{
+.showDash {
     -ms-transform: translate(147px, 150px); /* IE 9 */
     -webkit-transform: translate(147px, 150px); /* Safari */
     transform: translate(147px, 150px);
     transition-duration: 0.5s;
+	/*needed for bug in chrome*/
 	-webkit-filter: blur(0.000001px);
 }
-#dashboardSelector{
+#dashboardSelector {
     width: 160px;
     z-index: 10;
     left: 10px;
 	height: 60%;
 	visibility: hidden;
 }
-#storynav{
+#storynav {
 	overflow-y: auto;
 	width: 160px;
 	height: 100%;
 	visibility: visible; 
 	background-color: transparent !important;
 }
-#storyNavList{
+#storyNavList {
 	visibility: visible;
 	overflow-y: auto;
 }
-/*hides popout nav scrollbar for google chrome
-#dashboardSelector::-webkit-scrollbar { 
-    display: none; 
-}*/
-.dash-item{
+.dash-item {
     border-left: 1px solid black !important;
     background-color: #1c1c1c !important;
 }
-.custom-side-nav{
+.custom-side-nav {
     background-color: #3a3d42;
 }
-.nav-item-container{
+.nav-item-container {
     height: 50px;
 }
-.custom-nav-item{
+.custom-nav-item {
     background-color: #3a3d42;
     display:block;
     height: 50px;
     border-left: 0px;
     border-bottom: 1px solid black;
 }
-.custom-nav-link{
+.custom-nav-link {
     color:#BDC3C7;
     display: block;
     margin-left: 10px;
@@ -63,11 +61,11 @@
     white-space: nowrap;
 
 }
-.custom-nav-link:hover{
+.custom-nav-link:hover {
     color:#ECF0F1;
     text-decoration: none;
 }
-.custom-nav-link:hover i{
+.custom-nav-link:hover i {
     border: solid #ECF0F1;
     border-width: 0 3px 3px 0;
     display: inline-block;
@@ -255,6 +253,9 @@ i {
 .border-bottom-orange {
 	border-bottom: 2px solid #DC4405;"
 }
+.card-shadow {
+	box-shadow: 2px 2px 6px 1px rgba(0,0,0,0.3);
+}
 .select-none {
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -272,6 +273,9 @@ i {
 .orange-button {
 	color: white; 
 	background-color: #DC4405 !important;
+}
+.btn {
+	box-shadow: 2px 2px 4px 1px rgba(0,0,0,0.2);
 }
 @font-face {
   font-family: 'rufina-stencil-regular';
