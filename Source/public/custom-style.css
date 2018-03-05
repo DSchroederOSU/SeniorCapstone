@@ -340,5 +340,12 @@ i {
     transition: all 0.1s ease-in-out 0s;
 }
 
-
+.line-chart{
+    border: solid 1px gray;
+    width: 635px;
+    height: 400px;
+    margin: 0;
+    padding: 0;
+    float: left;
+}
 
