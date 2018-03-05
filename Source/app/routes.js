@@ -1,6 +1,4 @@
-
 require('mongoose');
-
 var parseString = require('xml2js').parseString;
 var User = require('./models/user-schema');
 var Building = require('./models/building-schema');
@@ -260,9 +258,37 @@ module.exports = function(app, passport) {
         });
     });
     app.get('/api/getMeters', function(req, res) {
-        Meter.find({}, function (err, meters) {
-            res.json(meters); // return all buildings in JSON format
-        });
+        Meter.find({})
+            .populate({
+                path: 'building'
+            })
+            .exec(function (err, meters) {
+                if (err) return handleError(err);
+                res.json(meters);
+            });
+    });
+    app.get('/api/getMeterById', function(req, res) {
+        Meter.findOne({_id : req.query.meter_id})
+            .populate({
+                path: 'building'
+            })
+            .exec(function (err, meter) {
+                if (err) return handleError(err);
+                res.json(meter);
+            });
+    });
+
+    app.post('/api/updateMeter', function(req, res) {
+        console.log(req.body);
+        Meter.findByIdAndUpdate(
+            { _id: req.body.id},
+            { $set:{'meter_id': req.body.meter_id, 'name': req.body.name}},
+            {safe: true, upsert: true, new: true}, function(err, meter) {
+                if (err)
+                    throw(err);
+                else{
+                    res.json(meter);
+                }});
     });
 
 

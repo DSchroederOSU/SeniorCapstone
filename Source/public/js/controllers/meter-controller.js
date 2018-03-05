@@ -1,6 +1,11 @@
 angular.module('meterController', [])
-    .controller('meterController', function($scope, Meter, Building) {
-
+    .controller('meterController', function($scope, $location, $route, Meter, Building) {
+        $scope.buttonText = "Create";
+        $scope.meterFormTitle = "Add a Meter";
+        Meter.get()
+            .success(function (data) {
+                $scope.meters = data;
+            });
 
         Building.get()
             .success(function (data) {
@@ -9,24 +14,31 @@ angular.module('meterController', [])
             });
 
 
-        $scope.CreateMeter = function() {
+        $scope.editMeter = function(meter){
+
+        };
+        $scope.addMeter = function(meter){
+            $location.path('/addmeter');
+        };
+
+        $scope.submit = function() {
             // validate the formData to make sure that something is there
             // if form is empty, nothing will happen
             // people can't just hold enter to keep adding the same to-do anymore
-            if (!$.isEmptyObject($scope.nameForm) && !$.isEmptyObject($scope.serialForm))  {
+            if (!$.isEmptyObject($scope.meterNameForm) && !$.isEmptyObject($scope.meterSerialForm))  {
                 // call the create function from our service (returns a promise object)
                 var meterData = {
-                    "name": $scope.nameForm,
-                    "meter_id": $scope.serialForm,
+                    "name": $scope.meterNameForm,
+                    "meter_id": $scope.meterSerialForm,
                     "building": $scope.buildingSelection
                 };
-                console.log($scope.buildingSelection);
+
                 Meter.create(meterData)
                 // if successful creation
                     .success(function(meter) {
-                        $scope.nameForm = "";
-                        $scope.serialForm = "";
-                        //$location.path('/meters');
+                        $scope.meterNameForm = "";
+                        $scope.meterSerialForm = "";
+                        $location.path('/meters');
                     });
             }
         };
@@ -35,6 +47,6 @@ angular.module('meterController', [])
                 .success(function() {
                     $route.reload();
                 });
-        }
+        };
 
     });
