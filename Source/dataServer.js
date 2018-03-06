@@ -72,45 +72,28 @@ app.post('/acquisuite/upload/:id', function (req, res) {
     // the 'xmlparser' in parameters converts XML to String
     // then bodyParser converts this string to JSON 
     app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
-        
+    console.log(req.body.das.devices.device.records.record.point)
 
        
      pathShortener = req.body.das.devices.device.records.record;
-    /********************************************************************/
-
-      // Used for creating test building with meters
-      // comment out when not in use
-      
-      // metername = 'Test meter'
-      // index = 0
-      // for (let i = 0; i < 5; i++){
-      //     meter = new Meter({
-      //         name: metername + index,
-      //        // building: '5a99d54f99b6630770303675', //change to building desired
-      //         meter_id: index++
-      //     });
-      //     bleh = {name: metername + index, meter_id: index};
-      //     console.log('Saving meter')
-      //     Building.findOneAndUpdate({_id: '5a98fdd7ec42871748d2260d'},
-      //     {$push:{meters: bleh}},
-      //     {safe: true, upsert: true, new: true},
-      //     (err) =>{if (err) throw(err)})
-      //     meter.building = '5a99d54f99b6630770303675'
-      //     meter.save().catch( err => {res.status(400).send("unable to save to database");})
-         
-              
-      // }
-/********************************************************************/
-     
+  
 
       entry = new DataEntry();
    
       // Checks if meter exists. If it doesn't adds one.
       Meter.findOne({meter_id: req.body.das.serial},(err, doc1) => {
           if (doc1 === null || doc1 === undefined){
-              addMeter(req.body.das)
+              console.log('Addmeter')
+              newmeter = new Meter({
+                name:   req.body.das.devices.device.name,
+                meter_id:  req.body.das.serial,
+                building: null
+              });
+              // issue, after meter is saved, data entry is lost because it gets added to null building.
+              newmeter.save().catch( err => {res.status(400)});
+              
           }
-          else{
+         setTimeout(()=>{ // 
               entry.meter_id = doc1._id;
               DataEntry.findOne({timestamp:pathShortener.time._, meter_id: entry.meter_id}, (err,doc2) =>{
                   if (doc2 === null || doc2 === undefined){  
@@ -132,10 +115,10 @@ app.post('/acquisuite/upload/:id', function (req, res) {
                   }
           
               })
-          }
-        
+          
+            });
    
-      });
+        },2000);
       res.send(req.body); // used for testing, below is required for acquisuites because they require that specifc return
     //   res.status("200");
     //   res.set({'content-type': 'text/xml', 'Connection': 'close'});
