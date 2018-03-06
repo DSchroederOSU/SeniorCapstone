@@ -1,35 +1,54 @@
-<div id="target" class="line-chart"></div>
+<div id="line"></div>
 <script>
-    new tauCharts.Chart({
-        data: data(),
-        type: 'line',
-        x: 'i',
-        y: 'val',
-        color: 'type',
-        guide: {
-            color: {
-                brewer: {
-                    'sin': '#ff0000',
-                    'cos': '#00ff00'
+    var defData = [{
+        type:'us', count:0, date:'12-2013'
+    },{
+        type:'us', count:10, date:'01-2014'
+    },{
+        type:'us', count:15, date:'02-2014'
+    },{
+        type:'us', count:12, date:'03-2014'
+    },{
+        type:'us', count:16, date:'04-2014'
+    },{
+        type:'us', count:13, date:'05-2014'
+    },{
+        type:'bug', count:21, date:'01-2014'
+    },{
+        type:'bug', count:19, date:'02-2014'
+    },{
+        type:'bug', count:23, date:'03-2014'
+    },{
+        type:'bug', count:26, date:'04-2014'
+    },{
+        type:'bug', count:23, date:'05-2014'
+    }];
+    var chart = new tauCharts.Chart({
+        guide:{
+            padding:{l:70, t:10, b:70,r:10},
+            showGridLines:'xy',
+            color:{
+                brewer:{
+                    us:'color-us',
+                    bug:'color-bug'
                 }
+            },
+            y:{
+                label:{
+                    text:'Count of completed entities',
+                    padding:50
+                }
+            },
+            x:{
+                label:'Month'
             }
         },
-        plugins: [
-            tauCharts.api.plugins.get('legend')(),
-            tauCharts.api.plugins.get('tooltip')()
-        ]
-    }).renderTo('#target');
+        data: defData,
+        type: 'line',
+        x: 'date',
+        y: 'count',
+        color: 'type'
+    });
 
-
-    function data() {
-        return (Array.from({length:100})
-            .map(function (e,i) {return i;})
-            .reduce(function (memo, x) {
-                var i = x / 100;
-                return memo.concat([
-                    {type: 'sin', formula: 'sin(i)', i: i, val: Math.sin(i)},
-                    {type: 'cos', formula: 'cos(i)', i: i, val: Math.cos(i)},
-                ]);
-            }, []));
-    }
+    chart.renderTo('#line');
 </script>
