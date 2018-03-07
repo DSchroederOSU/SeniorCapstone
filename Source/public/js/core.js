@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController',
-    'buildingController', 'mapController', 'meterController', 'storyController', 'sideNavController',
+    'buildingController', 'mapController', 'meterController', 'storyController', 'sideNavController', 'chartController',
     'BlockService', 'UserService', 'MeterService','BuildingService',
     'DashboardService', 'StoryService', 'ngRoute']);
 

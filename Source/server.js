@@ -27,6 +27,10 @@ db.once('open', function() {
     console.log("We're connected");
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8ba732f803a97507a9d9a6750178e6b80cd444f8
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
