@@ -349,3 +349,10 @@ i {
     float: left;
 }
 
+.shiftLeft{
+    margin-left: 0px;
+}
+.shiftRight{
+    margin-left: 160px;
+}
+
