@@ -52,16 +52,12 @@ module.exports = function(app, passport) {
             res.json(buildings); // return all buildings in JSON format
         });
     });
-<<<<<<< HEAD
- 
-=======
     app.post('/api/buildingMeters', function (req, res) {
 
         Building.find({}, function (err, buildings) {
             res.json(buildings); // return all buildings in JSON format
         });
     });
->>>>>>> master
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
     });
