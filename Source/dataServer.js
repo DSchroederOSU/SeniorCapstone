@@ -64,8 +64,8 @@ app.post('/acquisuite/upload/:id', function (req, res) {
           +"</xml>");
 });
 
- // =====================================
-    // XML POST PARSING ====================
+    // =====================================
+    // XML POST PARSING 
     // =====================================
     // Function for handling xml post requests
     // Receives post requests, converts from XML to JSON
@@ -76,8 +76,7 @@ app.post('/acquisuite/upload/:id', function (req, res) {
         Meter.findOne({meter_id: req.body.das.serial},(err, doc) => {
             if (doc === null || doc === undefined){
                     addMeter(req.body.das).then(data => addEntry(data,req.body.das));
-            }
-            else{
+            } else{
                 addEntry(doc,req.body.das)
             }   
         });  
@@ -104,8 +103,6 @@ function addMeter(meter) {
 }
 
 function addEntry(meter,body){
-    console.log('in entry');
-    console.log(meter)
     pathShortener = body.devices.device.records.record;
     entry = new DataEntry();
     entry.meter_id = meter._id;
@@ -123,9 +120,10 @@ function addEntry(meter,body){
                     {$push:{data_entries: entry}},
                     {safe: true, upsert: true, new: true},
                     (err) =>{if (err) throw(err)})
+            } else{
+                console.log('Data entry added with NULL building')
             }
-        }
-        else{
+        } else{
             console.log('Duplicate detected and nothing has been added!')
         }
     })
