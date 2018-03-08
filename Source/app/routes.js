@@ -30,17 +30,13 @@ module.exports = function(app, passport) {
         building.name = req.body.name;
         building.building_type = req.body.building_type;
         building.meters = req.body.meters;
-    
         building.save(function(err, savedBuilding) {
             if (err)
                 throw err;
             else{
-                savedBuilding.meters.forEach( meter => {      
-               
+                savedBuilding.meters.forEach( meter => {
                         updateOldBuildingMeters(meter, savedBuilding)
                             .then(addMeter(meter,savedBuilding))
-                            
-                
                 });
             }
         });
@@ -394,10 +390,7 @@ function isLoggedIn(req, res, next) {
         return next();
 
     // if they aren't redirect them to the home page
-
-
 }
-
 
 
 function saveBlock(blockData){
