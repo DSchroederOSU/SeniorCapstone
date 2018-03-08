@@ -32,6 +32,7 @@ angular.module('buildingController', [])
             selectedBuilding = building;
             $scope.BuildingName = building.name;
             $scope.currentBuilding = selectedBuilding;
+            console.log(building);
 
         };
         $scope.formatDate = function(date){

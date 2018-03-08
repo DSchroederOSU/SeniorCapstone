@@ -43,7 +43,9 @@ app.use(bodyParser.json());// get information from html forms
 // the database.
 app.post('/acquisuite/upload/:id', function (req, res) {
 
-  console.log(req.body);
+    console.log(new Date().toJSON());
+    console.log("Received");
+    console.log(req.body);
 
   // TEMP - A file with post data will be created, and data will be dumped.
   fs.appendFile('./acquisuite-data/postData.txt',
@@ -71,7 +73,8 @@ app.post('/acquisuite/upload/:id', function (req, res) {
     // Receives post requests, converts from XML to JSON
     // the 'xmlparser' in parameters converts XML to String
     // then bodyParser converts this string to JSON 
-    app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {   
+    app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
+
       // Checks if meter exists. If it doesn't adds one.
         Meter.findOne({meter_id: req.body.das.serial},(err, doc) => {
             if (doc === null || doc === undefined){
