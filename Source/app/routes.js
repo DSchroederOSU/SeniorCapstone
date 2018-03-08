@@ -312,6 +312,7 @@ module.exports = function(app, passport) {
         });
     });
 
+
 }
 
 function updateOldBuildingMeters(meter,building){
@@ -328,6 +329,7 @@ function updateOldBuildingMeters(meter,building){
     });
 
 }
+
 
 function addMeter(meter,savedBuilding) {
     return new Promise((resolve, reject) => {

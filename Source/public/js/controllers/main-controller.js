@@ -1,6 +1,7 @@
 
 angular.module('mainController', [])
-    .controller('mainController', function($scope, GetUser, Story) {
+    .controller('mainController', function($scope, $rootScope, GetUser, Story) {
+
 
         Story.get()
             .success(function(user_stories){
@@ -12,10 +13,17 @@ angular.module('mainController', [])
             if (data) {
                 $scope.login_status = "Logout";
                 $scope.greeting = "Hello " + data.name.split(' ')[0] + "!";
+                $scope.myLink = "logout";
+                $scope.userLoggedIn = false;
+                $scope.mainContent = 'shiftRight';
+
             }
             else{
                 $scope.login_status = "Login";
                 $scope.greeting = "";
+                $scope.myLink = "auth/google";
+                $scope.userLoggedIn = true;
+                $scope.mainContent = 'shiftLeft';
             }
         });
 
@@ -25,6 +33,8 @@ angular.module('mainController', [])
         }
 
     })
+
+
     .directive('sideNav', function() {
         return {
             restrict: 'E',

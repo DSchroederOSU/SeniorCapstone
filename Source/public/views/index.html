@@ -15,10 +15,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
     <!-- load angular and angular route via CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
     <script src="js/controllers/main-controller.js"></script> <!-- load up our controller -->
+    <script src="js/controllers/side-nav-controller.js"></script> <!-- load up our controller -->
     <script src="js/controllers/block-controller.js"></script> <!-- load up our controller -->
     <script src="js/controllers/building-controller.js"></script> <!-- load up our controller -->
     <script src="js/controllers/dashboard-controller.js"></script> <!-- load up our controller -->
@@ -47,18 +49,18 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="custom-side-nav navbar-fixed-side navbar-fixed-side-left pl-0 pr-0 col-sm-2 col-md-2 Stratum2-Light card-shadow" style="width: 162px; height: 100vh;">
+        <div ng-hide="userLoggedIn" class="custom-side-nav navbar-fixed-side navbar-fixed-side-left pl-0 pr-0 col-sm-2 col-md-2 Stratum2-Light card-shadow"
+             style="width: 162px; height: 100vh;">
             <side-nav model="$parent"></side-nav>
         </div>
 
-        <div id="dashboardSelector" class="navbar-fixed-side navbar-fixed-side-left bg-dark"
+        <div ng-hide="userLoggedIn" id="dashboardSelector" class="navbar-fixed-side navbar-fixed-side-left bg-dark"
              ng-include="'/storyNav'"
              ng-class="dashboardClass">
         </div>
 
-        <main role="main" class="container-fluid pt-3" style="margin-left: 160px;">
+        <main ng-class="mainContent" role="main" class="container-fluid pt-3">
             <div class="p-0 ml-4 mr-4" ng-view>
-
             </div>
         </main>
     </div>
