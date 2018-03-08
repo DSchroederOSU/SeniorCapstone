@@ -330,7 +330,6 @@ function updateOldBuildingMeters(meter,building){
 
 }
 
-
 function addMeter(meter,savedBuilding) {
     return new Promise((resolve, reject) => {
         pushNullMeter(meter,savedBuilding)
@@ -393,8 +392,6 @@ function isLoggedIn(req, res, next) {
 
 
 }
-
-
 
 function saveBlock(blockData){
 
