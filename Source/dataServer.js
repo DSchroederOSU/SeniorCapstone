@@ -72,15 +72,21 @@ app.post('/acquisuite/upload/:id', function (req, res) {
     // the 'xmlparser' in parameters converts XML to String
     // then bodyParser converts this string to JSON 
     app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {   
-      // Checks if meter exists. If it doesn't adds one.
-        Meter.findOne({meter_id: req.body.das.serial},(err, doc) => {
-            if (doc === null || doc === undefined){
-                    addMeter(req.body.das).then(data => addEntry(data,req.body.das));
-            } else{
-                addEntry(doc,req.body.das)
-            }   
-        });  
-        //res.send(req.body); // used for testing, below is required for acquisuites because they require that specifc return
+        if (req.body.das.mode !== 'STATUS'){
+         // Checks if meter exists. If it doesn't adds one.
+            Meter.findOne({meter_id: req.body.das.serial},(err, doc) => {
+                if (doc === null || doc === undefined){
+                        addMeter(req.body.das).then(data => addEntry(data,req.body.das));
+                } else{
+                    addEntry(doc,req.body.das)
+                }   
+            });  
+            //res.send(req.body); // used for testing, below is required for acquisuites because they require that specifc return
+           
+        }
+        else{
+            console.log('STATUS file received');
+        }
         res.status("200");
         res.set({'content-type': 'text/xml', 'Connection': 'close'});
         res.send("<?xml version='1.0' encoding='UTF-8' ?>\n"
