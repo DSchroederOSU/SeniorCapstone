@@ -11,7 +11,7 @@ module.exports = function(app, passport) {
     
     app.get('/', function (req, res) {
 
-        res.render('index.html'); // load the index.html file
+        return res.render('./index.html'); // load the index.html file
     });
 
     app.get('/api/google_user', function(req, res) {
@@ -52,9 +52,22 @@ module.exports = function(app, passport) {
             res.json(buildings); // return all buildings in JSON format
         });
     });
+<<<<<<< HEAD
  
+=======
+    app.post('/api/buildingMeters', function (req, res) {
+
+        Building.find({}, function (err, buildings) {
+            res.json(buildings); // return all buildings in JSON format
+        });
+    });
+>>>>>>> master
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
+    });
+
+    app.get('/singleLine', function (req, res) {
+        res.render('./charts/single-building-line.html'); // load the index.html file
     });
 
     app.get('/login', function (req, res) {
@@ -158,7 +171,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.get('/api/getDashboards', function(req, res) {
+    app.get('/api/getDashboards', isLoggedIn, function(req, res) {
         User.findOne({_id : req.user._id})
             .populate({
                 path: 'dashboards',
@@ -193,7 +206,7 @@ module.exports = function(app, passport) {
     // =====================================================================
     ///////////////////////////////STORY API////////////////////////////////
     // =====================================================================
-    app.get('/api/getUserStories', function(req, res) {
+    app.get('/api/getUserStories', isLoggedIn, function(req, res) {
         User.findOne({_id : req.user._id})
             .populate({path: 'stories',
                 populate: {path: 'dashboards',
@@ -301,7 +314,12 @@ module.exports = function(app, passport) {
             failureRedirect: '/login'
         })
     );
-
+    app.get('/logout', function(req, res) {
+        req.session.destroy(function(e){
+            req.logout();
+            res.redirect('/');
+        });
+    });
 
 }
 
@@ -380,7 +398,7 @@ function isLoggedIn(req, res, next) {
         return next();
 
     // if they aren't redirect them to the home page
-    res.redirect('/');
+
 
 }
 
