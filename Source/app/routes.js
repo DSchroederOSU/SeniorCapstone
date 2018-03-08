@@ -30,20 +30,17 @@ module.exports = function(app, passport) {
         building.name = req.body.name;
         building.building_type = req.body.building_type;
         building.meters = req.body.meters;
+    
         building.save(function(err, savedBuilding) {
             if (err)
                 throw err;
             else{
-                savedBuilding.meters.forEach(function(meter){
-                    Meter.findByIdAndUpdate(
-                        { _id: meter},
-                        { $set:{building: savedBuilding}},
-                        {safe: true, upsert: true, new: true}, function(err, meter) {
-                            if (err)
-                                throw(err);
-                            else{
-                                console.log("Meter: "+meter.name+ " set building to: "+savedBuilding.name);
-                            }});
+                savedBuilding.meters.forEach( meter => {      
+               
+                        updateOldBuildingMeters(meter, savedBuilding)
+                            .then(addMeter(meter,savedBuilding))
+                            
+                
                 });
             }
         });
@@ -55,12 +52,16 @@ module.exports = function(app, passport) {
             res.json(buildings); // return all buildings in JSON format
         });
     });
+<<<<<<< HEAD
+ 
+=======
     app.post('/api/buildingMeters', function (req, res) {
 
         Building.find({}, function (err, buildings) {
             res.json(buildings); // return all buildings in JSON format
         });
     });
+>>>>>>> master
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
     });
@@ -321,8 +322,73 @@ module.exports = function(app, passport) {
     });
 
 }
-function addMeter(entry){
-    // add meter building reference == null
+
+function updateOldBuildingMeters(meter,building){
+    return new Promise((resolve, reject) => {
+        Building.findOneAndUpdate({meters: {"$in" : [meter]}, "_id":{$ne: building._id}},{$pull:{meters: meter}},function(err,oldBuilding){
+            if (err){
+                console.log('hecc')
+               reject(err);
+            } else {
+                if (oldBuilding){console.log("Old Building '"+oldBuilding.name+"' has had the following meter removed: " + meter);}
+                resolve();
+            }
+        });
+    });
+
+}
+function addMeter(meter,savedBuilding) {
+    return new Promise((resolve, reject) => {
+        pushNullMeter(meter,savedBuilding)
+            .then(()=> {Meter.findByIdAndUpdate(
+                { _id: meter},
+                { $set:{building: savedBuilding}},
+                {safe: true, upsert: true, new: true}, (err, meter) => {
+                    if (err){
+                        reject(err)
+                    } else{
+                        console.log("Meter: "+meter.name+ " set building to: "+savedBuilding.name);
+                        resolve(savedBuilding);
+                    }
+                }
+            )
+        });
+    })
+}
+
+function pushNullMeter(meter,savedBuilding){
+    console.log('savedBuilding');
+    console.log(savedBuilding);
+    // DataEntry.update({building: null}, {$set: {building: savedBuilding}});
+    return new Promise((resolve, reject) => {
+        Meter.findById(meter, (err,doc)=>{
+            if (doc === null || doc === undefined){
+                console.log('Unable to find meter in pushNullData entries for meter id: ' + meter);
+                reject();
+            }
+            if (doc.building == null){
+                console.log('Building is null')
+                DataEntry.find({meter_id: meter}, (err,docs) =>{
+                    if (err){
+                        console.log('Unable to push null data entries for meter id: ' + meter)
+                        reject();
+                    } else {
+                        Building.findOneAndUpdate({_id: savedBuilding._id},
+                            {$push:{data_entries: {$each: docs}}},
+                            {safe: true, upsert: true, new: true},
+                            (err) =>{if (err) throw(err)
+                        });
+                        
+                    }
+                });
+                DataEntry.update({building: null}, {$set: {building: savedBuilding._id}});
+            }
+           
+        });
+        // resolve(console.log(savedBuilding));
+        resolve();
+    });
+    // console.log(meter,savedBuilding);
 }
 
 // route middleware to make sure a user is logged in
