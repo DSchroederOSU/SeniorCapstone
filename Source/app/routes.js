@@ -52,16 +52,7 @@ module.exports = function(app, passport) {
             res.json(buildings); // return all buildings in JSON format
         });
     });
-<<<<<<< HEAD
  
-=======
-    app.post('/api/buildingMeters', function (req, res) {
-
-        Building.find({}, function (err, buildings) {
-            res.json(buildings); // return all buildings in JSON format
-        });
-    });
->>>>>>> master
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
     });
@@ -337,6 +328,7 @@ function updateOldBuildingMeters(meter,building){
     });
 
 }
+
 function addMeter(meter,savedBuilding) {
     return new Promise((resolve, reject) => {
         pushNullMeter(meter,savedBuilding)
@@ -380,15 +372,16 @@ function pushNullMeter(meter,savedBuilding){
                         });
                         
                     }
+                    DataEntry.update({building: null}, {$set: {building: savedBuilding._id}});
                 });
-                DataEntry.update({building: null}, {$set: {building: savedBuilding._id}});
+               
+                
             }
-           
+             
         });
-        // resolve(console.log(savedBuilding));
-        resolve();
+        resolve(); 
     });
-    // console.log(meter,savedBuilding);
+ 
 }
 
 // route middleware to make sure a user is logged in
