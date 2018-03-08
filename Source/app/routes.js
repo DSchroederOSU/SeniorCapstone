@@ -68,6 +68,10 @@ module.exports = function(app, passport) {
         res.render('./story/story-selector.html'); // load the index.html file
     });
 
+    app.get('/singleLine', function (req, res) {
+        res.render('./charts/single-building-line.html'); // load the index.html file
+    });
+
     app.get('/login', function (req, res) {
         res.render('login.html'); // load the login.html file
     });

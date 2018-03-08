@@ -10,8 +10,6 @@ var dataEntrySchema = mongoose.Schema({
         units: String,
         value: Number
     }]
-
-   
 });
 
 // create the model for users and expose it to our app
