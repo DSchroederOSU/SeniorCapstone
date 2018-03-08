@@ -72,15 +72,24 @@ myApp.config(function($routeProvider, $locationProvider) {
     .when("/viewBuilding", {
         templateUrl : "../views/building/view-building.html"
     })
-
+    .when("/editbuilding/:id", {
+        templateUrl : "../views/building/edit-building.html",
+        controller : "buildingEditController",
+        reloadOnSearch: false,
+        resolve: {
+            editbuilding: function (Building, $route) {
+                return Building.getById($route.current.params.id);
+            }
+        }
+    })
+    .when("/addBuilding", {
+            templateUrl : "../views/building/create-building.html"
+        })
 
     ///////////////////////////
     ///////////METERS////////////
     ///////////////////////////
-    .when("/addBuilding", {
-        templateUrl : "../views/building/create-building.html"
-    })
-
+  
     .when("/editmeter/:id", {
         templateUrl : "../views/meter-controls/add-meter-form.html",
         controller : "meterEditController",
@@ -124,6 +133,33 @@ myApp.controller('meterEditController', function($scope, $location, $route, Mete
                     $scope.nameForm = "";
                     $scope.serialForm = "";
                     $location.path('/meters');
+                });
+        }
+
+    }
+});
+myApp.controller('buildingEditController', function($scope, $location, $route, Meter, Building, editbuilding) {
+
+    $scope.buildingFormTitle = "Update Building";
+    $scope.buttonText = "Update";
+    $scope.buildingNameForm = editbuilding.name;
+    $scope.buildingType =  editbuilding.type;
+
+    $scope.submit = function() {
+        if (!$.isEmptyObject($scope.buildingNameForm) && !$.isEmptyObject($scope.buildingSerialForm))  {
+            // call the create function from our service (returns a promise object)
+            var buildingData = {
+                "name": $scope.buildingNameForm,
+                "type": $scope.buildingType,
+                "id"    :   editbuilding._id
+            };
+
+            Building.update(buildingData)
+            // if successful creation
+                .success(function(meter) {
+                    $scope.nameForm = "";
+                    $scope.type = "";
+                    $location.path('/buildings');
                 });
         }
 

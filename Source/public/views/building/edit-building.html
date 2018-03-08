@@ -1,0 +1,22 @@
+<h3>{{buildingFormTitle}}</h3>
+<div class="row mt-4">
+    <div class="col-sm-6 col-md-6">
+        <h4>Edit Information</h4>
+        <div class="form-group row mt-4">
+            <label for="inputBuildingName" class="ml-3">Building Name</label>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" maxlength="30" id="inputBuildingName" ng-model="buildingNameForm">
+            </div>
+        </div>
+
+        <div class="form-group row mt-4">
+            <label for="inputSerial" class="ml-3">Building Type/label>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" maxlength="30" id="inputSerial" ng-model="buildingType">
+            </div>
+        </div>
+    
+    </div>
+    <div class="col-sm-6 col-md-6"></div>
+    <button type="submit" class="btn btn-success" ng-click="submit()">{{buttonText}}</button>
+</div>
