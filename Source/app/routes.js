@@ -52,16 +52,7 @@ module.exports = function(app, passport) {
             res.json(buildings); // return all buildings in JSON format
         });
     });
-<<<<<<< HEAD
  
-=======
-    app.post('/api/buildingMeters', function (req, res) {
-
-        Building.find({}, function (err, buildings) {
-            res.json(buildings); // return all buildings in JSON format
-        });
-    });
->>>>>>> master
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
     });
@@ -321,6 +312,7 @@ module.exports = function(app, passport) {
         });
     });
 
+
 }
 
 function updateOldBuildingMeters(meter,building){
@@ -337,6 +329,7 @@ function updateOldBuildingMeters(meter,building){
     });
 
 }
+
 function addMeter(meter,savedBuilding) {
     return new Promise((resolve, reject) => {
         pushNullMeter(meter,savedBuilding)
@@ -367,7 +360,7 @@ function pushNullMeter(meter,savedBuilding){
                 reject();
             }
             if (doc.building == null){
-                console.log('Building is null')
+                console.log('Building is null, pushing stored data entries')
                 DataEntry.find({meter_id: meter}, (err,docs) =>{
                     if (err){
                         console.log('Unable to push null data entries for meter id: ' + meter)
@@ -380,15 +373,13 @@ function pushNullMeter(meter,savedBuilding){
                         });
                         
                     }
+                    DataEntry.update({building: null}, {$set: {building: savedBuilding._id}});
                 });
-                DataEntry.update({building: null}, {$set: {building: savedBuilding._id}});
-            }
-           
+            } 
         });
-        // resolve(console.log(savedBuilding));
-        resolve();
+        resolve(); 
     });
-    // console.log(meter,savedBuilding);
+ 
 }
 
 // route middleware to make sure a user is logged in
@@ -401,8 +392,6 @@ function isLoggedIn(req, res, next) {
 
 
 }
-
-
 
 function saveBlock(blockData){
 
