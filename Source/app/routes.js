@@ -126,19 +126,12 @@ module.exports = function(app, passport) {
 
     });
     app.post('/api/deleteBuilding', function(req, res) {
-        console.log('In delete building')
-        // User.findByIdAndUpdate(
-        //     { _id: req.user._id},
-        //     { $pull:{blocks: req.body._id}}, function(err, user) {
-        //         if (err)
-        //             throw(err);
-        //         else{
-        //             Block.remove({_id : req.body._id}, function (err) {
-        //                 if (err) return handleError(err);
-        //                 res.json({message: "success"});
-        //             });
-        //         }
-        //     });
+        // null out the meters in this building?
+        Building.remove(
+            {_id : req.body._id}, function (err) {
+                if (err) return handleError(err);
+                res.json({message: "success"});
+            });
 
     });
     app.get('/api/getBlockById', function(req, res) {
