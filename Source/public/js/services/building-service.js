@@ -20,7 +20,7 @@ angular.module('BuildingService', [])
                             method: "GET",
                             params: {_id: id}
                 }).then(function(response){
-                    console.log(response);
+                    console.log(response.data);
                     return response.data;
                 }, function(error){
                     alert(error);

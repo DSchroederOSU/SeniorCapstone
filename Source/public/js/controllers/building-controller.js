@@ -7,6 +7,7 @@ angular.module('buildingController', [])
 
         selectedMeters = [];
         $scope.meters = [];
+        $scope.buildingMeters = [];
         $scope.buildingModel = selectedBuilding;
        
         Meter.get()
@@ -34,9 +35,10 @@ angular.module('buildingController', [])
             $scope.BuildingName = building.name;
             $scope.currentBuilding = selectedBuilding;
             Building.getById($scope.currentBuilding._id).success(function(data) {
+                
                 $scope.buildingMeters = data.meters;               
             });
-
+            
         };
         
         $scope.DeleteBuilding = function(building){

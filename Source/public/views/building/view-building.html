@@ -2,7 +2,7 @@
     <div class="col-sm-4">
         <h3 class="ml-3">{{buildingModel.name}}</h3>
         <h3 class="ml-3">{{buildingModel._id}}</h3>
-        <h3 class="ml-3">'{{buildingModel.buildingMeters}}'</h3>
+        <h3 class="ml-3">{{$scope.buildingMeters}}</h3>
         <div class="rounded ml-3" style="height: 200px; width: 200px;">
             <img class="rounded text-white bg-primary w-100 h-100" ng-src="{{getImageAddress(buildingModel)}}" alt="">
         </div>
@@ -30,7 +30,7 @@
                 <th scope="row">{{ $index + 1 }}</th>
                 <td>{{meter.name}}</td>
                 <td>{{meter.meter_id}}</td>
-                <td>{{meter.building.name}}</td>
+              
                  <td>
                     
                 <button class="float-right fa fa-remove border-orange-thin border-curve-button" style="font-size:24px; color:red"></button>

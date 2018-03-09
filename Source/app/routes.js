@@ -61,7 +61,7 @@ module.exports = function(app, passport) {
 
     });
     app.get('/api/getBuildingById', function(req, res) {
-        console.log('in get building by id')
+        
         Building.findOne({_id : req.query._id})
             .populate({
                 path: 'meters'
