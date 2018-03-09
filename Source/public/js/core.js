@@ -143,14 +143,16 @@ myApp.controller('buildingEditController', function($scope, $location, $route, M
     $scope.buildingFormTitle = "Update Building";
     $scope.buttonText = "Update";
     $scope.buildingNameForm = editbuilding.name;
-    $scope.buildingType =  editbuilding.type;
+    $scope.buildingType =  editbuilding.building_type;
+    $scope.buildingMeters = editbuilding.meters;
+    
 
     $scope.submit = function() {
         if (!$.isEmptyObject($scope.buildingNameForm) && !$.isEmptyObject($scope.buildingSerialForm))  {
             // call the create function from our service (returns a promise object)
             var buildingData = {
                 "name": $scope.buildingNameForm,
-                "type": $scope.buildingType,
+                "building_type": $scope.buildingType,
                 "id"    :   editbuilding._id
             };
 

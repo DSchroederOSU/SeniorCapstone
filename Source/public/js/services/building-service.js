@@ -14,5 +14,17 @@ angular.module('BuildingService', [])
             delete : function(building) {
                 return $http.post('/api/deleteBuilding', building);
             },
+            getById : function(id){
+               
+                return $http({ url: '/api/getBuildingById',
+                            method: "GET",
+                            params: {_id: id}
+                }).then(function(response){
+                    console.log(response);
+                    return response.data;
+                }, function(error){
+                    alert(error);
+                });
+            }
         }
     });
