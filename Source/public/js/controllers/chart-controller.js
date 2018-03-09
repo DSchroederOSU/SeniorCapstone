@@ -3,7 +3,7 @@ angular.module('chartController', [])
 
 		/*$scope.myObj = {
 			"background-color" : "coral",
-		}*/
+		}
 		
 		// Our labels along the x-axis
 		var years = [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050];
@@ -14,16 +14,29 @@ angular.module('chartController', [])
 		var latinAmerica = [40,20,10,16,24,38,74,167,508,784];
 		var northAmerica = [6,3,2,2,7,26,82,172,312,433];
 		
+		
 		var ctx = document.getElementsByClassName("myChart");
+		
 		var myChart = new Chart(ctx, {
 			type: 'line',
 			data: {
 				labels: years,
-			datasets: [
-			  { 
-				data: africa
-			  }
-			]
+				datasets: [{ 
+					fill: false,
+					borderColor: 'blue',
+					label: 'North America',
+					data: northAmerica
+				},{ 
+					fill: false,
+					borderColor: 'green',
+					label: 'Africa',
+					data: africa
+				},{ 
+					fill: false,
+					borderColor: 'red',
+					label: 'Europe',
+					data: europe
+				}]
 			}});
-		
+		*/
 	});

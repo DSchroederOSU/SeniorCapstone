@@ -312,6 +312,7 @@ module.exports = function(app, passport) {
         });
     });
 
+
 }
 
 function updateOldBuildingMeters(meter,building){
@@ -359,7 +360,7 @@ function pushNullMeter(meter,savedBuilding){
                 reject();
             }
             if (doc.building == null){
-                console.log('Building is null')
+                console.log('Building is null, pushing stored data entries')
                 DataEntry.find({meter_id: meter}, (err,docs) =>{
                     if (err){
                         console.log('Unable to push null data entries for meter id: ' + meter)
@@ -374,10 +375,7 @@ function pushNullMeter(meter,savedBuilding){
                     }
                     DataEntry.update({building: null}, {$set: {building: savedBuilding._id}});
                 });
-               
-                
-            }
-             
+            } 
         });
         resolve(); 
     });
@@ -394,8 +392,6 @@ function isLoggedIn(req, res, next) {
 
 
 }
-
-
 
 function saveBlock(blockData){
 
