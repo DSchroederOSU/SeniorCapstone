@@ -130,12 +130,7 @@ function addEntry(meter,body){
                 entryArray.push(entry);
             }
         }
- 
-        console.log('entryArray 0 0 ')
-        console.log(entryArray[0].point[0])
-       console.log('meter id')
-       console.log(meter._id)
-       
+
     entryArray.forEach(x => {
        
         DataEntry.findOne({timestamp: x.timestamp, meter_id: meter._id}, (err,doc2) => {
@@ -156,7 +151,6 @@ function addEntry(meter,body){
             }
         });
     });
-    console.log('done')
 resolve()
 });
 
