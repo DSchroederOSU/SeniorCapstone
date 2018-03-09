@@ -35,6 +35,12 @@ angular.module('buildingController', [])
             $scope.currentBuilding = selectedBuilding;
 
         };
+        $scope.DeleteBuilding = function(building){
+            Building.delete(building)
+                .success(function() {
+                    $route.reload();
+                });
+        };
         $scope.formatDate = function(date){
             return "" + date.substring(0,10) + " " + date.substring(14,19).replace(/^0+/, '')
         };

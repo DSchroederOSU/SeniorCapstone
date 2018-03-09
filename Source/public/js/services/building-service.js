@@ -10,6 +10,9 @@ angular.module('BuildingService', [])
             },
             get : function() {
                 return $http.get('/api/buildings');
-            }
+            },
+            delete : function(building) {
+                return $http.post('/api/deleteBuilding', building);
+            },
         }
     });

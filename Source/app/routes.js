@@ -30,7 +30,9 @@ module.exports = function(app, passport) {
         building.name = req.body.name;
         building.building_type = req.body.building_type;
         building.meters = req.body.meters;
-    
+        console.log('building meters:')
+        console.log(building.meters)
+
         building.save(function(err, savedBuilding) {
             if (err)
                 throw err;
@@ -121,6 +123,22 @@ module.exports = function(app, passport) {
                     });
                 }
             });
+
+    });
+    app.post('/api/deleteBuilding', function(req, res) {
+        console.log('In delete building')
+        // User.findByIdAndUpdate(
+        //     { _id: req.user._id},
+        //     { $pull:{blocks: req.body._id}}, function(err, user) {
+        //         if (err)
+        //             throw(err);
+        //         else{
+        //             Block.remove({_id : req.body._id}, function (err) {
+        //                 if (err) return handleError(err);
+        //                 res.json({message: "success"});
+        //             });
+        //         }
+        //     });
 
     });
     app.get('/api/getBlockById', function(req, res) {
