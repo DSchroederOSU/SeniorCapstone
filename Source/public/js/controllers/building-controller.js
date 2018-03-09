@@ -33,8 +33,12 @@ angular.module('buildingController', [])
             selectedBuilding = building;
             $scope.BuildingName = building.name;
             $scope.currentBuilding = selectedBuilding;
+            Building.getById($scope.currentBuilding._id).success(function(data) {
+                $scope.buildingMeters = data.meters;               
+            });
 
         };
+        
         $scope.DeleteBuilding = function(building){
             Building.delete(building)
                 .success(function() {
@@ -50,7 +54,7 @@ angular.module('buildingController', [])
             return parseInt(date.substring(9,10))
         };
         $scope.editBuilding = function(building){
-
+         
         };
 
         $scope.selection = function(meter) {

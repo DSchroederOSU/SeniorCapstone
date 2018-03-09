@@ -70,7 +70,7 @@ myApp.config(function($routeProvider, $locationProvider) {
         templateUrl : "../views/building/buildings.html"
     })
     .when("/viewBuilding", {
-        templateUrl : "../views/building/view-building.html"
+        templateUrl : "../views/building/view-building.html",
     })
     .when("/editbuilding/:id", {
         templateUrl : "../views/building/edit-building.html",
