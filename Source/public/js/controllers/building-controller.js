@@ -7,6 +7,7 @@ angular.module('buildingController', [])
 
         selectedMeters = [];
         $scope.meters = [];
+        $scope.buildingMeters = [];
         $scope.buildingModel = selectedBuilding;
        
         Meter.get()
@@ -33,7 +34,18 @@ angular.module('buildingController', [])
             selectedBuilding = building;
             $scope.BuildingName = building.name;
             $scope.currentBuilding = selectedBuilding;
-
+            Building.getById($scope.currentBuilding._id).success(function(data) {
+                
+                $scope.buildingMeters = data.meters;               
+            });
+            
+        };
+        
+        $scope.DeleteBuilding = function(building){
+            Building.delete(building)
+                .success(function() {
+                    $route.reload();
+                });
         };
         $scope.formatDate = function(date){
             return "" + date.substring(0,10) + " " + date.substring(14,19).replace(/^0+/, '')
@@ -44,7 +56,7 @@ angular.module('buildingController', [])
             return parseInt(date.substring(9,10))
         };
         $scope.editBuilding = function(building){
-
+         
         };
 
         $scope.selection = function(meter) {

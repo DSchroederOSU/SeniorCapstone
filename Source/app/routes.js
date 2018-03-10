@@ -25,22 +25,21 @@ module.exports = function(app, passport) {
 
     });
 
+    // =====================================================================
+    ///////////////////////////////BUILDING API/////////////////////////////
+    // =====================================================================
     app.post('/api/addBuilding', function(req, res) {
         var building = new Building();
         building.name = req.body.name;
         building.building_type = req.body.building_type;
         building.meters = req.body.meters;
-    
         building.save(function(err, savedBuilding) {
             if (err)
                 throw err;
             else{
                 savedBuilding.meters.forEach( meter => {      
-               
                         updateOldBuildingMeters(meter, savedBuilding)
                             .then(addMeter(meter,savedBuilding))
-                            
-                
                 });
             }
         });
@@ -51,6 +50,29 @@ module.exports = function(app, passport) {
             //console.log(buildings);
             res.json(buildings); // return all buildings in JSON format
         });
+    });
+    app.post('/api/deleteBuilding', function(req, res) {
+        // null out the meters in this building?
+        Building.remove(
+            {_id : req.body._id}, function (err) {
+                if (err) return handleError(err);
+                res.json({message: "success"});
+            });
+
+    });
+    app.get('/api/getBuildingById', function(req, res) {
+        
+        Building.findOne({_id : req.query._id})
+            .populate({
+                path: 'meters'
+            })
+            .exec(function (err, building) {
+                if (err) return handleError(err);
+                console.log('building:')
+                console.log(building)
+                res.json(building);
+            });
+         
     });
  
     app.get('/storyNav', function (req, res) {
@@ -123,6 +145,7 @@ module.exports = function(app, passport) {
             });
 
     });
+   
     app.get('/api/getBlockById', function(req, res) {
         Block.findOne({_id : req.query.block_id})
         .populate({

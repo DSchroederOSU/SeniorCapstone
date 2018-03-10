@@ -1,6 +1,8 @@
 <div class="row mt-4 Stratum2-Light font-weight-bold" ng-model="buildingModel" ng-controller="buildingController">
     <div class="col-sm-4">
         <h3 class="ml-3">{{buildingModel.name}}</h3>
+        <h3 class="ml-3">{{buildingModel._id}}</h3>
+        <h3 class="ml-3">{{$scope.buildingMeters}}</h3>
         <div class="rounded ml-3" style="height: 200px; width: 200px;">
             <img class="rounded text-white bg-primary w-100 h-100" ng-src="{{getImageAddress(buildingModel)}}" alt="">
         </div>
@@ -9,42 +11,34 @@
 
     </div>
     <div class="col-sm-8 pb-4">
-        <h4>Meters</h4>
-        <table class="table">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Meter number</th>
-                    <th scope="col">Meter Name</th>
-                    <th scope="col">Meter Serial</th>
-                </tr>
+       [graph here maybe?]
+    </div>
+    <h4>Meters</h4>
+        <table class="table border-black Stratum2-Thin font-weight-bold">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Meter Name</th>
+                <th scope="col">Meter Serial</th>
+               
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="entry in meters">
-                    <th scope="row">{{ $index + 1 }}</th>
-                    <td>{{entry.name}}</td>
-                    <td>{{entry.meter_id}}</td>
-                </tr>
+            <tr class="border-bottom-orange background-white" ng-repeat="meter in buildingMeters track by meter._id">
+                <th scope="row">{{ $index + 1 }}</th>
+                <td>{{meter.name}}</td>
+                <td>{{meter.meter_id}}</td>
+              
+                 <td>
+                    
+                <button class="float-right fa fa-remove border-orange-thin border-curve-button" style="font-size:24px; color:red"></button>
+                            
+                
+                </td> 
+            </tr>
             </tbody>
         </table>
-    </div>
-    <div class="col-sm-12">
-        <h4>Data Entries</h4>
-        <table class="table">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Entry</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">KW/hr Reading</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="entry in buildingModel.data_entries track by entry._id">
-                    <th scope="row">{{ $index + 1 }}</th>
-                    <td>{{entry.timestamp}}</td>
-                    <td>{{entry.point[$index].value}}</td> <!-- Need to change this bit to needed info -->
-                </tr>
-            </tbody>
-        </table>
-    </div>
   
 </div>
