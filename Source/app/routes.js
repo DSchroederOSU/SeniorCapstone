@@ -16,7 +16,6 @@ module.exports = function(app, passport) {
 
     app.get('/api/google_user', function(req, res) {
         if (req.user){
-
             res.json(req.user.google);
         }
         else {
@@ -43,7 +42,7 @@ module.exports = function(app, passport) {
     });
 
     app.get('/api/buildings', function (req, res) {
-        Building.find({}, function (err, buildings) {
+        Building.find({}).exec(function (err, buildings) {
             //console.log(buildings);
             res.json(buildings); // return all buildings in JSON format
         });
@@ -82,6 +81,7 @@ module.exports = function(app, passport) {
     });
 
     app.post('/api/addBlock', function(req, res) {
+        console.log("REACHED");
         var user = req.user;
         var block = new Block();
         // set all of the relevant information

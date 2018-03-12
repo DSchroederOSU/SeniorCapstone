@@ -106,6 +106,7 @@ angular.module('blockController', [])
                     "chart": $scope.chartForm,
                     "buildings": selectedBuildings
                 };
+                console.log(BlockData);
                 Block.create(BlockData)
                 // if successful creation
                     .success(function(data) {
