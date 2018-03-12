@@ -24,6 +24,9 @@ module.exports = function(app, passport) {
 
     });
 
+    // =====================================================================
+    ///////////////////////////////BUILDING API/////////////////////////////
+    // =====================================================================
     app.post('/api/addBuilding', function(req, res) {
         var building = new Building();
         building.name = req.body.name;
@@ -33,7 +36,11 @@ module.exports = function(app, passport) {
             if (err)
                 throw err;
             else{
+<<<<<<< HEAD
                 savedBuilding.meters.forEach( meter => {
+=======
+                savedBuilding.meters.forEach( meter => {      
+>>>>>>> d57526fed285556016807cefad3959a6d48781d9
                         updateOldBuildingMeters(meter, savedBuilding)
                             .then(addMeter(meter,savedBuilding))
                 });
@@ -47,12 +54,29 @@ module.exports = function(app, passport) {
             res.json(buildings); // return all buildings in JSON format
         });
     });
-    app.post('/api/buildingMeters', function (req, res) {
-
-        Building.find({}, function (err, buildings) {
-            res.json(buildings); // return all buildings in JSON format
-        });
+    app.post('/api/deleteBuilding', function(req, res) {
+        // null out the meters in this building?
+        Building.remove(
+            {_id : req.body._id}, function (err) {
+                if (err) return handleError(err);
+                res.json({message: "success"});
+            });
     });
+    app.get('/api/getBuildingById', function(req, res) {
+        
+        Building.findOne({_id : req.query._id})
+            .populate({
+                path: 'meters'
+            })
+            .exec(function (err, building) {
+                if (err) return handleError(err);
+                console.log('building:')
+                console.log(building)
+                res.json(building);
+            });
+         
+    });
+
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
     });
@@ -124,6 +148,7 @@ module.exports = function(app, passport) {
             });
 
     });
+   
     app.get('/api/getBlockById', function(req, res) {
         Block.findOne({_id : req.query.block_id})
         .populate({
@@ -313,6 +338,7 @@ module.exports = function(app, passport) {
         });
     });
 
+
 }
 
 function updateOldBuildingMeters(meter,building){
@@ -329,6 +355,7 @@ function updateOldBuildingMeters(meter,building){
     });
 
 }
+
 function addMeter(meter,savedBuilding) {
     return new Promise((resolve, reject) => {
         pushNullMeter(meter,savedBuilding)
@@ -359,7 +386,7 @@ function pushNullMeter(meter,savedBuilding){
                 reject();
             }
             if (doc.building == null){
-                console.log('Building is null')
+                console.log('Building is null, pushing stored data entries')
                 DataEntry.find({meter_id: meter}, (err,docs) =>{
                     if (err){
                         console.log('Unable to push null data entries for meter id: ' + meter)
@@ -372,15 +399,13 @@ function pushNullMeter(meter,savedBuilding){
                         });
                         
                     }
+                    DataEntry.update({building: null}, {$set: {building: savedBuilding._id}});
                 });
-                DataEntry.update({building: null}, {$set: {building: savedBuilding._id}});
-            }
-           
+            } 
         });
-        // resolve(console.log(savedBuilding));
-        resolve();
+        resolve(); 
     });
-    // console.log(meter,savedBuilding);
+ 
 }
 
 // route middleware to make sure a user is logged in
@@ -392,7 +417,10 @@ function isLoggedIn(req, res, next) {
     // if they aren't redirect them to the home page
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d57526fed285556016807cefad3959a6d48781d9
 function saveBlock(blockData){
 
 }

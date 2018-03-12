@@ -73,23 +73,29 @@ app.post('/acquisuite/upload/:id', function (req, res) {
     // Receives post requests, converts from XML to JSON
     // the 'xmlparser' in parameters converts XML to String
     // then bodyParser converts this string to JSON 
-    app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
 
-      // Checks if meter exists. If it doesn't adds one.
-        Meter.findOne({meter_id: req.body.das.serial},(err, doc) => {
-            if (doc === null || doc === undefined){
-                    addMeter(req.body.das).then(data => addEntry(data,req.body.das));
-            } else{
-                addEntry(doc,req.body.das)
-            }   
-        });  
-        res.send(req.body); // used for testing, below is required for acquisuites because they require that specifc return
-        // res.status("200");
-        // res.set({'content-type': 'text/xml', 'Connection': 'close'});
-        // res.send("<?xml version='1.0' encoding='UTF-8' ?>\n"
-        //         +"<result>SUCCESS</result>\n"
-        //         +"<DAS></DAS>"
-        //         +"</xml>");
+    app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {   
+        if (req.body.das.mode == 'LOGFILEUPLOAD'){
+            pathShortener = req.body.das.devices.device.records
+         // Checks if meter exists. If it doesn't adds one.
+            Meter.findOne({meter_id: req.body.das.serial},(err, doc) => {
+                if (doc === null || doc === undefined){
+                       addMeter(req.body.das).then(data => addEntry(data, pathShortener));
+                } else{
+                     addEntry(doc, pathShortener);                 
+                }   
+            });  
+        }
+        else{
+            console.log('STATUS file received');
+        }
+       
+        res.status("200");
+        res.set({'content-type': 'text/xml', 'Connection': 'close'});
+        res.send("<?xml version='1.0' encoding='UTF-8' ?>\n"
+                +"<result>SUCCESS</result>\n"
+                +"<DAS></DAS>"
+                +"</xml>");
   });
 
 function addMeter(meter) {
@@ -99,38 +105,61 @@ function addMeter(meter) {
             meter_id:  meter.serial,
             building: null
         });
-        console.log('New meter "' + meter.name + ' has been added.')
+        console.log('New meter "' + newmeter.name + '" has been added.')
         newmeter.save().catch( err => {res.status(400)})
         resolve(newmeter);
     });
 }
 
 function addEntry(meter,body){
-    pathShortener = body.devices.device.records.record;
-    entry = new DataEntry();
-    entry.meter_id = meter._id;
-    DataEntry.findOne({timestamp:pathShortener.time._, meter_id: entry.meter_id}, (err,doc2) =>{
-        if (doc2 === null || doc2 === undefined){  
-            entry.timestamp = pathShortener.time._
-            entry.building = meter.building;
-            pathShortener.point.forEach((e,i) => {entry.point[i] = e.$;});
-            // save it to data entries
-            entry.save().catch( err => {res.status(400)})
-            // add it to building
-            if (entry.building !== null){
-                console.log('Data entry saved to:  ' + entry.building)
-                Building.findOneAndUpdate({_id: entry.building},
-                    {$push:{data_entries: entry}},
-                    {safe: true, upsert: true, new: true},
-                    (err) =>{if (err) throw(err)})
-            } else{
-                console.log('Data entry added with NULL building')
-            }
-        } else{
-            console.log('Duplicate detected and nothing has been added!')
+    return new Promise((resolve, reject) => {
+        
+        entryArray = new Array();
+        if (body.record.length == undefined){
+            entry = new DataEntry();
+            entry.meter_id = meter._id;
+            entry.timestamp = body.record.time._;
+            entry.building = meter.building
+            body.record.point.forEach((e,i) => {entry.point[i] = e.$;});
+            entryArray.push(entry);
         }
-    })
+        else{
+            for (var i = 0; i < body.record.length; i++){
+                entry = new DataEntry();
+                entry.meter_id = meter._id;
+                entry.timestamp = body.record[i].time._;
+                entry.building = meter.building
+                body.record[i].point.forEach((e,i) => {entry.point[i] = e.$;});
+                entryArray.push(entry);
+            }
+        }
+
+    entryArray.forEach(x => {
+       
+        DataEntry.findOne({timestamp: x.timestamp, meter_id: meter._id}, (err,doc2) => {
+            if (doc2 === null || doc2 === undefined){
+            
+                // save it to data entries
+                x.save().catch( err => {res.status(400)})
+                // add it to building
+                if (x.building !== null){
+                    Building.findOneAndUpdate({_id: entry.building},
+                        {$push:{data_entries: x}},
+                        {safe: true, upsert: true, new: true},
+                        (err) =>{if (err) throw(err)})
+                }
+                console.log('Data entry id "' +  x._id + '" added to the meter named "' + meter.name + '" which is assigned to building id: "'+ meter.building+ '"')
+            } else{
+                console.log('Duplicate detected and nothing has been added!')
+            }
+        });
+    });
+resolve()
+});
+
+
 }
+
 // launch ======================================================================
 app.listen(6121); // 6121 is open on most PCs
 console.log("I think it's working!");
