@@ -36,11 +36,7 @@ module.exports = function(app, passport) {
             if (err)
                 throw err;
             else{
-<<<<<<< HEAD
                 savedBuilding.meters.forEach( meter => {
-=======
-                savedBuilding.meters.forEach( meter => {      
->>>>>>> d57526fed285556016807cefad3959a6d48781d9
                         updateOldBuildingMeters(meter, savedBuilding)
                             .then(addMeter(meter,savedBuilding))
                 });
@@ -74,7 +70,19 @@ module.exports = function(app, passport) {
                 console.log(building)
                 res.json(building);
             });
-         
+    });
+    app.get('/api/getBuildingData', function(req, res) {
+
+        Building.findOne({_id : req.query._id})
+            .populate({
+                path: 'data_entries'
+            })
+            .exec(function (err, building) {
+                if (err) return handleError(err);
+                console.log('building:')
+                console.log(building)
+                res.json(building);
+            });
     });
 
     app.get('/storyNav', function (req, res) {
@@ -416,11 +424,6 @@ function isLoggedIn(req, res, next) {
 
     // if they aren't redirect them to the home page
 }
-
-<<<<<<< HEAD
-
-=======
->>>>>>> d57526fed285556016807cefad3959a6d48781d9
 function saveBlock(blockData){
 
 }
