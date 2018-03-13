@@ -7,7 +7,7 @@ var buttontext = "";
 var blocksChartData = [];
 
 angular.module('blockController', [])
-    .controller('blockController', function($route, $scope, $location, $timeout, Building, Block, GetBlockByID) {
+    .controller('blockController', function($route, $scope, $http, $location, $timeout, Building, Block, GetBlockByID) {
         $scope.title = title;
         $scope.button_text = buttontext;
         $scope.buildings = [];
@@ -94,7 +94,6 @@ angular.module('blockController', [])
             }
         };
 
-
         function CreateBlock() {
             // validate the formData to make sure that something is there
             // if form is empty, nothing will happen
@@ -106,6 +105,7 @@ angular.module('blockController', [])
                     "chart": $scope.chartForm,
                     "buildings": selectedBuildings
                 };
+                console.log(BlockData);
                 Block.create(BlockData)
                 // if successful creation
                     .success(function(data) {
@@ -121,8 +121,7 @@ angular.module('blockController', [])
                     });
             }
         };
-		
-		
-		
+
+
 		
 	});
