@@ -31,13 +31,13 @@ angular.module('chartController', [])
 			//object array and return that array
 			/*********************************SAMPLE BUILDING DATA************************************/
 			//x axis
-			var Dates = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+			var Dates = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 			//y axis data is under the "data" value of these objects
-			var Bloss = {name: 'Bloss', data: [86,114,106,106,107,111,133], color: generateColor()};
-			var Finley = {name: 'Finley', data: [700,350,411,502,635,809,947], color: generateColor()};
-			var Arnold = {name: 'Arnold', data: [168,170,178,190,203,276,408], color: generateColor()};
-			var West = {name: 'West', data: [40,20,10,16,24,38,74], color: generateColor()};
-			var Callahan = {name: 'Callahan', data: [6,3,2,2,7,26,82,172], color: generateColor()};
+			var Bloss = {name: 'Bloss', data: [86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, ], color: generateColor()};
+			var Finley = {name: 'Finley', data: [700,350,411,502,635,809,947 , 700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,], color: generateColor()};
+			var Arnold = {name: 'Arnold', data: [168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, ], color: generateColor()};
+			var West = {name: 'West', data: [40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, ], color: generateColor()};
+			var Callahan = {name: 'Callahan', data: [6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, ], color: generateColor()};
 			/**********************************************************************************/
 			
 			//example of an array that has been returned by the function idea above. 
