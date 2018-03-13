@@ -16,7 +16,6 @@ module.exports = function(app, passport) {
 
     app.get('/api/google_user', function(req, res) {
         if (req.user){
-
             res.json(req.user.google);
         }
         else {
@@ -37,7 +36,7 @@ module.exports = function(app, passport) {
             if (err)
                 throw err;
             else{
-                savedBuilding.meters.forEach( meter => {      
+                savedBuilding.meters.forEach( meter => {
                         updateOldBuildingMeters(meter, savedBuilding)
                             .then(addMeter(meter,savedBuilding))
                 });
@@ -46,7 +45,7 @@ module.exports = function(app, passport) {
     });
 
     app.get('/api/buildings', function (req, res) {
-        Building.find({}, function (err, buildings) {
+        Building.find({}).exec(function (err, buildings) {
             //console.log(buildings);
             res.json(buildings); // return all buildings in JSON format
         });
@@ -58,7 +57,6 @@ module.exports = function(app, passport) {
                 if (err) return handleError(err);
                 res.json({message: "success"});
             });
-
     });
     app.get('/api/getBuildingById', function(req, res) {
         
@@ -72,9 +70,21 @@ module.exports = function(app, passport) {
                 console.log(building)
                 res.json(building);
             });
-         
     });
- 
+    app.get('/api/getBuildingData', function(req, res) {
+        console.log(req.query);
+        Building.findOne({_id : req.query._id})
+            .populate({
+                path: 'data_entries',
+                select: 'timestamp point'
+            }).lean()
+            .exec(function (err, building) {
+                if (err) return handleError(err);
+                console.log(building);
+                res.json(building.data_entries);
+            });
+    });
+
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
     });
@@ -103,6 +113,7 @@ module.exports = function(app, passport) {
     });
 
     app.post('/api/addBlock', function(req, res) {
+        console.log("REACHED");
         var user = req.user;
         var block = new Block();
         // set all of the relevant information
@@ -412,10 +423,7 @@ function isLoggedIn(req, res, next) {
         return next();
 
     // if they aren't redirect them to the home page
-
-
 }
-
 function saveBlock(blockData){
 
 }
