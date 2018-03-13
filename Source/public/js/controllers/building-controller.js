@@ -23,10 +23,11 @@ angular.module('buildingController', [])
                 $scope.buildings = data;
             });
         $scope.getImageAddress = function(building) {
-            if (building){
+            if (building._id != null){
+                console.log(building);
                 return "../assets/buildings/"+ building.name.replace(/\s+/g, '-').toLowerCase() + ".jpg";
             }
-            else{
+            else if(selectedBuilding._id != null){
                 return "../assets/buildings/"+ selectedBuilding.name.replace(/\s+/g, '-').toLowerCase() + ".jpg";
             }
         };
