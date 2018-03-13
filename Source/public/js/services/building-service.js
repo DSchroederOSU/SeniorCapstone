@@ -15,24 +15,22 @@ angular.module('BuildingService', [])
                 return $http.post('/api/deleteBuilding', building);
             },
             getById : function(id){
-               
                 return $http({ url: '/api/getBuildingById',
                             method: "GET",
                             params: {_id: id}
                 }).then(function(response){
-                    console.log(response.data);
                     return response.data;
                 }, function(error){
                     alert(error);
                 });
             },
-            getBuildingData : function(id){
-
+            getBuildingData : function(buildings){
                 return $http({ url: '/api/getBuildingData',
                     method: "GET",
-                    params: {_id: id}
+                    params: {_id: buildings.buildings[0]._id,
+                        variable : buildings.var
+                    }
                 }).then(function(response){
-                    console.log(response.data);
                     return response.data;
                 }, function(error){
                     alert(error);

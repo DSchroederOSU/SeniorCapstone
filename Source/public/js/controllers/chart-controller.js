@@ -1,5 +1,6 @@
 angular.module('chartController', [])
-    .controller('chartController', function($scope){
+    .controller('chartController', function($route, $scope, Building){
+
 
 		var randomNum = function(range){
 			var num = Math.floor(Math.random() * range);
@@ -23,9 +24,26 @@ angular.module('chartController', [])
             }
             return "rgb(" + g() + "," + g() + "," + g() +")";
         };
+        $scope.getData = function(buildings){
+        	console.log(buildings);
+            Building.getBuildingData(buildings)
+                .then(function(data) {
+                    var d = formatChartData(data);
+                    console.log(d);
+                });
+        };
+
+        function formatChartData(data_entries) {
+            console.log(data_entries);
+            var to_return = [];
+            data_entries.forEach(function(element) {
+                to_return.push({time: element.timestamp, data: element.point[0].value});
+            });
+            return to_return;
+        }
 	
-		$scope.createCharts = function() {	
-			
+		$scope.createCharts = function() {
+
 			//Building Data can be retrieved for each building in the block object
 			//My current idea is to make a function to push all of these building objects below to an 
 			//object array and return that array

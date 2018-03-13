@@ -72,16 +72,16 @@ module.exports = function(app, passport) {
             });
     });
     app.get('/api/getBuildingData', function(req, res) {
-
+        console.log(req.query);
         Building.findOne({_id : req.query._id})
             .populate({
-                path: 'data_entries'
-            })
+                path: 'data_entries',
+                select: 'timestamp point'
+            }).lean()
             .exec(function (err, building) {
                 if (err) return handleError(err);
-                console.log('building:')
-                console.log(building)
-                res.json(building);
+                console.log(building);
+                res.json(building.data_entries);
             });
     });
 

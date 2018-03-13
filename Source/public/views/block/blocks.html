@@ -48,7 +48,9 @@
 						<p class="font-weight-bold mb-0" style="font-size: 1.5vw;">XXX,XXX</p><p class="font-weight-light mb-0 mt-1" style="font-size: 1em;">  mW/h</p>
 					</div>
 				</div>
-				<canvas class="col-6 mr-4 myChart" ></canvas>
+				<canvas ng-controller="chartController"
+						ng-init="getData({buildings :block.building, var : 'Accumulated Real Energy Net'})"
+						class="col-6 mr-4 myChart"></canvas>
 			
 			</div>
 		</div>

@@ -35,10 +35,6 @@ angular.module('buildingController', [])
             selectedBuilding = building;
             $scope.BuildingName = building.name;
             $scope.currentBuilding = selectedBuilding;
-<<<<<<< HEAD
-            console.log(building);
-
-=======
             Building.getById($scope.currentBuilding._id).success(function(data) {
                 
                 $scope.buildingMeters = data.meters;               
@@ -51,7 +47,6 @@ angular.module('buildingController', [])
                 .success(function() {
                     $route.reload();
                 });
->>>>>>> d57526fed285556016807cefad3959a6d48781d9
         };
         $scope.formatDate = function(date){
             return "" + date.substring(0,10) + " " + date.substring(14,19).replace(/^0+/, '')
