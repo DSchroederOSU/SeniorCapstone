@@ -1,7 +1,8 @@
 angular.module('chartController', [])
-    .controller('chartController', function($route, $scope, $element, Building){
+    .controller('chartController', function($route, $scope, Building){
 
-        var randomNum = function(range) {
+
+        var randomNum = function(range){
             var num = Math.floor(Math.random() * range);
             return num;
         }
@@ -23,54 +24,25 @@ angular.module('chartController', [])
             }
             return "rgb(" + g() + "," + g() + "," + g() +")";
         };
-
-        /*var getData = function(buildings) {
-            //console.log(buildings);
+        $scope.getData = function(buildings){
+            console.log(buildings);
             Building.getBuildingData(buildings)
                 .then(function(data) {
                     var d = formatChartData(data);
-                    //x axis data
-                    var x = [];
-                    //y axis data
-                    var y = [];
-
-                    d.forEach(function(element) {
-                        x.push(element.time);
-                        y.push(element.data);
-                    });
-                    console.log({x, y});
-                    return {x, y};
-
+                    console.log(d);
                 });
-        };*/
+        };
 
         function formatChartData(data_entries) {
-            //console.log(data_entries);
+            console.log(data_entries);
             var to_return = [];
             data_entries.forEach(function(element) {
                 to_return.push({time: element.timestamp, data: element.point[0].value});
             });
-            //console.log(to_return);
-
             return to_return;
-        };
+        }
 
-
-
-        $scope.createChart = function(buildings) {
-            //x axis data
-            var x = [];
-            //y axis data
-            var y = [];
-
-            //console.log(buildings);
-            Building.getBuildingData(buildings).then(function(data) {
-                var d = formatChartData(data);
-                d.forEach(function(element) {
-                    x.push(element.time);
-                    y.push(element.data);
-                });
-                console.log({x, y});
+        $scope.createCharts = function() {
 
             //Building Data can be retrieved for each building in the block object
             //My current idea is to make a function to push all of these building objects below to an
@@ -79,56 +51,90 @@ angular.module('chartController', [])
                 //x axis
             var Dates = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday', 'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
             //y axis data is under the "data" value of these objects
-            var Bloss = {name: 'Bloss', data: [700,350,411,502,635,809,947], color: generateColor()};
-            var Finley = {name: 'Finley', data: [700,350,411,502,635,809,947 , 700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947], color: generateColor()};
-            var Arnold = {name: 'Arnold', data: [168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408 ], color: generateColor()};
-            var West = {name: 'West', data: [40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74 ], color: generateColor()};
-            var Callahan = {name: 'Callahan', data: [6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172], color: generateColor()};
+            var Bloss = {name: 'Bloss', data: [86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, 86,114,106,106,107,111,133, ], color: generateColor()};
+            var Finley = {name: 'Finley', data: [700,350,411,502,635,809,947 , 700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,700,350,411,502,635,809,947 ,], color: generateColor()};
+            var Arnold = {name: 'Arnold', data: [168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, 168,170,178,190,203,276,408, ], color: generateColor()};
+            var West = {name: 'West', data: [40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, 40,20,10,16,24,38,74, ], color: generateColor()};
+            var Callahan = {name: 'Callahan', data: [6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, 6,3,2,2,7,26,82,172, ], color: generateColor()};
             /**********************************************************************************/
 
-            var KEC = {name: 'KEC', data: [], color: generateColor()};
-
             //example of an array that has been returned by the function idea above.
-            var buildingDataArray = [KEC];
+            var buildingDataArray = [Bloss, Finley, Arnold, West, Callahan];
 
             //function could be made here to dynamically fill the datasetsArray's for each value in block.buildings
-            var datasetsArray = [{
+            var datasetsArray1 = [{
                 fill: false,
                 borderColor: buildingDataArray[0].color,
                 label: buildingDataArray[0].name,
                 data: buildingDataArray[0].data
+            },{
+                fill: false,
+                borderColor: buildingDataArray[1].color,
+                label: buildingDataArray[1].name,
+                data: buildingDataArray[1].data
+            },{
+                fill: false,
+                borderColor: buildingDataArray[2].color,
+                label: buildingDataArray[2].name,
+                data: buildingDataArray[2].data
             }];
+            var datasetsArray2 = [{
+                fill: false,
+                borderColor: buildingDataArray[3].color,
+                label: buildingDataArray[3].name,
+                data: buildingDataArray[3].data
+            },{
+                fill: false,
+                borderColor: buildingDataArray[4].color,
+                label: buildingDataArray[4].name,
+                data: buildingDataArray[4].data
+            }];
+            var datasetsArray3 = [{
+                fill: false,
+                borderColor: buildingDataArray[0].color,
+                label: buildingDataArray[0].name,
+                data: buildingDataArray[0].data
+            },{
+                fill: false,
+                borderColor: buildingDataArray[4].color,
+                label: buildingDataArray[4].name,
+                data: buildingDataArray[4].data
+            },];
+
+            var datasetsArrayArray = [datasetsArray1,datasetsArray2,datasetsArray3]
 
             //an example of a completed auto generated chart object to be passed to the chart creation function
-            var completedChartObj = {chartType:'line', chartYtitle:'kWh', chartDataLabels: Dates, chartDatasets: datasetsArray};
+            var completedChartObj = {chartType:'line', chartYtitle:'kWh', chartDataLabels: Dates, chartDatasets: datasetsArrayArray};
 
 
             //keeps track of blocksChartData[] index
             var blockIndex = 0;
-
-            //set current element as context for chart
-            var ctx = $element;
-
-
-            /*
-            var myChart = new Chart(ctx, {
-                type: completedChartObj.chartType,
-                data: {
-                    labels: completedChartObj.chartDataLabels,
-                    datasets: completedChartObj.chartDatasets[index]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: completedChartObj.chartYtitle
-                            }
-                        }]
+            // get all elements with class "myChart" and create chart for it
+            $(".myChart").each(function(index, element){
+                //set current element as context for chart
+                var ctx = element;
+                // create chart
+                var myChart = new Chart(ctx, {
+                    type: completedChartObj.chartType,
+                    data: {
+                        labels: completedChartObj.chartDataLabels,
+                        datasets: completedChartObj.chartDatasets[index]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: completedChartObj.chartYtitle
+                                }
+                            }]
+                        }
                     }
-                }
-            };
-            */
+                });
+                //increment block index to get next blocks chart data
+                blockIndex++;
             });
-        };
+
+
+        }
     });

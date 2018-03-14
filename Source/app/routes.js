@@ -53,12 +53,15 @@ module.exports = function(app, passport) {
     app.post('/api/deleteBuilding', function(req, res) {
         // null out the meters in this building?
         Building.remove(
-            {_id : req.body._id}, function (err) {
+            {_id : req.body._id}, async function (err) {
                 if (err) return handleError(err);
+                await Meter.updateMany({building:req.body._id},{$set: {building: null}})
+                await DataEntry.updateMany({building:req.body._id},{$set: {building: null}})
                 res.json({message: "success"});
             });
     });
     app.get('/api/getBuildingById', function(req, res) {
+        // delete a building then set it's meters/data 'building' var to null
         Building.findOne({_id : req.query._id})
             .populate({
                 path: 'meters'
@@ -350,6 +353,9 @@ module.exports = function(app, passport) {
 
 }
 
+    
+
+
 function updateOldBuildingMeters(meter,building){
     return new Promise((resolve, reject) => {
         Building.findOneAndUpdate({meters: {"$in" : [meter]}, "_id":{$ne: building._id}},{$pull:{meters: meter}},function(err,oldBuilding){
@@ -385,7 +391,7 @@ function addMeter(meter,savedBuilding) {
 }
 
 function pushNullMeter(meter,savedBuilding){
-    console.log('savedBuilding');
+   
     console.log(savedBuilding);
     // DataEntry.update({building: null}, {$set: {building: savedBuilding}});
     return new Promise((resolve, reject) => {
@@ -394,6 +400,8 @@ function pushNullMeter(meter,savedBuilding){
                 console.log('Unable to find meter in pushNullData entries for meter id: ' + meter);
                 reject();
             }
+            // await Meter.updateMany({building:req.body._id},{$set: {building: null}})
+               
             if (doc.building == null){
                 console.log('Building is null, pushing stored data entries')
                 DataEntry.find({meter_id: meter}, (err,docs) =>{
@@ -408,8 +416,12 @@ function pushNullMeter(meter,savedBuilding){
                         });
                         
                     }
-                    DataEntry.update({building: null}, {$set: {building: savedBuilding._id}});
+                    
+                    // DataEntry.update({building: null}, {$set: {building: savedBuilding._id}});
                 });
+                DataEntry.updateMany({meter_id: meter},
+                    {$set: {building: savedBuilding._id}},
+                    (err) =>{if (err) throw(err)})              
             } 
         });
         resolve(); 
