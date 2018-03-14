@@ -49,13 +49,10 @@
 					</div>
 				</div> 
 				<canvas ng-controller="chartController" 
-                        ng-init="createCharts({buildings :block.building, var : 'Accumulated Real Energy Net'})" 
+                        ng-init="createChart({building: block.building, val : 'Accumulated Real Energy Net'})" 
                         class="col-7 myChart"></canvas>
 			</div>
 		</div>
-	</div>
-	<div ng-controller="chartController">
-	{{createCharts()}}
 	</div>
 </div>
 

@@ -27,7 +27,7 @@ angular.module('BuildingService', [])
             getBuildingData : function(buildings){
                 return $http({ url: '/api/getBuildingData',
                     method: "GET",
-                    params: {_id: buildings.buildings[0]._id,
+                    params: {_id: buildings.building._id,
                         variable : buildings.var
                     }
                 }).then(function(response){
