@@ -59,15 +59,12 @@ module.exports = function(app, passport) {
             });
     });
     app.get('/api/getBuildingById', function(req, res) {
-        
         Building.findOne({_id : req.query._id})
             .populate({
                 path: 'meters'
             })
             .exec(function (err, building) {
                 if (err) return handleError(err);
-                console.log('building:')
-                console.log(building)
                 res.json(building);
             });
     });
@@ -79,7 +76,9 @@ module.exports = function(app, passport) {
                 select: 'timestamp point'
             }).lean()
             .exec(function (err, building) {
-                if (err) return handleError(err);
+                if (err){
+                    res.json({building : null});
+                };
                 console.log(building);
                 res.json(building.data_entries);
             });
@@ -208,7 +207,9 @@ module.exports = function(app, passport) {
                 }
             })
             .exec(function (err, user) {
-                if (err) return handleError(err);
+                if (err){
+                    console.log("Error");
+                };
                 res.json(user.dashboards);
             });
     });
