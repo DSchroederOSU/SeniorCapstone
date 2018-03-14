@@ -56,6 +56,7 @@ module.exports = function(app, passport) {
             {_id : req.body._id}, async function (err) {
                 if (err) return handleError(err);
                 await Meter.updateMany({building:req.body._id},{$set: {building: null}})
+                await DataEntry.updateMany({building:{$eq:building_id}},{$set: {building: null}})
                 res.json({message: "success"});
             });
     });
