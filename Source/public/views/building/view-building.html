@@ -11,27 +11,7 @@
 
     </div>
     <div class="col-sm-8 pb-4">
-<<<<<<< HEAD
-        <h4>Meters</h4>
-        <table class="table">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Meter Name</th>
-                    <th scope="col">Meter Serial</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="met in buildingModel.meters">
-                    <th scope="row">{{ $index + 1 }}</th>
-                    <td>{{met.name}}</td>
-                    <td>{{met.meter_id}}</td>
-                </tr>
-            </tbody>
-        </table>
-=======
        [graph here maybe?]
->>>>>>> d57526fed285556016807cefad3959a6d48781d9
     </div>
     <h4>Meters</h4>
         <table class="table border-black Stratum2-Thin font-weight-bold">
@@ -46,13 +26,6 @@
             </tr>
             </thead>
             <tbody>
-<<<<<<< HEAD
-                <tr ng-repeat="entry in buildingModel.data_entries track by entry._id">
-                    <th scope="row">{{ $index + 1 }}</th>
-                    <td>{{entry.timestamp}}</td>
-                    <td>{{entry.point[0].value}}</td> <!-- Need to change this bit to needed info -->
-                </tr>
-=======
             <tr class="border-bottom-orange background-white" ng-repeat="meter in buildingMeters track by meter._id">
                 <th scope="row">{{ $index + 1 }}</th>
                 <td>{{meter.name}}</td>
@@ -65,7 +38,6 @@
                 
                 </td> 
             </tr>
->>>>>>> d57526fed285556016807cefad3959a6d48781d9
             </tbody>
         </table>
   

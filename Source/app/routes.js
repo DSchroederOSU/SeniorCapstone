@@ -53,8 +53,9 @@ module.exports = function(app, passport) {
     app.post('/api/deleteBuilding', function(req, res) {
         // null out the meters in this building?
         Building.remove(
-            {_id : req.body._id}, function (err) {
+            {_id : req.body._id}, async function (err) {
                 if (err) return handleError(err);
+                await Meter.updateMany({building:req.body._id},{$set: {building: null}})
                 res.json({message: "success"});
             });
     });
@@ -348,6 +349,9 @@ module.exports = function(app, passport) {
 
 
 }
+
+    
+
 
 function updateOldBuildingMeters(meter,building){
     return new Promise((resolve, reject) => {
