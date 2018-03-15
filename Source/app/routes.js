@@ -93,19 +93,22 @@ module.exports = function(app, passport) {
             { $set: {
                 'name': req.body.name,
                 'building_type': req.body.building_type,
-                'meters': req.body.meters
+                'meters':  req.body.meters
                 // instead of pushing meters here, might do similar function call like in addBuilding
             }},
             {safe: true, upsert: true, new: true}, function(err, meter) {
                 if (err)
                     throw(err);
                 else{
-                        // This is where I could push meters. But for now, let's just have it be done manually
+                    req.body.meters.forEach( meter => {
+                        updateOldBuildingMeters(meter._id, req.body)
+                        .then(addMeter(meter._id,req.body))
+                    });
+                
                         // updateOldBuildingMeters(req.body.meters[i],req.body).then(console.log('hi'));
                     
-                    res.json(meter);
-                }});
-        
+        }});
+        res.json(req.body);
     });
 
     app.get('/storyNav', function (req, res) {
@@ -405,6 +408,7 @@ module.exports = function(app, passport) {
 
 function updateOldBuildingMeters(meter,building){
     return new Promise((resolve, reject) => {
+        
         Building.findOneAndUpdate({meters: {"$in" : [meter]}, "_id":{$ne: building._id}},{$pull:{meters: meter}},function(err,oldBuilding){
             if (err){
                reject(err);
