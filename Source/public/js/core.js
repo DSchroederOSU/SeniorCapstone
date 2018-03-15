@@ -72,16 +72,6 @@ myApp.config(function($routeProvider, $locationProvider) {
     .when("/viewBuilding", {
         templateUrl : "../views/building/view-building.html",
     })
-    .when("/editbuilding/:id", {
-        templateUrl : "../views/building/edit-building.html",
-        controller : "buildingEditController",
-        reloadOnSearch: false,
-        resolve: {
-            editbuilding: function (Building, $route) {
-                return Building.getById($route.current.params.id);
-            }
-        }
-    })
     .when("/addBuilding", {
             templateUrl : "../views/building/create-building.html"
         })
