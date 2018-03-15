@@ -71,7 +71,7 @@ angular.module('meterController', [])
                 var meterData = {
                     "name": $scope.meterNameForm,
                     "meter_id": $scope.meterSerialForm,
-                    "id"    :   editmeter._id
+                    "id"    :   editMeter._id
                 };
 
                 Meter.update(meterData)
@@ -109,9 +109,6 @@ angular.module('meterController', [])
                 createMeter();
             }
             else{
-                /*
-                Need to create an "Update" function and API
-                 */
                 UpdateMeter(editMeter);
             }
         };
