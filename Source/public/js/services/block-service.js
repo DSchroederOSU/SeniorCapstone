@@ -11,8 +11,8 @@ angular.module('BlockService', [])
             delete : function(block) {
                 return $http.post('/api/deleteBlock', block);
             },
-            edit : function(block) {
-                return $http.post('/api/editBlock', block);
+            update : function(block) {
+                return $http.post('/api/updateBlock', block);
             },
             get : function() {
                 return $http.get('/api/getUserBlocks');

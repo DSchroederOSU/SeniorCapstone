@@ -141,6 +141,7 @@ angular.module('blockController', [])
         /*---------------------------------------------------------------------------------------
         ----------------------------------EDIT/UPDATE FUNCTIONS----------------------------------
         ---------------------------------------------------------------------------------------*/
+
         /*
         This function is called on ng-click of the edit block button in blocks.html
         makes sure that our editBlock variable is set to the correct block
@@ -217,10 +218,22 @@ angular.module('blockController', [])
                     });
             }
         }
-
+        
+        /*
+        Function to update block information by taking the id of the current block and 
+        taking the $scope variables for updated info.
+        */
         function UpdateBlock(editBlock){
             var update_block_data = {
-                _id : editBlock._id
-            }
+                "_id"   : editBlock._id,
+                "name"  : $scope.nameForm,
+                "chart" : $scope.chartForm,
+                "building": selectedBuildings,
+                "variable": 'Killowatts/Hr'
+            };
+            Block.update(update_block_data)
+                .success(function() {
+                    $route.reload();
+                });
         }
 	});
