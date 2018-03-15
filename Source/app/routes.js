@@ -170,6 +170,25 @@ module.exports = function(app, passport) {
         });
     });
 
+    app.post('/api/updateBlock', function(req, res) {
+        console.log(req.body);
+       Block.findByIdAndUpdate(
+            { _id: req.body._id},
+            { $set: {
+                'meter_id': req.body.meter_id,
+                'name': req.body.name,
+                'chart': req.body.chart,
+                'building': req.body.building,
+                'variable': req.body.variable
+            }},
+            {safe: true, upsert: true, new: true}, function(err, meter) {
+                if (err)
+                    throw(err);
+                else{
+                    res.json(meter);
+                }});
+    });
+
     // =====================================================================
     /////////////////////////////DASHBOARD API//////////////////////////////
     // =====================================================================
