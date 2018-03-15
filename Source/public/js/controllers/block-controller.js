@@ -141,7 +141,6 @@ angular.module('blockController', [])
         /*---------------------------------------------------------------------------------------
         ----------------------------------EDIT/UPDATE FUNCTIONS----------------------------------
         ---------------------------------------------------------------------------------------*/
-
         /*
         This function is called on ng-click of the edit block button in blocks.html
         makes sure that our editBlock variable is set to the correct block
@@ -220,11 +219,8 @@ angular.module('blockController', [])
         }
 
         function UpdateBlock(editBlock){
-
             var update_block_data = {
                 _id : editBlock._id
             }
         }
-
-		
 	});
