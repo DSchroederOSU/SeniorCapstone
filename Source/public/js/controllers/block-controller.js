@@ -236,6 +236,4 @@ angular.module('blockController', [])
                     $route.reload();
                 });
         }
-       
-		
 	});
