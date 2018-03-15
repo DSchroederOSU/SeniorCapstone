@@ -77,13 +77,23 @@ module.exports = function(app, passport) {
             .populate(
                 { path: 'data_entries',
                     match : {timestamp : { $lt: "2018-03-15 00:45:00", $gte : "2018-03-14 21:00:00"}}, //THIS WORKS TO FILTER DATES
-                    select : 'timestamp -_id point.name point.value '
+                    select : 'id'
             })
-            .exec(function (err, building) {
+            .exec(function (err, dataEntries) {
                 if (err){
                     res.json({building : null});
-                };
-                res.json(building.data_entries);
+                }
+                else{
+                    DataEntry.find({_id : { $in: dataEntries.data_entries }})
+                        .select({ point: { $elemMatch: { name: "Accumulated Real Energy Net" }}})
+                        .select('-_id timestamp point.value')
+                        .exec(function (err, datapoints) {
+                            if (err) { res.json({building: null});}
+                            else{
+                                res.json(datapoints);
+                            }
+                        });
+                }
             });
     });
     app.post('/api/updateBuilding', function(req, res) {

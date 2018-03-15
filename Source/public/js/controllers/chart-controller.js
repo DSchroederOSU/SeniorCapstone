@@ -39,6 +39,7 @@ angular.module('chartController', [])
             buildingsArray.building.forEach(function(currBuilding) {	
 				var to_pass = {building: currBuilding, val : buildingsArray.val};
 				Building.getBuildingData(to_pass).then(function(data) {
+					console.log(data);
                     x = [];
                     y = [];
 					data.forEach( function(entry){
