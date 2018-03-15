@@ -176,7 +176,9 @@ angular.module('blockController', [])
                 CreateBlock();
             }
             else{
-                console.log("WE ARE UPDATING");
+                /*
+                Need to create an "Update" function and API
+                 */
             }
         };
 
