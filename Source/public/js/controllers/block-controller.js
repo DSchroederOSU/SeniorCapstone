@@ -179,6 +179,7 @@ angular.module('blockController', [])
                 /*
                 Need to create an "Update" function and API
                  */
+                UpdateBlock(editBlock);
             }
         };
 
@@ -214,6 +215,12 @@ angular.module('blockController', [])
             }
         }
 
+        function UpdateBlock(editBlock){
+
+            var update_block_data = {
+                _id : editBlock._id
+            }
+        }
 
 		
 	});
