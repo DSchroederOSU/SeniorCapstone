@@ -74,15 +74,15 @@ module.exports = function(app, passport) {
     app.get('/api/getBuildingData', function(req, res) {
         console.log(req.query);
         Building.findOne({_id : req.query._id})
-            .populate({
-                path: 'data_entries',
-                select: 'timestamp point'
-            }).lean()
+            .populate(
+                { path: 'data_entries',
+                    match : {timestamp : { $lt: "2018-03-15 00:45:00", $gte : "2018-03-14 21:00:00"}}, //THIS WORKS TO FILTER DATES
+                    select : 'timestamp -_id point.name point.value '
+            })
             .exec(function (err, building) {
                 if (err){
                     res.json({building : null});
                 };
-                console.log(building);
                 res.json(building.data_entries);
             });
     });
@@ -361,7 +361,6 @@ module.exports = function(app, passport) {
                 }});
     });
     app.post('/api/deleteMeter', function(req, res) {
-    
        Meter.remove(
             {_id : req.body._id}, async function (err) {
                 if (err) return handleError(err);

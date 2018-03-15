@@ -27,7 +27,7 @@ angular.module('chartController', [])
             }
             return "rgb(" + g() + "," + g() + "," + g() +")";
         };
-		
+
         function formatChartData(data_entries) {
             //console.log(data_entries);
             var to_return = [];
@@ -35,10 +35,10 @@ angular.module('chartController', [])
                 to_return.push({time: element.timestamp, data: element.point[0].value});
             });
 			//console.log(to_return);
-			
+
             return to_return;
         };
-		
+
 		$scope.createChart = function(buildingsArray) {
 			//will hold each buildings data in the block
 			var buildingsYaxis = [];
@@ -54,62 +54,59 @@ angular.module('chartController', [])
             buildingsArray.building.forEach(function(currBuilding) {	
 				var to_pass = {building: currBuilding, val : buildingsArray.val};
 				Building.getBuildingData(to_pass).then(function(data) {
-                    var d = formatChartData(data);
-					//reset x and y to get data for next building.
-					x = [];
-					y = [];
-					d.forEach(function(element) {
-						//sets the x and y arrays for the chart using the data
-						x.push(element.time);
-						y.push(element.data);
+                    x = [];
+                    y = [];
+					data.forEach( function(entry){
+                        x.push(entry.timestamp);
+                        y.push(entry.point[0].value);
 					});
-					console.log(to_pass.building.name);
 					//push all the values to the array of each buildings x axis data
 					buildingAxisData.push({name: to_pass.building.name, buildingYdata: y, buildingXdata: x});
+                    //function could be made here to dynamically fill the datasetsArray's for each value in block.buildings
+                    var datasetsArray = [];
+                    buildingAxisData.forEach(function(element) {
+                        datasetsArray.push({
+                            fill: false,
+                            borderColor: generateColor(),
+                            label: element.name,
+                            data: element.buildingYdata
+                        });
+                    });
+
+                    //an example of a completed auto generated chart object to be passed to the chart creation function
+                    var completedChartObj = {chartType:'line', chartYtitle:'kWh', chartDataLabels: buildingAxisData[0].buildingXdata, chartDatasets: datasetsArray};
+
+
+                    //set current element of the html function call as context for chart
+                    var ctx = $element;
+                    //create the chart on the element
+                    var myChart = new Chart(ctx, {
+                        type: completedChartObj.chartType,
+                        data: {
+                            labels: completedChartObj.chartDataLabels,
+                            datasets: completedChartObj.chartDatasets
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: completedChartObj.chartYtitle
+                                    }
+                                }]
+                            }
+                        }
+                    });
 				});
 			});
-			
+
 			//timeout necessary to let data load. This is a dumb way to handle asynchronous-ness but it works for now.
 			$timeout(function () {
 
 				console.log(buildingAxisData);
-				
-				//function could be made here to dynamically fill the datasetsArray's for each value in block.buildings
-				var datasetsArray = [];
-				buildingAxisData.forEach(function(element) {
-								datasetsArray.push({ 
-									fill: false,
-									borderColor: generateColor(),
-									label: element.name,
-									data: element.buildingYdata
-								});
-				});
 
-				//an example of a completed auto generated chart object to be passed to the chart creation function
-				var completedChartObj = {chartType:'line', chartYtitle:'kWh', chartDataLabels: buildingAxisData[0].buildingXdata, chartDatasets: datasetsArray};
-				
-				
-				//set current element of the html function call as context for chart
-				var ctx = $element;
-				//create the chart on the element
-				var myChart = new Chart(ctx, {
-					type: completedChartObj.chartType,
-					data: {
-						labels: completedChartObj.chartDataLabels,
-						datasets: completedChartObj.chartDatasets
-					},
-					options: {
-						scales: {
-							yAxes: [{
-								scaleLabel: {
-									display: true,
-									labelString: completedChartObj.chartYtitle
-								}
-							}]
-						}
-					}
-				});
+
 			}, 5000);
-			
+
 		};
 	});
