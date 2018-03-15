@@ -14,6 +14,9 @@ angular.module('BuildingService', [])
             delete : function(building) {
                 return $http.post('/api/deleteBuilding', building);
             },
+            update : function(building) {
+                return $http.post('/api/updateBuilding', building);
+            },
             getById : function(id){
                 return $http({ url: '/api/getBuildingById',
                             method: "GET",

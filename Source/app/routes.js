@@ -86,6 +86,27 @@ module.exports = function(app, passport) {
                 res.json(building.data_entries);
             });
     });
+    app.post('/api/updateBuilding', function(req, res) {
+        console.log(req.body);
+       Building.findByIdAndUpdate(
+            { _id: req.body._id},
+            { $set: {
+                'name': req.body.name,
+                'building_type': req.body.building_type,
+                'meters': req.body.meters
+                // instead of pushing meters here, might do similar function call like in addBuilding
+            }},
+            {safe: true, upsert: true, new: true}, function(err, meter) {
+                if (err)
+                    throw(err);
+                else{
+                        // This is where I could push meters. But for now, let's just have it be done manually
+                        // updateOldBuildingMeters(req.body.meters[i],req.body).then(console.log('hi'));
+                    
+                    res.json(meter);
+                }});
+        
+    });
 
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
@@ -168,6 +189,24 @@ module.exports = function(app, passport) {
             if (err) return handleError(err);
             res.json(block);
         });
+    });
+
+    app.post('/api/updateBlock', function(req, res) {
+        console.log(req.body);
+       Block.findByIdAndUpdate(
+            { _id: req.body._id},
+            { $set: {
+                'name': req.body.name,
+                'chart': req.body.chart,
+                'building': req.body.building,
+                'variable': req.body.variable
+            }},
+            {safe: true, upsert: true, new: true}, function(err, meter) {
+                if (err)
+                    throw(err);
+                else{
+                    res.json(meter);
+                }});
     });
 
     // =====================================================================
@@ -321,6 +360,16 @@ module.exports = function(app, passport) {
                     res.json(meter);
                 }});
     });
+    app.post('/api/deleteMeter', function(req, res) {
+    
+       Meter.remove(
+            {_id : req.body._id}, async function (err) {
+                if (err) return handleError(err);
+                await Building.findOneAndUpdate({_id:req.body.building},{$pull:{meters: req.body._id}})
+                res.json({message: "success"});
+            });
+    });
+
 
     // =====================================
     // GOOGLE ROUTES =======================
@@ -358,7 +407,6 @@ function updateOldBuildingMeters(meter,building){
     return new Promise((resolve, reject) => {
         Building.findOneAndUpdate({meters: {"$in" : [meter]}, "_id":{$ne: building._id}},{$pull:{meters: meter}},function(err,oldBuilding){
             if (err){
-                console.log('hecc')
                reject(err);
             } else {
                 if (oldBuilding){console.log("Old Building '"+oldBuilding.name+"' has had the following meter removed: " + meter);}

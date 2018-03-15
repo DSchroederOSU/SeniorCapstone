@@ -26,7 +26,6 @@ angular.module('buildingController', [])
                     .success(function(building) {
                         $scope.nameForm = "";
                         $scope.serialForm = "";
-                        // $location.path('/meters');
                     });
             }
         }
@@ -48,8 +47,15 @@ angular.module('buildingController', [])
 
         function UpdateBuilding(building){
             var update_building_data = {
-                _id : building._id
+                "_id" : building._id,
+                "name": $scope.nameForm,
+                "building_type": $scope.buildingSelection,
+                "meters": selectedMeters
             }
+            Building.update(update_building_data)
+                .success(function() {
+                    $location.path('/allBuildings')
+                });
         }
         /*---------------------------------------------------------------------------------------
         -------------------------------------VIEW FUNCTIONS--------------------------------------
@@ -162,7 +168,7 @@ angular.module('buildingController', [])
         $scope.getBuildingType = function(){
             if(editBuilding != null){
                 console.log(editBuilding);
-                buildingSelection = editBuilding.building_type;
+                $scope.buildingSelection = editBuilding.building_type;
 
             }
         };
@@ -213,7 +219,7 @@ angular.module('buildingController', [])
                 /*
                 Need to create an "Update" function and API
                  */
-                UpdateBuilding(editBlock);
+                UpdateBuilding(editBuilding);
             }
         };
 
