@@ -1,25 +1,13 @@
 var selectedBuildings = [];
 var dropdownBuildings = [];
-var title = "";
-var buttontext = "";
+var editBlock = null;
 
 //needs a function that goes through each block in User.blocks and retrieves chart data from that object.
 var blocksChartData = [];
 
 angular.module('blockController', [])
     .controller('blockController', function($route, $scope, $http, $location, $timeout, Building, Block, GetBlockByID) {
-        $scope.title = title;
-        $scope.button_text = buttontext;
-        $scope.buildings = [];
         selectedBuildings = [];
-        if(title == "Create Block"){
-            Building.get()
-                .success(function (data) {
-                    dropdownBuildings = data;
-                    $scope.buildings = dropdownBuildings;
-                    $scope.selectedBuildings = "";
-                });
-        }
         $scope.selection = function(building) {
             selectedBuildings.push(building);
             var index = dropdownBuildings.indexOf(building);
@@ -54,39 +42,79 @@ angular.module('blockController', [])
                     $route.reload();
                 });
         };
-        $scope.create = function(){
-            title = "Create Block";
-            buttontext = "Create";
+
+        $scope.getTitle = function(){
+            if(editBlock == null){
+                $scope.title = "Create Block";
+                $scope.buttontext = "Create";
+            }
+            else{
+                $scope.title = "Update Block";
+                $scope.buttontext = "Update";
+            }
         };
 
+        $scope.create = function(){
+            editBlock = null;
+        };
+
+        $scope.getName = function(){
+            if(editBlock != null){
+                $scope.nameForm = editBlock.name;
+            }
+        };
+        $scope.getChart = function(){
+            if(editBlock != null){
+                $scope.chartForm = editBlock.chart;
+            }
+        };
+
+        $scope.getBlockBuildings = function(){
+            if(editBlock != null){
+                GetBlockByID.get(editBlock)
+                    .then(function(block) {
+                        Building.get()
+                            .then(function (data) {
+                                dropdownBuildings = data.data;
+                                $scope.selectedBuildings = "";
+                                block.data.building.forEach( function(building){
+                                    var count = 0;
+                                    dropdownBuildings.forEach(function (obj) {
+                                        if(obj._id == building._id){
+                                            dropdownBuildings.splice(count, 1);
+                                            selectedBuildings.push(obj);
+                                            count++;
+                                        }
+                                        else count++;
+                                    });
+                                });
+                                $scope.buildings = dropdownBuildings;
+                                $scope.selectedBuildings = selectedBuildings;
+                                $scope.buildingSelection = "";
+                            });
+
+
+                    });
+            }
+            else{
+                Building.get()
+                    .then(function (data) {
+                        console.log(data.data);
+                        dropdownBuildings = data.data;
+                        $scope.buildings = dropdownBuildings;
+                        $scope.selectedBuildings = "";
+                    });
+            }
+        };
         $scope.EditBlock = function(block){
-            title = "Update Block";
-            buttontext = "Update";
-
-            GetBlockByID.get(block)
-                .success(function(block) {
-                    $scope.nameForm = block.name;
-                    for(b in block.building){
-                        //var index = $scope.buildings.findIndex(x => x._id === block.building[b]._id);
-                        console.log(index);
-                        if (index > -1) {
-                            $scope.buildings.splice(index, 1);
-                            selectedBuildings.push(block.building[b]);
-                        }
-                    }
-                    //$scope.buildings = dropdownBuildings;
-                    $scope.selectedBuildings = selectedBuildings;
-                    $scope.buildingSelection = "";
-                    console.log($scope.buildings);
-                    console.log(dropdownBuildings);
-                    console.log(selectedBuildings);
-
-                });
+            $scope.title = "Update Block";
+            $scope.buttontext = "Update";
+            editBlock = block;
             $location.path('/createblock');
         };
 
         $scope.submit = function(){
-            if(buttontext == "Update"){
+            if($scope.buttontext == "Update"){
                 console.log("WE ARE UPDATING");
             }
             else{
