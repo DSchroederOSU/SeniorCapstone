@@ -66,10 +66,22 @@ angular.module('meterController', [])
         };
 
         function UpdateMeter(editMeter) {
-            var meterData = {
-                "id": editMeter._id
-            };
+            if (!$.isEmptyObject($scope.meterNameForm) && !$.isEmptyObject($scope.meterSerialForm))  {
+                // call the create function from our service (returns a promise object)
+                var meterData = {
+                    "name": $scope.meterNameForm,
+                    "meter_id": $scope.meterSerialForm,
+                    "id"    :   editmeter._id
+                };
 
+                Meter.update(meterData)
+                // if successful creation
+                    .success(function(meter) {
+                        $scope.nameForm = "";
+                        $scope.serialForm = "";
+                        $location.path('/meters');
+                    });
+            }
         }
 
         /*
