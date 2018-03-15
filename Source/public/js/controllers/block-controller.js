@@ -87,26 +87,6 @@ angular.module('blockController', [])
         };
 
         /*
-        A function called on ng-init of the nameForm input tag
-        prepopulates input form with the name of the block being edited
-        */
-        $scope.getName = function(){
-            if(editBlock != null){
-                $scope.nameForm = editBlock.name;
-            }
-        };
-
-        /*
-        A function called on ng-init of the chartForm input tag
-        prepopulates input form with the chart-name of the block being edited
-        */
-        $scope.getChart = function(){
-            if(editBlock != null){
-                $scope.chartForm = editBlock.chart;
-            }
-        };
-
-        /*
         A function called on ng-init of the dropdown menu for buildings
         This function checks the editBlock variable to see if the user is editing or not
 
@@ -158,6 +138,10 @@ angular.module('blockController', [])
             }
         };
 
+        /*---------------------------------------------------------------------------------------
+        ----------------------------------EDIT/UPDATE FUNCTIONS----------------------------------
+        ---------------------------------------------------------------------------------------*/
+
         /*
         This function is called on ng-click of the edit block button in blocks.html
         makes sure that our editBlock variable is set to the correct block
@@ -165,6 +149,26 @@ angular.module('blockController', [])
         $scope.EditBlock = function(block){
             editBlock = block;
             $location.path('/createblock');
+        };
+
+        /*
+        A function called on ng-init of the nameForm input tag
+        prepopulates input form with the name of the block being edited
+        */
+        $scope.getName = function(){
+            if(editBlock != null){
+                $scope.nameForm = editBlock.name;
+            }
+        };
+
+        /*
+        A function called on ng-init of the chartForm input tag
+        prepopulates input form with the chart-name of the block being edited
+        */
+        $scope.getChart = function(){
+            if(editBlock != null){
+                $scope.chartForm = editBlock.chart;
+            }
         };
 
         /*
