@@ -24,22 +24,28 @@ angular.module('buildingController', [])
             });
         $scope.getImageAddress = function(building) {
             if (building._id != null){
-                console.log(building);
                 return "../assets/buildings/"+ building.name.replace(/\s+/g, '-').toLowerCase() + ".jpg";
             }
             else if(selectedBuilding._id != null){
                 return "../assets/buildings/"+ selectedBuilding.name.replace(/\s+/g, '-').toLowerCase() + ".jpg";
             }
         };
+
         $scope.viewBuilding = function(building) {
             selectedBuilding = building;
             $scope.BuildingName = building.name;
             $scope.currentBuilding = selectedBuilding;
-            Building.getById($scope.currentBuilding._id).success(function(data) {
-                
-                $scope.buildingMeters = data.meters;               
+        };
+
+        /*
+        This function is called as an ng-init directive of the meter table in viewBuilding
+        INPUT: the current buildingModel of the building being viewed
+        OUTPUT: calls a service to retrieve building meters so table can populate dynamically
+         */
+        $scope.getBuildingData = function(building){
+            Building.getById(building._id).then(function(data) {
+                $scope.buildingMeters = data.meters;
             });
-            
         };
         
         $scope.DeleteBuilding = function(building){
@@ -48,6 +54,7 @@ angular.module('buildingController', [])
                     $route.reload();
                 });
         };
+
         $scope.formatDate = function(date){
             return "" + date.substring(0,10) + " " + date.substring(14,19).replace(/^0+/, '')
         };
@@ -55,9 +62,6 @@ angular.module('buildingController', [])
         $scope.getDataDay = function(date){
             console.log(date.substring(9,10));
             return parseInt(date.substring(9,10))
-        };
-        $scope.editBuilding = function(building){
-         
         };
 
         $scope.selection = function(meter) {
