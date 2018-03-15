@@ -27,26 +27,11 @@ angular.module('chartController', [])
             }
             return "rgb(" + g() + "," + g() + "," + g() +")";
         };
-
-        function formatChartData(data_entries) {
-            //console.log(data_entries);
-            var to_return = [];
-            data_entries.forEach(function(element) {
-                to_return.push({time: element.timestamp, data: element.point[0].value});
-            });
-			//console.log(to_return);
-
-            return to_return;
-        };
-
 		$scope.createChart = function(buildingsArray) {
 			//will hold each buildings data in the block
-			var buildingsYaxis = [];
-			var buildingsXaxis = [];
 			//x and y axis data
 			var x = [];
 			var y = [];
-			
 			var buildingAxisData = [];
 	
 			//fills buildingAxisData array with building data.
