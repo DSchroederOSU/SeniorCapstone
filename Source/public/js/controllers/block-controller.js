@@ -220,7 +220,11 @@ angular.module('blockController', [])
 
         function UpdateBlock(editBlock){
             var update_block_data = {
-                _id : editBlock._id
-            }
+                _id : editBlock._id,
+                "name": $scope.nameForm,
+                "chart": $scope.chartForm,
+                "buildings": selectedBuildings
+            };
+
         }
 	});
