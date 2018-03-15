@@ -225,11 +225,11 @@ angular.module('blockController', [])
         */
         function UpdateBlock(editBlock){
             var update_block_data = {
-                _id : editBlock._id,
-                name : $scope.nameForm,
-                chart: $scope.chartForm,
-                building: selectedBuildings,
-                variable: 'Killowatts/Hr'
+                "_id"   : editBlock._id,
+                "name"  : $scope.nameForm,
+                "chart" : $scope.chartForm,
+                "building": selectedBuildings,
+                "variable": 'Killowatts/Hr'
             };
             Block.update(update_block_data)
                 .success(function() {

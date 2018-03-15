@@ -86,6 +86,27 @@ module.exports = function(app, passport) {
                 res.json(building.data_entries);
             });
     });
+    app.post('/api/updateBuilding', function(req, res) {
+        console.log(req.body);
+       Building.findByIdAndUpdate(
+            { _id: req.body._id},
+            { $set: {
+                'name': req.body.name,
+                'building_type': req.body.building_type,
+                'meters': req.body.meters
+                // instead of pushing meters here, might do similar function call like in addBuilding
+            }},
+            {safe: true, upsert: true, new: true}, function(err, meter) {
+                if (err)
+                    throw(err);
+                else{
+                        // This is where I could push meters. But for now, let's just have it be done manually
+                        // updateOldBuildingMeters(req.body.meters[i],req.body).then(console.log('hi'));
+                    
+                    res.json(meter);
+                }});
+        
+    });
 
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
@@ -175,7 +196,6 @@ module.exports = function(app, passport) {
        Block.findByIdAndUpdate(
             { _id: req.body._id},
             { $set: {
-                'meter_id': req.body.meter_id,
                 'name': req.body.name,
                 'chart': req.body.chart,
                 'building': req.body.building,
@@ -387,7 +407,6 @@ function updateOldBuildingMeters(meter,building){
     return new Promise((resolve, reject) => {
         Building.findOneAndUpdate({meters: {"$in" : [meter]}, "_id":{$ne: building._id}},{$pull:{meters: meter}},function(err,oldBuilding){
             if (err){
-                console.log('hecc')
                reject(err);
             } else {
                 if (oldBuilding){console.log("Old Building '"+oldBuilding.name+"' has had the following meter removed: " + meter);}
