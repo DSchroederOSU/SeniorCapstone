@@ -76,7 +76,7 @@ module.exports = function(app, passport) {
         Building.findOne({_id : req.query._id})
             .populate(
                 { path: 'data_entries',
-                    match : {timestamp : { $lt: "2018-03-15 00:45:00", $gte : "2018-03-14 21:00:00"}}, //THIS WORKS TO FILTER DATES
+                   // match : {timestamp : { $lt: "2018-03-15 00:45:00", $gte : "2018-03-14 21:00:00"}}, //THIS WORKS TO FILTER DATES
                     select : 'id'
             })
             .exec(function (err, dataEntries) {
