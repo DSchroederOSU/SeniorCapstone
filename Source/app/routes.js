@@ -10,7 +10,7 @@ var Story = require('./models/story-schema');
 module.exports = function(app, passport) {
     
     app.get('/', function (req, res) {
-
+        
         return res.render('./index.html'); // load the index.html file
     });
 
@@ -46,18 +46,22 @@ module.exports = function(app, passport) {
 
     app.get('/api/buildings', function (req, res) {
         Building.find({}).exec(function (err, buildings) {
-            //console.log(buildings);
-            res.json(buildings); // return all buildings in JSON format
+            // returns all buildings except the 'null' one that keeps showing up
+            // temporary fix that makes app look clean
+            // need to find root cause still
+            res.json(buildings.filter(building => building._id != null)); // return all buildings in JSON format
         });
     });
     app.post('/api/deleteBuilding', function(req, res) {
         // null out the meters in this building?
         Building.remove(
-            {_id : req.body._id}, async function (err) {
+            {_id : req.body._id}, function (err) {
                 if (err) return handleError(err);
-                await Meter.updateMany({building:req.body._id},{$set: {building: null}})
-                await DataEntry.updateMany({building:req.body._id},{$set: {building: null}})
-                res.json({message: "success"});
+                    Meter.updateMany({building:req.body._id},{$set: {building: null}}, () =>{ 
+                        DataEntry.updateMany({building:req.body._id},{$set: {building: null}}, () => res.json({message: "success"}));
+                    });
+                   
+               
             });
     });
     app.get('/api/getBuildingById', function(req, res) {
@@ -74,16 +78,26 @@ module.exports = function(app, passport) {
     app.get('/api/getBuildingData', function(req, res) {
         console.log(req.query);
         Building.findOne({_id : req.query._id})
-            .populate({
-                path: 'data_entries',
-                select: 'timestamp point'
-            }).lean()
-            .exec(function (err, building) {
+            .populate(
+                { path: 'data_entries',
+                    match : {timestamp : { $lt: "2018-03-15 00:45:00", $gte : "2018-03-14 21:00:00"}}, //THIS WORKS TO FILTER DATES
+                    select : 'id'
+            })
+            .exec(function (err, dataEntries) {
                 if (err){
                     res.json({building : null});
-                };
-                console.log(building);
-                res.json(building.data_entries);
+                }
+                else{
+                    DataEntry.find({_id : { $in: dataEntries.data_entries }})
+                        .select({ point: { $elemMatch: { name: "Accumulated Real Energy Net" }}})
+                        .select('-_id timestamp point.value')
+                        .exec(function (err, datapoints) {
+                            if (err) { res.json({building: null});}
+                            else{
+                                res.json(datapoints);
+                            }
+                        });
+                }
             });
     });
     app.post('/api/updateBuilding', function(req, res) {
@@ -93,19 +107,22 @@ module.exports = function(app, passport) {
             { $set: {
                 'name': req.body.name,
                 'building_type': req.body.building_type,
-                'meters': req.body.meters
+                'meters':  req.body.meters
                 // instead of pushing meters here, might do similar function call like in addBuilding
             }},
             {safe: true, upsert: true, new: true}, function(err, meter) {
                 if (err)
                     throw(err);
                 else{
-                        // This is where I could push meters. But for now, let's just have it be done manually
+                    req.body.meters.forEach( meter => {
+                        updateOldBuildingMeters(meter._id, req.body)
+                        .then(addMeter(meter._id,req.body))
+                    });
+                
                         // updateOldBuildingMeters(req.body.meters[i],req.body).then(console.log('hi'));
                     
-                    res.json(meter);
-                }});
-        
+        }});
+        res.json(req.body);
     });
 
     app.get('/storyNav', function (req, res) {
@@ -361,7 +378,6 @@ module.exports = function(app, passport) {
                 }});
     });
     app.post('/api/deleteMeter', function(req, res) {
-    
        Meter.remove(
             {_id : req.body._id}, async function (err) {
                 if (err) return handleError(err);
@@ -405,6 +421,7 @@ module.exports = function(app, passport) {
 
 function updateOldBuildingMeters(meter,building){
     return new Promise((resolve, reject) => {
+        
         Building.findOneAndUpdate({meters: {"$in" : [meter]}, "_id":{$ne: building._id}},{$pull:{meters: meter}},function(err,oldBuilding){
             if (err){
                reject(err);
@@ -449,7 +466,7 @@ function pushNullMeter(meter,savedBuilding){
             // await Meter.updateMany({building:req.body._id},{$set: {building: null}})
                
             if (doc.building == null){
-                console.log('Building is null, pushing stored data entries')
+                console.log('The meter ' + meter._id + 'has its building set to null, pushing stored data entries')
                 DataEntry.find({meter_id: meter}, (err,docs) =>{
                     if (err){
                         console.log('Unable to push null data entries for meter id: ' + meter)
@@ -467,7 +484,7 @@ function pushNullMeter(meter,savedBuilding){
                 });
                 DataEntry.updateMany({meter_id: meter},
                     {$set: {building: savedBuilding._id}},
-                    (err) =>{if (err) throw(err)})              
+                    (err) =>{if (err) throw(err)});              
             } 
         });
         resolve(); 

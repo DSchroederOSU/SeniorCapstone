@@ -6,10 +6,6 @@ angular.module('buildingController', [])
     .controller('buildingController', function($scope,$location, $route, Building, Meter) {
 
         selectedMeters = [];
-        $scope.meters = [];
-        $scope.buildingMeters = [];
-        $scope.buildingModel = selectedBuilding;
-
         /*---------------------------------------------------------------------------------------
         ------------------------------------CREATE FUNCTIONS-------------------------------------
         ---------------------------------------------------------------------------------------*/
@@ -32,7 +28,7 @@ angular.module('buildingController', [])
                         $scope.serialForm = "";
                     });
             }
-        };
+        }
         /*
         This function is called on ng-click of the create block button in blocks.html
         makes sure that our edit variable is null to indicate we are creating
