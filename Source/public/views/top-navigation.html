@@ -21,17 +21,20 @@
 					</li>
 				</ul>
 			</div>
-
+		
+				
 			<button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navBarDefault" aria-controls="navBarDefault" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<!-- FIX THIS -->
-			<a  ng-href="/{{$parent.myLink}}" class="mb-2 pb-2 px-4 Stratum2-Bold" style="text-decoration: none;" role="button" aria-pressed="true" id="login">Register</a>
-			<span class="navbar-text pr-3" style="margin-right: 60px;" id="login-greeting">
+		
+			
+			<span class="navbar-text pr-3" style="margin-right: 60px;" id="login-greeting">		
+				<a  ng-href="/#/register" class="mb-2 pb-2 px-4 Stratum2-Bold" style="text-decoration: none;" role="button" aria-pressed="true" id="register">Register</a>
 				{{$parent.greeting}}
 			</span>
 			
-			<a  ng-href="/{{$parent.myLink}}" class="mb-2 pb-2 px-4 Stratum2-Bold" style="text-decoration: none;" role="button" aria-pressed="true" id="login">{{$parent.login_status}}</a>
+				<a  ng-href="/{{$parent.myLink}}" class="mb-2 pb-2 px-4 Stratum2-Bold" style="text-decoration: none;" role="button" aria-pressed="true" id="login">{{$parent.login_status}}</a>
+			
 		</nav>
 	</div>
 </header>

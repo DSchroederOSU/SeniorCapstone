@@ -21,6 +21,9 @@ myApp.config(function($routeProvider, $locationProvider) {
     .when("/contact", {
         templateUrl : "../views/top-nav-views/contact.html"
     })
+    .when("/register", {
+        templateUrl: "../views/register.html"
+    })
 
     ///////////////////////////
     ////////DASHBOARDS/////////

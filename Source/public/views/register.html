@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>OSU Office of Sustainability</title>
+
+</head>
+
+<body>
+    <div class="Stratum2-Light font-weight-bold container">
+        <div ng-controller="ExampleController">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group row mt-4">
+                        <label for="inputSerialName" class="ml-3">Enter Email below</label>
+                        <div class="col-sm-12">
+                            <input type="email"  class="form-control" maxlength="30" id="inputSerialName" ng-model="user.email" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="col-sm-5 col-md-5">
+                        <button type="submit" class="btn border-orange-thin background-orange text-white" ng-click="submit()">Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
+<script>
+    angular.module('registration', [])
+        .controller('RegistrationController', ['$scope', function ($scope) {
+            $scope.master = {};
+
+            $scope.submit = function () {
+               // TODO: Look into email clients through node
+            };
+
+         
+        }]);
+</script>
