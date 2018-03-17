@@ -31,17 +31,7 @@ angular.module('mainController', [])
         $scope.showDashboards = function () {
             $scope.dashboardClass = 'showDash';
         }
-        
-        $scope.checkLoginStatus = function () {
-            console.log('in controller')
-            if ($scope.login_status == 'Login') {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        
+    
      
     })
   
