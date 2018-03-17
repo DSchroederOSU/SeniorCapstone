@@ -1,5 +1,5 @@
 <br>
-<div ng-controller="dashboardController" ng-model="selectedDashboard">
+<div ng-init="getView()" ng-controller="dashboardController" ng-model="selectedDashboard">
     <h1 class="Stratum2-Light font-weight-bold"> {{selectedDashboard.name}} </h1>
 
     <h5 class="Stratum2-Light font-weight-bold">Description: <span style="font-size:0.8em;">{{selectedDashboard.description}}</span></h5>

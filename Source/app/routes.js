@@ -151,6 +151,22 @@ module.exports = function(app, passport) {
                     res.json(user.blocks);
         });
     });
+    app.get('/api/getBlocksForDashboards', function(req, res) {
+        User.findOne({_id : req.user._id})
+            .populate({
+                path: 'blocks',
+                populate: {
+                    path: 'building',
+                    select : 'id'
+                }
+            })
+            .exec(function (err, user) {
+                if (err) return handleError(err);
+                res.json(user.blocks);
+            });
+    });
+
+
 
     app.post('/api/addBlock', function(req, res) {
         console.log("REACHED");
@@ -287,6 +303,23 @@ module.exports = function(app, passport) {
                 }
             });
     });
+    app.post('/api/updateDashboard', function(req, res) {
+        console.log(req.body);
+        Dashboard.findByIdAndUpdate(
+            { _id: req.body._id},
+            { $set: {
+                'name': req.body.name,
+                'description': req.body.description,
+                'blocks': req.body.blocks,
+            }},
+            {safe: true, upsert: true, new: true}, function(err, dash) {
+                if (err)
+                    throw(err);
+                else{
+                    res.json(dash);
+                }});
+    });
+
 
     // =====================================================================
     ///////////////////////////////STORY API////////////////////////////////

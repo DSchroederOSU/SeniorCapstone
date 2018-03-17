@@ -4,7 +4,6 @@ var dropdownMeters = [];
 var editBuilding;
 angular.module('buildingController', [])
     .controller('buildingController', function($scope,$location, $route, Building, Meter) {
-
         selectedMeters = [];
         /*---------------------------------------------------------------------------------------
         ------------------------------------CREATE FUNCTIONS-------------------------------------
