@@ -379,10 +379,9 @@ module.exports = function(app, passport) {
     });
     app.post('/api/deleteMeter', function(req, res) {
        Meter.remove(
-            {_id : req.body._id}, async function (err) {
+            {_id : req.body._id}, function (err) {
                 if (err) return handleError(err);
-                await Building.findOneAndUpdate({_id:req.body.building},{$pull:{meters: req.body._id}})
-                res.json({message: "success"});
+                Building.findOneAndUpdate({_id:req.body.building},{$pull:{meters: req.body._id}}, () => res.json({message: "success"}));
             });
     });
 
