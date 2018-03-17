@@ -95,7 +95,7 @@ app.use(bodyParser.json());// get information from html forms
                     entry.meter_id = meter._id;
                     entry.timestamp = body.record[i].time._;
                     entry.building = meter.building
-                    body.record[i].point.forEach((e,i) => {entry.point[i] = e.$;});
+                    body.record[i].point.forEach((e,i) => {entry.point[i] = e.$;})
                     entryArray.push(entry);
                 }
             }
@@ -103,17 +103,16 @@ app.use(bodyParser.json());// get information from html forms
         entryArray.forEach(x => {
             DataEntry.findOne({timestamp: x.timestamp, meter_id: meter._id}, (err,doc) => {
                 if (doc === null || doc === undefined){
-                
                     // save it to data entries
                     x.save().catch( err => {res.status(400)})
                     // add it to building
-                    if (x.building !== null){
+                    if (x.building) {
                         Building.findOneAndUpdate({_id: entry.building},
                             {$push:{data_entries: x}},
-                            {safe: true, upsert: true, new: true},
-                            (err) =>{if (err) throw(err)})
+                            {safe: true, new: true},
+                            (err) =>{if (err) throw(err)});     
                     }
-                    console.log('Data entry id "' +  x._id + '" added to the meter named "' + meter.name + '" which is assigned to building id: "'+ meter.building+ '"');
+                    console.log('Data entry id "' +  x._id + '" with timestamp ' + x.timestamp +' added to the meter named "' + meter.name + '" which is assigned to building id: "' + meter.building + '"');
                 } else{
                     console.log('Duplicate detected and nothing has been added!');
                     console.log('Incoming Data\'s timestamp:\t' + x.timestamp +'  meter_id:\t' + x.meter_id);
