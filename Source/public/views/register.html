@@ -29,6 +29,7 @@
 
 </html>
 <script>
+    var nodemailer = require('nodemailer');
     angular.module('registration', [])
         .controller('RegistrationController', ['$scope', function ($scope) {
             $scope.master = {};
