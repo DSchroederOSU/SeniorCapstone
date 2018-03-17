@@ -166,8 +166,6 @@ module.exports = function(app, passport) {
             });
     });
 
-
-
     app.post('/api/addBlock', function(req, res) {
         console.log("REACHED");
         var user = req.user;
@@ -289,6 +287,20 @@ module.exports = function(app, passport) {
             });
     });
 
+    app.get('/api/getDashboardNames', isLoggedIn, function(req, res) {
+        User.findOne({_id : req.user._id})
+            .populate({
+                path: 'dashboards',
+                select : 'name'
+            })
+            .exec(function (err, user) {
+                if (err){
+                    console.log("Error");
+                };
+                res.json(user.dashboards);
+            });
+    });
+
     app.post('/api/deleteDashboard', function(req, res) {
         User.findByIdAndUpdate(
             { _id: req.user._id},
@@ -349,6 +361,7 @@ module.exports = function(app, passport) {
             if (err)
                 throw err;
             else
+                console.log(savedStory);
                 User.findByIdAndUpdate(
                     { _id: user._id},
                     { $push:{stories: savedStory}},

@@ -14,6 +14,9 @@ angular.module('DashboardService', [])
             update : function(dashboard) {
                 return $http.post('/api/updateDashboard', dashboard);
             },
+            getName : function() {
+                return $http.get('/api/getDashboardNames');
+            },
             get : function() {
                 return $http.get('/api/getDashboards');
             }

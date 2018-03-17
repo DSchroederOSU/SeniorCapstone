@@ -6,7 +6,7 @@
     <div class="row mt-4">
         <div class="col-sm-3 pb-4 Stratum2-Light" ng-repeat="d in selectedStory.dashboards">
 
-            <a class="grow" ng-controller="dashboardController" href="#viewdashboard" ng-click="viewDashboard(d)" style="text-decoration: none; color: black;">
+            <a class="grow" ng-controller="dashboardController" ng-click="ViewDashboard(d)" style="text-decoration: none; color: black;">
                 <div id="card-story" class="card grow border-black card-shadow" style="min-width: 200px;">
                     <div class="card-body ml-3 ">
                         <h4 class="card-title" style="height: 65px;">{{d.name}}</h4>
