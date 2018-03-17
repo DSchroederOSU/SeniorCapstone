@@ -63,7 +63,7 @@ app.use(bodyParser.json());// get information from html forms
                 +"<result>SUCCESS</result>\n"
                 +"<DAS></DAS>"
                 +"</xml>");
-  });
+    });
 
     function addMeter(meter) {
         return new Promise((resolve, reject) => {
@@ -124,7 +124,6 @@ app.use(bodyParser.json());// get information from html forms
         });
 
     }
-
 
 // launch ======================================================================
 app.listen(6121); // 6121 is open on most PCs
