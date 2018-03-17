@@ -55,11 +55,13 @@ module.exports = function(app, passport) {
     app.post('/api/deleteBuilding', function(req, res) {
         // null out the meters in this building?
         Building.remove(
-            {_id : req.body._id}, async function (err) {
+            {_id : req.body._id}, function (err) {
                 if (err) return handleError(err);
-                await Meter.updateMany({building:req.body._id},{$set: {building: null}})
-                await DataEntry.updateMany({building:req.body._id},{$set: {building: null}})
-                res.json({message: "success"});
+                    Meter.updateMany({building:req.body._id},{$set: {building: null}}, () =>{ 
+                        DataEntry.updateMany({building:req.body._id},{$set: {building: null}}, () => res.json({message: "success"}));
+                    });
+                   
+               
             });
     });
     app.get('/api/getBuildingById', function(req, res) {
@@ -455,7 +457,7 @@ function pushNullMeter(meter,savedBuilding){
             // await Meter.updateMany({building:req.body._id},{$set: {building: null}})
                
             if (doc.building == null){
-                console.log('Building is null, pushing stored data entries')
+                console.log('The meter ' + meter._id + 'has its building set to null, pushing stored data entries')
                 DataEntry.find({meter_id: meter}, (err,docs) =>{
                     if (err){
                         console.log('Unable to push null data entries for meter id: ' + meter)
@@ -473,7 +475,7 @@ function pushNullMeter(meter,savedBuilding){
                 });
                 DataEntry.updateMany({meter_id: meter},
                     {$set: {building: savedBuilding._id}},
-                    (err) =>{if (err) throw(err)})              
+                    (err) =>{if (err) throw(err)});              
             } 
         });
         resolve(); 
