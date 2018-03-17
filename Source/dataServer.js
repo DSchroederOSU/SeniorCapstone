@@ -74,7 +74,7 @@ app.post('/acquisuite/upload/:id', function (req, res) {
     // the 'xmlparser' in parameters converts XML to String
     // then bodyParser converts this string to JSON 
 
-    app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {   
+    app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
         if (req.body.das.mode == 'LOGFILEUPLOAD'){
             pathShortener = req.body.das.devices.device.records
          // Checks if meter exists. If it doesn't adds one.

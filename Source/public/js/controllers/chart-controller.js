@@ -33,18 +33,21 @@ angular.module('chartController', [])
 			var x = [];
 			var y = [];
 			var buildingAxisData = [];
-	
+
 			//fills buildingAxisData array with building data.
 			//
-            buildingsArray.building.forEach(function(currBuilding) {	
+            buildingsArray.building.forEach(function(currBuilding) {
 				var to_pass = {building: currBuilding, val : buildingsArray.val};
 				Building.getBuildingData(to_pass).then(function(data) {
 					console.log(data);
                     x = [];
                     y = [];
 					data.forEach( function(entry){
-                        x.push(entry.timestamp);
-                        y.push(entry.point[0].value);
+					    //console.log(entry);
+                        if(entry.timestamp &&entry.point[0]) {
+                            x.push(entry.timestamp);
+                            y.push(entry.point[0].value);
+                        }
 					});
 					//push all the values to the array of each buildings x axis data
 					buildingAxisData.push({name: to_pass.building.name, buildingYdata: y, buildingXdata: x});
