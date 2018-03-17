@@ -10,6 +10,9 @@
 
     </div>
     <div class="col-sm-8 pb-4">
+        <canvas ng-controller="chartController"
+                ng-init="createChart({building: [buildingModel], val : 'Accumulated Real Energy Net'})"
+                class="myChart mt-3"></canvas>
     </div>
     <h4>Meters</h4>
         <table ng-init="getBuildingData(buildingModel)" class="table border-black Stratum2-Thin font-weight-bold">
