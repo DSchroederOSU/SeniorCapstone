@@ -10,7 +10,7 @@ var Story = require('./models/story-schema');
 module.exports = function(app, passport) {
     
     app.get('/', function (req, res) {
-
+        
         return res.render('./index.html'); // load the index.html file
     });
 
@@ -46,8 +46,10 @@ module.exports = function(app, passport) {
 
     app.get('/api/buildings', function (req, res) {
         Building.find({}).exec(function (err, buildings) {
-            //console.log(buildings);
-            res.json(buildings); // return all buildings in JSON format
+            // returns all buildings except the 'null' one that keeps showing up
+            // temporary fix that makes app look clean
+            // need to find root cause still
+            res.json(buildings.filter(building => building._id != null)); // return all buildings in JSON format
         });
     });
     app.post('/api/deleteBuilding', function(req, res) {
