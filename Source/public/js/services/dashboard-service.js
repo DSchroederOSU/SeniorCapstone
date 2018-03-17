@@ -11,8 +11,11 @@ angular.module('DashboardService', [])
             delete : function(dashboard) {
                 return $http.post('/api/deleteDashboard', dashboard);
             },
-            edit : function(dashboard) {
-                return $http.post('/api/editDashboard', dashboard);
+            update : function(dashboard) {
+                return $http.post('/api/updateDashboard', dashboard);
+            },
+            getName : function() {
+                return $http.get('/api/getDashboardNames');
             },
             get : function() {
                 return $http.get('/api/getDashboards');

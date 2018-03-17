@@ -151,6 +151,20 @@ module.exports = function(app, passport) {
                     res.json(user.blocks);
         });
     });
+    app.get('/api/getBlocksForDashboards', function(req, res) {
+        User.findOne({_id : req.user._id})
+            .populate({
+                path: 'blocks',
+                populate: {
+                    path: 'building',
+                    select : 'id'
+                }
+            })
+            .exec(function (err, user) {
+                if (err) return handleError(err);
+                res.json(user.blocks);
+            });
+    });
 
     app.post('/api/addBlock', function(req, res) {
         console.log("REACHED");
@@ -273,6 +287,20 @@ module.exports = function(app, passport) {
             });
     });
 
+    app.get('/api/getDashboardNames', isLoggedIn, function(req, res) {
+        User.findOne({_id : req.user._id})
+            .populate({
+                path: 'dashboards',
+                select : 'name'
+            })
+            .exec(function (err, user) {
+                if (err){
+                    console.log("Error");
+                };
+                res.json(user.dashboards);
+            });
+    });
+
     app.post('/api/deleteDashboard', function(req, res) {
         User.findByIdAndUpdate(
             { _id: req.user._id},
@@ -287,6 +315,23 @@ module.exports = function(app, passport) {
                 }
             });
     });
+    app.post('/api/updateDashboard', function(req, res) {
+        console.log(req.body);
+        Dashboard.findByIdAndUpdate(
+            { _id: req.body._id},
+            { $set: {
+                'name': req.body.name,
+                'description': req.body.description,
+                'blocks': req.body.blocks,
+            }},
+            {safe: true, upsert: true, new: true}, function(err, dash) {
+                if (err)
+                    throw(err);
+                else{
+                    res.json(dash);
+                }});
+    });
+
 
     // =====================================================================
     ///////////////////////////////STORY API////////////////////////////////
@@ -316,6 +361,7 @@ module.exports = function(app, passport) {
             if (err)
                 throw err;
             else
+                console.log(savedStory);
                 User.findByIdAndUpdate(
                     { _id: user._id},
                     { $push:{stories: savedStory}},

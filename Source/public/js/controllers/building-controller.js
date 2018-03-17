@@ -4,7 +4,6 @@ var dropdownMeters = [];
 var editBuilding;
 angular.module('buildingController', [])
     .controller('buildingController', function($scope,$location, $route, Building, Meter) {
-
         selectedMeters = [];
         /*---------------------------------------------------------------------------------------
         ------------------------------------CREATE FUNCTIONS-------------------------------------
@@ -51,7 +50,7 @@ angular.module('buildingController', [])
                 "name": $scope.nameForm,
                 "building_type": $scope.buildingSelection,
                 "meters": selectedMeters
-            }
+            };
             Building.update(update_building_data)
                 .success(function() {
                     $location.path('/allBuildings')
@@ -63,9 +62,13 @@ angular.module('buildingController', [])
         $scope.viewBuilding = function(building) {
             selectedBuilding = building;
             $scope.BuildingName = building.name;
-            $scope.currentBuilding = selectedBuilding;
+            $scope.buildingModel = building;
+            $location.path('/viewBuilding');
         };
 
+        $scope.getViewBuilding = function(){
+            $scope.buildingModel = selectedBuilding;
+        };
         /*
         This function is called as an ng-init directive of the meter table in viewBuilding
         INPUT: the current buildingModel of the building being viewed
@@ -76,9 +79,6 @@ angular.module('buildingController', [])
                 $scope.buildingMeters = data.meters;
             });
         };
-        /*---------------------------------------------------------------------------------------
-        -------------------------------------MISC FUNCTIONS--------------------------------------
-        ---------------------------------------------------------------------------------------*/
         $scope.getImageAddress = function(building) {
             if (building._id != null){
                 return "../assets/buildings/"+ building.name.replace(/\s+/g, '-').toLowerCase() + ".jpg";
@@ -87,6 +87,11 @@ angular.module('buildingController', [])
                 return "../assets/buildings/"+ selectedBuilding.name.replace(/\s+/g, '-').toLowerCase() + ".jpg";
             }
         };
+
+        /*---------------------------------------------------------------------------------------
+        -------------------------------------MISC FUNCTIONS--------------------------------------
+        ---------------------------------------------------------------------------------------*/
+
 
         /*
         A function called on ng-init of title H4 in create-block.html

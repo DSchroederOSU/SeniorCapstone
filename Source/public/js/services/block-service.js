@@ -14,6 +14,9 @@ angular.module('BlockService', [])
             update : function(block) {
                 return $http.post('/api/updateBlock', block);
             },
+            getForDashboard : function() {
+                return $http.get('/api/getBlocksForDashboards');
+            },
             get : function() {
                 return $http.get('/api/getUserBlocks');
             }
