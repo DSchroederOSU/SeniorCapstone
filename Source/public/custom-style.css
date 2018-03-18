@@ -242,22 +242,25 @@ i {
     background-color: white; 
 }
 .border-orange {
-	border: 2px solid #DC4405;"
+	border: 2px solid #DC4405;
 }
 .border-curve-button {    
 	border-radius: 4px;
 }
 .border-black{
-	border: 2px solid #3a3d42;"
+	border: 2px solid #3a3d42;
 }
 .border-orange-thin {
-	border: 1px solid #DC4405;"
+	border: 1px solid #DC4405;
 }
 .border-bottom-orange {
-	border-bottom: 2px solid #DC4405;"
+	border-bottom: 2px solid #DC4405;
 }
 .card-shadow {
 	box-shadow: 2px 2px 6px 1px rgba(0,0,0,0.3);
+}
+.pointer{
+	cursor: pointer;
 }
 .select-none {
   -moz-user-select: none;
@@ -307,13 +310,18 @@ i {
 #card-story:hover { 
 	border: 2px solid #DC4405;	
 }
+.building-card-highlight:hover{
+	border: 1px solid black;
+	transition: all .2s ease-in-out;
+	background-color: #ECF0F1;
+}
 .fa-gear{
 	cursor: pointer;
-	
 }
 .dropdown {
     position: relative;
     display: inline-block;
+	cursor: pointer;
 }
 .dropdown-content {
     display: none;

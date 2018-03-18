@@ -3,7 +3,7 @@ var selectedMeters = [];
 var dropdownMeters = [];
 var editBuilding;
 angular.module('buildingController', [])
-    .controller('buildingController', function($scope,$location, $route, Building, Meter) {
+    .controller('buildingController', function($scope, $location, $route, Building, Meter) {
         selectedMeters = [];
         /*---------------------------------------------------------------------------------------
         ------------------------------------CREATE FUNCTIONS-------------------------------------
@@ -108,6 +108,7 @@ angular.module('buildingController', [])
                 $scope.buttontext = "Update";
             }
         };
+		
 
         /*
         A function called on ng-init of the nameForm input tag
@@ -178,6 +179,8 @@ angular.module('buildingController', [])
             }
         };
 
+		
+		
         $scope.DeleteBuilding = function(building){
             Building.delete(building)
                 .success(function() {
