@@ -126,10 +126,11 @@ myApp.controller('buildingEditController', function($scope, $location, $route, M
 myApp.controller('userController', function($scope, EmailUser){
     
  
-    $scope.email = '';
+    $scope.email = {email: ''};
     $scope.submit = function() {
-        EmailUser.post(this.email)
+        EmailUser.post($scope.email)
         .success(function() {
+            console.log('idk')
             $scope.email = '';
         });
     };
