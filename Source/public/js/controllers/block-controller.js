@@ -142,12 +142,13 @@ angular.module('blockController', [])
         A function called on ng-init of key values list in blocks.html
         Sets scope variables of high, median, average, and low  values of the requested data type and 
         */
-        $scope.getKeyValues = function(buildingObj){
+        $scope.getKeyValues = function(buildingObj, option){
+			console.log(option);
             buildingObj.building.forEach(function(currBuilding) {
 				var to_pass = {building: currBuilding, val : buildingObj.val};
 				Building.getBuildingData(to_pass).then(function(data) {
                     y = [];
-					var buildName = currBuilding.name;
+					$scope.buildName = currBuilding.name;
 					
 					data.forEach(function(entry){
                         if(entry.point[0]) {
@@ -156,20 +157,26 @@ angular.module('blockController', [])
 					});
 					//console.log(y);
 					
-					//////////////median calculation/////////////
-					y.sort((a, b) => a - b);
-					var lowMiddle = Math.floor((y.length - 1) / 2);
-					var highMiddle = Math.ceil((y.length - 1) / 2);
-					var med = (y[lowMiddle] + y[highMiddle]) / 2;
-					////////////////////////////////////////////
 					
-					var max = Math.max(...y);
-					var min = Math.min(...y);
-					var sum = y.reduce((previous, current) => current += previous);
-					var avg = sum / y.length;
-					var units = 'units';
-					$scope.valObj = {buildingName: buildName, max: max, min: min, avg: avg, med: med, units: units};
-					console.log($scope.valObj);
+					if(option == 'med') {        
+						y.sort((a, b) => a - b);
+						var lowMiddle = Math.floor((y.length - 1) / 2);
+						var highMiddle = Math.ceil((y.length - 1) / 2);
+						$scope.med = (y[lowMiddle] + y[highMiddle]) / 2;
+					}
+					else if(option == 'max') {        
+						$scope.max = Math.max(...y);
+					}
+					else if(option == 'min') {        
+						$scope.min = Math.min(...y);
+					}
+					
+					
+					//var sum = y.reduce((previous, current) => current += previous);
+					//var avg = sum / y.length;
+					$scope.units = 'units';
+					//$scope.valObj = {buildingName: buildName, max: max, min: min, avg: avg, med: med, units: units};
+					//console.log($scope.valObj);
 				});
 			});
         };
