@@ -57,7 +57,7 @@ angular.module('blockController', [])
         OUTPUT: reloads current page to show updated user blocks
         */
         $scope.DeleteBlock = function(block){
-            Block.delete(block)
+            Block.delete({_id : block._id})
                 .success(function() {
                     $route.reload();
                 });
@@ -275,7 +275,7 @@ angular.module('blockController', [])
             };
             Block.update(update_block_data)
                 .success(function() {
-                    $route.reload();
+                    $location.path('/blocks');
                 });
         }
 	});

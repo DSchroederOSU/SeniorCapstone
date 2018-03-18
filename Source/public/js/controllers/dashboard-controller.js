@@ -145,7 +145,7 @@ angular.module('dashboardController', [])
         }
 
         $scope.DeleteDashboard = function(dashboard){
-            Dashboard.delete(dashboard)
+            Dashboard.delete({_id : dashboard._id})
                 .success(function() {
                     $route.reload();
                 });
