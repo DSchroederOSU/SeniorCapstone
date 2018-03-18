@@ -15,9 +15,9 @@ angular.module('dashboardController', [])
                 var DashboardData = {
                     "name": $scope.nameForm,
                     "description": $scope.descriptionForm,
-                    "blocks": selectedBlocks
+                    "blocks": $scope.selectedBlocks
                 };
-
+                console.log(DashboardData);
                 Dashboard.create(DashboardData)
                 // if successful creation
                     .success(function(data) {
