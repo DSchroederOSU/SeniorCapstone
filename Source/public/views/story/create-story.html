@@ -1,21 +1,20 @@
-
-<br>
-<h1 class="Stratum2-Light font-weight-bold">Create Story </h1>
-<br>
-
-<div class="row Stratum2-Light font-weight-bold" ng-controller="storyController">
+<div class=" Stratum2-Light font-weight-bold" ng-controller="storyController">
+    <br>
+    <h1 ng-init="getTitle()" class="Stratum2-Light font-weight-bold">{{title}}</h1>
+    <br>
+    <div class="row">
     <div class="col-sm-5 col-md-5">
         <h4>Edit Information</h4>
         <div class="form-group row mt-4">
             <label for="inputDashboardName" class="ml-3">Story Name</label>
             <div class="col-sm-12">
-                <input type="text" class="form-control" maxlength="35" id="inputDashboardName" ng-model="nameForm" placeholder="Name">
+                <input ng-init="getName()" type="text" class="form-control" maxlength="35" id="inputDashboardName" ng-model="nameForm" placeholder="Name">
             </div>
         </div>
         <div class="form-group row mt-4">
             <label for="dropdownDashboards" class="ml-3">Select Dashboards:</label>
             <div class="col-sm-12">
-                <select id="dropdownDashboards" class="form-control "
+                <select ng-init="getStoryDashboards()" id="dropdownDashboards" class="form-control "
                         ng-model="dashboardSelection"
                         required ng-options="dashboard.name for dashboard in user_dashboards"
                         ng-change="selection(dashboardSelection)">
@@ -38,8 +37,9 @@
             </div>
         </ul>
     </div>
+    </div>
 	<div class="col-sm-5 col-md-5">
-		<button type="submit" class="btn border-orange-thin background-orange text-white" ng-click="CreateStory()">Create Story</button>
+		<button type="submit" class="btn border-orange-thin background-orange text-white" ng-click="submit()">{{buttontext}}</button>
 	</div>
 </div>
 

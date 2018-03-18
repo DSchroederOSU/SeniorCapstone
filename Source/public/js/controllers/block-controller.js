@@ -136,6 +136,11 @@ angular.module('blockController', [])
                     });
             }
         };
+        /*
+        This function is called as the ng init of the stats section for each block
+        it calculates the high, median, and low for each buildings data and pushed them to arrays.
+        These arrays are then ng-repeated in the view and the values for each building are displayed in the block
+         */
         $scope.getValues = function(buildings){
             var maxes = [];
             var meds = [];

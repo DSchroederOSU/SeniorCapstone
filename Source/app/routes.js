@@ -373,6 +373,19 @@ module.exports = function(app, passport) {
                         }});
         });
     });
+    app.post('/api/updateStory', function(req, res) {
+        console.log(req.body);
+        Story.findByIdAndUpdate(
+            { _id: req.body.id},
+            { $set:{'dashboards': req.body.dashboards, 'name': req.body.name}},
+            {safe: true, upsert: true, new: true}, function(err, story) {
+                if (err)
+                    throw(err);
+                else{
+                    res.json(story);
+                }});
+    });
+
 
     // =====================================================================
     /////////////////////////////METER API//////////////////////////////
