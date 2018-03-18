@@ -57,7 +57,7 @@ angular.module('blockController', [])
         OUTPUT: reloads current page to show updated user blocks
         */
         $scope.DeleteBlock = function(block){
-            Block.delete(block)
+            Block.delete({_id : block._id})
                 .success(function() {
                     $route.reload();
                 });
@@ -136,12 +136,15 @@ angular.module('blockController', [])
                     });
             }
         };
+        /*
+        This function is called as the ng init of the stats section for each block
+        it calculates the high, median, and low for each buildings data and pushed them to arrays.
+        These arrays are then ng-repeated in the view and the values for each building are displayed in the block
+         */
         $scope.getValues = function(buildings){
             var maxes = [];
             var meds = [];
             var mins = [];
-            console.log(buildings);
-            console.log($scope.maxValues);
             buildings.forEach(function(currBuilding) {
                 var to_pass = {building: currBuilding, val : "Accumulated Real Energy Net"};
                 var max = {name: currBuilding.name, max : null, units : null};
@@ -272,7 +275,7 @@ angular.module('blockController', [])
             };
             Block.update(update_block_data)
                 .success(function() {
-                    $route.reload();
+                    $location.path('/blocks');
                 });
         }
 	});

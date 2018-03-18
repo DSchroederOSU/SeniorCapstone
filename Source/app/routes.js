@@ -376,6 +376,34 @@ module.exports = function(app, passport) {
                         }});
         });
     });
+    app.post('/api/updateStory', function(req, res) {
+        console.log(req.body);
+        Story.findByIdAndUpdate(
+            { _id: req.body._id},
+            { $set:{'dashboards': req.body.dashboards, 'name': req.body.name}},
+            {safe: true, upsert: true, new: true}, function(err, story) {
+                if (err)
+                    throw(err);
+                else{
+                    res.json(story);
+                }});
+    });
+
+    app.post('/api/deleteStory', function(req, res) {
+        console.log(req.body);
+        User.findByIdAndUpdate(
+            { _id: req.user._id},
+            { $pull:{stories: req.body._id}}, function(err) {
+                if (err)
+                    throw(err);
+                else{
+                    Story.remove({_id : req.body._id}, function (err) {
+                        if (err) return handleError(err);
+                        res.json({message: "success"});
+                    });
+                }
+            });
+    });
 
     // =====================================================================
     /////////////////////////////METER API//////////////////////////////

@@ -6,7 +6,31 @@ angular.module('dashboardController', [])
         /*---------------------------------------------------------------------------------------
         ------------------------------------CREATE FUNCTIONS-------------------------------------
         ---------------------------------------------------------------------------------------*/
-
+        function CreateDashboard() {
+            // validate the formData to make sure that something is there
+            // if form is empty, nothing will happen
+            // people can't just hold enter to keep adding the same to-do anymore
+            if (!$.isEmptyObject($scope.nameForm) && !$.isEmptyObject($scope.descriptionForm))  {
+                // call the create function from our service (returns a promise object)
+                var DashboardData = {
+                    "name": $scope.nameForm,
+                    "description": $scope.descriptionForm,
+                    "blocks": $scope.selectedBlocks
+                };
+                console.log(DashboardData);
+                Dashboard.create(DashboardData)
+                // if successful creation
+                    .success(function(data) {
+                        $scope.nameForm = "";
+                        $scope.descriptionForm = "";
+                        $location.path('/dashboards');
+                    });
+            }
+        }
+        $scope.create = function() {
+            editDashboard = null;
+            $location.path('/createdashboard');
+        };
         /*---------------------------------------------------------------------------------------
         ----------------------------------EDIT/UPDATE FUNCTIONS----------------------------------
         ---------------------------------------------------------------------------------------*/
@@ -15,10 +39,7 @@ angular.module('dashboardController', [])
             editDashboard = dashboard;
             $location.path('/createdashboard');
         };
-        $scope.create = function() {
-            editDashboard = null;
-            $location.path('/createdashboard');
-        };
+
 
         $scope.getTitle = function(){
             if(editDashboard != null){
@@ -98,27 +119,7 @@ angular.module('dashboardController', [])
             }
             $scope.blockSelection = "";
         };
-        function CreateDashboard() {
-            // validate the formData to make sure that something is there
-            // if form is empty, nothing will happen
-            // people can't just hold enter to keep adding the same to-do anymore
-            if (!$.isEmptyObject($scope.nameForm) && !$.isEmptyObject($scope.descriptionForm))  {
-                // call the create function from our service (returns a promise object)
-                var DashboardData = {
-                    "name": $scope.nameForm,
-                    "description": $scope.descriptionForm,
-                    "blocks": selectedBlocks
-                };
 
-                Dashboard.create(DashboardData)
-                // if successful creation
-                    .success(function(data) {
-                        $scope.nameForm = "";
-                        $scope.descriptionForm = "";
-                        $location.path('/dashboards');
-                    });
-            }
-        }
         function UpdateDashboard() {
             console.log($scope.selectedBlocks);
             // validate the formData to make sure that something is there
@@ -144,7 +145,7 @@ angular.module('dashboardController', [])
         }
 
         $scope.DeleteDashboard = function(dashboard){
-            Dashboard.delete(dashboard)
+            Dashboard.delete({_id : dashboard._id})
                 .success(function() {
                     $route.reload();
                 });
