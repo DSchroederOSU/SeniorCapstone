@@ -22,13 +22,13 @@
 			</div>		
 			
 		</div>
-		<div class="card-body p-2">
+		<div ng-init="getValues(block.building)" class="card-body p-2">
 			<div class="row">
 				<div class="col-3">
 					<h3>Buildings:</h3>
 					<ul class="list-unstyled">
 						<li class=" p-1" ng-repeat="building in block.building">
-							<a ng-controller="buildingController" ng-click="viewBuilding(building)" class="btn btn-light">{{building.name}}</a>
+							<a ng-click="viewBuilding(building)" class="btn btn-light">{{building.name}}</a>
 						</li>
 					</ul>
 				</div>
@@ -36,24 +36,30 @@
 					<div class="row">
 						<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">High</div>
 						<ul class="list-unstyled">
-							<li ng-repeat="building in block.building">
-								<div class="font-weight-bold mb-0" ng-init="getKeyValues({building: block.building, val : 'Accumulated Real Energy Net'}, 'max')">{{buildName}}: {{max}} {{units}}</div>
+							<li ng-repeat="val in maxValues[$index]">
+								<div class="font-weight-bold mb-0">
+									{{val.name}}: {{val.max}} {{val.units}}
+								</div>
 							</li>
 						</ul>
 					</div>
 					<div class="row">
 						<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">Median</div>
 						<ul class="list-unstyled">
-							<li ng-repeat="building in block.building">
-								<div class="font-weight-bold mb-0" ng-init="getKeyValues({building: block.building, val : 'Accumulated Real Energy Net'}, 'med')">{{buildName}}: {{med}} {{units}}</div>
+							<li ng-repeat="val in medValues[$index]">
+								<div class="font-weight-bold mb-0">
+									{{val.name}}: {{val.med}} {{val.units}}
+								</div>
 							</li>
 						</ul>
 					</div>
 					<div class="row">
 						<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">Low</div>
 						<ul class="list-unstyled">
-							<li ng-repeat="building in block.building">
-								<div class="font-weight-bold mb-0" ng-init="getKeyValues({building: block.building, val : 'Accumulated Real Energy Net'}, 'min')">{{buildName}}: {{min}} {{units}}</div>
+							<li ng-repeat="val in minValues[$index]">
+								<div class="font-weight-bold mb-0">
+									{{val.name}}: {{val.min}} {{val.units}}
+								</div>
 							</li>
 						</ul>
 					</div>

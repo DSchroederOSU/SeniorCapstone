@@ -1,7 +1,6 @@
 var selectedBuildings = [];
 var dropdownBuildings = [];
 var editBlock = null;
-
 //needs a function that goes through each block in User.blocks and retrieves chart data from that object.
 var blocksChartData = [];
 
@@ -9,7 +8,9 @@ angular.module('blockController', [])
     .controller('blockController', function($route, $scope, $http, $location, $timeout, Building, Block, GetBlockByID) {
         //this is to clear the selection
         selectedBuildings = [];
-
+        $scope.maxValues = [];
+        $scope.medValues = [];
+        $scope.minValues = [];
         /*
         This is the function for removing from the dropdown
         and adding to the selection list group
@@ -123,8 +124,6 @@ angular.module('blockController', [])
                                 $scope.selectedBuildings = selectedBuildings;
                                 $scope.buildingSelection = "";
                             });
-
-
                     });
             }
             else{
@@ -137,50 +136,47 @@ angular.module('blockController', [])
                     });
             }
         };
-	
-		/*
-        A function called on ng-init of key values list in blocks.html
-        Sets scope variables of high, median, average, and low  values of the requested data type and 
-        */
-        $scope.getKeyValues = function(buildingObj, option){
-			console.log(option);
-            buildingObj.building.forEach(function(currBuilding) {
-				var to_pass = {building: currBuilding, val : buildingObj.val};
-				Building.getBuildingData(to_pass).then(function(data) {
+        $scope.getValues = function(buildings){
+            var maxes = [];
+            var meds = [];
+            var mins = [];
+            console.log(buildings);
+            console.log($scope.maxValues);
+            buildings.forEach(function(currBuilding) {
+                var to_pass = {building: currBuilding, val : "Accumulated Real Energy Net"};
+                var max = {name: currBuilding.name, max : null, units : null};
+                var med = {name: currBuilding.name, med : null, units : null};
+                var min = {name: currBuilding.name, min : null, units : null};
+                Building.getBuildingData(to_pass).then(function(data) {
+                    //console.log(data);
                     y = [];
-					$scope.buildName = currBuilding.name;
-					
-					data.forEach(function(entry){
+                    data.forEach(function(entry){
                         if(entry.point[0]) {
                             y.push(entry.point[0].value);
                         }
-					});
-					//console.log(y);
-					
-					
-					if(option == 'med') {        
-						y.sort((a, b) => a - b);
-						var lowMiddle = Math.floor((y.length - 1) / 2);
-						var highMiddle = Math.ceil((y.length - 1) / 2);
-						$scope.med = (y[lowMiddle] + y[highMiddle]) / 2;
-					}
-					else if(option == 'max') {        
-						$scope.max = Math.max(...y);
-					}
-					else if(option == 'min') {        
-						$scope.min = Math.min(...y);
-					}
-					
-					
-					//var sum = y.reduce((previous, current) => current += previous);
-					//var avg = sum / y.length;
-					$scope.units = 'units';
-					//$scope.valObj = {buildingName: buildName, max: max, min: min, avg: avg, med: med, units: units};
-					//console.log($scope.valObj);
-				});
-			});
+                    });
+                    max.max = Math.max(...y);
+                    max.units = "KwH";
+                    min.min = Math.min(...y);
+                    min.units = "KwH";
+
+                    y.sort((a, b) => a - b);
+                    var lowMiddle = Math.floor((y.length - 1) / 2);
+                    var highMiddle = Math.ceil((y.length - 1) / 2);
+                    med.med = (y[lowMiddle] + y[highMiddle]) / 2;
+                    med.units = "KwH";
+
+
+                });
+                maxes.push(max);
+                meds.push(med);
+                mins.push(min);
+            });
+            $scope.maxValues.push(maxes);
+            $scope.medValues.push(meds);
+            $scope.minValues.push(mins);
         };
-		
+
         /*---------------------------------------------------------------------------------------
         ----------------------------------EDIT/UPDATE FUNCTIONS----------------------------------
         ---------------------------------------------------------------------------------------*/
