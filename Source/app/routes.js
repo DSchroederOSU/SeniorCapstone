@@ -7,6 +7,7 @@ var DataEntry = require('./models/data-entry-schema');
 var Dashboard = require('./models/dashboard-schema');
 var Block = require('./models/block-schema');
 var Story = require('./models/story-schema');
+var nodemailer = require('nodemailer');
 module.exports = function(app, passport) {
     
     app.get('/', function (req, res) {
@@ -21,8 +22,10 @@ module.exports = function(app, passport) {
         else {
             res.send(null)
         }
+        
 
     });
+   
 
     // =====================================================================
     ///////////////////////////////BUILDING API/////////////////////////////
@@ -425,13 +428,30 @@ module.exports = function(app, passport) {
     });
     app.post('/api/deleteMeter', function(req, res) {
        Meter.remove(
-            {_id : req.body._id}, async function (err) {
+            {_id : req.body._id}, function (err) {
                 if (err) return handleError(err);
-                await Building.findOneAndUpdate({_id:req.body.building},{$pull:{meters: req.body._id}})
-                res.json({message: "success"});
+                Building.findOneAndUpdate({_id:req.body.building},{$pull:{meters: req.body._id}}, () => res.json({message: "success"}));
             });
     });
 
+    app.post('/api/emailUser', function (req,res) {
+        console.log('in emailUser')
+        if (req.body){
+            console.log(req.body);
+        }
+        else {
+            console.log('dangit');
+        }
+       res.json({message: "success"});
+
+        // transporter = nodemailer.createTransport(),
+        // transporter.sendMail({
+        //     from: 'admin@mydomain.com',
+        //     to: user.email,
+        //     subject: 'Test Email',
+        //     text: 'Test email sent from webclient'
+        //     });
+    });
 
     // =====================================
     // GOOGLE ROUTES =======================
