@@ -460,7 +460,8 @@ module.exports = function(app, passport) {
               Body: { /* required */
                 Html: {
                  Charset: "UTF-8",
-                 Data: "<h1>This is an E-mail from the application</h1><br> <h4>Thank you!</h4><br>"
+                 Data: "<h1>This is an E-mail from the application</h1><br> <h4>Please click the link below to be taken there.</h4><br>" +
+                        "<a href=\"http://localhost:3000/login/\">Click me!</a>"
                 },
                 Text: {
                  Charset: "UTF-8",
