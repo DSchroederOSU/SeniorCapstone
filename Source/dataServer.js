@@ -40,7 +40,7 @@ app.use(bodyParser.json());// get information from html forms
     // the 'xmlparser' in parameters converts XML to String
     // then bodyParser converts this string to JSON 
 
-    app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {   
+    app.post('/receiveXML', xmlparser({ trim: false, explicitArray: false }), function (req, res) {
         if (req.body.das.mode == 'LOGFILEUPLOAD'){
             console.log('Received XML data on: ' + new Date().toUTCString());
             pathShortener = req.body.das.devices.device.records;

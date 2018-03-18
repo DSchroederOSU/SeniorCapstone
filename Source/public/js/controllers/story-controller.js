@@ -7,8 +7,9 @@ angular.module('storyController', [])
         selectedDashboards = [];
         $scope.user_dashboards = [];
 
-        Dashboard.get()
+        Dashboard.getName()
         .success(function (data) {
+            console.log(data);
             $scope.user_dashboards = data;
             dropdownDashboards = data;
         });
@@ -44,6 +45,7 @@ angular.module('storyController', [])
                     "name": $scope.nameForm,
                     "dashboards": selectedDashboards
                 };
+                console.log(StoryData);
                 Story.create(StoryData)
                 // if successful creation
                 .success(function(data) {
