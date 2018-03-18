@@ -8,7 +8,7 @@ var DataEntry = require('./models/data-entry-schema');
 var Dashboard = require('./models/dashboard-schema');
 var Block = require('./models/block-schema');
 var Story = require('./models/story-schema');
-var nodemailer = require('nodemailer');
+var AWS = require('aws-sdk');
 module.exports = function(app, passport) {
     
     app.get('/', function (req, res) {
@@ -444,46 +444,48 @@ module.exports = function(app, passport) {
     });
 
     app.post('/api/emailUser', function (req,res) {
-        console.log('in emailUser')
-        if (req.body){
-            console.log(req.body);
-        }
-        else {
-            console.log('dangit');
-        }
-    // might be worth looking into setting up AWS SES instead of using nodemailer
-    // https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/ses-examples-sending-email.html
-    // Need to get credentials of 
+        AWS.config.update({region: 'us-west-2'});
+        var credentials = new AWS.EnvironmentCredentials('AWS');
+        credentials.accessKeyId = process.env.AWS_ACCESS_KEY_ID
+        credentials.secretAccessKey = process.env.SECRET_ACCESS_KEY
+        AWS.config.credentials = credentials;
 
-       nodemailer.createTestAccount((err, account) => {
-        // create reusable transporter object using the default SMTP transport
-            let transporter = nodemailer.createTransport({
-                service: "Gmail",
-                auth: {
-                    user: process.env.TEST_EMAIL_USER, // generated ethereal user
-                    pass: process.env.TEST_EMAIL_PASSWORD // generated ethereal password
+        var params = {
+            Destination: { /* required */
+              CcAddresses: [ ],
+              ToAddresses: [ req.body.email]
+            },
+
+            Message: { /* required */
+              Body: { /* required */
+                Html: {
+                 Charset: "UTF-8",
+                 Data: "<h1>This is an E-mail from the application</h1><br> <h4>Thank you!</h4><br>"
+                },
+                Text: {
+                 Charset: "UTF-8",
+                 Data: "TEXT_FORMAT_BODY"
                 }
+               },
+               Subject: {
+                Charset: 'UTF-8',
+                Data: 'Test email from AWS'
+               }
+              },
+            Source: process.env.TEST_EMAIL_USER, /* required */
+            ReplyToAddresses: [ ],
+          };  
+          var sendPromise = new AWS.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise();
+
+          // Handle promise's fulfilled/rejected states
+          sendPromise.then(
+            function(data) {
+              console.log(data.MessageId);
+            }).catch(
+              function(err) {
+              console.error(err, err.stack);
             });
-        
-            // setup email data with unicode symbols
-            let mailOptions = {
-                from: 'OSU SUSTAINABILITY <' + process.env.TEST_EMAIL_USER + '>', // sender address
-                to: req.body.email, // list of receivers
-                subject: 'Hello from node.js', // Subject line
-                text: 'Hello world?', // plain text body
-                html: '<b>Hello world?</b>' // html body
-            };
-        
-            // send mail with defined transport object
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    return console.log(error);
-                }
-                console.log('Message sent: %s', info.messageId);
-                // Preview only available when sending through an Ethereal account
-        
-            });
-        });
+
         res.json({message: "success"});
     });
 
