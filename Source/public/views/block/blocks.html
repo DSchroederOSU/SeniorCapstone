@@ -31,21 +31,31 @@
 							<a ng-controller="buildingController" ng-click="viewBuilding(building)" class="btn btn-light">{{building.name}}</a>
 						</li>
 					</ul>
-					<button type="button" class="btn border-orange-thin background-orange text-white position-absolute" style="bottom: 0;">Filter 1</button>
-					<button type="button" class="btn border-orange-thin background-orange text-white position-absolute" style="bottom: 0; left: 100px;">Filter 2</button>
 				</div>
-				<div class="col-2">
-					<div class="row pb-4">
-						<span class="font-weight-light w-100" style="font-size: 1em;">High</span></br>
-						<p class="font-weight-bold mb-0" style="font-size: 1.5vw;">XXX,XXX</p><p class="font-weight-light mb-0 mt-1" style="font-size: 1em;">  mW/h</p>
+				<div class="col-2" >
+					<div class="row">
+						<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">High</div>
+						<ul class="list-unstyled">
+							<li ng-repeat="building in block.building" ng-controller="buildingController">
+								<div class="font-weight-bold mb-0" ng-init="getKeyValues({building: block.building, val : 'Accumulated Real Energy Net'})">{{valObj.buildingName}}: {{valObj.max}} {{valObj.units}}</div>
+							</li>
+						</ul>
 					</div>
-					<div class="row pb-4">
-						<span class="font-weight-light w-100" style="font-size: 1em;">Median</span></br>
-						<p class="font-weight-bold mb-0" style="font-size: 1.5vw;">XXX,XXX</p><p class="font-weight-light mb-0 mt-1" style="font-size: 1em;">  mW/h</p>
+					<div class="row">
+						<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">Median</div>
+						<ul class="list-unstyled">
+							<li ng-repeat="building in block.building" ng-controller="buildingController">
+								<div class="font-weight-bold mb-0" ng-init="getKeyValues({building: block.building, val : 'Accumulated Real Energy Net'})">{{valObj.buildingName}}: {{valObj.med}} {{valObj.units}}</div>
+							</li>
+						</ul>
 					</div>
-					<div class="row pb-4">
-						<span class="font-weight-light w-100" style="font-size: 1em;">Low</span></br>
-						<p class="font-weight-bold mb-0" style="font-size: 1.5vw;">XXX,XXX</p><p class="font-weight-light mb-0 mt-1" style="font-size: 1em;">  mW/h</p>
+					<div class="row">
+						<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">Low</div>
+						<ul class="list-unstyled">
+							<li ng-repeat="building in block.building" ng-controller="buildingController">
+								<div class="font-weight-bold mb-0" ng-init="getKeyValues({building: block.building, val : 'Accumulated Real Energy Net'})">{{valObj.buildingName}}: {{valObj.min}} {{valObj.units}}</div>
+							</li>
+						</ul>
 					</div>
 				</div> 
 				<canvas ng-controller="chartController" 
