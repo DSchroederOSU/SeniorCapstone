@@ -141,4 +141,13 @@ angular.module('storyController', [])
             viewStory = story;
             $route.reload();
         }
+
+        $scope.DeleteStory = function(story){
+            console.log(story);
+            Story.delete({_id : story._id})
+                .success(function() {
+                    $location.path('/');
+                });
+        };
+
     });

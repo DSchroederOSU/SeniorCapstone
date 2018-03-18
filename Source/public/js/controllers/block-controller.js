@@ -145,8 +145,6 @@ angular.module('blockController', [])
             var maxes = [];
             var meds = [];
             var mins = [];
-            console.log(buildings);
-            console.log($scope.maxValues);
             buildings.forEach(function(currBuilding) {
                 var to_pass = {building: currBuilding, val : "Accumulated Real Energy Net"};
                 var max = {name: currBuilding.name, max : null, units : null};

@@ -8,8 +8,8 @@ angular.module('StoryService', [])
             create : function(storyData) {
                 return $http.post('/api/addStory', storyData);
             },
-            delete : function(story) {
-                return $http.post('/api/deleteStory', story);
+            delete : function(id) {
+                return $http.post('/api/deleteStory', id);
             },
             update : function(story) {
                 return $http.post('/api/updateStory', story);
@@ -18,4 +18,4 @@ angular.module('StoryService', [])
                 return $http.get('/api/getUserStories');
             }
         }
-    })
+    });
