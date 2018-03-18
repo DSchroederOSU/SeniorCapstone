@@ -123,9 +123,8 @@ myApp.controller('buildingEditController', function($scope, $location, $route, M
 
     }
 });
+
 myApp.controller('userController', function($scope, EmailUser){
-    
- 
     $scope.email = {email: ''};
     $scope.submit = function() {
         EmailUser.post($scope.email)

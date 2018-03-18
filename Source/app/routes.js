@@ -1,4 +1,5 @@
 require('mongoose');
+
 var parseString = require('xml2js').parseString;
 var User = require('./models/user-schema');
 var Building = require('./models/building-schema');
@@ -55,6 +56,7 @@ module.exports = function(app, passport) {
             res.json(buildings.filter(building => building._id != null)); // return all buildings in JSON format
         });
     });
+    
     app.post('/api/deleteBuilding', function(req, res) {
         // null out the meters in this building?
         Building.remove(
@@ -67,6 +69,7 @@ module.exports = function(app, passport) {
                
             });
     });
+
     app.get('/api/getBuildingById', function(req, res) {
         // delete a building then set it's meters/data 'building' var to null
         Building.findOne({_id : req.query._id})
@@ -78,6 +81,7 @@ module.exports = function(app, passport) {
                 res.json(building);
             });
     });
+
     app.get('/api/getBuildingData', function(req, res) {
         console.log(req.query);
         Building.findOne({_id : req.query._id})
@@ -103,6 +107,7 @@ module.exports = function(app, passport) {
                 }
             });
     });
+
     app.post('/api/updateBuilding', function(req, res) {
         console.log(req.body);
        Building.findByIdAndUpdate(
@@ -154,6 +159,7 @@ module.exports = function(app, passport) {
                     res.json(user.blocks);
         });
     });
+
     app.get('/api/getBlocksForDashboards', function(req, res) {
         User.findOne({_id : req.user._id})
             .populate({
@@ -318,6 +324,7 @@ module.exports = function(app, passport) {
                 }
             });
     });
+
     app.post('/api/updateDashboard', function(req, res) {
         console.log(req.body);
         Dashboard.findByIdAndUpdate(
@@ -393,6 +400,7 @@ module.exports = function(app, passport) {
                 res.json(savedMeter);
         });
     });
+
     app.get('/api/getMeters', function(req, res) {
         Meter.find({})
             .populate({
@@ -403,6 +411,7 @@ module.exports = function(app, passport) {
                 res.json(meters);
             });
     });
+
     app.get('/api/getMeterById', function(req, res) {
         Meter.findOne({_id : req.query.meter_id})
             .populate({
@@ -442,15 +451,40 @@ module.exports = function(app, passport) {
         else {
             console.log('dangit');
         }
-       res.json({message: "success"});
+    // might be worth looking into setting up AWS SES instead of using nodemailer
+    // https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/ses-examples-sending-email.html
+    // Need to get credentials of 
 
-        // transporter = nodemailer.createTransport(),
-        // transporter.sendMail({
-        //     from: 'admin@mydomain.com',
-        //     to: user.email,
-        //     subject: 'Test Email',
-        //     text: 'Test email sent from webclient'
-        //     });
+       nodemailer.createTestAccount((err, account) => {
+        // create reusable transporter object using the default SMTP transport
+            let transporter = nodemailer.createTransport({
+                service: "Gmail",
+                auth: {
+                    user: process.env.TEST_EMAIL_USER, // generated ethereal user
+                    pass: process.env.TEST_EMAIL_PASSWORD // generated ethereal password
+                }
+            });
+        
+            // setup email data with unicode symbols
+            let mailOptions = {
+                from: 'OSU SUSTAINABILITY <' + process.env.TEST_EMAIL_USER + '>', // sender address
+                to: req.body.email, // list of receivers
+                subject: 'Hello from node.js', // Subject line
+                text: 'Hello world?', // plain text body
+                html: '<b>Hello world?</b>' // html body
+            };
+        
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log('Message sent: %s', info.messageId);
+                // Preview only available when sending through an Ethereal account
+        
+            });
+        });
+        res.json({message: "success"});
     });
 
     // =====================================
