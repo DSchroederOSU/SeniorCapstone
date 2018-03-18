@@ -27,6 +27,9 @@ angular.module('chartController', [])
             }
             return "rgb(" + g() + "," + g() + "," + g() +")";
         };
+		
+		//Purpose: retrieves data and updates a canvas element with a chart based on data parameters
+		//Input: array of buildings retrieved from user block object
 		$scope.createChart = function(buildingsArray) {
 			//will hold each buildings data in the block
 			//x and y axis data
@@ -35,11 +38,10 @@ angular.module('chartController', [])
 			var buildingAxisData = [];
 
 			//fills buildingAxisData array with building data.
-			//
             buildingsArray.building.forEach(function(currBuilding) {
 				var to_pass = {building: currBuilding, val : buildingsArray.val};
 				Building.getBuildingData(to_pass).then(function(data) {
-					console.log(data);
+					//console.log(data);
                     x = [];
                     y = [];
 					data.forEach( function(entry){
@@ -91,10 +93,7 @@ angular.module('chartController', [])
 
 			//timeout necessary to let data load. This is a dumb way to handle asynchronous-ness but it works for now.
 			$timeout(function () {
-
-				console.log(buildingAxisData);
-
-
+				//console.log(buildingAxisData);
 			}, 5000);
 
 		};
