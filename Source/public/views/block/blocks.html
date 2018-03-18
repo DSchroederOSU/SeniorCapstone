@@ -37,7 +37,7 @@
 						<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">High</div>
 						<ul class="list-unstyled">
 							<li ng-repeat="building in block.building">
-								<div class="font-weight-bold mb-0" ng-init="getKeyValues({building: block.building, val : 'Accumulated Real Energy Net'})">{{valObj.buildingName}}: {{valObj.max}} {{valObj.units}}</div>
+								<div class="font-weight-bold mb-0" ng-init="getKeyValues({building: block.building, val : 'Accumulated Real Energy Net'}, 'max')">{{buildName}}: {{max}} {{units}}</div>
 							</li>
 						</ul>
 					</div>
@@ -45,7 +45,7 @@
 						<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">Median</div>
 						<ul class="list-unstyled">
 							<li ng-repeat="building in block.building">
-								<div class="font-weight-bold mb-0" ng-init="getKeyValues({building: block.building, val : 'Accumulated Real Energy Net'})">{{valObj.buildingName}}: {{valObj.med}} {{valObj.units}}</div>
+								<div class="font-weight-bold mb-0" ng-init="getKeyValues({building: block.building, val : 'Accumulated Real Energy Net'}, 'med')">{{buildName}}: {{med}} {{units}}</div>
 							</li>
 						</ul>
 					</div>
@@ -53,7 +53,7 @@
 						<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">Low</div>
 						<ul class="list-unstyled">
 							<li ng-repeat="building in block.building">
-								<div class="font-weight-bold mb-0" ng-init="getKeyValues({building: block.building, val : 'Accumulated Real Energy Net'})">{{valObj.buildingName}}: {{valObj.min}} {{valObj.units}}</div>
+								<div class="font-weight-bold mb-0" ng-init="getKeyValues({building: block.building, val : 'Accumulated Real Energy Net'}, 'min')">{{buildName}}: {{min}} {{units}}</div>
 							</li>
 						</ul>
 					</div>
