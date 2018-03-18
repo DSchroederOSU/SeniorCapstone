@@ -1,43 +1,24 @@
-<!doctype html>
-<html>
-
-<head>
-    <title>OSU Office of Sustainability</title>
-
-</head>
-
-<body>
-    <div class="Stratum2-Light font-weight-bold container">
-        <div ng-controller="ExampleController">
-            <div class="row">
-                <div class="col-sm-6 col-md-6">
-                    <div class="form-group row mt-4">
-                        <label for="inputSerialName" class="ml-3">Enter Email below</label>
-                        <div class="col-sm-12">
-                            <input type="email"  class="form-control" maxlength="30" id="inputSerialName" ng-model="user.email" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="col-sm-5 col-md-5">
-                        <button type="submit" class="btn border-orange-thin background-orange text-white" ng-click="submit()">Register</button>
-                    </div>
-                </div>
+<div class="container-fluid p-0">
+    <div class="row w-100 m-0">
+        <div class="col-sm-6 mx-auto text-center">
+            <h2 class="rufina-stencil-regular m-0">Oregon State University</h2>
+            <h3 class="Stratum2-Light text-orange m-0">Energy Dashboards</h3>
+            <h4 class="Stratum2-Thin">Campus Building Energy Usage Registration</h4>
+        </div>
+    </div>
+    <div class="row pt-3 w-100 m-0">
+        <div class="col-sm-10 mx-auto">
+            <div class="container" style="height:450px;">
+                <form ng-controller="userController" ng-submit="submit()">
+                    <!-- <input type="text" ng-model="text" name="text" />
+        '{{input}}' -->
+                   
+                    <input type="text" ng-model="email" name="email" />
+                    <input type="submit" id="submit" value="Submit" />
+                    {{email}}
+                   
+                </form>
             </div>
         </div>
-
     </div>
-</body>
-
-</html>
-<script>
-    var nodemailer = require('nodemailer');
-    angular.module('registration', [])
-        .controller('RegistrationController', ['$scope', function ($scope) {
-            $scope.master = {};
-
-            $scope.submit = function () {
-               // TODO: Look into email clients through node
-            };
-
-         
-        }]);
-</script>
+</div>

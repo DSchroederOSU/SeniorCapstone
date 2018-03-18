@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController',
+var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController',  
     'buildingController', 'mapController', 'meterController', 'storyController', 'sideNavController', 'chartController',
     'BlockService', 'UserService', 'MeterService','BuildingService',
     'DashboardService', 'StoryService', 'ngRoute']);
@@ -122,4 +122,15 @@ myApp.controller('buildingEditController', function($scope, $location, $route, M
         }
 
     }
+});
+myApp.controller('userController', function($scope, EmailUser){
+    
+ 
+    $scope.email = '';
+    $scope.submit = function() {
+        EmailUser.post(this.email)
+        .success(function() {
+            $scope.email = '';
+        });
+    };
 });

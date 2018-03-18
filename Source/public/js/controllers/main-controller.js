@@ -26,13 +26,10 @@ angular.module('mainController', [])
                 $scope.mainContent = 'shiftLeft';
             }
         });
-
         $scope.dashboardClass = 'hideDash';
         $scope.showDashboards = function () {
             $scope.dashboardClass = 'showDash';
         }
-    
-     
     })
   
 
