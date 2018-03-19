@@ -16,7 +16,6 @@ angular.module('mainController', [])
                 $scope.myLink = "logout";
                 $scope.userLoggedIn = false;
                 $scope.mainContent = 'shiftRight';
-
             }
             else{
                 $scope.login_status = "Login";
