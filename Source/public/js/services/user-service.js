@@ -9,4 +9,14 @@ angular.module('UserService', [])
                 return $http.get('/api/google_user');
             }
         }
+    })
+    .factory('EmailUser', function($http) {
+        return {
+            post: function(email) {
+                return $http.post('/api/emailUser',email)
+            }
+        }
     });
+            
+            
+            

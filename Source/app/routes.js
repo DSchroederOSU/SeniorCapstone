@@ -1,4 +1,5 @@
 require('mongoose');
+
 var parseString = require('xml2js').parseString;
 var User = require('./models/user-schema');
 var Building = require('./models/building-schema');
@@ -7,6 +8,7 @@ var DataEntry = require('./models/data-entry-schema');
 var Dashboard = require('./models/dashboard-schema');
 var Block = require('./models/block-schema');
 var Story = require('./models/story-schema');
+var AWS = require('aws-sdk');
 module.exports = function(app, passport) {
     
     app.get('/', function (req, res) {
@@ -21,8 +23,10 @@ module.exports = function(app, passport) {
         else {
             res.send(null)
         }
+        
 
     });
+   
 
     // =====================================================================
     ///////////////////////////////BUILDING API/////////////////////////////
@@ -54,6 +58,7 @@ module.exports = function(app, passport) {
             res.json(buildings.filter(building => building._id != null)); // return all buildings in JSON format
         });
     });
+    
     app.post('/api/deleteBuilding', function(req, res) {
         // null out the meters in this building?
         Building.remove(
@@ -66,6 +71,7 @@ module.exports = function(app, passport) {
                
             });
     });
+
     app.get('/api/getBuildingById', function(req, res) {
         // delete a building then set it's meters/data 'building' var to null
         Building.findOne({_id : req.query._id})
@@ -77,6 +83,7 @@ module.exports = function(app, passport) {
                 res.json(building);
             });
     });
+
     app.get('/api/getBuildingData', function(req, res) {
         console.log(req.query);
         Building.findOne({_id : req.query._id})
@@ -102,6 +109,7 @@ module.exports = function(app, passport) {
                 }
             });
     });
+
     app.post('/api/updateBuilding', function(req, res) {
         console.log(req.body);
        Building.findByIdAndUpdate(
@@ -153,6 +161,7 @@ module.exports = function(app, passport) {
                     res.json(user.blocks);
         });
     });
+
     app.get('/api/getBlocksForDashboards', function(req, res) {
         User.findOne({_id : req.user._id})
             .populate({
@@ -317,6 +326,7 @@ module.exports = function(app, passport) {
                 }
             });
     });
+
     app.post('/api/updateDashboard', function(req, res) {
         console.log(req.body);
         Dashboard.findByIdAndUpdate(
@@ -420,6 +430,7 @@ module.exports = function(app, passport) {
                 res.json(savedMeter);
         });
     });
+
     app.get('/api/getMeters', function(req, res) {
         Meter.find({})
             .populate({
@@ -430,6 +441,7 @@ module.exports = function(app, passport) {
                 res.json(meters);
             });
     });
+
     app.get('/api/getMeterById', function(req, res) {
         Meter.findOne({_id : req.query.meter_id})
             .populate({
@@ -455,13 +467,58 @@ module.exports = function(app, passport) {
     });
     app.post('/api/deleteMeter', function(req, res) {
        Meter.remove(
-            {_id : req.body._id}, async function (err) {
+            {_id : req.body._id}, function (err) {
                 if (err) return handleError(err);
-                await Building.findOneAndUpdate({_id:req.body.building},{$pull:{meters: req.body._id}})
-                res.json({message: "success"});
+                Building.findOneAndUpdate({_id:req.body.building},{$pull:{meters: req.body._id}}, () => res.json({message: "success"}));
             });
     });
 
+    app.post('/api/emailUser', function (req,res) {
+        AWS.config.update({region: 'us-west-2'});
+        var credentials = new AWS.EnvironmentCredentials('AWS');
+        credentials.accessKeyId = process.env.AWS_ACCESS_KEY_ID
+        credentials.secretAccessKey = process.env.SECRET_ACCESS_KEY
+        AWS.config.credentials = credentials;
+
+        var params = {
+            Destination: { /* required */
+              CcAddresses: [ ],
+              ToAddresses: [ req.body.email]
+            },
+
+            Message: { /* required */
+              Body: { /* required */
+                Html: {
+                 Charset: "UTF-8",
+                 Data: "<h1>This is an E-mail from the application</h1><br> <h4>Please click the link below to be taken there.</h4><br>" +
+                        "<a href=\"http://localhost:3000/login/\">Click me!</a>"
+                },
+                Text: {
+                 Charset: "UTF-8",
+                 Data: "TEXT_FORMAT_BODY"
+                }
+               },
+               Subject: {
+                Charset: 'UTF-8',
+                Data: 'Test email from AWS'
+               }
+              },
+            Source: process.env.TEST_EMAIL_USER, /* required */
+            ReplyToAddresses: [ ],
+          };  
+          var sendPromise = new AWS.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise();
+
+          // Handle promise's fulfilled/rejected states
+          sendPromise.then(
+            function(data) {
+              console.log(data.MessageId);
+            }).catch(
+              function(err) {
+              console.error(err, err.stack);
+            });
+
+        res.json({message: "success"});
+    });
 
     // =====================================
     // GOOGLE ROUTES =======================

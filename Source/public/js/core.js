@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController',
+var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController',  
     'buildingController', 'mapController', 'meterController', 'storyController', 'sideNavController', 'chartController',
     'BlockService', 'UserService', 'MeterService','BuildingService',
     'DashboardService', 'StoryService', 'ngRoute']);
@@ -20,6 +20,9 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when("/contact", {
         templateUrl : "../views/top-nav-views/contact.html"
+    })
+    .when("/register", {
+        templateUrl: "../views/register.html"
     })
 
     ///////////////////////////
@@ -119,4 +122,15 @@ myApp.controller('buildingEditController', function($scope, $location, $route, M
         }
 
     }
+});
+
+myApp.controller('userController', function($scope, EmailUser){
+    $scope.email = {email: ''};
+    $scope.submit = function() {
+        EmailUser.post($scope.email)
+        .success(function() {
+            console.log('idk')
+            $scope.email = '';
+        });
+    };
 });

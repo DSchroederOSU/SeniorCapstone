@@ -14,20 +14,18 @@ angular.module('mainController', [])
             }
             else{
                 $scope.login_status = "Login";
-                $scope.greeting = "";
+                $scope.greeting = '';
                 $scope.myLink = "auth/google";
                 $scope.userLoggedIn = true;
                 $scope.mainContent = 'shiftLeft';
             }
         });
-
         $scope.dashboardClass = 'hideDash';
         $scope.showDashboards = function () {
         $scope.dashboardClass = 'showDash';
         }
-
     })
-
+  
 
     .directive('sideNav', function() {
         return {
