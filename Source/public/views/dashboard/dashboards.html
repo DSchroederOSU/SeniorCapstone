@@ -4,7 +4,7 @@
 		   class="btn border-orange-thin background-orange text-white float-right">Create Dashboard+</a>
 	</h1>
     <ul class="list-group mt-4 mb-4 Stratum2-Light">
-        <li class="list-group-item border-orange-thin p-2" ng-repeat="dashboard in dashboards">
+        <li class="list-group-item border-orange-thin p-2 building-card-highlight pointer" ng-click="ViewDashboard(dashboard)" ng-repeat="dashboard in dashboards">
             <div class="row px-2 mb-2">
                 <div class="col-sm-12">
                     <h4 class="m-0 ">{{dashboard.name}}
@@ -12,7 +12,6 @@
 							<button class="fa fa-gear border-orange-thin border-curve-button" style="font-size:24px"></button>
 							<div class="dropdown-content border-orange font-weight-normal">
 								<a class="" ng-click="EditDashboard(dashboard)">Edit</a>
-								<a class="" ng-click="ViewDashboard(dashboard)">View</a>
 								<a class="" ng-click="DeleteDashboard(dashboard)">Delete</a>
 							</div>
 						</div>
