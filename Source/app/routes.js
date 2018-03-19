@@ -10,9 +10,10 @@ var Dashboard = require('./models/dashboard-schema');
 var Block = require('./models/block-schema');
 var Story = require('./models/story-schema');
 var AWS = require('aws-sdk');
-var mongoSanitize = require('express-mongo-sanitize');
+var sanitize = require('mongo-sanitize');
+
 module.exports = function(app, passport) {
-    
+ 
     app.get('/', function (req, res) {
         
         return res.render('./index.html'); // load the index.html file
@@ -34,11 +35,13 @@ module.exports = function(app, passport) {
     ///////////////////////////////BUILDING API/////////////////////////////
     // =====================================================================
     app.post('/api/addBuilding', function(req, res) {
-        if (mongoSanitize.has(req.body)) {
-            console.log ('bad stuff')
-        }
-        mongoSanitize.sanitize(req.body);
-       
+        console.log('req.body b')
+        console.log(req.body)
+        req.body = sanitize(req.body);
+        console.log('req.body a')
+        console.log(req.body)
+        console.log('----------------------------\n-----------------------')
+        req.body = sanitize(req.body);
         var building = new Building();
         building.name = req.body.name;
         building.building_type = req.body.building_type;
