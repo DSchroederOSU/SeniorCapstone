@@ -40,6 +40,8 @@ module.exports = function(app, passport) {
                         updateOldBuildingMeters(meter, savedBuilding)
                             .then(addMeter(meter,savedBuilding))
                 });
+                res.json(savedBuilding);
+
             }
         });
     });

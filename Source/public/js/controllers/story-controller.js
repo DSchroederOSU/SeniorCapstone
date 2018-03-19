@@ -22,7 +22,12 @@ angular.module('storyController', [])
                 // if successful creation
                     .success(function(data) {
                         $scope.nameForm = "";
-                        $location.path('/');
+                        Story.get()
+                            .success(function(user_stories){
+                                $scope.stories = user_stories;
+                                console.log($scope.stories);
+                                $location.path('/');
+                            });
                     });
             }
         }
@@ -120,7 +125,11 @@ angular.module('storyController', [])
                 // if successful creation
                     .success(function(data) {
                         $scope.nameForm = "";
-                        $location.path('/');
+                        Story.get()
+                            .success(function(user_stories){
+                                $scope.stories = user_stories;
+                                $location.path('/');
+                            });
                     });
             }
         }
@@ -139,15 +148,24 @@ angular.module('storyController', [])
 
         $scope.viewStory = function(story) {
             viewStory = story;
-            $route.reload();
-        }
+            $location.path('/viewStory');
+        };
 
         $scope.DeleteStory = function(story){
             console.log(story);
             Story.delete({_id : story._id})
                 .success(function() {
-                    $location.path('/');
+                    Story.get()
+                        .success(function(user_stories){
+                            $scope.stories = user_stories;
+                            $location.path('/');
+                        });
                 });
         };
+
+        Story.get()
+            .success(function(user_stories){
+                $scope.stories = user_stories;
+            });
 
     });

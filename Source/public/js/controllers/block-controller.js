@@ -1,5 +1,3 @@
-var selectedBuildings = [];
-var dropdownBuildings = [];
 var editBlock = null;
 //needs a function that goes through each block in User.blocks and retrieves chart data from that object.
 var blocksChartData = [];
@@ -7,7 +5,6 @@ var blocksChartData = [];
 angular.module('blockController', [])
     .controller('blockController', function($route, $scope, $http, $location, $timeout, Building, Block, GetBlockByID) {
         //this is to clear the selection
-        selectedBuildings = [];
         $scope.maxValues = [];
         $scope.medValues = [];
         $scope.minValues = [];
@@ -16,13 +13,11 @@ angular.module('blockController', [])
         and adding to the selection list group
          */
         $scope.selection = function(building) {
-            selectedBuildings.push(building);
-            var index = dropdownBuildings.indexOf(building);
+            $scope.selectedBuildings.push(building);
+            var index = $scope.buildings.indexOf(building);
             if (index > -1) {
-                dropdownBuildings.splice(index, 1);
+                $scope.buildings.splice(index, 1);
             }
-            $scope.buildings = dropdownBuildings;
-            $scope.selectedBuildings = selectedBuildings;
             $scope.buildingSelection = "";
         };
 
@@ -31,13 +26,11 @@ angular.module('blockController', [])
         and adding the building back to the dropdown menu
          */
         $scope.removeBuilding = function(building) {
-            dropdownBuildings.push(building);
-            var index = selectedBuildings.indexOf(building);
+            $scope.buildings.push(building);
+            var index = $scope.selectedBuildings.indexOf(building);
             if (index > -1) {
-                selectedBuildings.splice(index, 1);
+                $scope.selectedBuildings.splice(index, 1);
             }
-            $scope.buildings = dropdownBuildings;
-            $scope.selectedBuildings = selectedBuildings;
             $scope.buildingSelection = "";
         };
 
@@ -107,21 +100,19 @@ angular.module('blockController', [])
                     .then(function(block) {
                         Building.get()
                             .then(function (data) {
-                                dropdownBuildings = data.data;
-                                $scope.selectedBuildings = "";
+                                $scope.buildings = data.data;
+                                $scope.selectedBuildings = [];
                                 block.data.building.forEach( function(building){
                                     var count = 0;
-                                    dropdownBuildings.forEach(function (obj) {
+                                    $scope.buildings.forEach(function (obj) {
                                         if(obj._id == building._id){
-                                            dropdownBuildings.splice(count, 1);
-                                            selectedBuildings.push(obj);
+                                            $scope.buildings.splice(count, 1);
+                                            $scope.selectedBuildings.push(obj);
                                             count++;
                                         }
                                         else count++;
                                     });
                                 });
-                                $scope.buildings = dropdownBuildings;
-                                $scope.selectedBuildings = selectedBuildings;
                                 $scope.buildingSelection = "";
                             });
                     });
@@ -129,10 +120,8 @@ angular.module('blockController', [])
             else{
                 Building.get()
                     .then(function (data) {
-                        console.log(data.data);
-                        dropdownBuildings = data.data;
-                        $scope.buildings = dropdownBuildings;
-                        $scope.selectedBuildings = "";
+                        $scope.buildings = data.data;
+                        $scope.selectedBuildings = [];
                     });
             }
         };
@@ -242,17 +231,11 @@ angular.module('blockController', [])
                 var BlockData = {
                     "name": $scope.nameForm,
                     "chart": $scope.chartForm,
-                    "buildings": selectedBuildings
+                    "buildings": $scope.selectedBuildings
                 };
-                console.log(BlockData);
                 Block.create(BlockData)
                 // if successful creation
                     .success(function(data) {
-                        selectedBuildings.forEach(function(b) {
-                            dropdownBuildings.push(b);
-                        });
-                        selectedBuildings = [];
-                        $scope.selectedBuildings = selectedBuildings;
                         $scope.nameForm = "";
                         $scope.chartForm = "";
                         $location.path('/blocks');
@@ -270,7 +253,7 @@ angular.module('blockController', [])
                 "_id"   : editBlock._id,
                 "name"  : $scope.nameForm,
                 "chart" : $scope.chartForm,
-                "building": selectedBuildings,
+                "building": $scope.selectedBuildings,
                 "variable": 'Killowatts/Hr'
             };
             Block.update(update_block_data)
