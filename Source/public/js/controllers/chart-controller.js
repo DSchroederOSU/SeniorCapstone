@@ -37,13 +37,12 @@ angular.module('chartController', [])
             var curr = new Date; // get current date
             var last;
             var first;
-            last = curr.getDate() - curr.getDay();
-            first = last - 7; // First day is the day of the month - the day of the week
-            // last day is the first day + 6
+            first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+            last = first + 6; // last day is the first day + 6
             startDate = new Date(curr.setDate(first));
-            startDate = "" + startDate.getFullYear() + "-0" + (startDate.getMonth() + 1) + "-" + "00";
+            startDate = "" + startDate.getFullYear() + "-0" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
             endDate = new Date(curr.setDate(last));
-            endDate = "" + endDate.getFullYear() + "-0" + (endDate.getMonth() + 1) + "-" + "30";
+            endDate = "" + endDate.getFullYear() + "-0" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
             //will hold each buildings data in the block
             //x and y axis data
             var x = [];
@@ -79,7 +78,7 @@ angular.module('chartController', [])
                 $scope.chartData = buildingAxisData;
                 buildChart(buildingAxisData, buildingsArray.type,buildingsArray.id );
                 if(buildingsArray.vals != 'none'){
-                    calculateVals(buildingAxisData);
+                    calculateVals(buildingAxisData, buildingsArray.id);
                 }
             });
 
@@ -157,7 +156,7 @@ angular.module('chartController', [])
                 $scope.chartData = buildingAxisData;
                 updateChart(buildingAxisData, object.index, object.id);
                 if(object.vals != 'none'){
-                    calculateVals(buildingAxisData);
+                    calculateVals(buildingAxisData, object.id);
                 }
 
             });
@@ -170,23 +169,22 @@ angular.module('chartController', [])
         it calculates the high, median, and low for each buildings data and pushed them to arrays.
         These arrays are then ng-repeated in the view and the values for each building are displayed in the block
          */
-        function calculateVals(dataset) {
-            var maxes = [];
-            var meds = [];
-            var mins = [];
-
+        function calculateVals(dataset, block_id) {
             dataset.forEach(function (currBuilding) {
                 var max = {
+                    id : block_id,
                     name: parseName(currBuilding.name),
                     max: null,
                     units: null
                 };
                 var med = {
+                    id : block_id,
                     name: parseName(currBuilding.name),
                     med: null,
                     units: null
                 };
                 var min = {
+                    id : block_id,
                     name: parseName(currBuilding.name),
                     min: null,
                     units: null
@@ -203,13 +201,11 @@ angular.module('chartController', [])
                 med.med = formatNumber(parseInt(((currBuilding.buildingYdata[lowMiddle] + currBuilding.buildingYdata[highMiddle]) / 2), 10));
                 med.units = "KwH";
 
-                maxes.push(max);
-                meds.push(med);
-                mins.push(min);
+                $scope.maxValues.push(max);
+                $scope.medValues.push(med);
+                $scope.minValues.push(min);
             });
-            $scope.maxValues.push(maxes);
-            $scope.medValues.push(meds);
-            $scope.minValues.push(mins);
+            console.log($scope.maxValues);
         }
 
         /*
