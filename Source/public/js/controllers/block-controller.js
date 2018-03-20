@@ -126,51 +126,7 @@ angular.module('blockController', [])
             }
         };
 		
-        /*
-        This function is called as the ng init of the stats section for each block
-        it calculates the high, median, and low for each buildings data and pushed them to arrays.
-        These arrays are then ng-repeated in the view and the values for each building are displayed in the block
-         */
-        $scope.getValues = function(buildings){
-            var maxes = [];
-            var meds = [];
-            var mins = [];
-            /*
-            buildings.forEach(function(currBuilding) {
-                var to_pass = {building: currBuilding, val : "Accumulated Real Energy Net"};
-                var max = {name: parseName(currBuilding.name), max : null, units : null};
-                var med = {name: parseName(currBuilding.name), med : null, units : null};
-                var min = {name: parseName(currBuilding.name), min : null, units : null};
-                Building.getBuildingData(to_pass).then(function(data) {
-                    //console.log(data);
-                    y = [];
-                    data.forEach(function(entry){
-                        if(entry.point[0]) {
-                            y.push(entry.point[0].value);
-                        }
-                    });
-                    max.max = Math.max(...y);
-                    max.units = "KwH";
-                    min.min = Math.min(...y);
-                    min.units = "KwH";
 
-                    y.sort((a, b) => a - b);
-                    var lowMiddle = Math.floor((y.length - 1) / 2);
-                    var highMiddle = Math.ceil((y.length - 1) / 2);
-                    med.med = (y[lowMiddle] + y[highMiddle]) / 2;
-                    med.units = "KwH";
-
-
-                });
-                maxes.push(max);
-                meds.push(med);
-                mins.push(min);
-            });
-            $scope.maxValues.push(maxes);
-            $scope.medValues.push(meds);
-            $scope.minValues.push(mins);
-            */
-        };
 
         /*---------------------------------------------------------------------------------------
         ----------------------------------EDIT/UPDATE FUNCTIONS----------------------------------

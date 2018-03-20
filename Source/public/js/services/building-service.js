@@ -32,8 +32,8 @@ angular.module('BuildingService', [])
                     method: "GET",
                     params: {buildings: buildings.buildings,
                             variable : buildings.var,
-                            startDate : buildings.start,
-                            endDate : buildings.end
+                            start : buildings.start,
+                            end : buildings.end
                     }
                 });
             }

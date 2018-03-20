@@ -85,11 +85,18 @@ module.exports = function(app, passport) {
     });
 
     app.get('/api/getBuildingData', function(req, res) {
+        var match;
+        if(req.query.start && req.query.end) {
+            match = {timestamp : { $lt: req.query.end, $gte : req.query.start}}
+        }
+        else{
+            match = {};
+        }
         console.log(req.query);
         Building.find({_id : { $in: req.query.buildings }})
             .populate(
                 { path: 'data_entries',
-                    match : {timestamp : { $lt: "2018-03-15 00:45:00", $gte : "2018-03-14 21:00:00"}}, //THIS WORKS TO FILTER DATES
+                    match : match, //THIS WORKS TO FILTER DATES
                     select : 'id'
             })
             .exec(function (err, dataEntries) {

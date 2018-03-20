@@ -5,7 +5,8 @@
 </h1>
 <br>
 <div>
-	<div ng-controller="chartController" class="card mb-3 Stratum2-Light font-weight-bold border-orange-thin" style="width: 100%;" ng-repeat="block in userBlocks">
+	<div ng-controller="chartController"
+         class="card mb-3 Stratum2-Light font-weight-bold border-orange-thin" style="width: 100%;" ng-repeat="block in userBlocks">
 		<div class="card-header h-100">
 			<div class="row m-0">
 				<div class="col-3">
@@ -40,7 +41,7 @@
 						</li>
 					</ul>
 				</div>
-				<div class="col-2" >
+				<div class="col-2" ng-init="initVals()">
 					<div class="row">
 						<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">High</div>
 						<ul class="list-unstyled">
@@ -102,24 +103,24 @@
 				<div class="col-7">
 					<div class="row container p-0 m-0">
 						<canvas ng-controller="chartController"
-								ng-init="createChart({building: block.building, var : 'Accumulated Real Energy Net'})"
+                                ng-init="createChart({building: block.building, var : 'Accumulated Real Energy Net'})"
 								class="myChart d-inline-block w-100"></canvas>
 					</div>
 					<div class="row p-1 m-3">
 						<div class="col-2"></div>
 						<div class="col-3">
 							<button class="btn btn-success"
-									ng-click="filterResults({building: block.building, var : 'Accumulated Real Energy Net', range : 'lastweek'})">
+									ng-click="filterResults({building: block.building, var : 'Accumulated Real Energy Net', range : 'lastweek', index : $index})">
 								Last Week</button>
 						</div>
 						<div class="col-3">
 							<button class="btn btn-success"
-									ng-click="filterResults({building: block.building, var : 'Accumulated Real Energy Net', range : 'thisweek'})">
+									ng-click="filterResults({building: block.building, var : 'Accumulated Real Energy Net', range : 'thisweek', index : $index})">
 								This Week</button>
 						</div>
 						<div class="col-3">
 							<button class="btn btn-success"
-									ng-click="filterResults({building: block.building, var : 'Accumulated Real Energy Net', range : 'month'})">
+									ng-click="filterResults({building: block.building, var : 'Accumulated Real Energy Net', range : 'month', index : $index})">
 								This Month</button>
 						</div>
 
