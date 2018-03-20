@@ -1,8 +1,7 @@
-
 var viewStory;
 var editStory;
 angular.module('storyController', [])
-    .controller('storyController', function($route, $scope, $location, Dashboard, Story) {
+    .controller('storyController', function ($route, $scope, $location, Dashboard, Story) {
 
         /*---------------------------------------------------------------------------------------
         ------------------------------------CREATE FUNCTIONS-------------------------------------
@@ -11,7 +10,7 @@ angular.module('storyController', [])
             // validate the formData to make sure that something is there
             // if form is empty, nothing will happen
             // people can't just hold enter to keep adding the same to-do anymore
-            if (!$.isEmptyObject($scope.nameForm))  {
+            if (!$.isEmptyObject($scope.nameForm)) {
                 // call the create function from our service (returns a promise object)
                 var StoryData = {
                     "name": $scope.nameForm,
@@ -19,11 +18,11 @@ angular.module('storyController', [])
                 };
                 console.log(StoryData);
                 Story.create(StoryData)
-                // if successful creation
-                    .success(function(data) {
+                    // if successful creation
+                    .success(function (data) {
                         $scope.nameForm = "";
                         Story.get()
-                            .success(function(user_stories){
+                            .success(function (user_stories) {
                                 $scope.stories = user_stories;
                                 console.log($scope.stories);
                                 $location.path('/');
@@ -31,7 +30,7 @@ angular.module('storyController', [])
                     });
             }
         }
-        $scope.create = function() {
+        $scope.create = function () {
             editStory = null;
             $location.path('/createStory');
         };
@@ -39,49 +38,46 @@ angular.module('storyController', [])
         /*---------------------------------------------------------------------------------------
        ----------------------------------EDIT/UPDATE FUNCTIONS----------------------------------
        ---------------------------------------------------------------------------------------*/
-        $scope.EditStory = function(story) {
+        $scope.EditStory = function (story) {
             editStory = story;
             $location.path('/createStory');
         };
 
-        $scope.getName = function(){
-            if(editStory){
+        $scope.getName = function () {
+            if (editStory) {
                 $scope.nameForm = editStory.name;
             }
         };
-        $scope.getTitle = function(){
-            if(editStory != null){
+        $scope.getTitle = function () {
+            if (editStory != null) {
                 $scope.title = "Update Story";
                 $scope.buttontext = "Update";
-            }
-            else{
+            } else {
                 $scope.title = "Create Story";
                 $scope.buttontext = "Create";
             }
         };
-        $scope.getStoryDashboards = function() {
+        $scope.getStoryDashboards = function () {
             $scope.selectedDashboards = [];
             $scope.user_dashboards = [];
-            if(editStory != null){
+            if (editStory != null) {
                 Dashboard.getName()
                     .then(function (data) {
                         console.log(data);
                         $scope.user_dashboards = data.data;
-                        editStory.dashboards.forEach( function(dashboard){
+                        editStory.dashboards.forEach(function (dashboard) {
                             var count = 0;
                             $scope.user_dashboards.forEach(function (obj) {
-                                if(obj._id == dashboard._id){
+                                if (obj._id == dashboard._id) {
                                     $scope.user_dashboards.splice(count, 1);
                                     $scope.selectedDashboards.push(obj);
                                     count++;
-                                }
-                                else count++;
+                                } else count++;
                             });
                         });
                         $scope.dashboardSelection = "";
                     });
-            }
-            else{
+            } else {
                 Dashboard.getName()
                     .then(function (data) {
                         $scope.user_dashboards = data.data;
@@ -92,7 +88,7 @@ angular.module('storyController', [])
         $scope.selectedStory = viewStory;
         $scope.user_dashboards = [];
 
-        $scope.selection = function(dashboard) {
+        $scope.selection = function (dashboard) {
             $scope.selectedDashboards.push(dashboard);
             var index = $scope.user_dashboards.indexOf(dashboard);
             if (index > -1) {
@@ -101,7 +97,7 @@ angular.module('storyController', [])
             $scope.dashboardSelection = "";
         };
 
-        $scope.removeDashboard = function(dashboard) {
+        $scope.removeDashboard = function (dashboard) {
             $scope.user_dashboards.push(dashboard);
             var index = $scope.selectedDashboards.indexOf(dashboard);
             if (index > -1) {
@@ -114,19 +110,19 @@ angular.module('storyController', [])
             // validate the formData to make sure that something is there
             // if form is empty, nothing will happen
             // people can't just hold enter to keep adding the same to-do anymore
-            if (!$.isEmptyObject($scope.nameForm))  {
+            if (!$.isEmptyObject($scope.nameForm)) {
                 // call the create function from our service (returns a promise object)
                 var StoryData = {
-                    "_id" : editStory._id,
+                    "_id": editStory._id,
                     "name": $scope.nameForm,
                     "dashboards": $scope.selectedDashboards
                 };
                 Story.update(StoryData)
-                // if successful creation
-                    .success(function(data) {
+                    // if successful creation
+                    .success(function (data) {
                         $scope.nameForm = "";
                         Story.get()
-                            .success(function(user_stories){
+                            .success(function (user_stories) {
                                 $scope.stories = user_stories;
                                 $location.path('/');
                             });
@@ -134,11 +130,10 @@ angular.module('storyController', [])
             }
         }
 
-        $scope.submit = function(){
-            if(editStory){
+        $scope.submit = function () {
+            if (editStory) {
                 UpdateStory();
-            }
-            else{
+            } else {
                 /*
                 Need to create an "Update" function and API
                  */
@@ -146,17 +141,19 @@ angular.module('storyController', [])
             }
         };
 
-        $scope.viewStory = function(story) {
+        $scope.viewStory = function (story) {
             viewStory = story;
             $location.path('/viewStory');
         };
 
-        $scope.DeleteStory = function(story){
+        $scope.DeleteStory = function (story) {
             console.log(story);
-            Story.delete({_id : story._id})
-                .success(function() {
+            Story.delete({
+                    _id: story._id
+                })
+                .success(function () {
                     Story.get()
-                        .success(function(user_stories){
+                        .success(function (user_stories) {
                             $scope.stories = user_stories;
                             $location.path('/');
                         });
@@ -164,7 +161,7 @@ angular.module('storyController', [])
         };
 
         Story.get()
-            .success(function(user_stories){
+            .success(function (user_stories) {
                 $scope.stories = user_stories;
             });
 

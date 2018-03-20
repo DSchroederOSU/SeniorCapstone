@@ -3,7 +3,7 @@ var selectedMeters = [];
 var dropdownMeters = [];
 var editBuilding;
 angular.module('buildingController', [])
-    .controller('buildingController', function($scope, $location, $route, Building, Meter) {
+    .controller('buildingController', function ($scope, $location, $route, Building, Meter) {
         selectedMeters = [];
         /*---------------------------------------------------------------------------------------
         ------------------------------------CREATE FUNCTIONS-------------------------------------
@@ -13,7 +13,7 @@ angular.module('buildingController', [])
             // validate the formData to make sure that something is there
             // if form is empty, nothing will happen
             // people can't just hold enter to keep adding the same to-do anymore
-            if (!$.isEmptyObject($scope.nameForm))  {
+            if (!$.isEmptyObject($scope.nameForm)) {
                 // call the create function from our service (returns a promise object)
                 var buildingData = {
                     "name": $scope.nameForm,
@@ -21,8 +21,8 @@ angular.module('buildingController', [])
                     "meters": selectedMeters
                 };
                 Building.create(buildingData)
-                // if successful creation
-                    .success(function(building) {
+                    // if successful creation
+                    .success(function (building) {
                         $scope.nameForm = "";
                         $scope.serialForm = "";
                         $location.path('/allBuildings')
@@ -33,41 +33,41 @@ angular.module('buildingController', [])
         This function is called on ng-click of the create block button in blocks.html
         makes sure that our edit variable is null to indicate we are creating
         */
-        $scope.create = function(){
+        $scope.create = function () {
             editBuilding = null;
         };
 
         /*---------------------------------------------------------------------------------------
         ----------------------------------EDIT/UPDATE FUNCTIONS----------------------------------
         ---------------------------------------------------------------------------------------*/
-        $scope.EditBuilding = function(block){
+        $scope.EditBuilding = function (block) {
             editBuilding = block;
             $location.path('/addBuilding');
         };
 
-        function UpdateBuilding(building){
+        function UpdateBuilding(building) {
             var update_building_data = {
-                "_id" : building._id,
+                "_id": building._id,
                 "name": $scope.nameForm,
                 "building_type": $scope.buildingSelection,
                 "meters": selectedMeters
             };
             Building.update(update_building_data)
-                .success(function() {
+                .success(function () {
                     $location.path('/allBuildings')
                 });
         }
         /*---------------------------------------------------------------------------------------
         -------------------------------------VIEW FUNCTIONS--------------------------------------
         ---------------------------------------------------------------------------------------*/
-        $scope.viewBuilding = function(building) {
+        $scope.viewBuilding = function (building) {
             selectedBuilding = building;
             $scope.BuildingName = building.name;
             $scope.buildingModel = building;
             $location.path('/viewBuilding');
         };
 
-        $scope.getViewBuilding = function(){
+        $scope.getViewBuilding = function () {
             $scope.buildingModel = selectedBuilding;
         };
         /*
@@ -75,17 +75,16 @@ angular.module('buildingController', [])
         INPUT: the current buildingModel of the building being viewed
         OUTPUT: calls a service to retrieve building meters so table can populate dynamically
          */
-        $scope.getBuildingData = function(building){
-            Building.getById(building._id).then(function(data) {
+        $scope.getBuildingData = function (building) {
+            Building.getById(building._id).then(function (data) {
                 $scope.buildingMeters = data.meters;
             });
         };
-        $scope.getImageAddress = function(building) {
-            if (building._id != null){
-                return "../assets/buildings/"+ building.name.replace(/\s+/g, '-').toLowerCase() + ".jpg";
-            }
-            else if(selectedBuilding._id != null){
-                return "../assets/buildings/"+ selectedBuilding.name.replace(/\s+/g, '-').toLowerCase() + ".jpg";
+        $scope.getImageAddress = function (building) {
+            if (building._id != null) {
+                return "../assets/buildings/" + building.name.replace(/\s+/g, '-').toLowerCase() + ".jpg";
+            } else if (selectedBuilding._id != null) {
+                return "../assets/buildings/" + selectedBuilding.name.replace(/\s+/g, '-').toLowerCase() + ".jpg";
             }
         };
 
@@ -99,24 +98,23 @@ angular.module('buildingController', [])
         Sets scope variables depending on if user is creating or editing
         Sets title heading and submit button text
         */
-        $scope.getTitle = function(){
-            if(editBuilding == null){
+        $scope.getTitle = function () {
+            if (editBuilding == null) {
                 $scope.title = "Create Building";
                 $scope.buttontext = "Create";
-            }
-            else{
+            } else {
                 $scope.title = "Update Building";
                 $scope.buttontext = "Update";
             }
         };
-		
+
 
         /*
         A function called on ng-init of the nameForm input tag
         prepopulates input form with the name of the block being edited
         */
-        $scope.getName = function(){
-            if(editBuilding != null){
+        $scope.getName = function () {
+            if (editBuilding != null) {
                 $scope.nameForm = editBuilding.name;
             }
         };
@@ -139,66 +137,64 @@ angular.module('buildingController', [])
         If creating:
         Calls the Building.get service to populate dropdown
         */
-        $scope.getBuildingMeters = function(){
-            if(editBuilding != null){
+        $scope.getBuildingMeters = function () {
+            if (editBuilding != null) {
                 Meter.get()
-                .then(function (data) {
-                    dropdownMeters = data.data;
-                    $scope.selectedBuildings = "";
-                    editBuilding.meters.forEach( function(meter){
-                        var count = 0;
-                        dropdownMeters.forEach(function (obj) {
-                            if(obj._id == meter){
-                                dropdownMeters.splice(count, 1);
-                                selectedMeters.push(obj);
-                                count++;
-                            }
-                            else count++;
+                    .then(function (data) {
+                        dropdownMeters = data.data;
+                        $scope.selectedBuildings = "";
+                        editBuilding.meters.forEach(function (meter) {
+                            var count = 0;
+                            dropdownMeters.forEach(function (obj) {
+                                if (obj._id == meter) {
+                                    dropdownMeters.splice(count, 1);
+                                    selectedMeters.push(obj);
+                                    count++;
+                                } else count++;
+                            });
                         });
-                    });
 
-                    $scope.meters = dropdownMeters;
-                    $scope.selectedMeters = selectedMeters;
-                    $scope.meterSelection = "";
-                });
-            }
-            else{
+                        $scope.meters = dropdownMeters;
+                        $scope.selectedMeters = selectedMeters;
+                        $scope.meterSelection = "";
+                    });
+            } else {
                 Meter.get()
-                .success(function (data) {
-                    $scope.meterSelection = "";
-                    dropdownMeters = data;
-                    $scope.meters = data;
-                });
+                    .success(function (data) {
+                        $scope.meterSelection = "";
+                        dropdownMeters = data;
+                        $scope.meters = data;
+                    });
             }
         };
 
-        $scope.getBuildingType = function(){
-            if(editBuilding != null){
+        $scope.getBuildingType = function () {
+            if (editBuilding != null) {
                 console.log(editBuilding);
                 $scope.buildingSelection = editBuilding.building_type;
 
             }
         };
 
-		
-		
-        $scope.DeleteBuilding = function(building){
+
+
+        $scope.DeleteBuilding = function (building) {
             Building.delete(building)
-                .success(function() {
+                .success(function () {
                     $location.path('/allBuildings');
                 });
         };
 
-        $scope.formatDate = function(date){
-            return "" + date.substring(0,10) + " " + date.substring(14,19).replace(/^0+/, '')
+        $scope.formatDate = function (date) {
+            return "" + date.substring(0, 10) + " " + date.substring(14, 19).replace(/^0+/, '')
         };
 
-        $scope.getDataDay = function(date){
-            console.log(date.substring(9,10));
-            return parseInt(date.substring(9,10))
+        $scope.getDataDay = function (date) {
+            console.log(date.substring(9, 10));
+            return parseInt(date.substring(9, 10))
         };
 
-        $scope.selection = function(meter) {
+        $scope.selection = function (meter) {
             selectedMeters.push(meter);
             var index = dropdownMeters.indexOf(meter);
             if (index > -1) {
@@ -209,7 +205,7 @@ angular.module('buildingController', [])
             $scope.meterSelection = "";
         };
 
-        $scope.removeMeter = function(meter) {
+        $scope.removeMeter = function (meter) {
             dropdownMeters.push(meter);
             var index = selectedMeters.indexOf(meter);
             if (index > -1) {
@@ -220,11 +216,10 @@ angular.module('buildingController', [])
             $scope.meterSelection = "";
         };
 
-        $scope.submit = function(){
-            if(editBuilding == null){
+        $scope.submit = function () {
+            if (editBuilding == null) {
                 CreateBuilding();
-            }
-            else{
+            } else {
                 /*
                 Need to create an "Update" function and API
                  */

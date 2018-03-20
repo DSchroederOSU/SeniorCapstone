@@ -3,7 +3,7 @@ var editBlock = null;
 var blocksChartData = [];
 
 angular.module('blockController', [])
-    .controller('blockController', function($route, $scope, $http, $location, $timeout, Building, Block, GetBlockByID) {
+    .controller('blockController', function ($route, $scope, $http, $location, $timeout, Building, Block, GetBlockByID) {
         //this is to clear the selection
         $scope.maxValues = [];
         $scope.medValues = [];
@@ -12,7 +12,7 @@ angular.module('blockController', [])
         This is the function for removing from the dropdown
         and adding to the selection list group
          */
-        $scope.selection = function(building) {
+        $scope.selection = function (building) {
             $scope.selectedBuildings.push(building);
             var index = $scope.buildings.indexOf(building);
             if (index > -1) {
@@ -25,7 +25,7 @@ angular.module('blockController', [])
         This is the function for removing from the selection list group
         and adding the building back to the dropdown menu
          */
-        $scope.removeBuilding = function(building) {
+        $scope.removeBuilding = function (building) {
             $scope.buildings.push(building);
             var index = $scope.selectedBuildings.indexOf(building);
             if (index > -1) {
@@ -40,7 +40,7 @@ angular.module('blockController', [])
         OUTPUT: loads the $scope variable userBlocks with API data
         */
         Block.get()
-            .success(function(data) {
+            .success(function (data) {
                 $scope.userBlocks = data;
             });
 
@@ -49,9 +49,11 @@ angular.module('blockController', [])
         INPUT: the block that was selected from DOM
         OUTPUT: reloads current page to show updated user blocks
         */
-        $scope.DeleteBlock = function(block){
-            Block.delete({_id : block._id})
-                .success(function() {
+        $scope.DeleteBlock = function (block) {
+            Block.delete({
+                    _id: block._id
+                })
+                .success(function () {
                     $route.reload();
                 });
         };
@@ -61,12 +63,11 @@ angular.module('blockController', [])
         Sets scope variables depending on if user is creating or editing
         Sets title heading and submit button text
         */
-        $scope.getTitle = function(){
-            if(editBlock == null){
+        $scope.getTitle = function () {
+            if (editBlock == null) {
                 $scope.title = "Create Block";
                 $scope.buttontext = "Create";
-            }
-            else{
+            } else {
                 $scope.title = "Update Block";
                 $scope.buttontext = "Update";
             }
@@ -76,7 +77,7 @@ angular.module('blockController', [])
         This function is called on ng-click of the create block button in blocks.html
         makes sure that our edit variable is null to indicate we are creating
         */
-        $scope.create = function(){
+        $scope.create = function () {
             editBlock = null;
         };
 
@@ -94,30 +95,28 @@ angular.module('blockController', [])
         If creating:
         Calls the Building.get service to populate dropdown
         */
-        $scope.getBlockBuildings = function(){
-            if(editBlock != null){
+        $scope.getBlockBuildings = function () {
+            if (editBlock != null) {
                 GetBlockByID.get(editBlock)
-                    .then(function(block) {
+                    .then(function (block) {
                         Building.get()
                             .then(function (data) {
                                 $scope.buildings = data.data;
                                 $scope.selectedBuildings = [];
-                                block.data.building.forEach( function(building){
+                                block.data.building.forEach(function (building) {
                                     var count = 0;
                                     $scope.buildings.forEach(function (obj) {
-                                        if(obj._id == building._id){
+                                        if (obj._id == building._id) {
                                             $scope.buildings.splice(count, 1);
                                             $scope.selectedBuildings.push(obj);
                                             count++;
-                                        }
-                                        else count++;
+                                        } else count++;
                                     });
                                 });
                                 $scope.buildingSelection = "";
                             });
                     });
-            }
-            else{
+            } else {
                 Building.get()
                     .then(function (data) {
                         $scope.buildings = data.data;
@@ -125,8 +124,6 @@ angular.module('blockController', [])
                     });
             }
         };
-		
-
 
         /*---------------------------------------------------------------------------------------
         ----------------------------------EDIT/UPDATE FUNCTIONS----------------------------------
@@ -136,7 +133,7 @@ angular.module('blockController', [])
         This function is called on ng-click of the edit block button in blocks.html
         makes sure that our editBlock variable is set to the correct block
         */
-        $scope.EditBlock = function(block){
+        $scope.EditBlock = function (block) {
             editBlock = block;
             $location.path('/createblock');
         };
@@ -145,8 +142,8 @@ angular.module('blockController', [])
         A function called on ng-init of the nameForm input tag
         prepopulates input form with the name of the block being edited
         */
-        $scope.getName = function(){
-            if(editBlock != null){
+        $scope.getName = function () {
+            if (editBlock != null) {
                 $scope.nameForm = editBlock.name;
             }
         };
@@ -155,8 +152,8 @@ angular.module('blockController', [])
         A function called on ng-init of the chartForm input tag
         prepopulates input form with the chart-name of the block being edited
         */
-        $scope.getChart = function(){
-            if(editBlock != null){
+        $scope.getChart = function () {
+            if (editBlock != null) {
                 $scope.chartForm = editBlock.chart;
             }
         };
@@ -165,11 +162,10 @@ angular.module('blockController', [])
         This function is called on ng-click of submit button,
         this decides whether to call the create API or edit API
         */
-        $scope.submit = function(){
-            if(editBlock == null){
+        $scope.submit = function () {
+            if (editBlock == null) {
                 CreateBlock();
-            }
-            else{
+            } else {
                 /*
                 Need to create an "Update" function and API
                  */
@@ -185,7 +181,7 @@ angular.module('blockController', [])
             // validate the formData to make sure that something is there
             // if form is empty, nothing will happen
             // people can't just hold enter to keep adding the same to-do anymore
-            if (!$.isEmptyObject($scope.nameForm) && !$.isEmptyObject($scope.chartForm))  {
+            if (!$.isEmptyObject($scope.nameForm) && !$.isEmptyObject($scope.chartForm)) {
                 // call the create function from our service (returns a promise object)
                 var BlockData = {
                     "name": $scope.nameForm,
@@ -193,8 +189,8 @@ angular.module('blockController', [])
                     "buildings": $scope.selectedBuildings
                 };
                 Block.create(BlockData)
-                // if successful creation
-                    .success(function(data) {
+                    // if successful creation
+                    .success(function (data) {
                         $scope.nameForm = "";
                         $scope.chartForm = "";
                         $location.path('/blocks');
@@ -202,22 +198,22 @@ angular.module('blockController', [])
                     });
             }
         }
-        
+
         /*
         Function to update block information by taking the id of the current block and 
         taking the $scope variables for updated info.
         */
-        function UpdateBlock(editBlock){
+        function UpdateBlock(editBlock) {
             var update_block_data = {
-                "_id"   : editBlock._id,
-                "name"  : $scope.nameForm,
-                "chart" : $scope.chartForm,
+                "_id": editBlock._id,
+                "name": $scope.nameForm,
+                "chart": $scope.chartForm,
                 "building": $scope.selectedBuildings,
                 "variable": 'Killowatts/Hr'
             };
             Block.update(update_block_data)
-                .success(function() {
+                .success(function () {
                     $location.path('/blocks');
                 });
         }
-	});
+    });
