@@ -145,7 +145,7 @@ module.exports = function(app, passport) {
                             if (err || datapoints == []) { res.json({building: null});}
                             else{
                                 var to_return = [];
-                                if (req.query.buildings.length <= 1 && dataEntries != '[]'){
+                                if (req.query.buildings && req.query.buildings.length <= 1 && dataEntries != '[]'){
                                     req.query.buildings.forEach(function(building_id) {
                                         to_return.push({id : building_id, points : datapoints.filter(entry => entry.building == building_id)});
                                     });
