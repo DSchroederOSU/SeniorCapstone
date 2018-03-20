@@ -1,6 +1,7 @@
 require('mongoose');
 
 var parseString = require('xml2js').parseString;
+var bodyParser = require('body-parser');
 var User = require('./models/user-schema');
 var Building = require('./models/building-schema');
 var Meter = require('./models/meter-schema');
@@ -9,44 +10,108 @@ var Dashboard = require('./models/dashboard-schema');
 var Block = require('./models/block-schema');
 var Story = require('./models/story-schema');
 var AWS = require('aws-sdk');
-module.exports = function(app, passport) {
-    
+var filter = require('content-filter');
+var blackList = ['$', '{', '&&', '||']
+var options = {
+    urlBlackList: blackList,
+    bodyBlackList: blackList
+}
+module.exports = function (app, passport) {
+    app.use(filter(options));
     app.get('/', function (req, res) {
-        
+
         return res.render('./index.html'); // load the index.html file
     });
 
-    app.get('/api/google_user', function(req, res) {
-        if (req.user){
+    app.get('/api/google_user', function (req, res) {
+        if (req.user) {
             res.json(req.user.google);
-        }
-        else {
+        } else {
             res.send(null)
         }
-        
+
 
     });
-   
+
 
     // =====================================================================
     ///////////////////////////////BUILDING API/////////////////////////////
     // =====================================================================
-    app.post('/api/addBuilding', function(req, res) {
+    app.post('/api/addBuilding', function (req, res) {
         var building = new Building();
         building.name = req.body.name;
         building.building_type = req.body.building_type;
         building.meters = req.body.meters;
-        building.save(function(err, savedBuilding) {
+        building.save(function (err, savedBuilding) {
             if (err)
                 throw err;
-            else{
-                savedBuilding.meters.forEach( meter => {
-                        updateOldBuildingMeters(meter, savedBuilding)
-                            .then(addMeter(meter,savedBuilding))
+            else {
+                savedBuilding.meters.forEach(meter => {
+                    updateOldBuildingMeters(meter, savedBuilding)
+                        .then(addMeter(meter, savedBuilding))
                 });
                 res.json(savedBuilding);
 
             }
+        });
+    });
+
+    app.post('/api/updateBuilding', function (req, res) {
+        console.log(req.body);
+        Building.findByIdAndUpdate({
+            _id: req.body._id
+        }, {
+            $set: {
+                'name': req.body.name,
+                'building_type': req.body.building_type,
+                'meters': req.body.meters
+                // instead of pushing meters here, might do similar function call like in addBuilding
+            }
+        }, {
+            safe: true,
+            upsert: true,
+            new: true
+        }, function (err, meter) {
+            if (err)
+                throw (err);
+            else {
+                req.body.meters.forEach(meter => {
+                    updateOldBuildingMeters(meter._id, req.body)
+                        .then(addMeter(meter._id, req.body))
+                });
+
+                // updateOldBuildingMeters(req.body.meters[i],req.body).then(console.log('hi'));
+
+            }
+        });
+        res.json(req.body);
+    });
+
+    app.post('/api/deleteBuilding', function (req, res) {
+        // null out the meters in this building?
+        Building.remove({
+            _id: req.body._id
+        }, function (err) {
+            if (err) return handleError(err);
+            Meter.updateMany({
+                building: req.body._id
+            }, {
+                $set: {
+                    building: null
+                }
+            }, () => {
+                DataEntry.updateMany({
+                    building: req.body._id
+                }, {
+                    $set: {
+                        building: null
+                    }
+                }, () => res.json({
+                    message: "success"
+                }));
+            });
+
+
         });
     });
 
@@ -58,23 +123,14 @@ module.exports = function(app, passport) {
             res.json(buildings.filter(building => building._id != null)); // return all buildings in JSON format
         });
     });
-    
-    app.post('/api/deleteBuilding', function(req, res) {
-        // null out the meters in this building?
-        Building.remove(
-            {_id : req.body._id}, function (err) {
-                if (err) return handleError(err);
-                    Meter.updateMany({building:req.body._id},{$set: {building: null}}, () =>{ 
-                        DataEntry.updateMany({building:req.body._id},{$set: {building: null}}, () => res.json({message: "success"}));
-                    });
-                   
-               
-            });
-    });
 
-    app.get('/api/getBuildingById', function(req, res) {
+
+
+    app.get('/api/getBuildingById', function (req, res) {
         // delete a building then set it's meters/data 'building' var to null
-        Building.findOne({_id : req.query._id})
+        Building.findOne({
+                _id: req.query._id
+            })
             .populate({
                 path: 'meters'
             })
@@ -84,66 +140,74 @@ module.exports = function(app, passport) {
             });
     });
 
-    app.get('/api/getBuildingData', function(req, res) {
+    app.get('/api/getBuildingData', function (req, res) {
         var match;
-        if(req.query.start && req.query.end) {
-            match = {timestamp : { $lt: req.query.end, $gte : req.query.start}}
-        }
-        else{
+        if (req.query.start && req.query.end) {
+            match = {
+                timestamp: {
+                    $lt: req.query.end,
+                    $gte: req.query.start
+                }
+            }
+        } else {
             match = {};
         }
-        console.log(req.query);
-        Building.find({_id : { $in: req.query.buildings }})
-            .populate(
-                { path: 'data_entries',
-                    match : match, //THIS WORKS TO FILTER DATES
-                    select : 'id'
+
+        Building.find({
+                _id: {
+                    $in: req.query.buildings
+                }
+            })
+            .populate({
+                path: 'data_entries',
+                match: match, //THIS WORKS TO FILTER DATES
+                select: 'id'
             })
             .exec(function (err, dataEntries) {
-                if (err){
-                    res.json({building : null});
-                }
-                else{
-                    DataEntry.find({_id : { $in: [].concat.apply([], dataEntries.map(d => d.data_entries))}})
-                        .select({ point: { $elemMatch: { name: "Accumulated Real Energy Net" }}})
+                if (err || !dataEntries) {
+                    res.json({
+                        building: null
+                    });
+                } else {
+                    DataEntry.find({
+                            _id: {
+                                $in: [].concat.apply([], dataEntries.map(d => d.data_entries))
+                            }
+                        })
+                        .select({
+                            point: {
+                                $elemMatch: {
+                                    name: "Accumulated Real Energy Net"
+                                }
+                            }
+                        })
                         .select('-_id timestamp point.value building')
                         .exec(function (err, datapoints) {
-                            if (err) { res.json({building: null});}
-                            else{
-                                var to_return = [];
-                                req.query.buildings.forEach(function(building_id) {
-                                    to_return.push({id : building_id, points : datapoints.filter(entry => entry.building == building_id)});
+                            if (err || datapoints == []) {
+                                res.json({
+                                    building: null
                                 });
+                            } else {
+                                var to_return = [];
+                                if (req.query.buildings && req.query.buildings.length <= 1 && dataEntries != '[]') {
+                                    req.query.buildings.forEach(function (building_id) {
+                                        to_return.push({
+                                            id: building_id,
+                                            points: datapoints.filter(entry => entry.building == building_id)
+                                        });
+                                    });
+                                } else {
+                                    to_return.push({
+                                        id: req.query.buildings,
+                                        points: datapoints.filter(entry => entry.building == req.query.buildings)
+                                    });
+                                }
                                 res.json(to_return);
                             }
                         });
                 }
             });
-    });
 
-    app.post('/api/updateBuilding', function(req, res) {
-        console.log(req.body);
-       Building.findByIdAndUpdate(
-            { _id: req.body._id},
-            { $set: {
-                'name': req.body.name,
-                'building_type': req.body.building_type,
-                'meters':  req.body.meters
-                // instead of pushing meters here, might do similar function call like in addBuilding
-            }},
-            {safe: true, upsert: true, new: true}, function(err, meter) {
-                if (err)
-                    throw(err);
-                else{
-                    req.body.meters.forEach( meter => {
-                        updateOldBuildingMeters(meter._id, req.body)
-                        .then(addMeter(meter._id,req.body))
-                    });
-                
-                        // updateOldBuildingMeters(req.body.meters[i],req.body).then(console.log('hi'));
-                    
-        }});
-        res.json(req.body);
     });
 
     app.get('/storyNav', function (req, res) {
@@ -161,25 +225,14 @@ module.exports = function(app, passport) {
     // =====================================================================
     ///////////////////////////////BLOCK API////////////////////////////////
     // =====================================================================
-    app.get('/api/getUserBlocks', function(req, res) {
-        User.findOne({_id : req.user._id})
-            .populate({
-                path: 'blocks',
-                populate: {path: 'building'}
+    app.get('/api/getUserBlocks', function (req, res) {
+        User.findOne({
+                _id: req.user._id
             })
-            .exec(function (err, user) {
-                if (err) return handleError(err);
-                    res.json(user.blocks);
-        });
-    });
-
-    app.get('/api/getBlocksForDashboards', function(req, res) {
-        User.findOne({_id : req.user._id})
             .populate({
                 path: 'blocks',
                 populate: {
-                    path: 'building',
-                    select : 'id'
+                    path: 'building'
                 }
             })
             .exec(function (err, user) {
@@ -188,7 +241,24 @@ module.exports = function(app, passport) {
             });
     });
 
-    app.post('/api/addBlock', function(req, res) {
+    app.get('/api/getBlocksForDashboards', function (req, res) {
+        User.findOne({
+                _id: req.user._id
+            })
+            .populate({
+                path: 'blocks',
+                populate: {
+                    path: 'building',
+                    select: 'id'
+                }
+            })
+            .exec(function (err, user) {
+                if (err) return handleError(err);
+                res.json(user.blocks);
+            });
+    });
+
+    app.post('/api/addBlock', function (req, res) {
         console.log("REACHED");
         var user = req.user;
         var block = new Block();
@@ -197,75 +267,99 @@ module.exports = function(app, passport) {
         block.created_by = user;
         block.building = req.body.buildings;
         block.chart = req.body.chart;
-        block.variable  = "Killowatts/Hr";
+        block.variable = "Killowatts/Hr";
         // save the blocks
-        block.save(function(err, savedBlock) {
+        block.save(function (err, savedBlock) {
             if (err)
                 throw err;
 
-            else 
-                User.findByIdAndUpdate(
-                    { _id: user._id},
-                    { $push:{blocks: savedBlock}},
-                    {safe: true, upsert: true, new: true}, function(err, user) {
-                        if (err)
-                            throw(err);
-                        else{
-                            res.json(user);
-                        }});
+            else
+                User.findByIdAndUpdate({
+                    _id: user._id
+                }, {
+                    $push: {
+                        blocks: savedBlock
+                    }
+                }, {
+                    safe: true,
+                    upsert: true,
+                    new: true
+                }, function (err, user) {
+                    if (err)
+                        throw (err);
+                    else {
+                        res.json(user);
+                    }
+                });
 
         });
     });
 
-    app.post('/api/deleteBlock', function(req, res) {
-        User.findByIdAndUpdate(
-            { _id: req.user._id},
-            { $pull:{blocks: req.body._id}}, function(err, user) {
-                if (err)
-                    throw(err);
-                else{
-                    Block.remove({_id : req.body._id}, function (err) {
-                        if (err) return handleError(err);
-                        res.json({message: "success"});
+    app.post('/api/deleteBlock', function (req, res) {
+        User.findByIdAndUpdate({
+            _id: req.user._id
+        }, {
+            $pull: {
+                blocks: req.body._id
+            }
+        }, function (err, user) {
+            if (err)
+                throw (err);
+            else {
+                Block.remove({
+                    _id: req.body._id
+                }, function (err) {
+                    if (err) return handleError(err);
+                    res.json({
+                        message: "success"
                     });
-                }
-            });
-
-    });
-   
-    app.get('/api/getBlockById', function(req, res) {
-        Block.findOne({_id : req.query.block_id})
-        .populate({
-             path: 'building'
-        })
-        .exec(function (err, block) {
-            if (err) return handleError(err);
-            res.json(block);
+                });
+            }
         });
+
     });
 
-    app.post('/api/updateBlock', function(req, res) {
+    app.get('/api/getBlockById', function (req, res) {
+        Block.findOne({
+                _id: req.query.block_id
+            })
+            .populate({
+                path: 'building'
+            })
+            .exec(function (err, block) {
+                if (err) return handleError(err);
+                res.json(block);
+            });
+    });
+
+    app.post('/api/updateBlock', function (req, res) {
         console.log(req.body);
-       Block.findByIdAndUpdate(
-            { _id: req.body._id},
-            { $set: {
+        Block.findByIdAndUpdate({
+            _id: req.body._id
+        }, {
+            $set: {
                 'name': req.body.name,
                 'chart': req.body.chart,
                 'building': req.body.building,
                 'variable': req.body.variable
-            }},
-            {safe: true, upsert: true, new: true}, function(err, meter) {
-                if (err)
-                    throw(err);
-                else{
-                    res.json(meter);
-                }});
+            }
+        }, {
+            safe: true,
+            upsert: true,
+            new: true
+        }, function (err, meter) {
+            if (err)
+                throw (err);
+            else {
+                res.json(meter);
+            }
+        });
     });
 
     // =====================================================================
     /////////////////////////////DASHBOARD API//////////////////////////////
     // =====================================================================
-    app.post('/api/addDashboard', function(req, res) {
+    app.post('/api/addDashboard', function (req, res) {
         console.log(req.body);
         var user = req.user;
         var dashboard = new Dashboard();
@@ -274,24 +368,34 @@ module.exports = function(app, passport) {
         dashboard.created_by = user;
         dashboard.blocks = req.body.blocks;
 
-        dashboard.save(function(err, savedDashboard) {
+        dashboard.save(function (err, savedDashboard) {
             if (err)
                 throw err;
             else
-                User.findByIdAndUpdate(
-                    { _id: user._id},
-                    { $push:{dashboards: savedDashboard}},
-                    {safe: true, upsert: true, new: true}, function(err, user) {
-                        if (err)
-                            throw(err);
-                        else{
-                            res.json(user);
-                        }});
+                User.findByIdAndUpdate({
+                    _id: user._id
+                }, {
+                    $push: {
+                        dashboards: savedDashboard
+                    }
+                }, {
+                    safe: true,
+                    upsert: true,
+                    new: true
+                }, function (err, user) {
+                    if (err)
+                        throw (err);
+                    else {
+                        res.json(user);
+                    }
+                });
         });
     });
 
-    app.get('/api/getDashboards', isLoggedIn, function(req, res) {
-        User.findOne({_id : req.user._id})
+    app.get('/api/getDashboards', isLoggedIn, function (req, res) {
+        User.findOne({
+                _id: req.user._id
+            })
             .populate({
                 path: 'dashboards',
                 populate: {
@@ -302,69 +406,94 @@ module.exports = function(app, passport) {
                 }
             })
             .exec(function (err, user) {
-                if (err){
+                if (err) {
                     console.log("Error");
                 };
                 res.json(user.dashboards);
             });
     });
 
-    app.get('/api/getDashboardNames', isLoggedIn, function(req, res) {
-        User.findOne({_id : req.user._id})
+    app.get('/api/getDashboardNames', isLoggedIn, function (req, res) {
+        User.findOne({
+                _id: req.user._id
+            })
             .populate({
                 path: 'dashboards',
-                select : 'name'
+                select: 'name'
             })
             .exec(function (err, user) {
-                if (err){
+                if (err) {
                     console.log("Error");
                 };
                 res.json(user.dashboards);
             });
     });
 
-    app.post('/api/deleteDashboard', function(req, res) {
-        User.findByIdAndUpdate(
-            { _id: req.user._id},
-            { $pull:{dashboards: req.body._id}}, function(err) {
-                if (err)
-                    throw(err);
-                else{
-                    Dashboard.remove({_id : req.body._id}, function (err) {
-                        if (err) return handleError(err);
-                        res.json({message: "success"});
+    app.post('/api/deleteDashboard', function (req, res) {
+        User.findByIdAndUpdate({
+            _id: req.user._id
+        }, {
+            $pull: {
+                dashboards: req.body._id
+            }
+        }, function (err) {
+            if (err)
+                throw (err);
+            else {
+                Dashboard.remove({
+                    _id: req.body._id
+                }, function (err) {
+                    if (err) return handleError(err);
+                    res.json({
+                        message: "success"
                     });
-                }
-            });
+                });
+            }
+        });
     });
 
-    app.post('/api/updateDashboard', function(req, res) {
+    app.post('/api/updateDashboard', function (req, res) {
         console.log(req.body);
-        Dashboard.findByIdAndUpdate(
-            { _id: req.body._id},
-            { $set: {
+        Dashboard.findByIdAndUpdate({
+            _id: req.body._id
+        }, {
+            $set: {
                 'name': req.body.name,
                 'description': req.body.description,
                 'blocks': req.body.blocks,
-            }},
-            {safe: true, upsert: true, new: true}, function(err, dash) {
-                if (err)
-                    throw(err);
-                else{
-                    res.json(dash);
-                }});
+            }
+        }, {
+            safe: true,
+            upsert: true,
+            new: true
+        }, function (err, dash) {
+            if (err)
+                throw (err);
+            else {
+                res.json(dash);
+            }
+        });
     });
 
 
     // =====================================================================
     ///////////////////////////////STORY API////////////////////////////////
     // =====================================================================
-    app.get('/api/getUserStories', isLoggedIn, function(req, res) {
-        User.findOne({_id : req.user._id})
-            .populate({path: 'stories',
-                populate: {path: 'dashboards',
-                    populate: {path: 'blocks',
-                        populate: {path: 'building'}}}
+    app.get('/api/getUserStories', isLoggedIn, function (req, res) {
+        User.findOne({
+                _id: req.user._id
+            })
+            .populate({
+                path: 'stories',
+                populate: {
+                    path: 'dashboards',
+                    populate: {
+                        path: 'blocks',
+                        populate: {
+                            path: 'building'
+                        }
+                    }
+                }
             })
             .exec(function (err, user) {
                 if (err) return handleError(err);
@@ -372,7 +501,7 @@ module.exports = function(app, passport) {
             });
     });
 
-    app.post('/api/addStory', function(req, res) {
+    app.post('/api/addStory', function (req, res) {
         console.log(req.body);
         var user = req.user;
         var story = new Story();
@@ -380,61 +509,86 @@ module.exports = function(app, passport) {
         story.created_by = user;
         story.dashboards = req.body.dashboards;
 
-        story.save(function(err, savedStory) {
+        story.save(function (err, savedStory) {
             if (err)
                 throw err;
             else
                 console.log(savedStory);
-                User.findByIdAndUpdate(
-                    { _id: user._id},
-                    { $push:{stories: savedStory}},
-                    {safe: true, upsert: true, new: true}, function(err, user) {
-                        if (err)
-                            throw(err);
-                        else{
-                            res.json(user);
-                        }});
-        });
-    });
-    app.post('/api/updateStory', function(req, res) {
-        console.log(req.body);
-        Story.findByIdAndUpdate(
-            { _id: req.body._id},
-            { $set:{'dashboards': req.body.dashboards, 'name': req.body.name}},
-            {safe: true, upsert: true, new: true}, function(err, story) {
+            User.findByIdAndUpdate({
+                _id: user._id
+            }, {
+                $push: {
+                    stories: savedStory
+                }
+            }, {
+                safe: true,
+                upsert: true,
+                new: true
+            }, function (err, user) {
                 if (err)
-                    throw(err);
-                else{
-                    res.json(story);
-                }});
-    });
-
-    app.post('/api/deleteStory', function(req, res) {
-        console.log(req.body);
-        User.findByIdAndUpdate(
-            { _id: req.user._id},
-            { $pull:{stories: req.body._id}}, function(err) {
-                if (err)
-                    throw(err);
-                else{
-                    Story.remove({_id : req.body._id}, function (err) {
-                        if (err) return handleError(err);
-                        res.json({message: "success"});
-                    });
+                    throw (err);
+                else {
+                    res.json(user);
                 }
             });
+        });
+    });
+    app.post('/api/updateStory', function (req, res) {
+        console.log(req.body);
+        Story.findByIdAndUpdate({
+            _id: req.body._id
+        }, {
+            $set: {
+                'dashboards': req.body.dashboards,
+                'name': req.body.name
+            }
+        }, {
+            safe: true,
+            upsert: true,
+            new: true
+        }, function (err, story) {
+            if (err)
+                throw (err);
+            else {
+                res.json(story);
+            }
+        });
+    });
+
+    app.post('/api/deleteStory', function (req, res) {
+        console.log(req.body);
+        User.findByIdAndUpdate({
+            _id: req.user._id
+        }, {
+            $pull: {
+                stories: req.body._id
+            }
+        }, function (err) {
+            if (err)
+                throw (err);
+            else {
+                Story.remove({
+                    _id: req.body._id
+                }, function (err) {
+                    if (err) return handleError(err);
+                    res.json({
+                        message: "success"
+                    });
+                });
+            }
+        });
     });
 
     // =====================================================================
     /////////////////////////////METER API//////////////////////////////
     // =====================================================================
-    app.post('/api/addMeter', function(req, res) {
+    app.post('/api/addMeter', function (req, res) {
         var user = req.user;
         var meter = new Meter();
         meter.name = req.body.name;
         meter.meter_id = req.body.meter_id;
         meter.building = null;
-        meter.save(function(err, savedMeter) {
+        meter.save(function (err, savedMeter) {
             if (err)
                 throw err;
             else
@@ -442,7 +596,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    app.get('/api/getMeters', function(req, res) {
+    app.get('/api/getMeters', function (req, res) {
         Meter.find({})
             .populate({
                 path: 'building'
@@ -453,8 +607,10 @@ module.exports = function(app, passport) {
             });
     });
 
-    app.get('/api/getMeterById', function(req, res) {
-        Meter.findOne({_id : req.query.meter_id})
+    app.get('/api/getMeterById', function (req, res) {
+        Meter.findOne({
+                _id: req.query.meter_id
+            })
             .populate({
                 path: 'building'
             })
@@ -464,28 +620,48 @@ module.exports = function(app, passport) {
             });
     });
 
-    app.post('/api/updateMeter', function(req, res) {
+    app.post('/api/updateMeter', function (req, res) {
         console.log(req.body);
-        Meter.findByIdAndUpdate(
-            { _id: req.body.id},
-            { $set:{'meter_id': req.body.meter_id, 'name': req.body.name}},
-            {safe: true, upsert: true, new: true}, function(err, meter) {
-                if (err)
-                    throw(err);
-                else{
-                    res.json(meter);
-                }});
+        Meter.findByIdAndUpdate({
+            _id: req.body.id
+        }, {
+            $set: {
+                'meter_id': req.body.meter_id,
+                'name': req.body.name
+            }
+        }, {
+            safe: true,
+            upsert: true,
+            new: true
+        }, function (err, meter) {
+            if (err)
+                throw (err);
+            else {
+                res.json(meter);
+            }
+        });
     });
-    app.post('/api/deleteMeter', function(req, res) {
-       Meter.remove(
-            {_id : req.body._id}, function (err) {
-                if (err) return handleError(err);
-                Building.findOneAndUpdate({_id:req.body.building},{$pull:{meters: req.body._id}}, () => res.json({message: "success"}));
-            });
+    app.post('/api/deleteMeter', function (req, res) {
+        Meter.remove({
+            _id: req.body._id
+        }, function (err) {
+            if (err) return handleError(err);
+            Building.findOneAndUpdate({
+                _id: req.body.building
+            }, {
+                $pull: {
+                    meters: req.body._id
+                }
+            }, () => res.json({
+                message: "success"
+            }));
+        });
     });
 
-    app.post('/api/emailUser', function (req,res) {
-        AWS.config.update({region: 'us-west-2'});
+    app.post('/api/emailUser', function (req, res) {
+        AWS.config.update({
+            region: 'us-west-2'
+        });
         var credentials = new AWS.EnvironmentCredentials('AWS');
         credentials.accessKeyId = process.env.AWS_ACCESS_KEY_ID
         credentials.secretAccessKey = process.env.SECRET_ACCESS_KEY
@@ -493,42 +669,47 @@ module.exports = function(app, passport) {
 
         var params = {
             Destination: { /* required */
-              CcAddresses: [ ],
-              ToAddresses: [ req.body.email]
+                CcAddresses: [],
+                ToAddresses: [req.body.email]
             },
 
             Message: { /* required */
-              Body: { /* required */
-                Html: {
-                 Charset: "UTF-8",
-                 Data: "<h1>This is an E-mail from the application</h1><br> <h4>Please click the link below to be taken there.</h4><br>" +
-                        "<a href=\"http://localhost:3000/login/\">Click me!</a>"
+                Body: { /* required */
+                    Html: {
+                        Charset: "UTF-8",
+                        Data: "<h1>This is an E-mail from the application</h1><br> <h4>Please click the link below to be taken there.</h4><br>" +
+                            "<a href=\"http://localhost:3000/login/\">Click me!</a>"
+                    },
+                    Text: {
+                        Charset: "UTF-8",
+                        Data: "TEXT_FORMAT_BODY"
+                    }
                 },
-                Text: {
-                 Charset: "UTF-8",
-                 Data: "TEXT_FORMAT_BODY"
+                Subject: {
+                    Charset: 'UTF-8',
+                    Data: 'Test email from AWS'
                 }
-               },
-               Subject: {
-                Charset: 'UTF-8',
-                Data: 'Test email from AWS'
-               }
-              },
-            Source: process.env.TEST_EMAIL_USER, /* required */
-            ReplyToAddresses: [ ],
-          };  
-          var sendPromise = new AWS.SES({apiVersion: '2010-12-01'}).sendEmail(params).promise();
+            },
+            Source: process.env.TEST_EMAIL_USER,
+            /* required */
+            ReplyToAddresses: [],
+        };
+        var sendPromise = new AWS.SES({
+            apiVersion: '2010-12-01'
+        }).sendEmail(params).promise();
 
-          // Handle promise's fulfilled/rejected states
-          sendPromise.then(
-            function(data) {
-              console.log(data.MessageId);
+        // Handle promise's fulfilled/rejected states
+        sendPromise.then(
+            function (data) {
+                console.log(data.MessageId);
             }).catch(
-              function(err) {
-              console.error(err, err.stack);
+            function (err) {
+                console.error(err, err.stack);
             });
 
-        res.json({message: "success"});
+        res.json({
+            message: "success"
+        });
     });
 
     // =====================================
@@ -550,8 +731,8 @@ module.exports = function(app, passport) {
             failureRedirect: '/login'
         })
     );
-    app.get('/logout', function(req, res) {
-        req.session.destroy(function(e){
+    app.get('/logout', function (req, res) {
+        req.session.destroy(function (e) {
             req.logout();
             res.redirect('/');
         });
@@ -560,17 +741,28 @@ module.exports = function(app, passport) {
 
 }
 
-    
 
-
-function updateOldBuildingMeters(meter,building){
+function updateOldBuildingMeters(meter, building) {
     return new Promise((resolve, reject) => {
-        
-        Building.findOneAndUpdate({meters: {"$in" : [meter]}, "_id":{$ne: building._id}},{$pull:{meters: meter}},function(err,oldBuilding){
-            if (err){
-               reject(err);
+
+        Building.findOneAndUpdate({
+            meters: {
+                "$in": [meter]
+            },
+            "_id": {
+                $ne: building._id
+            }
+        }, {
+            $pull: {
+                meters: meter
+            }
+        }, function (err, oldBuilding) {
+            if (err) {
+                reject(err);
             } else {
-                if (oldBuilding){console.log("Old Building '"+oldBuilding.name+"' has had the following meter removed: " + meter);}
+                if (oldBuilding) {
+                    console.log("Old Building '" + oldBuilding.name + "' has had the following meter removed: " + meter);
+                }
                 resolve();
             }
         });
@@ -578,62 +770,87 @@ function updateOldBuildingMeters(meter,building){
 
 }
 
-function addMeter(meter,savedBuilding) {
+function addMeter(meter, savedBuilding) {
     return new Promise((resolve, reject) => {
-        pushNullMeter(meter,savedBuilding)
-            .then(()=> {Meter.findByIdAndUpdate(
-                { _id: meter},
-                { $set:{building: savedBuilding}},
-                {safe: true, upsert: true, new: true}, (err, meter) => {
-                    if (err){
+        pushNullMeter(meter, savedBuilding)
+            .then(() => {
+                Meter.findByIdAndUpdate({
+                    _id: meter
+                }, {
+                    $set: {
+                        building: savedBuilding
+                    }
+                }, {
+                    safe: true,
+                    upsert: true,
+                    new: true
+                }, (err, meter) => {
+                    if (err) {
                         reject(err)
-                    } else{
-                        console.log("Meter: "+meter.name+ " set building to: "+savedBuilding.name);
+                    } else {
+                        console.log("Meter: " + meter.name + " set building to: " + savedBuilding.name);
                         resolve(savedBuilding);
                     }
-                }
-            )
-        });
+                })
+            });
     })
 }
 
-function pushNullMeter(meter,savedBuilding){
-   
+function pushNullMeter(meter, savedBuilding) {
+
     console.log(savedBuilding);
     // DataEntry.update({building: null}, {$set: {building: savedBuilding}});
     return new Promise((resolve, reject) => {
-        Meter.findById(meter, (err,doc)=>{
-            if (doc === null || doc === undefined){
+        Meter.findById(meter, (err, doc) => {
+            if (doc === null || doc === undefined) {
                 console.log('Unable to find meter in pushNullData entries for meter id: ' + meter);
                 reject();
             }
             // await Meter.updateMany({building:req.body._id},{$set: {building: null}})
-               
-            if (doc.building == null){
-                console.log('The meter ' + meter._id + 'has its building set to null, pushing stored data entries')
-                DataEntry.find({meter_id: meter}, (err,docs) =>{
-                    if (err){
+
+            if (doc.building == null) {
+                console.log('The meter "' + meter + '" has its building set to null, pushing stored data entries')
+                DataEntry.find({
+                    meter_id: meter
+                }, (err, docs) => {
+                    if (err) {
                         console.log('Unable to push null data entries for meter id: ' + meter)
                         reject();
                     } else {
-                        Building.findOneAndUpdate({_id: savedBuilding._id},
-                            {$push:{data_entries: {$each: docs}}},
-                            {safe: true, upsert: true, new: true},
-                            (err) =>{if (err) throw(err)
-                        });
-                        
+                        Building.findOneAndUpdate({
+                                _id: savedBuilding._id
+                            }, {
+                                $push: {
+                                    data_entries: {
+                                        $each: docs
+                                    }
+                                }
+                            }, {
+                                safe: true,
+                                upsert: true,
+                                new: true
+                            },
+                            (err) => {
+                                if (err) throw (err)
+                            });
                     }
-                    
-                    // DataEntry.update({building: null}, {$set: {building: savedBuilding._id}});
+
                 });
-                DataEntry.updateMany({meter_id: meter},
-                    {$set: {building: savedBuilding._id}},
-                    (err) =>{if (err) throw(err)});              
-            } 
+                DataEntry.updateMany({
+                        meter_id: meter
+                    }, {
+                        $set: {
+                            building: savedBuilding._id
+                        }
+                    },
+                    (err) => {
+                        if (err) throw (err)
+                    });
+            }
         });
-        resolve(); 
+        resolve();
     });
- 
+
 }
 
 // route middleware to make sure a user is logged in
@@ -644,7 +861,7 @@ function isLoggedIn(req, res, next) {
 
     // if they aren't redirect them to the home page
 }
-function saveBlock(blockData){
+
+function saveBlock(blockData) {
 
 }
-

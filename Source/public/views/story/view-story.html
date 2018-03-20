@@ -1,9 +1,9 @@
 <div ng-controller="storyController" ng-model="selectedStory" class="Stratum2-Light">
     <br>
-	<h1 class="font-weight-bold"> {{selectedStory.name}}
+    <h1 class="font-weight-bold"> {{selectedStory.name}}
         <a href="#createStory" ng-click="EditStory(selectedStory)" class="btn border-orange-thin background-orange text-white float-right">Edit</a>
     </h1>
-	<br>
+    <br>
     <h2 class="border-bottom-orange">Dashboards</h2>
     <div class="row mt-4">
         <div class="col-sm-3 pb-4 Stratum2-Light" ng-repeat="d in selectedStory.dashboards">
@@ -12,7 +12,8 @@
                     <div class="card-body ml-3 ">
                         <h4 class="card-title" style="height: 65px;">{{d.name}}</h4>
                         <div>
-                            <p class="mt-3" style="height: 30px;"><b>Description: </b>{{d.description}}</p>
+                            <p class="mt-3" style="height: 30px;">
+                                <b>Description: </b>{{d.description}}</p>
                         </div>
                     </div>
                 </div>

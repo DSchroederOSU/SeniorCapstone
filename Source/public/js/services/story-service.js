@@ -1,20 +1,20 @@
 // js/services/story-service.js
 angular.module('StoryService', [])
 
-// super simple service
-// each function returns a promise object
-    .factory('Story', function($http) {
+    // super simple service
+    // each function returns a promise object
+    .factory('Story', function ($http) {
         return {
-            create : function(storyData) {
+            create: function (storyData) {
                 return $http.post('/api/addStory', storyData);
             },
-            delete : function(id) {
+            delete: function (id) {
                 return $http.post('/api/deleteStory', id);
             },
-            update : function(story) {
+            update: function (story) {
                 return $http.post('/api/updateStory', story);
             },
-            get : function() {
+            get: function () {
                 return $http.get('/api/getUserStories');
             }
         }

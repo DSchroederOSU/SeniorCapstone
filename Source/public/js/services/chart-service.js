@@ -1,23 +1,26 @@
 // js/services/building-service.js
 angular.module('ChartService', [])
 
-// super simple service
-// each function returns a promise object
-    .factory('Chart', function($http) {
+    // super simple service
+    // each function returns a promise object
+    .factory('Chart', function ($http) {
         return {
-            create : function(buildingData) {
+            create: function (buildingData) {
                 return $http.post('/api/addBuilding', buildingData);
             },
-            get : function(buildings) {
+            get: function (buildings) {
                 return $http.get('/api/buildings');
             },
-            delete : function(building) {
+            delete: function (building) {
                 return $http.post('/api/deleteBuilding', building);
             },
-            getById : function(id){
-                return $http({ url: '/api/getChartData',
+            getById: function (id) {
+                return $http({
+                    url: '/api/getChartData',
                     method: "GET",
-                    params: {_id: id}
+                    params: {
+                        _id: id
+                    }
                 });
             }
         }

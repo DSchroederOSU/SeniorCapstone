@@ -20,17 +20,12 @@
             <div class="form-group row mt-4">
                 <label for="dropdownBuildings" class="ml-3">Select Buildings:</label>
                 <div class="col-sm-12">
-                    <select ng-init="getBlockBuildings()" id="dropdownBuildings" class="form-control"
-                            ng-model="buildingSelection"
-                            required ng-options="building.name for building in buildings track by building._id"
-                            ng-change="selection(buildingSelection)">
+                    <select ng-init="getBlockBuildings()" id="dropdownBuildings" class="form-control" ng-model="buildingSelection" required 
+                        ng-options="building.name for building in buildings track by building._id" ng-change="selection(buildingSelection)">
                     </select>
                 </div>
             </div>
-
-
         </div>
-
         <div class="col-sm-5 col-md-5">
             <h4>Current Buildings</h4>
             <ul class="list-group mt-4 mb-4">
@@ -48,5 +43,4 @@
     <div class="col-sm-5 col-md-5 p-0">
         <button type="submit" class="btn border-orange-thin background-orange text-white" ng-click="submit()">{{buttontext}}</button>
     </div>
-
 </div>

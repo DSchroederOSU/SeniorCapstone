@@ -27,10 +27,8 @@
             <div class="form-group row mt-4">
                 <label for="dropdownMeters" class="ml-3">Select Meter:</label>
                 <div class="col-sm-12">
-                    <select ng-init="getBuildingMeters()" id="dropdownMeters" class="form-control "
-                            ng-model="meterSelection"
-                            required ng-options="meter.name for meter in meters"
-                            ng-change="selection(meterSelection)">
+                    <select ng-init="getBuildingMeters()" id="dropdownMeters" class="form-control " ng-model="meterSelection" required ng-options="meter.name for meter in meters"
+                        ng-change="selection(meterSelection)">
                     </select>
                 </div>
             </div>
@@ -51,7 +49,7 @@
             </ul>
         </div>
     </div>
-	<div class="col-sm-5 col-md-5">
-		<button type="submit" class="btn border-orange-thin background-orange text-white" ng-click="submit()">{{buttontext}}</button>
+    <div class="col-sm-5 col-md-5">
+        <button type="submit" class="btn border-orange-thin background-orange text-white" ng-click="submit()">{{buttontext}}</button>
     </div>
 </div>

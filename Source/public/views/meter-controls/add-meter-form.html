@@ -11,30 +11,16 @@
                     <input ng-init="getMeterName()" type="text" class="form-control" maxlength="30" id="inputMeterName" ng-model="meterNameForm">
                 </div>
             </div>
-
             <div class="form-group row mt-4">
                 <label for="inputSerial" class="ml-3">Meter Serial</label>
                 <div class="col-sm-12">
                     <input ng-init="getMeterSerial()" type="text" class="form-control" maxlength="30" id="inputSerial" ng-model="meterSerialForm">
                 </div>
             </div>
-            <!--
-            <div class="form-group row mt-4">
-                <label for="dropdownBlocks" class="ml-3">Select Building:</label>
-                <div class="col-sm-12">
-                    <select id="dropdownBlocks" class="form-control "
-                            ng-model="buildingSelection"
-                            required ng-options="building.name for building in buildings">
-                    </select>
-                </div>
-            </div>
-            -->
         </div>
-
-    <div class="col-sm-6 col-md-6"></div>
-    
-	<div class="col-sm-5 col-md-5">
-		<button type="submit" class="btn border-orange-thin background-orange text-white" ng-click="submit()">{{buttontext}}</button>
-    </div>
+        <div class="col-sm-6 col-md-6"></div>
+        <div class="col-sm-5 col-md-5">
+            <button type="submit" class="btn border-orange-thin background-orange text-white" ng-click="submit()">{{buttontext}}</button>
+        </div>
     </div>
 </div>
