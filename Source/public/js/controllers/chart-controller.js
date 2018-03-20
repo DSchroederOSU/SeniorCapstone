@@ -65,8 +65,10 @@ angular.module('chartController', [])
                 //push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
                 $scope.chartData = buildingAxisData;
-                buildChart(buildingAxisData, buildingsArray.type);
-                calculateVals(buildingAxisData);
+                buildChart(buildingAxisData, buildingsArray.type,buildingsArray.id );
+                if(buildingsArray.vals != 'none'){
+                    calculateVals(buildingAxisData);
+                }
             });
 
         };
@@ -141,8 +143,11 @@ angular.module('chartController', [])
                 //push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
                 $scope.chartData = buildingAxisData;
-                updateChart(buildingAxisData, object.index);
-                calculateVals(buildingAxisData);
+                updateChart(buildingAxisData, object.index, object.id);
+                if(object.vals != 'none'){
+                    calculateVals(buildingAxisData);
+                }
+
             });
 
         };
@@ -200,7 +205,7 @@ angular.module('chartController', [])
         the global array charts holds the chart objects as they are created
         it simply updates the dataset of the calling chart
          */
-        function updateChart(buildingAxisData, index) {
+        function updateChart(buildingAxisData, index, id) {
             $scope.maxValues = [];
             $scope.medValues = [];
             $scope.minValues = [];
@@ -213,9 +218,11 @@ angular.module('chartController', [])
                     data: element.buildingYdata
                 });
             });
-            charts[index].data.datasets = datasetsArray;
-            charts[index].data.labels = buildingAxisData[0].buildingXdata;
-            charts[index].update();
+
+            var c = charts.find(c => c.id == id);
+            c.chart.data.datasets = datasetsArray;
+            c.chart.data.labels = buildingAxisData[0].buildingXdata;
+            c.chart.update();
         }
 
         /*
@@ -240,15 +247,14 @@ angular.module('chartController', [])
             $scope.maxValues = [];
             $scope.medValues = [];
             $scope.minValues = [];
-            charts = [];
-        }
+        };
 
 
         /*
         This function is what creates the chart in the canvas element once the data is retrieved and parsed
         the $element is the calling element of the function, which is the canvas element that called createChart
          */
-        function buildChart(buildingAxisData, type) {
+        function buildChart(buildingAxisData, type, id) {
             //function could be made here to dynamically fill the datasetsArray's for each value in block.buildings
             var datasetsArray = [];
             buildingAxisData.forEach(function (element) {
@@ -267,9 +273,8 @@ angular.module('chartController', [])
                 chartDataLabels: buildingAxisData[0].buildingXdata,
                 chartDatasets: datasetsArray
             };
-
             //set current element of the html function call as context for chart
-            var ctx = $element;
+            var ctx = $element.find( "canvas" );
             //create the chart on the element
             var myChart = new Chart(ctx, {
                 type: completedChartObj.chartType,
@@ -288,6 +293,9 @@ angular.module('chartController', [])
                     }
                 }
             });
-            charts.push(myChart);
+            charts.push({id: id, chart : myChart});
         }
+        $scope.clearCharts = function(){
+            charts = [];
+        };
     });
