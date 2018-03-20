@@ -185,7 +185,7 @@ angular.module('buildingController', [])
         $scope.DeleteBuilding = function(building){
             Building.delete(building)
                 .success(function() {
-                    $route.reload();
+                    $location.path('/allBuildings');
                 });
         };
 
