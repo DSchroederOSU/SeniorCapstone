@@ -32,16 +32,28 @@ angular.module('chartController', [])
         //Purpose: retrieves data and updates a canvas element with a chart based on data parameters
         //Input: array of buildings retrieved from user block object
         $scope.createChart = function (buildingsArray) {
+            var startDate;
+            var endDate;
+            var curr = new Date; // get current date
+            var last;
+            var first;
+            first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+            last = first + 6; // last day is the first day + 6
+            startDate = new Date(curr.setDate(first));
+            startDate = "" + startDate.getFullYear() + "-0" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
+            endDate = new Date(curr.setDate(last));
+            endDate = "" + endDate.getFullYear() + "-0" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
             //will hold each buildings data in the block
             //x and y axis data
             var x = [];
             var y = [];
             var buildingAxisData = [];
+
             var to_pass = {
                 buildings: buildingsArray.building.map(b => b._id),
                 var: buildingsArray.var,
-                start: null,
-                end: null
+                start: startDate,
+                end: endDate
             };
             Building.getBuildingData(to_pass).then(function (data) {
                 data.data.forEach(function (buildingData) {
@@ -64,8 +76,10 @@ angular.module('chartController', [])
                 //push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
                 $scope.chartData = buildingAxisData;
-                buildChart(buildingAxisData);
-                calculateVals(buildingAxisData);
+                buildChart(buildingAxisData, buildingsArray.type,buildingsArray.id );
+                if(buildingsArray.vals != 'none'){
+                    calculateVals(buildingAxisData, buildingsArray.id);
+                }
             });
 
         };
@@ -140,8 +154,11 @@ angular.module('chartController', [])
                 //push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
                 $scope.chartData = buildingAxisData;
-                updateChart(buildingAxisData, object.index);
-                calculateVals(buildingAxisData);
+                updateChart(buildingAxisData, object.index, object.id);
+                if(object.vals != 'none'){
+                    calculateVals(buildingAxisData, object.id);
+                }
+
             });
 
         };
@@ -152,23 +169,22 @@ angular.module('chartController', [])
         it calculates the high, median, and low for each buildings data and pushed them to arrays.
         These arrays are then ng-repeated in the view and the values for each building are displayed in the block
          */
-        function calculateVals(dataset) {
-            var maxes = [];
-            var meds = [];
-            var mins = [];
-
+        function calculateVals(dataset, block_id) {
             dataset.forEach(function (currBuilding) {
                 var max = {
+                    id : block_id,
                     name: parseName(currBuilding.name),
                     max: null,
                     units: null
                 };
                 var med = {
+                    id : block_id,
                     name: parseName(currBuilding.name),
                     med: null,
                     units: null
                 };
                 var min = {
+                    id : block_id,
                     name: parseName(currBuilding.name),
                     min: null,
                     units: null
@@ -185,13 +201,11 @@ angular.module('chartController', [])
                 med.med = formatNumber(parseInt(((currBuilding.buildingYdata[lowMiddle] + currBuilding.buildingYdata[highMiddle]) / 2), 10));
                 med.units = "KwH";
 
-                maxes.push(max);
-                meds.push(med);
-                mins.push(min);
+                $scope.maxValues.push(max);
+                $scope.medValues.push(med);
+                $scope.minValues.push(min);
             });
-            $scope.maxValues.push(maxes);
-            $scope.medValues.push(meds);
-            $scope.minValues.push(mins);
+            console.log($scope.maxValues);
         }
 
         /*
@@ -199,7 +213,7 @@ angular.module('chartController', [])
         the global array charts holds the chart objects as they are created
         it simply updates the dataset of the calling chart
          */
-        function updateChart(buildingAxisData, index) {
+        function updateChart(buildingAxisData, index, id) {
             $scope.maxValues = [];
             $scope.medValues = [];
             $scope.minValues = [];
@@ -212,9 +226,11 @@ angular.module('chartController', [])
                     data: element.buildingYdata
                 });
             });
-            charts[index].data.datasets = datasetsArray;
-            charts[index].data.labels = buildingAxisData[0].buildingXdata;
-            charts[index].update();
+
+            var c = charts.find(c => c.id == id);
+            c.chart.data.datasets = datasetsArray;
+            c.chart.data.labels = buildingAxisData[0].buildingXdata;
+            c.chart.update();
         }
 
         /*
@@ -239,15 +255,14 @@ angular.module('chartController', [])
             $scope.maxValues = [];
             $scope.medValues = [];
             $scope.minValues = [];
-            charts = [];
-        }
+        };
 
 
         /*
         This function is what creates the chart in the canvas element once the data is retrieved and parsed
         the $element is the calling element of the function, which is the canvas element that called createChart
          */
-        function buildChart(buildingAxisData) {
+        function buildChart(buildingAxisData, type, id) {
             //function could be made here to dynamically fill the datasetsArray's for each value in block.buildings
             var datasetsArray = [];
             buildingAxisData.forEach(function (element) {
@@ -261,14 +276,13 @@ angular.module('chartController', [])
 
             //an example of a completed auto generated chart object to be passed to the chart creation function
             var completedChartObj = {
-                chartType: 'line',
+                chartType: type,
                 chartYtitle: 'kWh',
                 chartDataLabels: buildingAxisData[0].buildingXdata,
                 chartDatasets: datasetsArray
             };
-
             //set current element of the html function call as context for chart
-            var ctx = $element;
+            var ctx = $element.find( "canvas" );
             //create the chart on the element
             var myChart = new Chart(ctx, {
                 type: completedChartObj.chartType,
@@ -287,6 +301,9 @@ angular.module('chartController', [])
                     }
                 }
             });
-            charts.push(myChart);
+            charts.push({id: id, chart : myChart});
         }
+        $scope.clearCharts = function(){
+            charts = [];
+        };
     });

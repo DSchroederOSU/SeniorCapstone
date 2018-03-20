@@ -181,11 +181,11 @@ angular.module('blockController', [])
             // validate the formData to make sure that something is there
             // if form is empty, nothing will happen
             // people can't just hold enter to keep adding the same to-do anymore
-            if (!$.isEmptyObject($scope.nameForm) && !$.isEmptyObject($scope.chartForm)) {
+            if (!$.isEmptyObject($scope.nameForm) && $scope.chart.type ) {
                 // call the create function from our service (returns a promise object)
                 var BlockData = {
                     "name": $scope.nameForm,
-                    "chart": $scope.chartForm,
+                    "chart": $scope.chart.type,
                     "buildings": $scope.selectedBuildings
                 };
                 Block.create(BlockData)
@@ -207,7 +207,7 @@ angular.module('blockController', [])
             var update_block_data = {
                 "_id": editBlock._id,
                 "name": $scope.nameForm,
-                "chart": $scope.chartForm,
+                "chart": $scope.chart.type,
                 "building": $scope.selectedBuildings,
                 "variable": 'Killowatts/Hr'
             };

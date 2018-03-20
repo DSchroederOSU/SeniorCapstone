@@ -189,8 +189,15 @@ module.exports = function (app, passport) {
                                 });
                             } else {
                                 var to_return = [];
-                                if (req.query.buildings && req.query.buildings.length <= 1 && dataEntries != '[]') {
-                                    req.query.buildings.forEach(function (building_id) {
+                                var b_array = [];
+                                if(typeof req.query.buildings == 'string'){
+                                    b_array.push(req.query.buildings);
+                                }
+                                else{
+                                    b_array = req.query.buildings
+                                }
+                                if (b_array && req.query.buildings.length > 1 && dataEntries != '[]') {
+                                    b_array.forEach(function (building_id) {
                                         to_return.push({
                                             id: building_id,
                                             points: datapoints.filter(entry => entry.building == building_id)
