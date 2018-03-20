@@ -126,18 +126,6 @@ angular.module('blockController', [])
             }
         };
 		
-		/*
-        Function takes shortens the name of buildings. It takes in a building name
-		string and returns an abbreviated version if the name has more than 2 words
-		or returns the first word if else.
-         */
-		function parseName(name){
-			if(name.trim().split(/\s+/).length > 2){
-				return name.match(/\b\w/g).join('');
-			}
-			return name.replace(/ .*/,'');
-		};
-		
         /*
         This function is called as the ng init of the stats section for each block
         it calculates the high, median, and low for each buildings data and pushed them to arrays.
@@ -147,6 +135,7 @@ angular.module('blockController', [])
             var maxes = [];
             var meds = [];
             var mins = [];
+            /*
             buildings.forEach(function(currBuilding) {
                 var to_pass = {building: currBuilding, val : "Accumulated Real Energy Net"};
                 var max = {name: parseName(currBuilding.name), max : null, units : null};
@@ -180,6 +169,7 @@ angular.module('blockController', [])
             $scope.maxValues.push(maxes);
             $scope.medValues.push(meds);
             $scope.minValues.push(mins);
+            */
         };
 
         /*---------------------------------------------------------------------------------------

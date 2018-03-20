@@ -33,68 +33,133 @@ angular.module('chartController', [])
 		$scope.createChart = function(buildingsArray) {
 			//will hold each buildings data in the block
 			//x and y axis data
-			var x = [];
-			var y = [];
-			var buildingAxisData = [];
-
-			//fills buildingAxisData array with building data.
-            buildingsArray.building.forEach(function(currBuilding) {
-				var to_pass = {building: currBuilding, val : buildingsArray.val};
-				Building.getBuildingData(to_pass).then(function(data) {
-					//console.log(data);
-                    x = [];
-                    y = [];
-					data.forEach( function(entry){
-					    //console.log(entry);
-                        if(entry.timestamp &&entry.point[0]) {
-                            x.push(entry.timestamp);
-                            y.push(entry.point[0].value);
-                        }
-					});
-					//push all the values to the array of each buildings x axis data
-					buildingAxisData.push({name: to_pass.building.name, buildingYdata: y, buildingXdata: x});
-                    //function could be made here to dynamically fill the datasetsArray's for each value in block.buildings
-                    var datasetsArray = [];
-                    buildingAxisData.forEach(function(element) {
-                        datasetsArray.push({
-                            fill: false,
-                            borderColor: generateColor(),
-                            label: element.name,
-                            data: element.buildingYdata
-                        });
-                    });
-
-                    //an example of a completed auto generated chart object to be passed to the chart creation function
-                    var completedChartObj = {chartType:'line', chartYtitle:'kWh', chartDataLabels: buildingAxisData[0].buildingXdata, chartDatasets: datasetsArray};
-
-
-                    //set current element of the html function call as context for chart
-                    var ctx = $element;
-                    //create the chart on the element
-                    var myChart = new Chart(ctx, {
-                        type: completedChartObj.chartType,
-                        data: {
-                            labels: completedChartObj.chartDataLabels,
-                            datasets: completedChartObj.chartDatasets
-                        },
-                        options: {
-                            scales: {
-                                yAxes: [{
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: completedChartObj.chartYtitle
-                                    }
-                                }]
+            var x = [];
+            var y = [];
+            var buildingAxisData = [];
+                var to_pass = {
+                    buildings: buildingsArray.building.map(b => b._id),
+                    var: buildingsArray.var,
+                    start: null,
+                    end: null};
+                Building.getBuildingData(to_pass).then(function (data) {
+                    data.data.forEach(function (buildingData) {
+                        x = [];
+                        y = [];
+                        //console.log(entry);
+                        buildingData.points.forEach(function(entry){
+                            if (entry.timestamp && entry.point[0]) {
+                                x.push(entry.timestamp);
+                                y.push(entry.point[0].value);
                             }
-                        }
+                        });
+                        var name = buildingsArray.building.filter(b => b._id == buildingData.id)[0].name;
+                        buildingAxisData.push({name: name, buildingYdata: y, buildingXdata: x});
                     });
-				});
-			});
-
-			//timeout necessary to let data load. This is a dumb way to handle asynchronous-ness but it works for now.
-			$timeout(function () {
-				//console.log(buildingAxisData);
-			}, 5000);
+                    //push all the values to the array of each buildings x axis data
+                    //fills buildingAxisData array with building data.
+                    $scope.chartData = buildingAxisData;
+                    buildChart(buildingAxisData);
+                    calculateVals(buildingAxisData);
+                });
 
 		};
-	});
+
+		$scope.filterResults = function(buildingsArray){
+            buildChart(buildingsArray, $scope.startdatefilter, $scope.enddatefilter);
+            $scope.startdatefilter = "";
+            $scope.enddatefilter = "";
+        };
+
+        function buildChart(buildingAxisData){
+            //function could be made here to dynamically fill the datasetsArray's for each value in block.buildings
+            var datasetsArray = [];
+            buildingAxisData.forEach(function(element) {
+                datasetsArray.push({
+                    fill: false,
+                    borderColor: generateColor(),
+                    label: element.name,
+                    data: element.buildingYdata
+                });
+            });
+
+            //an example of a completed auto generated chart object to be passed to the chart creation function
+            var completedChartObj = {chartType:'line',
+                chartYtitle:'kWh',
+                chartDataLabels: buildingAxisData[0].buildingXdata,
+                chartDatasets: datasetsArray};
+
+            //set current element of the html function call as context for chart
+            var ctx = $element;
+            //create the chart on the element
+            var myChart = new Chart(ctx, {
+                type: completedChartObj.chartType,
+                data: {
+                    labels: completedChartObj.chartDataLabels,
+                    datasets: completedChartObj.chartDatasets
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: completedChartObj.chartYtitle
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        /*
+        This function is called as the ng init of the stats section for each block
+        it calculates the high, median, and low for each buildings data and pushed them to arrays.
+        These arrays are then ng-repeated in the view and the values for each building are displayed in the block
+         */
+        function calculateVals(dataset){
+            var maxes = [];
+            var meds = [];
+            var mins = [];
+
+            dataset.forEach(function(currBuilding) {
+
+                var max = {name: parseName(currBuilding.name), max : null, units : null};
+                var med = {name: parseName(currBuilding.name), med : null, units : null};
+                var min = {name: parseName(currBuilding.name), min : null, units : null};
+
+                max.max = formatNumber(parseInt(Math.max(...currBuilding.buildingYdata), 10));
+                max.units = "KwH";
+                min.min = formatNumber(parseInt(Math.min(...currBuilding.buildingYdata), 10));
+                min.units = "KwH";
+
+                currBuilding.buildingYdata.sort((a, b) => a - b);
+                var lowMiddle = Math.floor((currBuilding.buildingYdata.length - 1) / 2);
+                var highMiddle = Math.ceil((currBuilding.buildingYdata.length - 1) / 2);
+                med.med = formatNumber(parseInt(((currBuilding.buildingYdata[lowMiddle] + currBuilding.buildingYdata[highMiddle]) / 2),10));
+                med.units = "KwH";
+
+                maxes.push(max);
+                meds.push(med);
+                mins.push(min);
+            });
+            $scope.maxValues.push(maxes);
+            $scope.medValues.push(meds);
+            $scope.minValues.push(mins);
+        }
+
+        /*
+        Function takes shortens the name of buildings. It takes in a building name
+		string and returns an abbreviated version if the name has more than 2 words
+		or returns the first word if else.
+         */
+        function parseName(name){
+            if(name.trim().split(/\s+/).length > 2){
+                return name.match(/\b\w/g).join('');
+            }
+            return name.replace(/ .*/,'');
+        };
+
+        function formatNumber(num){
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        };
+
+});

@@ -86,7 +86,7 @@ module.exports = function(app, passport) {
 
     app.get('/api/getBuildingData', function(req, res) {
         console.log(req.query);
-        Building.findOne({_id : req.query._id})
+        Building.find({_id : { $in: req.query.buildings }})
             .populate(
                 { path: 'data_entries',
                     match : {timestamp : { $lt: "2018-03-15 00:45:00", $gte : "2018-03-14 21:00:00"}}, //THIS WORKS TO FILTER DATES
@@ -97,13 +97,17 @@ module.exports = function(app, passport) {
                     res.json({building : null});
                 }
                 else{
-                    DataEntry.find({_id : { $in: dataEntries.data_entries }})
+                    DataEntry.find({_id : { $in: [].concat.apply([], dataEntries.map(d => d.data_entries))}})
                         .select({ point: { $elemMatch: { name: "Accumulated Real Energy Net" }}})
-                        .select('-_id timestamp point.value')
+                        .select('-_id timestamp point.value building')
                         .exec(function (err, datapoints) {
                             if (err) { res.json({building: null});}
                             else{
-                                res.json(datapoints);
+                                var to_return = [];
+                                req.query.buildings.forEach(function(building_id) {
+                                    to_return.push({id : building_id, points : datapoints.filter(entry => entry.building == building_id)});
+                                });
+                                res.json(to_return);
                             }
                         });
                 }

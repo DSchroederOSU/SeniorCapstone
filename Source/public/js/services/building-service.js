@@ -30,13 +30,11 @@ angular.module('BuildingService', [])
             getBuildingData : function(buildings){
                 return $http({ url: '/api/getBuildingData',
                     method: "GET",
-                    params: {_id: buildings.building._id,
-                        variable : buildings.var
+                    params: {buildings: buildings.buildings,
+                            variable : buildings.var,
+                            startDate : buildings.start,
+                            endDate : buildings.end
                     }
-                }).then(function(response){
-                    return response.data;
-                }, function(error){
-                    alert(error);
                 });
             }
         }
