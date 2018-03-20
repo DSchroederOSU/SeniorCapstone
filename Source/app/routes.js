@@ -1,6 +1,7 @@
 require('mongoose');
 
 var parseString = require('xml2js').parseString;
+var bodyParser = require('body-parser');
 var User = require('./models/user-schema');
 var Building = require('./models/building-schema');
 var Meter = require('./models/meter-schema');
@@ -9,8 +10,14 @@ var Dashboard = require('./models/dashboard-schema');
 var Block = require('./models/block-schema');
 var Story = require('./models/story-schema');
 var AWS = require('aws-sdk');
+var filter = require('content-filter');
+var blackList = ['$','{','&&','||']
+var options = {
+    urlBlackList: blackList,
+    bodyBlackList: blackList
+}
 module.exports = function(app, passport) {
-    
+    app.use(filter(options));
     app.get('/', function (req, res) {
         
         return res.render('./index.html'); // load the index.html file
@@ -31,7 +38,7 @@ module.exports = function(app, passport) {
     // =====================================================================
     ///////////////////////////////BUILDING API/////////////////////////////
     // =====================================================================
-    app.post('/api/addBuilding', function(req, res) {
+    app.post('/api/addBuilding', function(req, res) {    
         var building = new Building();
         building.name = req.body.name;
         building.building_type = req.body.building_type;
@@ -48,77 +55,6 @@ module.exports = function(app, passport) {
 
             }
         });
-    });
-
-    app.get('/api/buildings', function (req, res) {
-        Building.find({}).exec(function (err, buildings) {
-            // returns all buildings except the 'null' one that keeps showing up
-            // temporary fix that makes app look clean
-            // need to find root cause still
-            res.json(buildings.filter(building => building._id != null)); // return all buildings in JSON format
-        });
-    });
-    
-    app.post('/api/deleteBuilding', function(req, res) {
-        // null out the meters in this building?
-        Building.remove(
-            {_id : req.body._id}, function (err) {
-                if (err) return handleError(err);
-                    Meter.updateMany({building:req.body._id},{$set: {building: null}}, () =>{ 
-                        DataEntry.updateMany({building:req.body._id},{$set: {building: null}}, () => res.json({message: "success"}));
-                    });
-                   
-               
-            });
-    });
-
-    app.get('/api/getBuildingById', function(req, res) {
-        // delete a building then set it's meters/data 'building' var to null
-        Building.findOne({_id : req.query._id})
-            .populate({
-                path: 'meters'
-            })
-            .exec(function (err, building) {
-                if (err) return handleError(err);
-                res.json(building);
-            });
-    });
-
-    app.get('/api/getBuildingData', function(req, res) {
-        var match;
-        if(req.query.start && req.query.end) {
-            match = {timestamp : { $lt: req.query.end, $gte : req.query.start}}
-        }
-        else{
-            match = {};
-        }
-        console.log(req.query);
-        Building.find({_id : { $in: req.query.buildings }})
-            .populate(
-                { path: 'data_entries',
-                    match : match, //THIS WORKS TO FILTER DATES
-                    select : 'id'
-            })
-            .exec(function (err, dataEntries) {
-                if (err){
-                    res.json({building : null});
-                }
-                else{
-                    DataEntry.find({_id : { $in: [].concat.apply([], dataEntries.map(d => d.data_entries))}})
-                        .select({ point: { $elemMatch: { name: "Accumulated Real Energy Net" }}})
-                        .select('-_id timestamp point.value building')
-                        .exec(function (err, datapoints) {
-                            if (err) { res.json({building: null});}
-                            else{
-                                var to_return = [];
-                                req.query.buildings.forEach(function(building_id) {
-                                    to_return.push({id : building_id, points : datapoints.filter(entry => entry.building == building_id)});
-                                });
-                                res.json(to_return);
-                            }
-                        });
-                }
-            });
     });
 
     app.post('/api/updateBuilding', function(req, res) {
@@ -144,6 +80,85 @@ module.exports = function(app, passport) {
                     
         }});
         res.json(req.body);
+    });
+
+    app.post('/api/deleteBuilding', function(req, res) {
+        // null out the meters in this building?
+        Building.remove(
+            {_id : req.body._id}, function (err) {
+                if (err) return handleError(err);
+                    Meter.updateMany({building:req.body._id},{$set: {building: null}}, () =>{ 
+                        DataEntry.updateMany({building:req.body._id},{$set: {building: null}}, () => res.json({message: "success"}));
+                    });
+                   
+               
+            });
+    });
+
+    app.get('/api/buildings', function (req, res) {
+        Building.find({}).exec(function (err, buildings) {
+            // returns all buildings except the 'null' one that keeps showing up
+            // temporary fix that makes app look clean
+            // need to find root cause still
+            res.json(buildings.filter(building => building._id != null)); // return all buildings in JSON format
+        });
+    });
+    
+   
+
+    app.get('/api/getBuildingById', function(req, res) {
+        // delete a building then set it's meters/data 'building' var to null
+        Building.findOne({_id : req.query._id})
+            .populate({
+                path: 'meters'
+            })
+            .exec(function (err, building) {
+                if (err) return handleError(err);
+                res.json(building);
+            });
+    });
+
+    app.get('/api/getBuildingData', function(req, res) {
+        var match;
+        if(req.query.start && req.query.end) {
+            match = {timestamp : { $lt: req.query.end, $gte : req.query.start}}
+        }
+        else{
+            match = {};
+        }
+
+        Building.find({_id : { $in: req.query.buildings }})
+            .populate(
+                { path: 'data_entries',
+                    match : match, //THIS WORKS TO FILTER DATES
+                    select : 'id'
+            })
+            .exec(function (err, dataEntries) {
+                if (err || !dataEntries){
+                    res.json({building : null});
+                }
+                else{
+                    DataEntry.find({_id : { $in: [].concat.apply([], dataEntries.map(d => d.data_entries))}})
+                        .select({ point: { $elemMatch: { name: "Accumulated Real Energy Net" }}})
+                        .select('-_id timestamp point.value building')
+                        .exec(function (err, datapoints) {
+                            if (err || datapoints == []) { res.json({building: null});}
+                            else{
+                                var to_return = [];
+                                if (req.query.buildings && req.query.buildings.length <= 1 && dataEntries != '[]'){
+                                    req.query.buildings.forEach(function(building_id) {
+                                        to_return.push({id : building_id, points : datapoints.filter(entry => entry.building == building_id)});
+                                    });
+                                }
+                                else {
+                                    to_return.push({id: req.query.buildings, points : datapoints.filter(entry => entry.building == req.query.buildings)});
+                                }
+                                res.json(to_return);
+                            }
+                        });
+                }
+            });
+  
     });
 
     app.get('/storyNav', function (req, res) {
@@ -610,7 +625,7 @@ function pushNullMeter(meter,savedBuilding){
             // await Meter.updateMany({building:req.body._id},{$set: {building: null}})
                
             if (doc.building == null){
-                console.log('The meter ' + meter._id + 'has its building set to null, pushing stored data entries')
+                console.log('The meter "' + meter + '" has its building set to null, pushing stored data entries')
                 DataEntry.find({meter_id: meter}, (err,docs) =>{
                     if (err){
                         console.log('Unable to push null data entries for meter id: ' + meter)

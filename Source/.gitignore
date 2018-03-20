@@ -1,5 +1,6 @@
 # Config Files
 .env
+.vscode/
 
 # Runtime data
 node_modules/

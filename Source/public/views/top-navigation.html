@@ -1,4 +1,4 @@
-<header>
+<header >
 
 	<div class="row">
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top border-bottom-orange px-2 Stratum2-Light card-shadow" style="background-color: #121212; padding: 28px;">
@@ -28,8 +28,9 @@
 			</button>
 		
 			
-			<span class="navbar-text pr-3" style="margin-right: 60px;" id="login-greeting">		
-				<a  ng-href="/#/register" class="mb-2 pb-2 px-4 Stratum2-Bold" style="text-decoration: none;" role="button" aria-pressed="true" id="register">Register</a>
+			<span class="navbar-text pr-3" style="margin-right: 60px;" id="login-greeting" >		
+				<a ng-hide="!userLoggedIn" ng-href="/#/register" class="mb-2 pb-2 px-4 Stratum2-Bold" style="text-decoration: none;" 
+				role="button" aria-pressed="true" id="register" ng-controller="mainController">Register</a>
 				{{$parent.greeting}}
 			</span>
 			
