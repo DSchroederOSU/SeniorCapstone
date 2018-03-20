@@ -34,9 +34,6 @@ myApp.config(function($routeProvider, $locationProvider) {
     .when("/createdashboard", {
         templateUrl : "../views/dashboard/create-dashboard.html"
     })
-    .when("/deletedashboard", {
-        templateUrl : "../views/dashboard/delete-dashboard.html"
-    })
     .when("/viewdashboard", {
         templateUrl : "../views/dashboard/view-dashboard.html"
     })

@@ -1,57 +1,62 @@
 <br>
 <div ng-init="getView()" ng-controller="dashboardController" ng-model="selectedDashboard">
     <h1 class="Stratum2-Light font-weight-bold"> {{selectedDashboard.name}} </h1>
-
-    <h5 class="Stratum2-Light font-weight-bold">Description: <span style="font-size:0.8em;">{{selectedDashboard.description}}</span></h5>
-	<br>
+    <h5 class="Stratum2-Light font-weight-bold">Description:
+        <span style="font-size:0.8em;">{{selectedDashboard.description}}</span>
+    </h5>
+    <br>
     <div class="card mb-3 Stratum2-Light font-weight-bold border-orange-thin" style="width: 100%;" ng-repeat="block in selectedDashboard.blocks">
         <div class="card-header h-100">
-        <div class="h-100 d-inline-flex">
-        <h4 class="align-middle m-0 font-weight-bold">
-            {{block.name}}
-        </h4>
-        </div>
-		
-		<div class="float-right dropdown">
-			<button class="fa fa-gear border-orange-thin border-curve-button" style="font-size:24px"></button>
-			<div class="dropdown-content border-orange font-weight-normal">
-				<a class="" href="#editdashboard" ng-click="EditBlock(block)">Edit</a>
-				<a class="" ng-click="DeleteBlock(block)">Delete</a>
-			</div>
-		</div>		
-		
-    </div>
-    <div class="card-body p-3">
-        <div class="row">
-            <div class="col">
-                <h3>Buildings:</h3>
-                <ul>
-                    <li ng-repeat="building in block.building">
-                        {{building.name}}
-                    </li>
-                </ul>
-                <button type="button" class="btn border-orange-thin background-orange text-white position-absolute" style="bottom: 0;">Filter 1</button>
-                <button type="button" class="btn border-orange-thin background-orange text-white position-absolute" style="bottom: 0; left: 100px;">Filter 2</button>
+            <div class="h-100 d-inline-flex">
+                <h4 class="align-middle m-0 font-weight-bold">
+                    {{block.name}}
+                </h4>
             </div>
-            <div class="col">
-                <div class="row pb-4">
-                    <span class="font-weight-light w-100" style="font-size: 1em;">High</span></br>
-                    <p class="font-weight-bold mb-0" style="font-size: 1.5vw;">XXX,XXX</p><p class="font-weight-light mb-0 mt-1" style="font-size: 1em;">  mW/h</p>
-                </div>
-                <div class="row pb-4">
-                    <span class="font-weight-light w-100" style="font-size: 1em;">Median</span></br>
-                    <p class="font-weight-bold mb-0" style="font-size: 1.5vw;">XXX,XXX</p><p class="font-weight-light mb-0 mt-1" style="font-size: 1em;">  mW/h</p>
-                </div>
-                <div class="row pb-4">
-                    <span class="font-weight-light w-100" style="font-size: 1em;">Low</span></br>
-                    <p class="font-weight-bold mb-0" style="font-size: 1.5vw;">XXX,XXX</p><p class="font-weight-light mb-0 mt-1" style="font-size: 1em;">  mW/h</p>
-                </div>
-            </div>
-            <div class="col-5" style="height: 300px;">
-                <div class="text-white background-orange w-100 h-100">Insert Chart Here</div>
-            </div>
-        </div>
-    </div>
-    </div>
 
+            <div class="float-right dropdown">
+                <button class="fa fa-gear border-orange-thin border-curve-button" style="font-size:24px"></button>
+                <div class="dropdown-content border-orange font-weight-normal">
+                    <a class="" href="#editdashboard" ng-click="EditBlock(block)">Edit</a>
+                    <a class="" ng-click="DeleteBlock(block)">Delete</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-3">
+            <div class="row">
+                <div class="col">
+                    <h3>Buildings:</h3>
+                    <ul>
+                        <li ng-repeat="building in block.building">
+                            {{building.name}}
+                        </li>
+                    </ul>
+                    <button type="button" class="btn border-orange-thin background-orange text-white position-absolute" style="bottom: 0;">Filter 1</button>
+                    <button type="button" class="btn border-orange-thin background-orange text-white position-absolute" style="bottom: 0; left: 100px;">Filter 2</button>
+                </div>
+                <div class="col">
+                    <div class="row pb-4">
+                        <span class="font-weight-light w-100" style="font-size: 1em;">High</span>
+                        </br>
+                        <p class="font-weight-bold mb-0" style="font-size: 1.5vw;">XXX,XXX</p>
+                        <p class="font-weight-light mb-0 mt-1" style="font-size: 1em;"> mW/h</p>
+                    </div>
+                    <div class="row pb-4">
+                        <span class="font-weight-light w-100" style="font-size: 1em;">Median</span>
+                        </br>
+                        <p class="font-weight-bold mb-0" style="font-size: 1.5vw;">XXX,XXX</p>
+                        <p class="font-weight-light mb-0 mt-1" style="font-size: 1em;"> mW/h</p>
+                    </div>
+                    <div class="row pb-4">
+                        <span class="font-weight-light w-100" style="font-size: 1em;">Low</span>
+                        </br>
+                        <p class="font-weight-bold mb-0" style="font-size: 1.5vw;">XXX,XXX</p>
+                        <p class="font-weight-light mb-0 mt-1" style="font-size: 1em;"> mW/h</p>
+                    </div>
+                </div>
+                <div class="col-5" style="height: 300px;">
+                    <div class="text-white background-orange w-100 h-100">Insert Chart Here</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
