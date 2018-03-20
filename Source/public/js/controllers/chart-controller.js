@@ -37,6 +37,7 @@ angular.module('chartController', [])
             var x = [];
             var y = [];
             var buildingAxisData = [];
+
             var to_pass = {
                 buildings: buildingsArray.building.map(b => b._id),
                 var: buildingsArray.var,
@@ -64,7 +65,7 @@ angular.module('chartController', [])
                 //push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
                 $scope.chartData = buildingAxisData;
-                buildChart(buildingAxisData);
+                buildChart(buildingAxisData, buildingsArray.type);
                 calculateVals(buildingAxisData);
             });
 
@@ -247,7 +248,7 @@ angular.module('chartController', [])
         This function is what creates the chart in the canvas element once the data is retrieved and parsed
         the $element is the calling element of the function, which is the canvas element that called createChart
          */
-        function buildChart(buildingAxisData) {
+        function buildChart(buildingAxisData, type) {
             //function could be made here to dynamically fill the datasetsArray's for each value in block.buildings
             var datasetsArray = [];
             buildingAxisData.forEach(function (element) {
@@ -261,7 +262,7 @@ angular.module('chartController', [])
 
             //an example of a completed auto generated chart object to be passed to the chart creation function
             var completedChartObj = {
-                chartType: 'line',
+                chartType: type,
                 chartYtitle: 'kWh',
                 chartDataLabels: buildingAxisData[0].buildingXdata,
                 chartDatasets: datasetsArray
