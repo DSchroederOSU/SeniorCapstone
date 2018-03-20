@@ -10,10 +10,14 @@ var Dashboard = require('./models/dashboard-schema');
 var Block = require('./models/block-schema');
 var Story = require('./models/story-schema');
 var AWS = require('aws-sdk');
-var sanitize = require('mongo-sanitize');
-
+var filter = require('content-filter');
+var blackList = ['$','{','&&','||']
+var options = {
+    urlBlackList: blackList,
+    bodyBlackList: blackList
+}
 module.exports = function(app, passport) {
- 
+    app.use(filter(options));
     app.get('/', function (req, res) {
         
         return res.render('./index.html'); // load the index.html file
@@ -34,14 +38,7 @@ module.exports = function(app, passport) {
     // =====================================================================
     ///////////////////////////////BUILDING API/////////////////////////////
     // =====================================================================
-    app.post('/api/addBuilding', function(req, res) {
-        console.log('req.body b')
-        console.log(req.body)
-        req.body = sanitize(req.body);
-        console.log('req.body a')
-        console.log(req.body)
-        console.log('----------------------------\n-----------------------')
-        req.body = sanitize(req.body);
+    app.post('/api/addBuilding', function(req, res) {    
         var building = new Building();
         building.name = req.body.name;
         building.building_type = req.body.building_type;
@@ -129,9 +126,7 @@ module.exports = function(app, passport) {
         else{
             match = {};
         }
-        console.log('req.query');
-        console.log(req.query);
-        console.log('----------------');
+
         Building.find({_id : { $in: req.query.buildings }})
             .populate(
                 { path: 'data_entries',
@@ -139,12 +134,7 @@ module.exports = function(app, passport) {
                     select : 'id'
             })
             .exec(function (err, dataEntries) {
-                console.log('err')
-                console.log(err)
-                console.log('dataEntries')
-                console.log(dataEntries)
-                
-                if (err || !dataEntries || dataEntries == []){
+                if (err || !dataEntries){
                     res.json({building : null});
                 }
                 else{
@@ -152,16 +142,17 @@ module.exports = function(app, passport) {
                         .select({ point: { $elemMatch: { name: "Accumulated Real Energy Net" }}})
                         .select('-_id timestamp point.value building')
                         .exec(function (err, datapoints) {
-                            console.log('datapoints');
-                            console.log(datapoints);
                             if (err || datapoints == []) { res.json({building: null});}
                             else{
                                 var to_return = [];
-                                console.log('req.query.buildings');
-                                console.log(req.query.buildings);
-                                req.query.buildings.forEach(function(building_id) {
-                                    to_return.push({id : building_id, points : datapoints.filter(entry => entry.building == building_id)});
-                                });
+                                if (req.query.buildings.length <= 1 && dataEntries != '[]'){
+                                    req.query.buildings.forEach(function(building_id) {
+                                        to_return.push({id : building_id, points : datapoints.filter(entry => entry.building == building_id)});
+                                    });
+                                }
+                                else {
+                                    to_return.push({id: req.query.buildings, points : datapoints.filter(entry => entry.building == req.query.buildings)});
+                                }
                                 res.json(to_return);
                             }
                         });
