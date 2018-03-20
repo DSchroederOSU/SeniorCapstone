@@ -10,7 +10,6 @@ var buildingSchema = mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'DataEntry'
     }]
-
 });
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Building', buildingSchema);
