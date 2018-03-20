@@ -266,13 +266,13 @@ module.exports = function (app, passport) {
     });
 
     app.post('/api/addBlock', function (req, res) {
-        console.log("REACHED");
         var user = req.user;
         var block = new Block();
         // set all of the relevant information
         block.name = req.body.name;
         block.created_by = user;
         block.building = req.body.buildings;
+        block.is_public = req.body.is_public;
         block.chart = req.body.chart;
         block.variable = "Killowatts/Hr";
         // save the blocks
@@ -298,7 +298,6 @@ module.exports = function (app, passport) {
                         res.json(user);
                     }
                 });
-
         });
     });
 
@@ -340,7 +339,6 @@ module.exports = function (app, passport) {
     });
 
     app.post('/api/updateBlock', function (req, res) {
-        console.log(req.body);
         Block.findByIdAndUpdate({
             _id: req.body._id
         }, {
@@ -348,6 +346,7 @@ module.exports = function (app, passport) {
                 'name': req.body.name,
                 'chart': req.body.chart,
                 'building': req.body.building,
+                'is_public' : req.body.is_public,
                 'variable': req.body.variable
             }
         }, {
@@ -373,6 +372,7 @@ module.exports = function (app, passport) {
         dashboard.name = req.body.name;
         dashboard.description = req.body.description;
         dashboard.created_by = user;
+        dashboard.is_public = req.body.is_public,
         dashboard.blocks = req.body.blocks;
 
         dashboard.save(function (err, savedDashboard) {
@@ -417,6 +417,16 @@ module.exports = function (app, passport) {
                     console.log("Error");
                 };
                 res.json(user.dashboards);
+            });
+    });
+
+    app.get('/api/getPublicDashboards', isLoggedIn, function (req, res) {
+        Dashboard.find({is_public: true})
+            .exec(function (err, dashboards) {
+                if (err) {
+                    console.log("Error");
+                };
+                res.json(dashboards);
             });
     });
 
@@ -467,6 +477,7 @@ module.exports = function (app, passport) {
             $set: {
                 'name': req.body.name,
                 'description': req.body.description,
+                'is_public' : req.body.is_public,
                 'blocks': req.body.blocks,
             }
         }, {
@@ -513,6 +524,7 @@ module.exports = function (app, passport) {
         var user = req.user;
         var story = new Story();
         story.name = req.body.name;
+        story.is_public = req.body.is_public;
         story.created_by = user;
         story.dashboards = req.body.dashboards;
 
@@ -547,6 +559,7 @@ module.exports = function (app, passport) {
         }, {
             $set: {
                 'dashboards': req.body.dashboards,
+                'is_public' : req.body.is_public,
                 'name': req.body.name
             }
         }, {

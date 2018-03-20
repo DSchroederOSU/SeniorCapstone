@@ -17,6 +17,9 @@ angular.module('DashboardService', [])
             getName: function () {
                 return $http.get('/api/getDashboardNames');
             },
+            getPublic: function () {
+                return $http.get('/api/getPublicDashboards');
+            },
             get: function () {
                 return $http.get('/api/getDashboards');
             }

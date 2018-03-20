@@ -152,9 +152,21 @@ angular.module('blockController', [])
         A function called on ng-init of the chartForm input tag
         prepopulates input form with the chart-name of the block being edited
         */
-        $scope.getChart = function () {
+        $scope.getChartType = function () {
             if (editBlock != null) {
+                if(editBlock.chart == 'line'){
+                    $scope.linecheck = true;
+                }
+                else if(editBlock.chart == 'heat'){
+                    $scope.heatcheck = true;
+                }
                 $scope.chartForm = editBlock.chart;
+            }
+        };
+
+        $scope.getPublicFlag = function(){
+            if (editBlock != null) {
+                $scope.publicCheck = editBlock.is_public;
             }
         };
 
@@ -186,6 +198,7 @@ angular.module('blockController', [])
                 var BlockData = {
                     "name": $scope.nameForm,
                     "chart": $scope.chart.type,
+                    "is_public" : $scope.publicCheck,
                     "buildings": $scope.selectedBuildings
                 };
                 Block.create(BlockData)
@@ -194,7 +207,6 @@ angular.module('blockController', [])
                         $scope.nameForm = "";
                         $scope.chartForm = "";
                         $location.path('/blocks');
-
                     });
             }
         }
@@ -208,6 +220,7 @@ angular.module('blockController', [])
                 "_id": editBlock._id,
                 "name": $scope.nameForm,
                 "chart": $scope.chart.type,
+                "is_public" : $scope.publicCheck,
                 "building": $scope.selectedBuildings,
                 "variable": 'Killowatts/Hr'
             };

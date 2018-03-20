@@ -15,9 +15,9 @@ angular.module('dashboardController', [])
                 var DashboardData = {
                     "name": $scope.nameForm,
                     "description": $scope.descriptionForm,
+                    "is_public" : $scope.publicCheck,
                     "blocks": $scope.selectedBlocks
                 };
-                console.log(DashboardData);
                 Dashboard.create(DashboardData)
                     // if successful creation
                     .success(function (data) {
@@ -40,7 +40,11 @@ angular.module('dashboardController', [])
             $location.path('/createdashboard');
         };
 
-
+        $scope.getPublicFlag = function(){
+            if (editDashboard != null) {
+                $scope.publicCheck = editDashboard.is_public;
+            }
+        };
         $scope.getTitle = function () {
             if (editDashboard != null) {
                 $scope.title = "Update Dashboard";
@@ -128,6 +132,7 @@ angular.module('dashboardController', [])
                     "_id": editDashboard._id,
                     "name": $scope.nameForm,
                     "description": $scope.descriptionForm,
+                    "is_public" : $scope.publicCheck,
                     "blocks": $scope.selectedBlocks
                 };
 
@@ -146,7 +151,7 @@ angular.module('dashboardController', [])
                     _id: dashboard._id
                 })
                 .success(function () {
-                    $route.reload();
+                    $location.path('/dashboards');
                 });
         };
 
@@ -170,5 +175,11 @@ angular.module('dashboardController', [])
                 CreateDashboard();
             }
         };
+
+        $scope.getPublicDashboards = function(){
+            Dashboard.getPublic().then(function (data) {
+                $scope.publicDashboards = data.data;
+            });
+        }
 
     });

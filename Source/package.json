@@ -28,6 +28,7 @@
     "aws-sdk": "^2.211.0",
     "bcrypt-nodejs": "latest",
     "body-parser": "^1.15.2",
+    "chart.heatmap.js": "0.0.1-alpha",
     "chart.js": "^2.7.2",
     "connect-flash": "~0.1.1",
     "content-filter": "^1.1.2",

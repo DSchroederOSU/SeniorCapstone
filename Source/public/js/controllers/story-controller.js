@@ -14,9 +14,9 @@ angular.module('storyController', [])
                 // call the create function from our service (returns a promise object)
                 var StoryData = {
                     "name": $scope.nameForm,
+                    "is_public" : $scope.publicCheck,
                     "dashboards": $scope.selectedDashboards
                 };
-                console.log(StoryData);
                 Story.create(StoryData)
                     // if successful creation
                     .success(function (data) {
@@ -63,7 +63,6 @@ angular.module('storyController', [])
             if (editStory != null) {
                 Dashboard.getName()
                     .then(function (data) {
-                        console.log(data);
                         $scope.user_dashboards = data.data;
                         editStory.dashboards.forEach(function (dashboard) {
                             var count = 0;
@@ -115,6 +114,7 @@ angular.module('storyController', [])
                 var StoryData = {
                     "_id": editStory._id,
                     "name": $scope.nameForm,
+                    "is_public" : $scope.publicCheck,
                     "dashboards": $scope.selectedDashboards
                 };
                 Story.update(StoryData)

@@ -205,7 +205,6 @@ angular.module('chartController', [])
                 $scope.medValues.push(med);
                 $scope.minValues.push(min);
             });
-            console.log($scope.maxValues);
         }
 
         /*
@@ -283,14 +282,33 @@ angular.module('chartController', [])
             };
             //set current element of the html function call as context for chart
             var ctx = $element.find( "canvas" );
-            //create the chart on the element
-            var myChart = new Chart(ctx, {
-                type: completedChartObj.chartType,
-                data: {
+
+            if(type == 'line'){
+                //create the chart on the element
+                var myChart = new Chart(ctx, {
+                    type: completedChartObj.chartType,
+                    data: {
+                        labels: completedChartObj.chartDataLabels,
+                        datasets: completedChartObj.chartDatasets
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: completedChartObj.chartYtitle
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+            else if(type == 'heat'){
+                data = {
                     labels: completedChartObj.chartDataLabels,
-                    datasets: completedChartObj.chartDatasets
-                },
-                options: {
+                        datasets: completedChartObj.chartDatasets
+                };
+                options = {
                     scales: {
                         yAxes: [{
                             scaleLabel: {
@@ -299,8 +317,10 @@ angular.module('chartController', [])
                             }
                         }]
                     }
-                }
-            });
+                };
+                var myChart = new Chart(ctx).HeatMap(data, options);
+            }
+
             charts.push({id: id, chart : myChart});
         }
         $scope.clearCharts = function(){
