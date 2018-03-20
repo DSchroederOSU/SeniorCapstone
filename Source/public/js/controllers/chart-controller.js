@@ -32,6 +32,18 @@ angular.module('chartController', [])
         //Purpose: retrieves data and updates a canvas element with a chart based on data parameters
         //Input: array of buildings retrieved from user block object
         $scope.createChart = function (buildingsArray) {
+            var startDate;
+            var endDate;
+            var curr = new Date; // get current date
+            var last;
+            var first;
+            last = curr.getDate() - curr.getDay();
+            first = last - 7; // First day is the day of the month - the day of the week
+            // last day is the first day + 6
+            startDate = new Date(curr.setDate(first));
+            startDate = "" + startDate.getFullYear() + "-0" + (startDate.getMonth() + 1) + "-" + "00";
+            endDate = new Date(curr.setDate(last));
+            endDate = "" + endDate.getFullYear() + "-0" + (endDate.getMonth() + 1) + "-" + "30";
             //will hold each buildings data in the block
             //x and y axis data
             var x = [];
@@ -41,8 +53,8 @@ angular.module('chartController', [])
             var to_pass = {
                 buildings: buildingsArray.building.map(b => b._id),
                 var: buildingsArray.var,
-                start: null,
-                end: null
+                start: startDate,
+                end: endDate
             };
             Building.getBuildingData(to_pass).then(function (data) {
                 data.data.forEach(function (buildingData) {
