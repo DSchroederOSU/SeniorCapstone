@@ -37,6 +37,7 @@
     "express-session": "~1.14.1",
     "express-xml-bodyparser": "^0.3.0",
     "method-override": "~2.3.6",
+    "mongo-sanitize": "^1.0.0",
     "mongoose": "^4.13.9",
     "morgan": "~1.7.0",
     "nodemon": "^1.14.11",

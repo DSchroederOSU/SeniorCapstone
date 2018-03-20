@@ -129,7 +129,9 @@ module.exports = function(app, passport) {
         else{
             match = {};
         }
+        console.log('req.query');
         console.log(req.query);
+        console.log('----------------');
         Building.find({_id : { $in: req.query.buildings }})
             .populate(
                 { path: 'data_entries',
@@ -137,7 +139,12 @@ module.exports = function(app, passport) {
                     select : 'id'
             })
             .exec(function (err, dataEntries) {
-                if (err || !dataEntries){
+                console.log('err')
+                console.log(err)
+                console.log('dataEntries')
+                console.log(dataEntries)
+                
+                if (err || !dataEntries || dataEntries == []){
                     res.json({building : null});
                 }
                 else{
@@ -145,9 +152,13 @@ module.exports = function(app, passport) {
                         .select({ point: { $elemMatch: { name: "Accumulated Real Energy Net" }}})
                         .select('-_id timestamp point.value building')
                         .exec(function (err, datapoints) {
-                            if (err) { res.json({building: null});}
+                            console.log('datapoints');
+                            console.log(datapoints);
+                            if (err || datapoints == []) { res.json({building: null});}
                             else{
                                 var to_return = [];
+                                console.log('req.query.buildings');
+                                console.log(req.query.buildings);
                                 req.query.buildings.forEach(function(building_id) {
                                     to_return.push({id : building_id, points : datapoints.filter(entry => entry.building == building_id)});
                                 });
