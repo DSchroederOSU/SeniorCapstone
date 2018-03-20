@@ -1,37 +1,38 @@
 // js/services/block-service.js
 angular.module('BlockService', [])
 
-// super simple service
-// each function returns a promise object
-    .factory('Block', function($http) {
+    // super simple service
+    // each function returns a promise object
+    .factory('Block', function ($http) {
         return {
-            create : function(blockData) {
+            create: function (blockData) {
                 return $http.post('/api/addBlock', blockData);
             },
-            delete : function(block) {
+            delete: function (block) {
                 return $http.post('/api/deleteBlock', block);
             },
-            update : function(block) {
+            update: function (block) {
                 return $http.post('/api/updateBlock', block);
             },
-            getForDashboard : function() {
+            getForDashboard: function () {
                 return $http.get('/api/getBlocksForDashboards');
             },
-            get : function() {
+            get: function () {
                 return $http.get('/api/getUserBlocks');
             }
         }
     })
-    .factory('GetBlockByID', function($http) {
+    .factory('GetBlockByID', function ($http) {
         return {
-            get : function(block) {
+            get: function (block) {
                 return $http({
-                                url: '/api/getBlockById',
-                                method: "GET",
-                                params: {block_id: block._id}
-                            });
+                    url: '/api/getBlockById',
+                    method: "GET",
+                    params: {
+                        block_id: block._id
+                    }
+                });
 
             }
         }
     });
-

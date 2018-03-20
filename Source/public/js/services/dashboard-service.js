@@ -1,32 +1,24 @@
 // js/services/block-service.js
 angular.module('DashboardService', [])
 
-// super simple service
-// each function returns a promise object
-    .factory('Dashboard', function($http) {
+    // super simple service
+    // each function returns a promise object
+    .factory('Dashboard', function ($http) {
         return {
-            create : function(dashboardData) {
+            create: function (dashboardData) {
                 return $http.post('/api/addDashboard', dashboardData);
             },
-            delete : function(dashboard) {
+            delete: function (dashboard) {
                 return $http.post('/api/deleteDashboard', dashboard);
             },
-            update : function(dashboard) {
+            update: function (dashboard) {
                 return $http.post('/api/updateDashboard', dashboard);
             },
-            getName : function() {
+            getName: function () {
                 return $http.get('/api/getDashboardNames');
             },
-            get : function() {
+            get: function () {
                 return $http.get('/api/getDashboards');
             }
         }
     })
-
-
-
-
-
-
-
-
