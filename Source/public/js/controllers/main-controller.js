@@ -1,12 +1,6 @@
 
 angular.module('mainController', [])
-    .controller('mainController', function($scope, $rootScope, GetUser, Story) {
-
-
-        Story.get()
-            .success(function(user_stories){
-                $scope.stories = user_stories;
-            });
+    .controller('mainController', function($scope, $rootScope, GetUser) {
 
         GetUser.get()
         .success(function(data) {
@@ -27,7 +21,7 @@ angular.module('mainController', [])
         });
         $scope.dashboardClass = 'hideDash';
         $scope.showDashboards = function () {
-            $scope.dashboardClass = 'showDash';
+        $scope.dashboardClass = 'showDash';
         }
     })
   
