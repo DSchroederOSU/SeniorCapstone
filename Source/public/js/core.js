@@ -53,10 +53,7 @@ myApp.config(function($routeProvider, $locationProvider) {
     .when("/createblock", {
         templateUrl : "../views/block/create-block.html"
     })
-    .when("/deleteblock", {
-        templateUrl : "../views/block/delete-block.html"
-    })
-
+  
     ///////////////////////////
     /////////STORIES///////////
     ///////////////////////////

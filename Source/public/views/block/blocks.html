@@ -1,136 +1,127 @@
 <div ng-controller="blockController">
-<br>
-<h1 class="Stratum2-Light font-weight-bold">My Blocks
-    <a href="#createblock" ng-click="create()" class="btn border-orange-thin background-orange text-white float-right">Create Block+</a>   <!--CHANGE EDIT TO CREATE AND HREF -->
-</h1>
-<br>
-<div>
-	<div ng-controller="chartController"
-         class="card mb-3 Stratum2-Light font-weight-bold border-orange-thin" style="width: 100%;" ng-repeat="block in userBlocks">
-		<div class="card-header h-100">
-			<div class="row m-0">
-				<div class="col-3">
-					<div class="h-100 d-inline-flex">
-						<h4 class="align-middle m-0 font-weight-bold">
-							{{block.name}}
-						</h4>
+	<br>
+	<h1 class="Stratum2-Light font-weight-bold">My Blocks
+		<a href="#createblock" ng-click="create()" class="btn border-orange-thin background-orange text-white float-right">Create Block+</a>
+	</h1>
+	<br>
+	<div>
+		<div ng-controller="chartController" class="card mb-3 Stratum2-Light font-weight-bold border-orange-thin" style="width: 100%;"
+		    ng-repeat="block in userBlocks">
+			<div class="card-header h-100">
+				<div class="row m-0">
+					<div class="col-3">
+						<div class="h-100 d-inline-flex">
+							<h4 class="align-middle m-0 font-weight-bold">
+								{{block.name}}
+							</h4>
+						</div>
 					</div>
-				</div>
-				<div class="col-8">
-				</div>
-				<div class="col-1">
-					<div class="float-right dropdown">
-						<button class="fa fa-gear border-orange-thin border-curve-button" style="font-size:24px"></button>
-						<div class="dropdown-content border-orange font-weight-normal">
-							<a class="" ng-click="EditBlock(block)">Edit</a>
-							<a class="" ng-click="DeleteBlock(block)">Delete</a>
+					<div class="col-8">
+					</div>
+					<div class="col-1">
+						<div class="float-right dropdown">
+							<button class="fa fa-gear border-orange-thin border-curve-button" style="font-size:24px"></button>
+							<div class="dropdown-content border-orange font-weight-normal">
+								<a class="" ng-click="EditBlock(block)">Edit</a>
+								<a class="" ng-click="DeleteBlock(block)">Delete</a>
+							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
-
-		</div>
-		<div ng-model="chartData" class="card-body p-0">
-			<div class="row  m-0">
-				<div class="col-3">
-					<h3>Buildings:</h3>
-					<ul class="list-unstyled">
-						<li class=" p-1" ng-repeat="building in block.building">
-							<a ng-click="viewBuilding(building)" class="btn btn-light">{{building.name}}</a>
-						</li>
-					</ul>
-				</div>
-				<div class="col-2" ng-init="initVals()">
-					<div class="row">
-						<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">High</div>
+			<div ng-model="chartData" class="card-body p-0">
+				<div class="row  m-0">
+					<div class="col-3">
+						<h3>Buildings:</h3>
 						<ul class="list-unstyled">
-							<li ng-repeat="val in maxValues[$index]">
-                                <div class="font-weight-bold mb-0 table-responsive-sm" style="width: 100%;">
-                                    <table class="table mb-0 ">
-                                        <tr style="width: 100%;">
-                                            <td class="text-right p-0 pr-2 align-middle" style="width: 30%; !important">
-                                                {{val.name}}:
-                                            </td>
-                                            <td class="text-left p-0 align-middle" style="width: 70%; !important">
-                                                {{val.max}} <span class="float-right mr-1">{{val.units}}</span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
+							<li class=" p-1" ng-repeat="building in block.building">
+								<a ng-click="viewBuilding(building)" class="btn btn-light">{{building.name}}</a>
 							</li>
 						</ul>
 					</div>
-					<div class="row">
-						<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">Median</div>
-						<ul class="list-unstyled">
-							<li ng-repeat="val in medValues[$index]">
-                                <div class="font-weight-bold mb-0 table-responsive-sm" style="width: 100%;">
-                                    <table class="table mb-0 ">
-                                        <tr style="width: 100%;">
-                                            <td class="text-right p-0 pr-2 align-middle" style="width: 30%; !important">
-                                                {{val.name}}:
-                                            </td>
-                                            <td class="text-left p-0 align-middle" style="width: 70%; !important">
-                                                {{val.med}} {{val.units}}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-							</li>
-						</ul>
-					</div>
-					<div class="row">
-						<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">Low</div>
-						<ul class="list-unstyled w-100">
-							<li ng-repeat="val in minValues[$index]">
-								<div class="font-weight-bold mb-0 table-responsive-sm" style="width: 100%;">
-									<table class="table mb-0 ">
-										<tr style="width: 100%;">
-											<td class="text-right p-0 pr-2 align-middle" style="width: 30%; !important">
-												{{val.name}}:
-											</td>
-											<td class="text-left p-0 align-middle" style="width: 70%; !important">
-												{{val.min}} {{val.units}}
-											</td>
-										</tr>
-									</table>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-7">
-					<div class="row container p-0 m-0">
-						<canvas ng-controller="chartController"
-                                ng-init="createChart({building: block.building, var : 'Accumulated Real Energy Net'})"
-								class="myChart d-inline-block w-100"></canvas>
-					</div>
-					<div class="row p-1 m-3">
-						<div class="col-2"></div>
-						<div class="col-3">
-							<button class="btn btn-success"
-									ng-click="filterResults({building: block.building, var : 'Accumulated Real Energy Net', range : 'lastweek', index : $index})">
-								Last Week</button>
+					<div class="col-2" ng-init="initVals()">
+						<div class="row">
+							<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">High</div>
+							<ul class="list-unstyled">
+								<li ng-repeat="val in maxValues[$index]">
+									<div class="font-weight-bold mb-0 table-responsive-sm" style="width: 100%;">
+										<table class="table mb-0 ">
+											<tr style="width: 100%;">
+												<td class="text-right p-0 pr-2 align-middle" style="width: 30%; !important">
+													{{val.name}}:
+												</td>
+												<td class="text-left p-0 align-middle" style="width: 70%; !important">
+													{{val.max}}
+													<span class="float-right mr-1">{{val.units}}</span>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</li>
+							</ul>
 						</div>
-						<div class="col-3">
-							<button class="btn btn-success"
-									ng-click="filterResults({building: block.building, var : 'Accumulated Real Energy Net', range : 'thisweek', index : $index})">
-								This Week</button>
+						<div class="row">
+							<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">Median</div>
+							<ul class="list-unstyled">
+								<li ng-repeat="val in medValues[$index]">
+									<div class="font-weight-bold mb-0 table-responsive-sm" style="width: 100%;">
+										<table class="table mb-0 ">
+											<tr style="width: 100%;">
+												<td class="text-right p-0 pr-2 align-middle" style="width: 30%; !important">
+													{{val.name}}:
+												</td>
+												<td class="text-left p-0 align-middle" style="width: 70%; !important">
+													{{val.med}} {{val.units}}
+												</td>
+											</tr>
+										</table>
+									</div>
+								</li>
+							</ul>
 						</div>
-						<div class="col-3">
-							<button class="btn btn-success"
-									ng-click="filterResults({building: block.building, var : 'Accumulated Real Energy Net', range : 'month', index : $index})">
-								This Month</button>
+						<div class="row">
+							<div class="font-weight-light w-100 border-bottom-orange" style="font-size: 1.5em;">Low</div>
+							<ul class="list-unstyled w-100">
+								<li ng-repeat="val in minValues[$index]">
+									<div class="font-weight-bold mb-0 table-responsive-sm" style="width: 100%;">
+										<table class="table mb-0 ">
+											<tr style="width: 100%;">
+												<td class="text-right p-0 pr-2 align-middle" style="width: 30%; !important">
+													{{val.name}}:
+												</td>
+												<td class="text-left p-0 align-middle" style="width: 70%; !important">
+													{{val.min}} {{val.units}}
+												</td>
+											</tr>
+										</table>
+									</div>
+								</li>
+							</ul>
 						</div>
-
 					</div>
-
+					<div class="col-7">
+						<div class="row container p-0 m-0">
+							<canvas ng-controller="chartController" ng-init="createChart({building: block.building, var : 'Accumulated Real Energy Net'})"
+							    class="myChart d-inline-block w-100"></canvas>
+						</div>
+						<div class="row p-1 m-3">
+							<div class="col-2"></div>
+							<div class="col-3">
+								<button class="btn btn-success" ng-click="filterResults({building: block.building, var : 'Accumulated Real Energy Net', range : 'lastweek', index : $index})">
+									Last Week</button>
+							</div>
+							<div class="col-3">
+								<button class="btn btn-success" ng-click="filterResults({building: block.building, var : 'Accumulated Real Energy Net', range : 'thisweek', index : $index})">
+									This Week</button>
+							</div>
+							<div class="col-3">
+								<button class="btn btn-success" ng-click="filterResults({building: block.building, var : 'Accumulated Real Energy Net', range : 'month', index : $index})">
+									This Month</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-</div>
-
