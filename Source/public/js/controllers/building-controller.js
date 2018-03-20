@@ -25,6 +25,7 @@ angular.module('buildingController', [])
                     .success(function(building) {
                         $scope.nameForm = "";
                         $scope.serialForm = "";
+                        $location.path('/allBuildings')
                     });
             }
         }

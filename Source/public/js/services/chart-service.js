@@ -15,15 +15,9 @@ angular.module('ChartService', [])
                 return $http.post('/api/deleteBuilding', building);
             },
             getById : function(id){
-
                 return $http({ url: '/api/getChartData',
                     method: "GET",
                     params: {_id: id}
-                }).then(function(response){
-                    console.log(response.data);
-                    return response.data;
-                }, function(error){
-                    alert(error);
                 });
             }
         }
