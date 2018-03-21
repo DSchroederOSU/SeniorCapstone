@@ -135,9 +135,9 @@ angular.module('buildingController', [])
                         }
 
                     }));
-                    resultObject.total = total / numPoints;
-                    resultObject.range = total / numPoints; //will change this with more data later
-                    resultObject.percent = (resultObject.total / resultObject.range) - 1 //will change this with more data later
+                    resultObject.total = formatNumber(total / numPoints);
+                    resultObject.range = formatNumber(total / numPoints); //will change this with more data later
+                    resultObject.percent =  ((total / numPoints)/ (total / numPoints)) - 1; //will change this with more data later
                     console.log('total')
                     console.log(total)
                     console.log('numPoints');
@@ -172,7 +172,10 @@ angular.module('buildingController', [])
             }
         };
 
-
+        //a regex to add commas to integers for better readability
+        function formatNumber(num) {
+            return num.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        };
         /*
         A function called on ng-init of the nameForm input tag
         prepopulates input form with the name of the block being edited
