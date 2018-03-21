@@ -140,6 +140,8 @@ angular.module('chartController', [])
                 end: endDate
             };
             Building.getBuildingData(to_pass).then(function (data) {
+                console.log('-----\n--------------------\n-------------')
+                console.log(data);
                 data.data.forEach(function (buildingData) {
                     x = [];
                     y = [];
