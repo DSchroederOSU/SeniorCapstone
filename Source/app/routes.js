@@ -216,6 +216,12 @@ module.exports = function (app, passport) {
             });
 
     });
+    app.get('/api/getBuildingAverages', function (req, res) {
+        console.log('work')
+        console.log(req.query);
+        console.log('pls');
+        res.json('yay')
+    });
 
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file

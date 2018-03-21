@@ -41,6 +41,16 @@ angular.module('BuildingService', [])
                         end: buildings.end
                     }
                 });
+            },
+            getBuildingAverages: function (dateRange) {
+                return $http({
+                    url: '/api/getBuildingAverages',
+                    method: "GET",
+                    params: {
+                        first: dateRange.first,
+                        second: dateRange.second
+                    }
+                });
             }
         }
     });

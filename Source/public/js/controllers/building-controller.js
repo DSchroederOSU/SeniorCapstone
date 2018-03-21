@@ -91,6 +91,16 @@ angular.module('buildingController', [])
         /*---------------------------------------------------------------------------------------
         -------------------------------------MISC FUNCTIONS--------------------------------------
         ---------------------------------------------------------------------------------------*/
+        $scope.getRankings = function () {
+            var to_pass = {
+                buildings: $scope.buildings,
+                start: startDate,
+                end: endDate
+            };
+            Building.getBuildingData(to_pass).then(function (data) {
+                $scope.buildingRanks = data;
+            });
+        };
 
 
         /*
