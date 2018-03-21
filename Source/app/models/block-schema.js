@@ -10,6 +10,7 @@ var blockSchema = mongoose.Schema({
                 ref: 'Building'
         }],
         chart: String,
+        is_public : Boolean,
         variable: String
 });
 // create the model for users and expose it to our app

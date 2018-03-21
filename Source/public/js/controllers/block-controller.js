@@ -152,9 +152,27 @@ angular.module('blockController', [])
         A function called on ng-init of the chartForm input tag
         prepopulates input form with the chart-name of the block being edited
         */
-        $scope.getChart = function () {
+        $scope.getChartType = function () {
+            $scope.chart = "";
             if (editBlock != null) {
+                if(editBlock.chart == 'line'){
+                    $scope.linecheck = true;
+                    $scope.chart.type = 'line';
+                }
+                else if(editBlock.chart == 'heat'){
+                    $scope.heatcheck = true;
+                    $scope.chart.type = 'heat';
+                }
                 $scope.chartForm = editBlock.chart;
+            }
+            else{
+                $scope.chart.type = 'line';
+            }
+        };
+
+        $scope.getPublicFlag = function(){
+            if (editBlock != null) {
+                $scope.publicCheck = editBlock.is_public;
             }
         };
 
@@ -181,11 +199,12 @@ angular.module('blockController', [])
             // validate the formData to make sure that something is there
             // if form is empty, nothing will happen
             // people can't just hold enter to keep adding the same to-do anymore
-            if (!$.isEmptyObject($scope.nameForm) && $scope.chart.type ) {
+            if (!$.isEmptyObject($scope.nameForm) ) {
                 // call the create function from our service (returns a promise object)
                 var BlockData = {
                     "name": $scope.nameForm,
-                    "chart": $scope.chart.type,
+                    "chart": 'line',
+                    "is_public" : $scope.publicCheck,
                     "buildings": $scope.selectedBuildings
                 };
                 Block.create(BlockData)
@@ -194,7 +213,6 @@ angular.module('blockController', [])
                         $scope.nameForm = "";
                         $scope.chartForm = "";
                         $location.path('/blocks');
-
                     });
             }
         }
@@ -208,6 +226,7 @@ angular.module('blockController', [])
                 "_id": editBlock._id,
                 "name": $scope.nameForm,
                 "chart": $scope.chart.type,
+                "is_public" : $scope.publicCheck,
                 "building": $scope.selectedBuildings,
                 "variable": 'Killowatts/Hr'
             };
@@ -216,4 +235,6 @@ angular.module('blockController', [])
                     $location.path('/blocks');
                 });
         }
+
+
     });

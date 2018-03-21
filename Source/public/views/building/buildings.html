@@ -53,7 +53,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-bottom-orange background-white" ng-repeat="building in buildingRanks track by $index">
+                    <tr class="border-bottom-orange background-white" ng-repeat="building in buildingRanks track by building.id">
                         <td>{{building.name}}</td>
                         <td>{{building.total}}</td>
                         <td>{{building.range}}</td>
@@ -68,7 +68,7 @@
 <script type="text/javascript">
     $(function () {
 
-        var start = moment().subtract(29, 'days');
+        var start = moment().subtract(6, 'days');
         var end = moment();
 
         function cb(start, end) {

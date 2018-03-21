@@ -1,4 +1,6 @@
 var charts = [];
+var blockData = [];
+
 angular.module('chartController', [])
     .controller('chartController', function ($route, $scope, $element, $timeout, Building) {
 
@@ -38,6 +40,7 @@ angular.module('chartController', [])
 		 and updates a canvas element with a chart based on data parameters
          */
         $scope.createChart = function (buildingsArray) {
+            console.log(buildingsArray);
             var startDate;
             var endDate;
             var curr = new Date; // get current date
@@ -61,8 +64,12 @@ angular.module('chartController', [])
                 start: startDate,
                 end: endDate
             };
+
             Building.getBuildingData(to_pass).then(function (data) {
+
+                //console.log(JSON.stringify(data.data, null, 2));
                 data.data.forEach(function (buildingData) {
+
                     x = [];
                     y = [];
                     //console.log(entry);
@@ -178,6 +185,7 @@ angular.module('chartController', [])
         These arrays are then ng-repeated in the view and the values for each building are displayed in the block
          */
         function calculateVals(dataset, block_id) {
+            console.log(dataset);
             dataset.forEach(function (currBuilding) {
                 var max = {
                     id : block_id,
@@ -202,7 +210,7 @@ angular.module('chartController', [])
                 max.units = "KwH";
                 min.min = formatNumber(parseInt(Math.min(...currBuilding.buildingYdata), 10));
                 min.units = "KwH";
-
+                console.log(max);
                 currBuilding.buildingYdata.sort((a, b) => a - b);
                 var lowMiddle = Math.floor((currBuilding.buildingYdata.length - 1) / 2);
                 var highMiddle = Math.ceil((currBuilding.buildingYdata.length - 1) / 2);
@@ -213,7 +221,6 @@ angular.module('chartController', [])
                 $scope.medValues.push(med);
                 $scope.minValues.push(min);
             });
-            console.log($scope.maxValues);
         }
 
         /*
@@ -291,27 +298,49 @@ angular.module('chartController', [])
             };
             //set current element of the html function call as context for chart
             var ctx = $element.find( "canvas" );
-            //create the chart on the element
-            var myChart = new Chart(ctx, {
-                type: completedChartObj.chartType,
-                data: {
-                    labels: completedChartObj.chartDataLabels,
-                    datasets: completedChartObj.chartDatasets
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: completedChartObj.chartYtitle
-                            }
-                        }]
+
+            if(type == 'line'){
+                //create the chart on the element
+                var myChart = new Chart(ctx, {
+                    type: completedChartObj.chartType,
+                    data: {
+                        labels: completedChartObj.chartDataLabels,
+                        datasets: completedChartObj.chartDatasets
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: completedChartObj.chartYtitle
+                                }
+                            }]
+                        }
                     }
-                }
-            });
+                });
+            }
+
             charts.push({id: id, chart : myChart});
         }
         $scope.clearCharts = function(){
             charts = [];
         };
+
+        $scope.printCSV =function(block){
+            var b = block.building.map(b => b._id);
+            Building.csv(b).then(function(csv){
+                let csvContent = "data:text/csv;charset=utf-8,";
+                csv.data.forEach(function(rowArray){
+                    let row = [rowArray].join(",");
+                    csvContent += row + "\r\n";
+                });
+
+                var encodedUri = encodeURI(csvContent);
+                window.open(encodedUri);
+
+
+            });
+
+
+        }
     });

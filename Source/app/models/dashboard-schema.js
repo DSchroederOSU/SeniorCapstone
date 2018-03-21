@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var dashboardSchema = mongoose.Schema({
     name: String,
     description: String,
+    is_public : Boolean,
     created_by: {
         type: mongoose.Schema.ObjectId,
         ref: 'User'

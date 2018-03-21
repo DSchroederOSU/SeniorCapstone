@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var storySchema = mongoose.Schema({
     name: String,
+    is_public : Boolean,
     created_by: {
         type: mongoose.Schema.ObjectId,
         ref: 'User'

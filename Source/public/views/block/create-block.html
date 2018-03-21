@@ -11,24 +11,33 @@
                     <input ng-init="getName()" type="text" class="form-control" id="inputName" ng-model="nameForm" placeholder="Name">
                 </div>
             </div>
-            <div class="form-group row mt-4">
-                <label for="inputChart" class="ml-3">Chart Type</label>
+            <div ng-init="getChartType()" class="form-group row mt-4">
+                <label class="ml-3">Chart Type</label>
                 <div class="col-sm-12">
                     <div class="form-check ml-4">
                         <input class="form-check-input" type="radio" name="exampleRadios"
-                               id="lineChartRadio" value="line"  ng-model="chart.type">
+                               id="lineChartRadio" value="line" ng-model="chart.type" ng-checked="true">
                         <label class="form-check-label pl-1" for="lineChartRadio">
                             Line Chart
                         </label>
                     </div>
+                    <!--
                     <div class="form-check ml-4">
                         <input class="form-check-input" type="radio" name="exampleRadios"
-                               id="heatChartRadio" value="heat"  ng-model="chart.type">
+                               id="heatChartRadio" value="heat"  ng-model="chart.type" ng-checked="heatcheck">
                         <label class="form-check-label pl-1" for="heatChartRadio">
                             Heat Map
                         </label>
                     </div>
+                     -->
                 </div>
+            </div>
+            <div class="form-check ml-4">
+                <input ng-init="getPublicFlag()" class="form-check-input" type="checkbox"
+                       ng-model="publicCheck" id="defaultCheck1">
+                <label class="form-check-label pl-1" for="defaultCheck1">
+                    Make Public
+                </label> 
             </div>
             <div class="form-group row mt-4">
                 <label for="dropdownBuildings" class="ml-3">Select Buildings:</label>
