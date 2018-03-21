@@ -799,10 +799,18 @@ module.exports = function (app, passport) {
                                     building: null
                                 });
                             } else {
-                                const fields = ['building', 'timestamp', 'point'];
+
+                                var to_return = [];
+                                datapoints.forEach(function(d){
+                                    if(d.point[0]){
+                                        to_return.push([d.building, d.timestamp, d.point[0].value])
+                                    }
+
+                                });
+                                const fields = ['building', 'timestamp', 'val'];
                                 const json2csvParser = new Json2csvParser({ fields });
-                                const csv = json2csvParser.parse(datapoints);
-                                res.send(csv);
+                                const csv = json2csvParser.parse(to_return);
+                                res.send(to_return);
                             }
                         });
                 }

@@ -318,11 +318,16 @@ angular.module('chartController', [])
         $scope.printCSV =function(block){
             var b = block.building.map(b => b._id);
             Building.csv(b).then(function(csv){
-                console.log(csv);
                 let csvContent = "data:text/csv;charset=utf-8,";
+                csv.data.forEach(function(rowArray){
+                    let row = [rowArray].join(",");
+                    csvContent += row + "\r\n";
+                });
 
-                console.log(csvContent+ csv.data);
-                window.open(csvContent + csv.data);
+                var encodedUri = encodeURI(csvContent);
+                window.open(encodedUri);
+
+
             });
 
 
