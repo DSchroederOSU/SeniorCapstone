@@ -100,8 +100,8 @@
 							</ul>
 						</div>
 					</div>
-					<div class="col-7" ng-controller="chartController">
-						<div class="row container p-0 m-0">
+					<div class="col-7" >
+						<div ng-controller="chartController" class="row container p-0 m-0">
 							<canvas ng-init="createChart({building: block.building, var : 'Accumulated Real Energy Net', type : block.chart, id:block._id})"
 							    class="myChart d-inline-block w-100"></canvas>
 						</div>
