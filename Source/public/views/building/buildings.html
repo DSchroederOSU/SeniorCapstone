@@ -25,4 +25,74 @@
             </div>
         </div>
     </div>
+    <h1 class="Stratum2-Light font-weight-bold">KILOWATT CRACKDOWN </h1>
+    <hr>
+    <div class="row mt-4">
+
+        <div class="col-sm-6">
+            <h3>Date Range</h3>
+            <div>
+            <input id="reportrange" class="pull-right" style="width: 100%" ng-model="dateRange" >
+                
+                <span></span>
+                <b class="caret"></b>
+            </div> <br><br>
+            <button class="btn border-orange-thin background-orange text-white float-left" ng-click="getRankings()"> Update Results
+            </button>
+        </div>
+        <div class="col-sm-6">
+            <h3>Building Results</h3>
+            <table class="table border-black Stratum2-Thin font-weight-bold">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Building Name</th>
+                        <th scope="col">Total Average Consumption</th>
+                        <th scope="col">Range Average Consumption</th>
+                        <th scope="col">% difference</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-bottom-orange background-white" ng-repeat="building in buildingRanks track by $index">
+                        <td>{{building.name}}</td>
+                        <td>{{building.total}}</td>
+                        <td>{{building.range}}</td>
+                        <td>{{building.percent}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+
+        var start = moment().subtract(29, 'days');
+        var end = moment();
+
+        function cb(start, end) {
+            $('#reportrange span').html(start.format('YYYY-MM-DD hh:mm:ss') + ' - ' + end.format('MMMM D, YYYY'));
+        }
+
+        $('#reportrange').daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
+                    'month').endOf('month')]
+
+            }
+
+
+        }, cb);
+
+        cb(start, end);
+
+    });
+</script>

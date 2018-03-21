@@ -91,6 +91,60 @@ angular.module('buildingController', [])
         /*---------------------------------------------------------------------------------------
         -------------------------------------MISC FUNCTIONS--------------------------------------
         ---------------------------------------------------------------------------------------*/
+        $scope.getRankings = function () {
+            var start = $scope.dateRange.substring(0, 10)
+            start = moment(start).format('YYYY-MM-DD') + ' 00:00:01';
+            var end = $scope.dateRange.substring(13, 24)
+            end = moment(end).format('YYYY-MM-DD') + ' 23:59:59';
+
+            $scope.buildingRanks = [];
+            var buildingIDArray = [];
+            var resultArray = [];
+            var resultObject = {
+                name: '',
+                total: '',
+                range: '',
+                percent: ''
+            };
+            $scope.buildings.forEach(function (e) {
+                buildingIDArray.push(e._id);
+
+            });
+
+            var to_pass = {
+                buildings: buildingIDArray,
+                start: start,
+                var: 'Accumulated Real Energy Net',
+                end: end
+            };
+            Building.getBuildingData(to_pass).then(function (data) {
+                console.log(data.data);
+                for (var i = 0; i < data.data.length; i++) {
+                    var total = 0;
+                    var numPoints = data.data[i].points.length
+                    var range = 0;
+                    resultObject.name = $scope.buildings[i].name
+                    resultObject.total = (data.data[i].points.forEach(function (e) {
+                        total += e.point[0].value
+                    }));
+                    resultObject.total = total / numPoints;
+                    resultObject.range = total / numPoints; //will change this with more data later
+                    resultObject.percent = (resultObject.total / resultObject.range) - 1 //will change this with more data later
+                    console.log('total')
+                    console.log(total)
+                    console.log('numPoints');
+                    console.log(numPoints);
+                    resultArray.push(resultObject)
+                }
+                $scope.buildingRanks = resultArray;//.sort(function(a,b) {return (a.total > b.total) ? 1 : ((b.total > a.total) ? -1 : 0);} );;
+                // data.data.;
+                console.log('--------------------------------------')
+                console.log($scope.buildingRanks);
+                
+            });
+
+
+        };
 
 
         /*
