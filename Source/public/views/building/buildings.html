@@ -53,12 +53,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-bottom-orange background-white" ng-repeat="building in buildings track by building._id">
+                    <tr class="border-bottom-orange background-white" ng-repeat="building in buildingRanks track by $index">
                         <td>{{building.name}}</td>
-                        <td>property 2</td>
-                        <td>property 3</td>
-                        <td>property 4</td>
-
+                        <td>{{building.total}}</td>
+                        <td>{{building.range}}</td>
+                        <td>{{building.percent}}</td>
                     </tr>
 
                 </tbody>
