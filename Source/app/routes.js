@@ -420,7 +420,7 @@ module.exports = function (app, passport) {
             });
     });
 
-    app.get('/api/getPublicDashboards', isLoggedIn, function (req, res) {
+    app.get('/api/getPublicDashboards', function (req, res) {
         Dashboard.find({is_public: true})
             .exec(function (err, dashboards) {
                 if (err) {
@@ -597,6 +597,19 @@ module.exports = function (app, passport) {
                 });
             }
         });
+    });
+
+    app.get('/api/getPublicStories', function (req, res) {
+        Story.find({is_public: true})
+            .populate({
+                path: 'dashboards',
+            })
+            .exec(function (err, stories) {
+                if (err) {
+                    console.log("Error");
+                };
+                res.json(stories);
+            });
     });
 
     // =====================================================================

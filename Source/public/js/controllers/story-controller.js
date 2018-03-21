@@ -165,4 +165,10 @@ angular.module('storyController', [])
                 $scope.stories = user_stories;
             });
 
+        $scope.getPublicStories = function(){
+            Story.getPublic().then(function (data) {
+                $scope.publicStories = data.data;
+            });
+        }
+
     });

@@ -14,6 +14,9 @@ angular.module('StoryService', [])
             update: function (story) {
                 return $http.post('/api/updateStory', story);
             },
+            getPublic: function () {
+                return $http.get('/api/getPublicStories');
+            },
             get: function () {
                 return $http.get('/api/getUserStories');
             }

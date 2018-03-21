@@ -38,6 +38,10 @@ myApp.config(function ($routeProvider, $locationProvider) {
         .when("/viewdashboard", {
             templateUrl: "../views/dashboard/view-dashboard.html"
         })
+        .when("/public-dashboards", {
+            templateUrl: "../views/dashboard/public-dashboard.html"
+        })
+
 
         ///////////////////////////
         //////////BLOCKS///////////
@@ -60,6 +64,9 @@ myApp.config(function ($routeProvider, $locationProvider) {
         })
         .when("/viewStory", {
             templateUrl: "../views/story/view-story.html"
+        })
+        .when("/public-stories", {
+            templateUrl: "../views/story/public-story.html"
         })
         ///////////////////////////
         ////////BUILDINGS//////////
