@@ -141,10 +141,6 @@ module.exports = function (app, passport) {
     });
 
     app.get('/api/getBuildingData', function (req, res) {
-       
-        console.log('Welcome to getBuildingData')
-        console.log(req.query)
-        console.log('----------------------------')
         var match;
         if (req.query && req.query.start && req.query.end) {
             match = {
@@ -169,8 +165,6 @@ module.exports = function (app, passport) {
             })
             .exec(function (err, dataEntries) {
                 if (err) {
-                    console.log('First exit')
-                    console.log(err)
                     res.json({
                         building: null
                     });
@@ -190,8 +184,6 @@ module.exports = function (app, passport) {
                         .select('-_id timestamp point.value building')
                         .exec(function (err, datapoints) {
                             if (err) {
-                                console.log('Second exit')
-                                console.log(err)
                                 res.json({
                                     building: null
                                 });
@@ -216,7 +208,6 @@ module.exports = function (app, passport) {
                                         points: datapoints.filter(entry => entry.building == req.query.buildings)
                                     });
                                 }
-                                console.log('Returning with value: ' + to_return);
                                 res.json(to_return);
                             }
                         });
@@ -224,48 +215,6 @@ module.exports = function (app, passport) {
             });
 
     });
-    // app.get('/api/getBuildingAverages', function (req, res) {
-    //     if (req.query && req.query.first && req.query.second) {
-    //         match = {
-    //             timestamp: {
-    //                 $lt: req.query.first,
-    //                 $gte: req.query.second
-    //             }
-    //         }
-    //     } else {
-    //         match = {};
-    //     }
-
-    //     Building.find({})
-    //         .populate({
-    //             path: 'data_entries',
-    //             match: match, //THIS WORKS TO FILTER DATES
-    //             select: 'id'
-    //         })
-    //         .exec(function (err, dataEntries) {
-    //             if (err || !dataEntries) {
-    //                 res.json({
-    //                     building: null
-    //                 });
-    //             } else {
-    //                 DataEntry.find({
-    //                         _id: {
-    //                             $in: [].concat.apply([], dataEntries.map(d => d.data_entries))
-    //                         }
-    //                     })
-    //                     .select({
-    //                         point: {
-    //                             $elemMatch: {
-    //                                 name: "Accumulated Real Energy Net"
-    //                             }
-    //                         }
-    //                     })
-    //                     .select('-_id timestamp point.value building')
-    //                 }
-                
-    //             });
-
-    // });
 
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
@@ -396,7 +345,7 @@ module.exports = function (app, passport) {
                 'name': req.body.name,
                 'chart': req.body.chart,
                 'building': req.body.building,
-                'is_public' : req.body.is_public,
+                'is_public': req.body.is_public,
                 'variable': req.body.variable
             }
         }, {
@@ -423,7 +372,7 @@ module.exports = function (app, passport) {
         dashboard.description = req.body.description;
         dashboard.created_by = user;
         dashboard.is_public = req.body.is_public,
-        dashboard.blocks = req.body.blocks;
+            dashboard.blocks = req.body.blocks;
 
         dashboard.save(function (err, savedDashboard) {
             if (err)
@@ -471,7 +420,9 @@ module.exports = function (app, passport) {
     });
 
     app.get('/api/getPublicDashboards', function (req, res) {
-        Dashboard.find({is_public: true})
+        Dashboard.find({
+                is_public: true
+            })
             .populate({
                 path: 'blocks',
                 populate: {
@@ -534,7 +485,7 @@ module.exports = function (app, passport) {
             $set: {
                 'name': req.body.name,
                 'description': req.body.description,
-                'is_public' : req.body.is_public,
+                'is_public': req.body.is_public,
                 'blocks': req.body.blocks,
             }
         }, {
@@ -617,7 +568,7 @@ module.exports = function (app, passport) {
         }, {
             $set: {
                 'dashboards': req.body.dashboards,
-                'is_public' : req.body.is_public,
+                'is_public': req.body.is_public,
                 'name': req.body.name
             }
         }, {
@@ -658,16 +609,18 @@ module.exports = function (app, passport) {
     });
 
     app.get('/api/getPublicStories', function (req, res) {
-        Story.find({is_public: true})
+        Story.find({
+                is_public: true
+            })
             .populate({
-                    path: 'dashboards',
+                path: 'dashboards',
+                populate: {
+                    path: 'blocks',
                     populate: {
-                        path: 'blocks',
-                        populate: {
-                            path: 'building',
-                            select: 'name'
-                        }
+                        path: 'building',
+                        select: 'name'
                     }
+                }
 
             })
             .exec(function (err, stories) {
@@ -844,10 +797,10 @@ module.exports = function (app, passport) {
             }
         };
         Building.find({
-            _id: {
-                $in: req.body
-            }
-        })
+                _id: {
+                    $in: req.body
+                }
+            })
             .populate({
                 path: 'data_entries',
                 match: match, //THIS WORKS TO FILTER DATES
@@ -860,10 +813,10 @@ module.exports = function (app, passport) {
                     });
                 } else {
                     DataEntry.find({
-                        _id: {
-                            $in: [].concat.apply([], dataEntries.map(d => d.data_entries))
-                        }
-                    })
+                            _id: {
+                                $in: [].concat.apply([], dataEntries.map(d => d.data_entries))
+                            }
+                        })
                         .select({
                             point: {
                                 $elemMatch: {
@@ -880,14 +833,16 @@ module.exports = function (app, passport) {
                             } else {
 
                                 var to_return = [];
-                                datapoints.forEach(function(d){
-                                    if(d.point[0]){
+                                datapoints.forEach(function (d) {
+                                    if (d.point[0]) {
                                         to_return.push([d.building, d.timestamp, d.point[0].value])
                                     }
 
                                 });
                                 const fields = ['building', 'timestamp', 'val'];
-                                const json2csvParser = new Json2csvParser({ fields });
+                                const json2csvParser = new Json2csvParser({
+                                    fields
+                                });
                                 const csv = json2csvParser.parse(to_return);
                                 res.send(to_return);
                             }
