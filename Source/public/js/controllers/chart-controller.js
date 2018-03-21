@@ -1,4 +1,6 @@
 var charts = [];
+var blockData = [];
+
 angular.module('chartController', [])
     .controller('chartController', function ($route, $scope, $element, $timeout, Building) {
 
@@ -56,7 +58,10 @@ angular.module('chartController', [])
                 end: endDate
             };
             Building.getBuildingData(to_pass).then(function (data) {
+
+                //console.log(JSON.stringify(data.data, null, 2));
                 data.data.forEach(function (buildingData) {
+
                     x = [];
                     y = [];
                     //console.log(entry);
@@ -303,27 +308,23 @@ angular.module('chartController', [])
                     }
                 });
             }
-            else if(type == 'heat'){
-                data = {
-                    labels: completedChartObj.chartDataLabels,
-                        datasets: completedChartObj.chartDatasets
-                };
-                options = {
-                    scales: {
-                        yAxes: [{
-                            scaleLabel: {
-                                display: true,
-                                labelString: completedChartObj.chartYtitle
-                            }
-                        }]
-                    }
-                };
-                var myChart = new Chart(ctx).HeatMap(data, options);
-            }
 
             charts.push({id: id, chart : myChart});
         }
         $scope.clearCharts = function(){
             charts = [];
         };
+
+        $scope.printCSV =function(block){
+            var b = block.building.map(b => b._id);
+            Building.csv(b).then(function(csv){
+                console.log(csv);
+                let csvContent = "data:text/csv;charset=utf-8,";
+
+                console.log(csvContent+ csv.data);
+                window.open(csvContent + csv.data);
+            });
+
+
+        }
     });

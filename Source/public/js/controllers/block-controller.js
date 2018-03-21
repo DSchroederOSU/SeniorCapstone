@@ -153,14 +153,20 @@ angular.module('blockController', [])
         prepopulates input form with the chart-name of the block being edited
         */
         $scope.getChartType = function () {
+            $scope.chart = "";
             if (editBlock != null) {
                 if(editBlock.chart == 'line'){
                     $scope.linecheck = true;
+                    $scope.chart.type = 'line';
                 }
                 else if(editBlock.chart == 'heat'){
                     $scope.heatcheck = true;
+                    $scope.chart.type = 'heat';
                 }
                 $scope.chartForm = editBlock.chart;
+            }
+            else{
+                $scope.chart.type = 'line';
             }
         };
 
@@ -193,11 +199,11 @@ angular.module('blockController', [])
             // validate the formData to make sure that something is there
             // if form is empty, nothing will happen
             // people can't just hold enter to keep adding the same to-do anymore
-            if (!$.isEmptyObject($scope.nameForm) && $scope.chart.type ) {
+            if (!$.isEmptyObject($scope.nameForm) ) {
                 // call the create function from our service (returns a promise object)
                 var BlockData = {
                     "name": $scope.nameForm,
-                    "chart": $scope.chart.type,
+                    "chart": 'line',
                     "is_public" : $scope.publicCheck,
                     "buildings": $scope.selectedBuildings
                 };
@@ -229,4 +235,6 @@ angular.module('blockController', [])
                     $location.path('/blocks');
                 });
         }
+
+
     });

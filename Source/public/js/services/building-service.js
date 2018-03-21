@@ -8,6 +8,9 @@ angular.module('BuildingService', [])
             create: function (buildingData) {
                 return $http.post('/api/addBuilding', buildingData);
             },
+            csv: function (block) {
+                return $http.post('/api/toCSV', block);
+            },
             get: function () {
                 return $http.get('/api/buildings');
             },

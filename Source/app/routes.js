@@ -1,5 +1,5 @@
 require('mongoose');
-
+const Json2csvParser = require('json2csv').Parser;
 var parseString = require('xml2js').parseString;
 var bodyParser = require('body-parser');
 var User = require('./models/user-schema');
@@ -757,7 +757,58 @@ module.exports = function (app, passport) {
             res.redirect('/');
         });
     });
+    app.post('/api/toCSV', function (req, res) {
+        var match = {
+            timestamp: {
+                $lt: "2018-03-12",
+                $gte: "2018-03-06"
+            }
+        };
+        Building.find({
+            _id: {
+                $in: req.body
+            }
+        })
+            .populate({
+                path: 'data_entries',
+                match: match, //THIS WORKS TO FILTER DATES
+                select: 'id'
+            })
+            .exec(function (err, dataEntries) {
+                if (err || !dataEntries) {
+                    res.json({
+                        building: null
+                    });
+                } else {
+                    DataEntry.find({
+                        _id: {
+                            $in: [].concat.apply([], dataEntries.map(d => d.data_entries))
+                        }
+                    })
+                        .select({
+                            point: {
+                                $elemMatch: {
+                                    name: "Accumulated Real Energy Net"
+                                }
+                            }
+                        })
+                        .select('-_id timestamp point.value building')
+                        .exec(function (err, datapoints) {
+                            if (err || datapoints == []) {
+                                res.json({
+                                    building: null
+                                });
+                            } else {
+                                const fields = ['building', 'timestamp', 'point'];
+                                const json2csvParser = new Json2csvParser({ fields });
+                                const csv = json2csvParser.parse(datapoints);
+                                res.send(csv);
+                            }
+                        });
+                }
+            });
 
+    });
 
 }
 
