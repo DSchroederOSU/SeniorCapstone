@@ -113,11 +113,9 @@ angular.module('buildingController', [])
                 end: end
             };
             Building.getBuildingData(to_pass).then(function (data) {
-                console.log(data.data);
-                console.log($scope.buildings);
                 for (var i = 0; i < data.data.length; i++) {
                     resultObject = {
-                        id : '',
+                        id: '',
                         name: '',
                         total: '',
                         range: '',
@@ -126,31 +124,22 @@ angular.module('buildingController', [])
                     var total = 0;
                     var numPoints = data.data[i].points.length;
                     var range = 0;
-                    console.log($scope.buildings[i].name);
+
                     resultObject.id = data.data[i].id;
                     resultObject.name = $scope.buildings[i].name;
                     resultObject.total = (data.data[i].points.forEach(function (e) {
-                        if(e.point[0]){
+                        if (e.point[0]) {
                             total += e.point[0].value;
                         }
 
                     }));
                     resultObject.total = formatNumber(total / numPoints);
                     resultObject.range = formatNumber(total / numPoints); //will change this with more data later
-                    resultObject.percent =  ((total / numPoints)/ (total / numPoints)) - 1; //will change this with more data later
-                    console.log('total')
-                    console.log(total)
-                    console.log('numPoints');
-                    console.log(numPoints);
+                    resultObject.percent = ((total / numPoints) / (total / numPoints)) - 1; //will change this with more data later
                     resultArray.push(resultObject)
-
                 }
-                console.log(resultArray);
-                $scope.buildingRanks = resultArray;//.sort(function(a,b) {return (a.total > b.total) ? 1 : ((b.total > a.total) ? -1 : 0);} );;
+                $scope.buildingRanks = resultArray; //.sort(function(a,b) {return (a.total > b.total) ? 1 : ((b.total > a.total) ? -1 : 0);} );;
                 // data.data.;
-                console.log('--------------------------------------')
-                console.log($scope.buildingRanks);
-                
             });
 
 
