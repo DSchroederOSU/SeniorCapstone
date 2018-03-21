@@ -40,6 +40,7 @@ angular.module('chartController', [])
 		 and updates a canvas element with a chart based on data parameters
          */
         $scope.createChart = function (buildingsArray) {
+            console.log(buildingsArray);
             var startDate;
             var endDate;
             var curr = new Date; // get current date
@@ -63,6 +64,7 @@ angular.module('chartController', [])
                 start: startDate,
                 end: endDate
             };
+
             Building.getBuildingData(to_pass).then(function (data) {
 
                 //console.log(JSON.stringify(data.data, null, 2));
@@ -183,6 +185,7 @@ angular.module('chartController', [])
         These arrays are then ng-repeated in the view and the values for each building are displayed in the block
          */
         function calculateVals(dataset, block_id) {
+            console.log(dataset);
             dataset.forEach(function (currBuilding) {
                 var max = {
                     id : block_id,
@@ -207,7 +210,7 @@ angular.module('chartController', [])
                 max.units = "KwH";
                 min.min = formatNumber(parseInt(Math.min(...currBuilding.buildingYdata), 10));
                 min.units = "KwH";
-
+                console.log(max);
                 currBuilding.buildingYdata.sort((a, b) => a - b);
                 var lowMiddle = Math.floor((currBuilding.buildingYdata.length - 1) / 2);
                 var highMiddle = Math.ceil((currBuilding.buildingYdata.length - 1) / 2);

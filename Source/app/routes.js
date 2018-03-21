@@ -472,6 +472,13 @@ module.exports = function (app, passport) {
 
     app.get('/api/getPublicDashboards', function (req, res) {
         Dashboard.find({is_public: true})
+            .populate({
+                path: 'blocks',
+                populate: {
+                    path: 'building',
+                    select: 'id name'
+                }
+            })
             .exec(function (err, dashboards) {
                 if (err) {
                     console.log("Error");
@@ -558,7 +565,8 @@ module.exports = function (app, passport) {
                     populate: {
                         path: 'blocks',
                         populate: {
-                            path: 'building'
+                            path: 'building',
+                            select: 'name'
                         }
                     }
                 }
@@ -652,7 +660,15 @@ module.exports = function (app, passport) {
     app.get('/api/getPublicStories', function (req, res) {
         Story.find({is_public: true})
             .populate({
-                path: 'dashboards',
+                    path: 'dashboards',
+                    populate: {
+                        path: 'blocks',
+                        populate: {
+                            path: 'building',
+                            select: 'name'
+                        }
+                    }
+
             })
             .exec(function (err, stories) {
                 if (err) {

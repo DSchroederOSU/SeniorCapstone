@@ -156,7 +156,6 @@ angular.module('dashboardController', [])
         };
 
         $scope.ViewDashboard = function (dashboard) {
-            console.log(dashboard);
             viewDashboard = dashboard;
             $location.path('/viewdashboard');
         };

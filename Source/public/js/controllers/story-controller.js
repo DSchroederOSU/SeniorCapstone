@@ -143,6 +143,7 @@ angular.module('storyController', [])
 
         $scope.viewStory = function (story) {
             viewStory = story;
+            console.log(viewStory);
             $location.path('/viewStory');
         };
 
@@ -158,12 +159,16 @@ angular.module('storyController', [])
                             $location.path('/');
                         });
                 });
+            $scope.getStories;
         };
 
-        Story.get()
-            .success(function (user_stories) {
-                $scope.stories = user_stories;
-            });
+        $scope.getStories = function(){
+            Story.get()
+                .success(function (user_stories) {
+                    $scope.stories = user_stories;
+                });
+        };
+
 
         $scope.getPublicStories = function(){
             Story.getPublic().then(function (data) {

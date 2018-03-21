@@ -5,8 +5,8 @@
 	</h1>
 	<br>
 	<div>
-		<div ng-init="initVals()">
-		<div ng-controller="chartController" class="card mb-3 Stratum2-Light font-weight-bold border-orange-thin" style="width: 100%;"
+		<div ng-controller="chartController" ng-init="initVals()">
+		<div  class="card mb-3 Stratum2-Light font-weight-bold border-orange-thin" style="width: 100%;"
 		    ng-repeat="block in userBlocks">
 			<div class="card-header h-100">
 				<div class="row m-0">
@@ -37,7 +37,7 @@
 						<h3>Buildings:</h3>
 						<ul class="list-unstyled">
 							<li class=" p-1" ng-repeat="building in block.building">
-								<a ng-click="viewBuilding(building)" class="btn btn-light">{{building.name}}</a>
+								<a ng-controller="buildingController" ng-click="viewBuilding(building)" class="btn btn-light">{{building.name}}</a>
 							</li>
 						</ul>
 					</div>
