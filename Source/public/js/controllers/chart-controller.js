@@ -2,15 +2,19 @@ var charts = [];
 angular.module('chartController', [])
     .controller('chartController', function ($route, $scope, $element, $timeout, Building) {
 
-        //Purpose: returns a random num from a specificied range
-        //Input: int
+        /*
+        This function gets a range int and produces a random number within 
+		that specified range.
+         */
         var randomNum = function (range) {
             var num = Math.floor(Math.random() * range);
             return num;
         }
 
-        //Purpose: returns a random color hex code of bright colors
-        //Input: Array of int arrays.
+        /*
+        This function gets either no argument or an array of ranges
+		to generate a random unique bright color
+         */
         function generateColor(ranges) {
             //https://stackoverflow.com/questions/1484506/random-color-generator
             if (!ranges) {
@@ -29,8 +33,10 @@ angular.module('chartController', [])
             return "rgb(" + g() + "," + g() + "," + g() + ")";
         };
 
-        //Purpose: retrieves data and updates a canvas element with a chart based on data parameters
-        //Input: array of buildings retrieved from user block object
+		/*
+        This function gets an array of buildings retrieved from user block object and 
+		 and updates a canvas element with a chart based on data parameters
+         */
         $scope.createChart = function (buildingsArray) {
             var startDate;
             var endDate;
