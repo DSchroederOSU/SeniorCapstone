@@ -92,14 +92,37 @@ angular.module('buildingController', [])
         -------------------------------------MISC FUNCTIONS--------------------------------------
         ---------------------------------------------------------------------------------------*/
         $scope.getRankings = function () {
-            var to_pass = {
-                buildings: $scope.buildings,
-                start: startDate,
-                end: endDate
-            };
-            Building.getBuildingData(to_pass).then(function (data) {
-                $scope.buildingRanks = data;
+            var start = $scope.dateRange.substring(0, 10)
+            start = moment(start).format('YYYY-MM-DD') + ' 00:00:01';
+            var end = $scope.dateRange.substring(13, 24)
+            end = moment(end).format('YYYY-MM-DD') + ' 23:59:59';
+            
+            $scope.buildingRanks = [];
+            var buildingIDArray = []
+            $scope.buildings.forEach(function(e) {
+                buildingIDArray.push(e._id);
             });
+           
+            var to_pass = {
+                buildings: buildingIDArray,
+                start: start,
+                var: 'Accumulated Real Energy Net',
+                end: end
+            };
+            console.log('to_pass')
+            console.log(to_pass)
+            console.log('$scope.buildingRanks')
+            console.log($scope.buildingRanks)
+           
+
+            Building.getBuildingData(to_pass).then(function (data) {
+                
+                $scope.buildingRanks = data.data;
+                console.log('--------------------------------------')
+                console.log($scope.buildingRanks);
+            });
+          
+
         };
 
 

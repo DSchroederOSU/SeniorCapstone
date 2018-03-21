@@ -141,8 +141,12 @@ module.exports = function (app, passport) {
     });
 
     app.get('/api/getBuildingData', function (req, res) {
+       
+        console.log('Welcome to getBuildingData')
+        console.log(req.query)
+        console.log('----------------------------')
         var match;
-        if (req.query.start && req.query.end) {
+        if (req.query && req.query.start && req.query.end) {
             match = {
                 timestamp: {
                     $lt: req.query.end,
@@ -164,7 +168,9 @@ module.exports = function (app, passport) {
                 select: 'id'
             })
             .exec(function (err, dataEntries) {
-                if (err || !dataEntries) {
+                if (err) {
+                    console.log('First exit')
+                    console.log(err)
                     res.json({
                         building: null
                     });
@@ -183,17 +189,18 @@ module.exports = function (app, passport) {
                         })
                         .select('-_id timestamp point.value building')
                         .exec(function (err, datapoints) {
-                            if (err || datapoints == []) {
+                            if (err) {
+                                console.log('Second exit')
+                                console.log(err)
                                 res.json({
                                     building: null
                                 });
                             } else {
                                 var to_return = [];
                                 var b_array = [];
-                                if(typeof req.query.buildings == 'string'){
+                                if (typeof req.query.buildings == 'string') {
                                     b_array.push(req.query.buildings);
-                                }
-                                else{
+                                } else {
                                     b_array = req.query.buildings
                                 }
                                 if (b_array && req.query.buildings.length > 1 && dataEntries != '[]') {
@@ -209,6 +216,7 @@ module.exports = function (app, passport) {
                                         points: datapoints.filter(entry => entry.building == req.query.buildings)
                                     });
                                 }
+                                console.log('Returning with value: ' + to_return);
                                 res.json(to_return);
                             }
                         });
@@ -216,12 +224,48 @@ module.exports = function (app, passport) {
             });
 
     });
-    app.get('/api/getBuildingAverages', function (req, res) {
-        console.log('work')
-        console.log(req.query);
-        console.log('pls');
-        res.json('yay')
-    });
+    // app.get('/api/getBuildingAverages', function (req, res) {
+    //     if (req.query && req.query.first && req.query.second) {
+    //         match = {
+    //             timestamp: {
+    //                 $lt: req.query.first,
+    //                 $gte: req.query.second
+    //             }
+    //         }
+    //     } else {
+    //         match = {};
+    //     }
+
+    //     Building.find({})
+    //         .populate({
+    //             path: 'data_entries',
+    //             match: match, //THIS WORKS TO FILTER DATES
+    //             select: 'id'
+    //         })
+    //         .exec(function (err, dataEntries) {
+    //             if (err || !dataEntries) {
+    //                 res.json({
+    //                     building: null
+    //                 });
+    //             } else {
+    //                 DataEntry.find({
+    //                         _id: {
+    //                             $in: [].concat.apply([], dataEntries.map(d => d.data_entries))
+    //                         }
+    //                     })
+    //                     .select({
+    //                         point: {
+    //                             $elemMatch: {
+    //                                 name: "Accumulated Real Energy Net"
+    //                             }
+    //                         }
+    //                     })
+    //                     .select('-_id timestamp point.value building')
+    //                 }
+                
+    //             });
+
+    // });
 
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
