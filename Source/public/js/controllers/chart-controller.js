@@ -40,7 +40,6 @@ angular.module('chartController', [])
 		 and updates a canvas element with a chart based on data parameters
          */
         $scope.createChart = function (buildingsArray) {
-            console.log(buildingsArray);
             var startDate;
             var endDate;
             var curr = new Date; // get current date
@@ -150,8 +149,6 @@ angular.module('chartController', [])
                 end: endDate
             };
             Building.getBuildingData(to_pass).then(function (data) {
-                console.log('-----\n--------------------\n-------------')
-                console.log(data);
                 data.data.forEach(function (buildingData) {
                     x = [];
                     y = [];
@@ -175,9 +172,11 @@ angular.module('chartController', [])
                 //push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
                 $scope.chartData = buildingAxisData;
-                $scope.maxValues = $scope.maxValues.filter(b => b.id !=  object.id);
-                $scope.medValues = $scope.medValues.filter(b => b.id !=  object.id);
-                $scope.minValues = $scope.minValues.filter(b => b.id !=  object.id);
+                if(object.vals != 'none') {
+                    $scope.maxValues = $scope.maxValues.filter(b => b.id != object.id);
+                    $scope.medValues = $scope.medValues.filter(b => b.id != object.id);
+                    $scope.minValues = $scope.minValues.filter(b => b.id != object.id);
+                }
                 updateChart(buildingAxisData, object.index, object.id);
                 if(object.vals != 'none'){
                     calculateVals(buildingAxisData, object.id);
