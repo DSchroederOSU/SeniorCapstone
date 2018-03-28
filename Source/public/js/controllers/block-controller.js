@@ -222,7 +222,6 @@ angular.module('blockController', [])
         taking the $scope variables for updated info.
         */
         function UpdateBlock(editBlock) {
-            console.log($scope.chart.type);
             var chart = $scope.chart.type;
             if(!$scope.chart.type){
                 chart = 'line'
