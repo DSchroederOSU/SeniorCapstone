@@ -165,7 +165,7 @@ module.exports = function (app, passport) {
             })
             .exec(function (err, dataEntries) {
                 if (err) {
-                    res.json({
+                    res.jsonp({
                         building: null
                     });
                 } else {
@@ -184,7 +184,7 @@ module.exports = function (app, passport) {
                         .select('-_id timestamp point.value building')
                         .exec(function (err, datapoints) {
                             if (err) {
-                                res.json({
+                                res.jsonp({
                                     building: null
                                 });
                             } else {
@@ -208,7 +208,7 @@ module.exports = function (app, passport) {
                                         points: datapoints.filter(entry => entry.building == req.query.buildings)
                                     });
                                 }
-                                res.jsonp(to_return); // Only difference between this function and old getBuildingData route.
+                                res.jsonp(to_return);
                             }
                         });
                 }
