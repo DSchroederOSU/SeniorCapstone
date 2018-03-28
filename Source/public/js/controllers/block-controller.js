@@ -222,10 +222,14 @@ angular.module('blockController', [])
         taking the $scope variables for updated info.
         */
         function UpdateBlock(editBlock) {
+            var chart = $scope.chart.type;
+            if(!$scope.chart.type){
+                chart = 'line'
+            }
             var update_block_data = {
                 "_id": editBlock._id,
                 "name": $scope.nameForm,
-                "chart": $scope.chart.type,
+                "chart": chart,
                 "is_public" : $scope.publicCheck,
                 "building": $scope.selectedBuildings,
                 "variable": 'Killowatts/Hr'

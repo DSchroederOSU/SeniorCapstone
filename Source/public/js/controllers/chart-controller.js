@@ -40,7 +40,6 @@ angular.module('chartController', [])
 		 and updates a canvas element with a chart based on data parameters
          */
         $scope.createChart = function (buildingsArray) {
-            console.log(buildingsArray);
             var startDate;
             var endDate;
             var curr = new Date; // get current date
@@ -76,7 +75,10 @@ angular.module('chartController', [])
                     buildingData.points.forEach(function (entry) {
                         if (entry.timestamp && entry.point[0]) {
                             x.push(entry.timestamp);
-                            y.push(entry.point[0].value);
+                            if(entry.point[0].value < 0){
+                                y.push(-1*entry.point[0].value);
+                            }
+                            else{ y.push(entry.point[0].value);}
                         }
                     });
                     var name = buildingsArray.building.filter(b => b._id == buildingData.id)[0].name;
@@ -147,8 +149,6 @@ angular.module('chartController', [])
                 end: endDate
             };
             Building.getBuildingData(to_pass).then(function (data) {
-                console.log('-----\n--------------------\n-------------')
-                console.log(data);
                 data.data.forEach(function (buildingData) {
                     x = [];
                     y = [];
@@ -156,7 +156,10 @@ angular.module('chartController', [])
                     buildingData.points.forEach(function (entry) {
                         if (entry.timestamp && entry.point[0]) {
                             x.push(entry.timestamp);
-                            y.push(entry.point[0].value);
+                            if(entry.point[0].value < 0){
+                                y.push(-1*entry.point[0].value);
+                            }
+                            else{ y.push(entry.point[0].value);}
                         }
                     });
                     var name = object.building.filter(b => b._id == buildingData.id)[0].name;
@@ -169,6 +172,11 @@ angular.module('chartController', [])
                 //push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
                 $scope.chartData = buildingAxisData;
+                if(object.vals != 'none') {
+                    $scope.maxValues = $scope.maxValues.filter(b => b.id != object.id);
+                    $scope.medValues = $scope.medValues.filter(b => b.id != object.id);
+                    $scope.minValues = $scope.minValues.filter(b => b.id != object.id);
+                }
                 updateChart(buildingAxisData, object.index, object.id);
                 if(object.vals != 'none'){
                     calculateVals(buildingAxisData, object.id);
@@ -185,7 +193,6 @@ angular.module('chartController', [])
         These arrays are then ng-repeated in the view and the values for each building are displayed in the block
          */
         function calculateVals(dataset, block_id) {
-            console.log(dataset);
             dataset.forEach(function (currBuilding) {
                 var max = {
                     id : block_id,
@@ -229,9 +236,7 @@ angular.module('chartController', [])
         it simply updates the dataset of the calling chart
          */
         function updateChart(buildingAxisData, index, id) {
-            $scope.maxValues = [];
-            $scope.medValues = [];
-            $scope.minValues = [];
+
             var datasetsArray = [];
             buildingAxisData.forEach(function (element) {
                 datasetsArray.push({
@@ -270,6 +275,7 @@ angular.module('chartController', [])
             $scope.maxValues = [];
             $scope.medValues = [];
             $scope.minValues = [];
+            charts = [];
         };
 
 
