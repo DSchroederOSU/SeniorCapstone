@@ -208,90 +208,14 @@ module.exports = function (app, passport) {
                                         points: datapoints.filter(entry => entry.building == req.query.buildings)
                                     });
                                 }
-                                res.json(to_return);
+                                res.jsonp(to_return); // Only difference between this function and old getBuildingData route.
                             }
                         });
                 }
             });
 
     });
-
-    app.get('/api/getBuildingDataJSONP', function (req, res) {
-        var match;
-        if (req.query && req.query.start && req.query.end) {
-            match = {
-                timestamp: {
-                    $lt: req.query.end,
-                    $gte: req.query.start
-                }
-            }
-        } else {
-            match = {};
-        }
-
-        Building.find({
-                _id: {
-                    $in: req.query.buildings
-                }
-            })
-            .populate({
-                path: 'data_entries',
-                match: match, //THIS WORKS TO FILTER DATES
-                select: 'id'
-            })
-            .exec(function (err, dataEntries) {
-                if (err) {
-                    res.json({
-                        building: null
-                    });
-                } else {
-                    DataEntry.find({
-                            _id: {
-                                $in: [].concat.apply([], dataEntries.map(d => d.data_entries))
-                            }
-                        })
-                        .select({
-                            point: {
-                                $elemMatch: {
-                                    name: "Accumulated Real Energy Net"
-                                }
-                            }
-                        })
-                        .select('-_id timestamp point.value building')
-                        .exec(function (err, datapoints) {
-                            if (err) {
-                                res.json({
-                                    building: null
-                                });
-                            } else {
-                                var to_return = [];
-                                var b_array = [];
-                                if (typeof req.query.buildings == 'string') {
-                                    b_array.push(req.query.buildings);
-                                } else {
-                                    b_array = req.query.buildings
-                                }
-                                if (b_array && req.query.buildings.length > 1 && dataEntries != '[]') {
-                                    b_array.forEach(function (building_id) {
-                                        to_return.push({
-                                            id: building_id,
-                                            points: datapoints.filter(entry => entry.building == building_id)
-                                        });
-                                    });
-                                } else {
-                                    to_return.push({
-                                        id: req.query.buildings,
-                                        points: datapoints.filter(entry => entry.building == req.query.buildings)
-                                    });
-                                }
-                                res.jsonp(to_return); // Only difference between this function and getBuildingData route.
-                            }
-                        });
-                }
-            });
-
-    });
-
+    
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
     });
