@@ -37,12 +37,12 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json()); // get information from html forms
 
 // =====================================
-// XML POST PARSING 
+// XML POST PARSING
 // =====================================
 // Function for handling xml post requests
 // Receives post requests, converts from XML to JSON
 // the 'xmlparser' in parameters converts XML to String
-// then bodyParser converts this string to JSON 
+// then bodyParser converts this string to JSON
 
 app.post('/receiveXML', xmlparser({
     trim: false,
@@ -54,7 +54,7 @@ app.post('/receiveXML', xmlparser({
         // Checks if meter exists. If it doesn't adds one.
         // Then/else adds incoming data entry
         Meter.findOne({
-            meter_id: req.body.das.serial
+            meter_id: req.body.das.serial + req.body.das.devices.device.address
         }, (err, doc) => {
             if (doc === null || doc === undefined) {
                 addMeter(req.body.das).then(data => addEntry(data, pathShortener));
@@ -80,7 +80,7 @@ function addMeter(meter) {
     return new Promise((resolve, reject) => {
         newmeter = new Meter({
             name: meter.devices.device.name,
-            meter_id: meter.serial,
+            meter_id: meter.serial + meter.devices.device.address,
             building: null
         });
         console.log('New meter "' + newmeter.name + '" has been added.')
