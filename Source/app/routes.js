@@ -1,4 +1,5 @@
 require('mongoose');
+require("mongodb")
 const Json2csvParser = require('json2csv').Parser;
 var parseString = require('xml2js').parseString;
 var bodyParser = require('body-parser');
@@ -116,7 +117,9 @@ module.exports = function (app, passport) {
     });
 
     app.get('/api/buildings', function (req, res) {
-        Building.find({}).exec(function (err, buildings) {
+        Building.find({})
+            .select('-data_entries')
+            .exec(function (err, buildings) {
             // returns all buildings except the 'null' one that keeps showing up
             // temporary fix that makes app look clean
             // need to find root cause still
@@ -184,20 +187,31 @@ module.exports = function (app, passport) {
                             point: {
                                 $elemMatch: {
                                     name: "Accumulated Real Energy Net"
-                                }
+                                },
                             }
                         })
                         .select('-_id timestamp point.value building')
                         .exec(function (err, datapoints) {
+                            /*
+                            datapoints: [
+                                {
+                                    building: 5aab24bfdbdd3c325439a219,
+                                    timestamp: '2018-04-03 22:00:00',
+                                    point: [ { value: 1355244.13 } ]
+                                 }
+                            ]
+                            */
+                            console.log(datapoints[0]);
                             if (err) {
-                                console.log('Second exit')
-                                console.log(err)
                                 res.json({
                                     building: null
                                 });
                             } else {
                                 var to_return = [];
                                 var b_array = [];
+
+                                //if only one building is being charted,
+                                //the value is a string not an array, needs to be handled
                                 if (typeof req.query.buildings == 'string') {
                                     b_array.push(req.query.buildings);
                                 } else {
@@ -207,15 +221,34 @@ module.exports = function (app, passport) {
                                     b_array.forEach(function (building_id) {
                                         to_return.push({
                                             id: building_id,
-                                            points: datapoints.filter(entry => entry.building == building_id)
+                                            points: datapoints.filter(entry => entry.building == building_id).map(x => {
+                                                if(x.point.length != 0)
+                                                    return{building: x.building, timestamp: x.timestamp, point: x.point[0].value}
+                                            })
                                         });
                                     });
                                 } else {
                                     to_return.push({
                                         id: req.query.buildings,
-                                        points: datapoints.filter(entry => entry.building == req.query.buildings)
+                                        points: datapoints.filter(entry => entry.building == req.query.buildings).map(x => {
+                                            if(x.point.length != 0)
+                                                return{building: x.building, timestamp: x.timestamp, point: x.point[0].value}
+                                        })
                                     });
                                 }
+                                /*
+                                This returns a structure like this to the client
+                                to_return: [
+                                    {
+                                        id: building_id,
+                                        points: [ {building: building_id, timestamp: timestamp, value: 1355244.13 } ]
+                                    },
+                                    {
+                                        id: building_id,
+                                        points: [ {building: building_id, timestamp: timestamp, value: 1355244.13 } ]
+                                    },
+                                ]
+                                */
                                 console.log('Returning with value: ' + to_return);
                                 res.json(to_return);
                             }
@@ -1022,4 +1055,14 @@ function isLoggedIn(req, res, next) {
 
 function saveBlock(blockData) {
 
+}
+function Last7Days () {
+    var result = [];
+    for (var i=0; i<7; i++) {
+        var d = new Date();
+        d.setDate(d.getDate() - i);
+        result.push( formatDate(d) )
+    }
+
+    return(result.join(','));
 }
