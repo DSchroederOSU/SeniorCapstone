@@ -48,15 +48,18 @@ app.post('/receiveXML', xmlparser({
     trim: false,
     explicitArray: false
 }), function (req, res) {
-    if (req.body.das.mode == 'LOGFILEUPLOAD') {
+    if (req.body.das.mode === 'LOGFILEUPLOAD') {
+        if (req.body.das.serial === '001EC60527B4') {
+            console.log('McNary AcquiSuite Meter hit with address of ' + req.body.das.devices.device.address);
+        }
         console.log('Received XML data on: ' + new Date().toUTCString());
         pathShortener = req.body.das.devices.device.records;
         // Checks if meter exists. If it doesn't adds one.
         // Then/else adds incoming data entry
         Meter.findOne({
-            meter_id: req.body.das.serial + req.body.das.devices.device.address
+            meter_id: (req.body.das.serial + '_' + req.body.das.devices.device.address)
         }, (err, doc) => {
-            if (doc === null || doc === undefined) {
+            if (!doc) {
                 addMeter(req.body.das).then(data => addEntry(data, pathShortener));
             } else {
                 addEntry(doc, pathShortener);
@@ -65,6 +68,7 @@ app.post('/receiveXML', xmlparser({
     } else {
         console.log('STATUS file received');
     }
+    console.log('About to return with res.status')
     res.status("200");
     res.set({
         'content-type': 'text/xml',
@@ -80,7 +84,7 @@ function addMeter(meter) {
     return new Promise((resolve, reject) => {
         newmeter = new Meter({
             name: meter.devices.device.name,
-            meter_id: meter.serial + meter.devices.device.address,
+            meter_id: (meter.serial + '_' + meter.devices.device.address),
             building: null
         });
         console.log('New meter "' + newmeter.name + '" has been added.')
@@ -134,10 +138,7 @@ function addEntry(meter, body) {
                                 $push: {
                                     data_entries: x
                                 }
-                            }, {
-                                safe: true,
-                                new: true
-                            },
+                            }, 
                             (err) => {
                                 if (err) throw (err)
                             });
