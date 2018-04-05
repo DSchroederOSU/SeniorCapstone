@@ -165,7 +165,7 @@ module.exports = function (app, passport) {
             })
             .exec(function (err, dataEntries) {
                 if (err) {
-                    res.json({
+                    res.jsonp({
                         building: null
                     });
                 } else {
@@ -184,7 +184,7 @@ module.exports = function (app, passport) {
                         .select('-_id timestamp point.value building')
                         .exec(function (err, datapoints) {
                             if (err) {
-                                res.json({
+                                res.jsonp({
                                     building: null
                                 });
                             } else {
@@ -208,14 +208,14 @@ module.exports = function (app, passport) {
                                         points: datapoints.filter(entry => entry.building == req.query.buildings)
                                     });
                                 }
-                                res.json(to_return);
+                                res.jsonp(to_return);
                             }
                         });
                 }
             });
 
     });
-
+    
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
     });
