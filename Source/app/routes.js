@@ -127,8 +127,6 @@ module.exports = function (app, passport) {
         });
     });
 
-
-
     app.get('/api/getBuildingById', function (req, res) {
         // delete a building then set it's meters/data 'building' var to null
         Building.findOne({
