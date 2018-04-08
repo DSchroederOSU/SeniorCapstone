@@ -68,7 +68,6 @@ app.post('/receiveXML', xmlparser({
     } else {
         console.log('STATUS file received');
     }
-    console.log('About to return with res.status')
     res.status("200");
     res.set({
         'content-type': 'text/xml',
@@ -105,6 +104,8 @@ function addEntry(meter, body) {
             entry.building = meter.building;
             body.record.point.forEach((e, i) => {
                 entry.point[i] = e.$;
+                Math.abs(entry.point[i].value);
+                console.log(entry.point[i].value)
             });
             entryArray.push(entry);
         } else {
@@ -115,6 +116,7 @@ function addEntry(meter, body) {
                 entry.building = meter.building
                 body.record[i].point.forEach((e, i) => {
                     entry.point[i] = e.$;
+                    entry.point[i].value = Math.abs(entry.point[i].value);
                 })
                 entryArray.push(entry);
             }
@@ -146,7 +148,7 @@ function addEntry(meter, body) {
                     console.log('Data entry id "' + x._id + '" with timestamp ' + x.timestamp + ' added to the meter named "' + meter.name + '" which is assigned to building id: "' + meter.building + '"');
                 } else {
                     console.log('Duplicate detected and nothing has been added!');
-                    console.log('Incoming Data\'s timestamp:\t' + x.timestamp + '  meter_id:\t' + x.meter_id);
+                    console.log('Incoming Data\'s timestamp:\t' + x.timestamp + '  meter "_id":\t' + x.meter_id);
                     console.log('Existing Data\'s timestamp:\t' + doc.timestamp + '  meter_id:\t' + doc.meter_id);
                 }
             });
