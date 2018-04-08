@@ -104,8 +104,7 @@ function addEntry(meter, body) {
             entry.building = meter.building;
             body.record.point.forEach((e, i) => {
                 entry.point[i] = e.$;
-                Math.abs(entry.point[i].value);
-                console.log(entry.point[i].value)
+                entry.point[i].value = Math.abs(entry.point[i].value);
             });
             entryArray.push(entry);
         } else {
