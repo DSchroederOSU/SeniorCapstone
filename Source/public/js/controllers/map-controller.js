@@ -1,5 +1,5 @@
 angular.module('mapController', [])
-	.controller('mapController', function ($scope) {
+	.controller('mapController', function ($scope, $location, $route, Building) {
 
 		$scope.loadMap = function () {
 			$scope.map;
@@ -65,7 +65,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(arnold_dining_center, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Arnold Dining Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -99,7 +99,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Bloss, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Bloss Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -131,7 +131,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Buxton, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Buxton Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -162,7 +162,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Callahan, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Callahan Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -190,7 +190,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Cauthorn, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Cauthorn Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -219,7 +219,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(CH2M, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "CH2M Hill Alumni Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -286,7 +286,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Dixon, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Dixon Recreation Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -320,7 +320,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Dryden, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Dryden Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -360,7 +360,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Finley, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Finley Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -460,7 +460,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Halsell, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Halsell Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -488,7 +488,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Hawley, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Hawley Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -548,7 +548,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(ILLC, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "ILLC" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -592,7 +592,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(KEC, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Kelley Engineering Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -620,7 +620,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(MPW, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Marketplace West Dining Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -650,7 +650,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Mcnary, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Mcnary Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -734,7 +734,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(MU, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Memorial Union" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -776,7 +776,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Milam, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Milam Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -800,7 +800,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Milne_Comp_Center, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Milne Computer Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -824,7 +824,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Nash, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Nash Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -852,7 +852,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Poling, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Poling Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -921,7 +921,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Sackett, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Sackett Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -953,7 +953,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(SEC, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Student Experience Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -1013,7 +1013,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Tebeau, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Tebeau Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -1070,7 +1070,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Library, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Valley Library" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -1172,7 +1172,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Weatherford, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Weatherford Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -1212,7 +1212,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Weniger, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Weniger Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -1252,7 +1252,7 @@ angular.module('mapController', [])
 			google.maps.event.addListener(West, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "West Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -1282,13 +1282,24 @@ angular.module('mapController', [])
 			google.maps.event.addListener(Wilson, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Wilson Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a id='myInfoWinDiv'  class='btn pointer' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Wilson);
 
+			
+			google.maps.event.addListener(infoWindow,'domready',function(){
+				$('#myInfoWinDiv').click(function() {
+					console.log("test");
+					selectedBuilding = building;
+					$scope.BuildingName = building.name;
+					$scope.buildingModel = building;
+					$location.path('/viewBuilding');
+				});
+			});
 		};
+		
 
 	});
