@@ -70,6 +70,7 @@ angular.module('buildingController', [])
         $scope.getViewBuilding = function () {
             $scope.buildingModel = selectedBuilding;
         };
+		
         /*
         This function is called as an ng-init directive of the meter table in viewBuilding
         INPUT: the current buildingModel of the building being viewed
