@@ -46,6 +46,7 @@ angular.module('mapController', [])
 			var shapes = [];
 
             jQuery.each(getPaths(), function(i, val) {
+            	console.log(map_buildings);
 				var check = map_buildings.filter(x => x.name == val.name);
             	if(check){
             		//console.log(buildMapObject(check[0], val.path));
@@ -1038,6 +1039,7 @@ angular.module('mapController', [])
 		};
 
         function buildMapObject(obj, path){
+            var infoWindow = new google.maps.InfoWindow;
             var map = new google.maps.Polygon({
                 path: path,
                 strokeColor: "#DC4405",
@@ -1045,20 +1047,26 @@ angular.module('mapController', [])
                 strokeWeight: 2
             });
             map.setMap($scope.map);
-
+            $scope.b = obj;
             var content = '<div><h5 class="Stratum2-Light" style="width:150px; min-height:30px">' + obj.name + '</h5>' +
-                '<button ng-controller="buildingController"' +
+                '<button ng-controller="buildingController" ng-click="view('+$scope.b+')" '+
                 'class="btn" style="color: white; background-color: #DC4405 !important;">View</button>  </div>';
             var compiledContent = $compile(content)($scope);
 
             google.maps.event.addListener(map, 'click', function (event) {
-                $rootScope.$broadcast("MapBuilding", { building: obj });
+                infoWindow.setContent(compiledContent[0]);
+                infoWindow.setPosition(event.latLng);
+                infoWindow.open($scope.map);
+                //$rootScope.$broadcast("MapBuilding", { building: obj });
             });
             return map;
 
 
 		}
 
+		$scope.view = function(o){
+        	console.log(o);
+		}
         function getPaths(){
         	return {
         		dixon: {name: "Dixon Recreation Center", path : [
