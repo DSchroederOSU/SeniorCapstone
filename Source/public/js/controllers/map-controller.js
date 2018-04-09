@@ -1,3 +1,4 @@
+var coordinates = require('../../assets/map_coordinates');
 var map_buildings;
 angular.module('mapController', [])
 	.controller('mapController', function ($rootScope, $compile,$scope, Building) {
@@ -12,7 +13,7 @@ angular.module('mapController', [])
 			$scope.map;
 			$scope.markers = [];
 			$scope.markerId = 1;
-			//Map initialization  
+			//Map initialization
 			var latlng = new google.maps.LatLng(44.563823618710714, -123.27824699896155);
 			var myStyles = [{
 				featureType: "poi",
@@ -45,6 +46,7 @@ angular.module('mapController', [])
 			//list of polygons
 			var shapes = [];
 
+			console.log(coordinates);
 			//Arnold Dining Center
 			var path = [
 				new google.maps.LatLng(44.56064873786082, -123.27814686300826),
