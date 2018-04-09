@@ -10,10 +10,17 @@ angular.module('UserService', [])
             }
         }
     })
-    .factory('EmailUser', function ($http) {
+    .factory('EmailRegistration', function ($http) {
         return {
             post: function (email) {
-                return $http.post('/api/emailUser', email)
+                return $http.post('/api/emailRegistration', email)
+            }
+        }
+    })
+    .factory('EmailAlert', function ($http) {
+        return {
+            post: function (email) {
+                return $http.post('/api/emailAlert', email)
             }
         }
     });

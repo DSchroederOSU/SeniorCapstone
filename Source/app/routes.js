@@ -1,5 +1,5 @@
 require('mongoose');
-require("mongodb")
+require('mongodb')
 const Json2csvParser = require('json2csv').Parser;
 var parseString = require('xml2js').parseString;
 var bodyParser = require('body-parser');
@@ -120,11 +120,11 @@ module.exports = function (app, passport) {
         Building.find({})
             .select('-data_entries')
             .exec(function (err, buildings) {
-            // returns all buildings except the 'null' one that keeps showing up
-            // temporary fix that makes app look clean
-            // need to find root cause still
-            res.json(buildings.filter(building => building._id != null)); // return all buildings in JSON format
-        });
+                // returns all buildings except the 'null' one that keeps showing up
+                // temporary fix that makes app look clean
+                // need to find root cause still
+                res.json(buildings.filter(building => building._id != null)); // return all buildings in JSON format
+            });
     });
 
     app.get('/api/getBuildingById', function (req, res) {
@@ -214,8 +214,12 @@ module.exports = function (app, passport) {
                                         to_return.push({
                                             id: building_id,
                                             points: datapoints.filter(entry => entry.building == building_id).map(x => {
-                                                if(x.point.length != 0)
-                                                    return{building: x.building, timestamp: x.timestamp, point: x.point[0].value}
+                                                if (x.point.length != 0)
+                                                    return {
+                                                        building: x.building,
+                                                        timestamp: x.timestamp,
+                                                        point: x.point[0].value
+                                                    }
                                             })
                                         });
                                     });
@@ -223,8 +227,12 @@ module.exports = function (app, passport) {
                                     to_return.push({
                                         id: req.query.buildings,
                                         points: datapoints.filter(entry => entry.building == req.query.buildings).map(x => {
-                                            if(x.point.length != 0)
-                                                return{building: x.building, timestamp: x.timestamp, point: x.point[0].value}
+                                            if (x.point.length != 0)
+                                                return {
+                                                    building: x.building,
+                                                    timestamp: x.timestamp,
+                                                    point: x.point[0].value
+                                                }
                                         })
                                     });
                                 }
@@ -249,7 +257,7 @@ module.exports = function (app, passport) {
             });
 
     });
-    
+
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
     });
@@ -744,7 +752,60 @@ module.exports = function (app, passport) {
         });
     });
 
-    app.post('/api/emailUser', function (req, res) {
+    // sends out alert to users (admins) when a meter goes down.
+    app.post('/api/emailAlert', function (req, res) {
+        AWS.config.update({
+            region: 'us-west-2'
+        });
+        var credentials = new AWS.EnvironmentCredentials('AWS');
+        credentials.accessKeyId = process.env.AWS_ACCESS_KEY_ID
+        credentials.secretAccessKey = process.env.SECRET_ACCESS_KEY
+        AWS.config.credentials = credentials;
+        var params = {
+            Destination: { 
+                CcAddresses: [],
+                ToAddresses: [req.body.email]
+            },
+
+            Message: { 
+                Body: { 
+                    Html: {
+                        Charset: "UTF-8",
+                        Data: "<h1>This is an E-mail alert from the application</h1><br> <h4> Somthing went terribly wrong with one of the meters! </h4>"
+                    },
+                    Text: {
+                        Charset: "UTF-8",
+                        Data: "TEXT_FORMAT_BODY"
+                    }
+                },
+                Subject: {
+                    Charset: 'UTF-8',
+                    Data: 'ALERT email from AWS'
+                }
+            },
+            Source: process.env.TEST_EMAIL_USER,
+            /* required */
+            ReplyToAddresses: [],
+        };
+        var sendPromise = new AWS.SES({
+            apiVersion: '2010-12-01'
+        }).sendEmail(params).promise();
+
+        // Handle promise's fulfilled/rejected states
+        sendPromise.then(
+            function (data) {
+                console.log(data.MessageId);
+            }).catch(
+            function (err) {
+                console.error(err, err.stack);
+            });
+
+        res.json({
+            message: "success"
+        });
+    });
+
+    app.post('/api/emailRegistration', function (req, res) {
         AWS.config.update({
             region: 'us-west-2'
         });
@@ -885,7 +946,40 @@ module.exports = function (app, passport) {
             });
 
     });
+    // Function to simply iteratively change any negative values in DataEntries
+    // into postive numbers.
+    app.post('/updateNegativeDBValues', async (req, res) => {
+        let finalArray = await DataEntry.find({
+            point: {
+                $elemMatch: {
+                    value: {
+                        $lt: 0
+                    }
+                }
+            }
+        }).limit(8000).exec(async (err, docs) => {
+            for (let i = 0; i < docs.length; i++) {
+                for (let j = 0; j < docs[i].point.length; j++) {
+                    docs[i].point[j].value = Math.abs(docs[i].point[j].value);
+                }
+            }
+        });
 
+        for (let i = 0; i < finalArray.length; i++) {
+            DataEntry.findByIdAndUpdate({
+                _id: finalArray[i]._id
+            }, {
+                $set: {
+                    point: finalArray[i].point
+                }
+            }, (err, doc) => {
+                if (err) {
+                    console.log(err);
+                }
+            });
+        }
+        res.jsonp(200);
+    });
 }
 
 
