@@ -980,6 +980,33 @@ module.exports = function (app, passport) {
         }
         res.jsonp(200);
     });
+
+  /*  app.post('/moveMeterReferences', async (req,res) => {
+        let oldMeters = [];
+        let newMeters = [];
+        let asyncMeter = await Meter.find((err,docs) => {
+       
+            for (let i = 0; i < docs.length; i++) {
+                if(docs[i].meter_id.substr(-2) === '_1'){
+                    newMeters.push(docs[i]);
+                }
+            }
+            // console.log(newMeters);
+            for (let j = 0; j < newMeters.length; j++) { 
+                for (let k = 0; k < docs.length; k++){
+                    if(newMeters[j].meter_id === docs[k].meter_id + '_1'){
+                        oldMeters.push(docs[k]);
+                    }
+                }
+            }
+        });
+        console.log(oldMeters[0]);
+        console.log(newMeters[0]);
+        for (let i = 0; i < newMeters.length; i++) { 
+            DataEntry.updateMany({meter_id: oldMeters[i]},{$set: {meter_id: newMeters[i]}});
+        }
+        res.jsonp(200);
+    });*/
 }
 
 
