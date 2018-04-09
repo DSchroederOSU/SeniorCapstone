@@ -1,7 +1,14 @@
+var map_buildings;
 angular.module('mapController', [])
-	.controller('mapController', function ($scope) {
+	.controller('mapController', function ($rootScope, $compile,$scope, Building) {
+		$scope.getBuildings = function(){
+            Building.get().success(function (data) {
+                map_buildings = data;
+                loadMap();
+            });
 
-		$scope.loadMap = function () {
+		};
+        function loadMap() {
 			$scope.map;
 			$scope.markers = [];
 			$scope.markerId = 1;
@@ -275,23 +282,28 @@ angular.module('mapController', [])
 				new google.maps.LatLng(44.56357378743596, -123.27914585174767),
 				new google.maps.LatLng(44.56357569843555, -123.27905935050694)
 			];
-			
-			var Dixon = new google.maps.Polygon({
+
+
+			var building_obj = map_buildings.filter(x => x.name.toString() == "Dixon Recreation Center");
+
+			var dixon_map = new google.maps.Polygon({
 				path: path,
 				strokeColor: "#DC4405",
 				strokeOpacity: 1.0,
 				strokeWeight: 2
 			});
-			Dixon.setMap($scope.map);
-			google.maps.event.addListener(Dixon, 'click', function (event) {
-				infoWindow.setContent(
-					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Dixon Recreation Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
-				);
-				infoWindow.setPosition(event.latLng);
-				infoWindow.open($scope.map);
-			});
-			shapes.push(Dixon);
+			var Dixon = {building : building_obj[0], map : dixon_map};
+			Dixon.map.setMap($scope.map);
+            var content = '<div><h5 class="Stratum2-Light" style="width:150px; min-height:30px">' + Dixon.building.name + '</h5>' +
+                '<button ng-controller="buildingController"' +
+                'class="btn" style="color: white; background-color: #DC4405 !important;">View</button>  </div>';
+            var compiledContent = $compile(content)($scope);
+            google.maps.event.addListener(Dixon.map, 'click', function (event) {
+                $rootScope.$broadcast("MapBuilding", { building: Dixon.building });
+            });
+
+
+			shapes.push(Dixon.map);
 
 			//Dryden
 			var path = [

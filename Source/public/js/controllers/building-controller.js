@@ -3,7 +3,7 @@ var selectedMeters = [];
 var dropdownMeters = [];
 var editBuilding;
 angular.module('buildingController', [])
-    .controller('buildingController', function ($scope, $location, $route, Building, Meter) {
+    .controller('buildingController', function ($rootScope, $scope, $location, $route, Building, Meter) {
         selectedMeters = [];
         /*---------------------------------------------------------------------------------------
         ------------------------------------CREATE FUNCTIONS-------------------------------------
@@ -65,6 +65,7 @@ angular.module('buildingController', [])
             $scope.BuildingName = building.name;
             $scope.buildingModel = building;
             $location.path('/viewBuilding');
+            $route.reload();
         };
 
         $scope.getViewBuilding = function () {
@@ -282,5 +283,9 @@ angular.module('buildingController', [])
                 UpdateBuilding(editBuilding);
             }
         };
+
+        $scope.$on("MapBuilding", function (event, data) {
+            $scope.viewBuilding(data.building);
+        });
 
     });
