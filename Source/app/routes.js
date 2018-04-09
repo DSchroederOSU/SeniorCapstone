@@ -752,7 +752,60 @@ module.exports = function (app, passport) {
         });
     });
 
-    app.post('/api/emailUser', function (req, res) {
+    // sends out alert to users (admins) when a meter goes down.
+    app.post('/api/emailAlert', function (req, res) {
+        AWS.config.update({
+            region: 'us-west-2'
+        });
+        var credentials = new AWS.EnvironmentCredentials('AWS');
+        credentials.accessKeyId = process.env.AWS_ACCESS_KEY_ID
+        credentials.secretAccessKey = process.env.SECRET_ACCESS_KEY
+        AWS.config.credentials = credentials;
+        var params = {
+            Destination: { 
+                CcAddresses: [],
+                ToAddresses: [req.body.email]
+            },
+
+            Message: { 
+                Body: { 
+                    Html: {
+                        Charset: "UTF-8",
+                        Data: "<h1>This is an E-mail alert from the application</h1><br> <h4> Somthing went terribly wrong with one of the meters! </h4>"
+                    },
+                    Text: {
+                        Charset: "UTF-8",
+                        Data: "TEXT_FORMAT_BODY"
+                    }
+                },
+                Subject: {
+                    Charset: 'UTF-8',
+                    Data: 'ALERT email from AWS'
+                }
+            },
+            Source: process.env.TEST_EMAIL_USER,
+            /* required */
+            ReplyToAddresses: [],
+        };
+        var sendPromise = new AWS.SES({
+            apiVersion: '2010-12-01'
+        }).sendEmail(params).promise();
+
+        // Handle promise's fulfilled/rejected states
+        sendPromise.then(
+            function (data) {
+                console.log(data.MessageId);
+            }).catch(
+            function (err) {
+                console.error(err, err.stack);
+            });
+
+        res.json({
+            message: "success"
+        });
+    });
+
+    app.post('/api/emailRegistration', function (req, res) {
         AWS.config.update({
             region: 'us-west-2'
         });
@@ -893,7 +946,8 @@ module.exports = function (app, passport) {
             });
 
     });
-
+    // Function to simply iteratively change any negative values in DataEntries
+    // into postive numbers.
     app.post('/updateNegativeDBValues', async (req, res) => {
         let finalArray = await DataEntry.find({
             point: {

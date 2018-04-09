@@ -129,7 +129,7 @@ myApp.controller('userController', function ($scope, EmailUser) {
         email: ''
     };
     $scope.submit = function () {
-        EmailUser.post($scope.email)
+        EmailRegistration.post($scope.email)
             .success(function () {
                 $scope.email = '';
             });
