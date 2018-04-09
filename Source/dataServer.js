@@ -89,7 +89,7 @@ function addMeter(meter) {
         console.log('New meter "' + newmeter.name + '" has been added.')
         newmeter.save().catch(err => {
             res.status(400)
-        })
+        });
         resolve(newmeter);
     });
 }
@@ -112,11 +112,11 @@ function addEntry(meter, body) {
                 entry = new DataEntry();
                 entry.meter_id = meter._id;
                 entry.timestamp = body.record[i].time._;
-                entry.building = meter.building
+                entry.building = meter.building;
                 body.record[i].point.forEach((e, i) => {
                     entry.point[i] = e.$;
                     entry.point[i].value = Math.abs(entry.point[i].value);
-                })
+                });
                 entryArray.push(entry);
             }
         }

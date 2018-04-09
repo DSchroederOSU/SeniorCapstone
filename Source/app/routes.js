@@ -1,4 +1,5 @@
 require('mongoose');
+require("mongodb")
 const Json2csvParser = require('json2csv').Parser;
 var parseString = require('xml2js').parseString;
 var bodyParser = require('body-parser');
@@ -116,15 +117,15 @@ module.exports = function (app, passport) {
     });
 
     app.get('/api/buildings', function (req, res) {
-        Building.find({}).exec(function (err, buildings) {
+        Building.find({})
+            .select('-data_entries')
+            .exec(function (err, buildings) {
             // returns all buildings except the 'null' one that keeps showing up
             // temporary fix that makes app look clean
             // need to find root cause still
             res.json(buildings.filter(building => building._id != null)); // return all buildings in JSON format
         });
     });
-
-
 
     app.get('/api/getBuildingById', function (req, res) {
         // delete a building then set it's meters/data 'building' var to null
@@ -165,7 +166,7 @@ module.exports = function (app, passport) {
             })
             .exec(function (err, dataEntries) {
                 if (err) {
-                    res.json({
+                    res.jsonp({
                         building: null
                     });
                 } else {
@@ -178,18 +179,31 @@ module.exports = function (app, passport) {
                             point: {
                                 $elemMatch: {
                                     name: "Accumulated Real Energy Net"
-                                }
+                                },
                             }
                         })
                         .select('-_id timestamp point.value building')
                         .exec(function (err, datapoints) {
+                            /*
+                            datapoints: [
+                                {
+                                    building: 5aab24bfdbdd3c325439a219,
+                                    timestamp: '2018-04-03 22:00:00',
+                                    point: [ { value: 1355244.13 } ]
+                                 }
+                            ]
+                            */
+                            console.log(datapoints[0]);
                             if (err) {
-                                res.json({
+                                res.jsonp({
                                     building: null
                                 });
                             } else {
                                 var to_return = [];
                                 var b_array = [];
+
+                                //if only one building is being charted,
+                                //the value is a string not an array, needs to be handled
                                 if (typeof req.query.buildings == 'string') {
                                     b_array.push(req.query.buildings);
                                 } else {
@@ -199,23 +213,43 @@ module.exports = function (app, passport) {
                                     b_array.forEach(function (building_id) {
                                         to_return.push({
                                             id: building_id,
-                                            points: datapoints.filter(entry => entry.building == building_id)
+                                            points: datapoints.filter(entry => entry.building == building_id).map(x => {
+                                                if(x.point.length != 0)
+                                                    return{building: x.building, timestamp: x.timestamp, point: x.point[0].value}
+                                            })
                                         });
                                     });
                                 } else {
                                     to_return.push({
                                         id: req.query.buildings,
-                                        points: datapoints.filter(entry => entry.building == req.query.buildings)
+                                        points: datapoints.filter(entry => entry.building == req.query.buildings).map(x => {
+                                            if(x.point.length != 0)
+                                                return{building: x.building, timestamp: x.timestamp, point: x.point[0].value}
+                                        })
                                     });
                                 }
-                                res.json(to_return);
+                                /*
+                                This returns a structure like this to the client
+                                to_return: [
+                                    {
+                                        id: building_id,
+                                        points: [ {building: building_id, timestamp: timestamp, value: 1355244.13 } ]
+                                    },
+                                    {
+                                        id: building_id,
+                                        points: [ {building: building_id, timestamp: timestamp, value: 1355244.13 } ]
+                                    },
+                                ]
+                                */
+                                console.log('Returning with value: ' + to_return);
+                                res.jsonp(to_return);
                             }
                         });
                 }
             });
 
     });
-
+    
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
     });

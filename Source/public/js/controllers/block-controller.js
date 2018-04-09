@@ -207,6 +207,7 @@ angular.module('blockController', [])
                     "is_public" : $scope.publicCheck,
                     "buildings": $scope.selectedBuildings
                 };
+                console.log($scope.selectedBuildings);
                 Block.create(BlockData)
                     // if successful creation
                     .success(function (data) {
