@@ -899,11 +899,11 @@ module.exports = function (app, passport) {
             point: {
                 $elemMatch: {
                     value: {
-                        $lte: 0
+                        $lt: 0
                     }
                 }
             }
-        }).limit(10000).exec(async (err, docs) => {
+        }).limit(8000).exec(async (err, docs) => {
             for (let i = 0; i < docs.length; i++) {
                 for (let j = 0; j < docs[i].point.length; j++) {
                     docs[i].point[j].value = Math.abs(docs[i].point[j].value);
