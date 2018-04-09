@@ -1,6 +1,6 @@
 var map_buildings;
 angular.module('mapController', [])
-	.controller('mapController', function ($rootScope, $compile,$scope, Building) {
+	.controller('mapController', function ($rootScope, $compile, $scope, Building) {
 		$scope.getBuildings = function(){
             Building.get().success(function (data) {
                 map_buildings = data;
@@ -12,7 +12,7 @@ angular.module('mapController', [])
 			$scope.map;
 			$scope.markers = [];
 			$scope.markerId = 1;
-			//Map initialization  
+			//Map initialization
 			var latlng = new google.maps.LatLng(44.563823618710714, -123.27824699896155);
 			var myStyles = [{
 				featureType: "poi",
@@ -45,6 +45,14 @@ angular.module('mapController', [])
 			//list of polygons
 			var shapes = [];
 
+            jQuery.each(getPaths(), function(i, val) {
+				var check = map_buildings.filter(x => x.name == val.name);
+            	if(check){
+            		//console.log(buildMapObject(check[0], val.path));
+            		shapes.push(buildMapObject(check[0], val.path));
+                    //console.log(check);
+				}
+            });
 			//Arnold Dining Center
 			var path = [
 				new google.maps.LatLng(44.56064873786082, -123.27814686300826),
@@ -232,112 +240,6 @@ angular.module('mapController', [])
 				infoWindow.open($scope.map);
 			});
 			shapes.push(CH2M);
-
-			//Dixon Rec Center
-			var path = [
-				new google.maps.LatLng(44.56370832164261, -123.27905881407332),
-				new google.maps.LatLng(44.56371023263777, -123.27824074032378),
-				new google.maps.LatLng(44.56340638361597, -123.2782434225328),
-				new google.maps.LatLng(44.56340447261081, -123.27832657101226),
-				new google.maps.LatLng(44.563391095572946, -123.27831852438521),
-				new google.maps.LatLng(44.56338918456728, -123.2781897783525),
-				new google.maps.LatLng(44.563322299329585, -123.27818441393447),
-				new google.maps.LatLng(44.56332038832165, -123.27822196486068),
-				new google.maps.LatLng(44.563274524112714, -123.27822196486068),
-				new google.maps.LatLng(44.563274524112714, -123.27830779554915),
-				new google.maps.LatLng(44.56324585896378, -123.27831315996718),
-				new google.maps.LatLng(44.56324585896378, -123.27816563847136),
-				new google.maps.LatLng(44.56295156258851, -123.27816832068038),
-				new google.maps.LatLng(44.56295156258851, -123.27845263483596),
-				new google.maps.LatLng(44.5629255727127, -123.27845075727737),
-				new google.maps.LatLng(44.562924521652626, -123.27846121788639),
-				new google.maps.LatLng(44.56288152366525, -123.27846188843864),
-				new google.maps.LatLng(44.56288247917641, -123.27844043076652),
-				new google.maps.LatLng(44.56287101304127, -123.27844043076652),
-				new google.maps.LatLng(44.562871968552614, -123.27827145159858),
-				new google.maps.LatLng(44.56259534736897, -123.27827078104633),
-				new google.maps.LatLng(44.56259439185307, -123.27832710743564),
-				new google.maps.LatLng(44.56258388117721, -123.27832710743564),
-				new google.maps.LatLng(44.56258388117721, -123.27841293812412),
-				new google.maps.LatLng(44.56259458295334, -123.27841313928673),
-				new google.maps.LatLng(44.56259486961103, -123.27844043076652),
-				new google.maps.LatLng(44.56258579220935, -123.27844110131878),
-				new google.maps.LatLng(44.56258483669329, -123.278481334454),
-				new google.maps.LatLng(44.56256238206162, -123.278481334454),
-				new google.maps.LatLng(44.56256094878696, -123.27879515291897),
-				new google.maps.LatLng(44.56259439185307, -123.27879515291897),
-				new google.maps.LatLng(44.56259343633717, -123.27887427808491),
-				new google.maps.LatLng(44.562581492387, -123.27887561918942),
-				new google.maps.LatLng(44.562581492387, -123.27895876766888),
-				new google.maps.LatLng(44.56256668188538, -123.27896010877339),
-				new google.maps.LatLng(44.56256620412718, -123.2791337818071),
-				new google.maps.LatLng(44.562666533244226, -123.2791337818071),
-				new google.maps.LatLng(44.5626670110016, -123.27915523947922),
-				new google.maps.LatLng(44.563098902060844, -123.27915859224049),
-				new google.maps.LatLng(44.56310081307605, -123.27907343210427),
-				new google.maps.LatLng(44.56322646218748, -123.27907611431328),
-				new google.maps.LatLng(44.56322837319847, -123.27919077874867),
-				new google.maps.LatLng(44.563474893121125, -123.27919077874867),
-				new google.maps.LatLng(44.56347680412395, -123.27914786340443),
-				new google.maps.LatLng(44.56357378743596, -123.27914585174767),
-				new google.maps.LatLng(44.56357569843555, -123.27905935050694)
-			];
-
-
-			var building_obj = map_buildings.filter(x => x.name.toString() == "Dixon Recreation Center");
-
-			var dixon_map = new google.maps.Polygon({
-				path: path,
-				strokeColor: "#DC4405",
-				strokeOpacity: 1.0,
-				strokeWeight: 2
-			});
-			var Dixon = {building : building_obj[0], map : dixon_map};
-			Dixon.map.setMap($scope.map);
-            var content = '<div><h5 class="Stratum2-Light" style="width:150px; min-height:30px">' + Dixon.building.name + '</h5>' +
-                '<button ng-controller="buildingController"' +
-                'class="btn" style="color: white; background-color: #DC4405 !important;">View</button>  </div>';
-            var compiledContent = $compile(content)($scope);
-            google.maps.event.addListener(Dixon.map, 'click', function (event) {
-                $rootScope.$broadcast("MapBuilding", { building: Dixon.building });
-            });
-
-
-			shapes.push(Dixon.map);
-
-			//Dryden
-			var path = [
-				new google.maps.LatLng(44.56322598446386, -123.2849756331234),
-				new google.maps.LatLng(44.56322569779472, -123.285184711267),
-				new google.maps.LatLng(44.563220920266865, -123.28518571709537),
-				new google.maps.LatLng(44.563221398019664, -123.2852896526947),
-				new google.maps.LatLng(44.56314758516507, -123.28528931741857),
-				new google.maps.LatLng(44.56314686853495, -123.28518772875213),
-				new google.maps.LatLng(44.562932834597596, -123.2851860523715),
-				new google.maps.LatLng(44.56293259572, -123.28519342844629),
-				new google.maps.LatLng(44.56287478731172, -123.28519342840536),
-				new google.maps.LatLng(44.56287478731172, -123.28497449309452),
-				new google.maps.LatLng(44.56293104301569, -123.28497469425201),
-				new google.maps.LatLng(44.562931162454475, -123.28498153389319),
-				new google.maps.LatLng(44.56317171170715, -123.28498086334093),
-				new google.maps.LatLng(44.56317171170715, -123.2849741578184)
-			];
-			var Dryden = new google.maps.Polygon({
-				path: path,
-				strokeColor: "#DC4405",
-				strokeOpacity: 1.0,
-				strokeWeight: 2
-			});
-			Dryden.setMap($scope.map);
-			google.maps.event.addListener(Dryden, 'click', function (event) {
-				infoWindow.setContent(
-					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Dryden Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
-				);
-				infoWindow.setPosition(event.latLng);
-				infoWindow.open($scope.map);
-			});
-			shapes.push(Dryden);
 
 			//Finley 
 			var path = [
@@ -567,49 +469,6 @@ angular.module('mapController', [])
 			});
 			shapes.push(ILLC);
 
-			//KEC 
-			var path = [
-				new google.maps.LatLng(44.56718302819598, -123.27931201462889),
-				new google.maps.LatLng(44.56718374477637, -123.27925937627697),
-				new google.maps.LatLng(44.56717227948899, -123.27925769989633),
-				new google.maps.LatLng(44.567172040628826, -123.2789764032259),
-				new google.maps.LatLng(44.56729935296451, -123.27897707377815),
-				new google.maps.LatLng(44.567300308403134, -123.27886173879051),
-				new google.maps.LatLng(44.567382237205926, -123.27886173879051),
-				new google.maps.LatLng(44.567382237205926, -123.27885369216347),
-				new google.maps.LatLng(44.567448162339524, -123.27885402743959),
-				new google.maps.LatLng(44.567449356634725, -123.27814927696977),
-				new google.maps.LatLng(44.567375071426, -123.27814994752202),
-				new google.maps.LatLng(44.567375071426, -123.27812111377511),
-				new google.maps.LatLng(44.56728669340141, -123.27812077850922),
-				new google.maps.LatLng(44.567286215681975, -123.27813754231556),
-				new google.maps.LatLng(44.56718374477637, -123.27813821285758),
-				new google.maps.LatLng(44.56718398363651, -123.2781197726706),
-				new google.maps.LatLng(44.56708724523291, -123.27811876684223),
-				new google.maps.LatLng(44.56708796181448, -123.2781496122459),
-				new google.maps.LatLng(44.56700698804066, -123.27814894170388),
-				new google.maps.LatLng(44.567006749179775, -123.2781529650174),
-				new google.maps.LatLng(44.56696733712502, -123.27815229446514),
-				new google.maps.LatLng(44.56696518737582, -123.27927245204592),
-				new google.maps.LatLng(44.56710539860091, -123.2792734578743),
-				new google.maps.LatLng(44.56710587632182, -123.2793110088005)
-			];
-			var KEC = new google.maps.Polygon({
-				path: path,
-				strokeColor: "#DC4405",
-				strokeOpacity: 1.0,
-				strokeWeight: 2
-			});
-			KEC.setMap($scope.map);
-			google.maps.event.addListener(KEC, 'click', function (event) {
-				infoWindow.setContent(
-					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Kelley Engineering Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
-				);
-				infoWindow.setPosition(event.latLng);
-				infoWindow.open($scope.map);
-			});
-			shapes.push(KEC);
 
 			//MPW Dining Center 
 			var path = [
@@ -871,75 +730,6 @@ angular.module('mapController', [])
 			});
 			shapes.push(Poling);
 
-			//Sackett 
-			var path = [
-				new google.maps.LatLng(44.56485070333875, -123.28408822417259),
-				new google.maps.LatLng(44.565138301759085, -123.28408688306808),
-				new google.maps.LatLng(44.565138301759085, -123.28393265604973),
-				new google.maps.LatLng(44.56513113570275, -123.28393265604973),
-				new google.maps.LatLng(44.565131613439874, -123.28378714621067),
-				new google.maps.LatLng(44.56535710492054, -123.28378915786743),
-				new google.maps.LatLng(44.56535806039104, -123.28408151865005),
-				new google.maps.LatLng(44.565641356706884, -123.28408688306808),
-				new google.maps.LatLng(44.56564183443981, -123.28393131494522),
-				new google.maps.LatLng(44.565447396814974, -123.28392997384071),
-				new google.maps.LatLng(44.565447396814974, -123.28378848731518),
-				new google.maps.LatLng(44.56554581004293, -123.28378982841969),
-				new google.maps.LatLng(44.56554628777661, -123.28363493084908),
-				new google.maps.LatLng(44.56525964684546, -123.28363358974457),
-				new google.maps.LatLng(44.56525964684546, -123.28357122838497),
-				new google.maps.LatLng(44.565296910246374, -123.28357122838497),
-				new google.maps.LatLng(44.565297387982135, -123.2834404706955),
-				new google.maps.LatLng(44.56525916910941, -123.2834418118),
-				new google.maps.LatLng(44.56525916910941, -123.28336268663406),
-				new google.maps.LatLng(44.565544854575464, -123.28336335718632),
-				new google.maps.LatLng(44.56554628777661, -123.28320845961571),
-				new google.maps.LatLng(44.56544596361139, -123.28320778906345),
-				new google.maps.LatLng(44.56544644134591, -123.2830622792244),
-				new google.maps.LatLng(44.56564183443981, -123.28306294977665),
-				new google.maps.LatLng(44.56564183443981, -123.2829100638628),
-				new google.maps.LatLng(44.56535806039104, -123.28290805220604),
-				new google.maps.LatLng(44.56535686605289, -123.28306160867214),
-				new google.maps.LatLng(44.56535304417068, -123.28306127339602),
-				new google.maps.LatLng(44.565351849832425, -123.2832071185112),
-				new google.maps.LatLng(44.565132091177006, -123.28320577740669),
-				new google.maps.LatLng(44.565132091177006, -123.2830673083663),
-				new google.maps.LatLng(44.565132330045536, -123.2829137519002),
-				new google.maps.LatLng(44.5648483146416, -123.28291341662407),
-				new google.maps.LatLng(44.56484783690215, -123.28306898474693),
-				new google.maps.LatLng(44.5650432320067, -123.28307032585144),
-				new google.maps.LatLng(44.56504275426884, -123.28320510685444),
-				new google.maps.LatLng(44.56493956280313, -123.28320577740669),
-				new google.maps.LatLng(44.564938607325736, -123.28336134552956),
-				new google.maps.LatLng(44.56522142794792, -123.28336201608181),
-				new google.maps.LatLng(44.56521999473878, -123.2834404706955),
-				new google.maps.LatLng(44.56519037507519, -123.28343980014324),
-				new google.maps.LatLng(44.56519037507519, -123.28357189893723),
-				new google.maps.LatLng(44.56522286115702, -123.28357391059399),
-				new google.maps.LatLng(44.56522142794792, -123.28363224864006),
-				new google.maps.LatLng(44.56493956280313, -123.28362956643105),
-				new google.maps.LatLng(44.56494051828051, -123.28378714621067),
-				new google.maps.LatLng(44.56503558820076, -123.28378714621067),
-				new google.maps.LatLng(44.56503463272493, -123.28393332660198),
-				new google.maps.LatLng(44.564850225599336, -123.28393399715424)
-			];
-			var Sackett = new google.maps.Polygon({
-				path: path,
-				strokeColor: "#DC4405",
-				strokeOpacity: 1.0,
-				strokeWeight: 2
-			});
-			Sackett.setMap($scope.map);
-			google.maps.event.addListener(Sackett, 'click', function (event) {
-				infoWindow.setContent(
-					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Sackett Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
-				);
-				infoWindow.setPosition(event.latLng);
-				infoWindow.open($scope.map);
-			});
-			shapes.push(Sackett);
-
 			//SEC 
 			var path = [
 				new google.maps.LatLng(44.56506329699248, -123.27767707407475),
@@ -1032,62 +822,6 @@ angular.module('mapController', [])
 			});
 			shapes.push(Tebeau);
 
-			//Valley Library
-			var path = [
-				new google.maps.LatLng(44.56537334791716, -123.27654987573624),
-				new google.maps.LatLng(44.56537764753316, -123.27606976032257),
-				new google.maps.LatLng(44.56539914560839, -123.27606908977032),
-				new google.maps.LatLng(44.565400578813126, -123.27595576643944),
-				new google.maps.LatLng(44.565377169798076, -123.27595710754395),
-				new google.maps.LatLng(44.56537764753316, -123.27566608786583),
-				new google.maps.LatLng(44.56538290261896, -123.27563591301441),
-				new google.maps.LatLng(44.5653824248839, -123.27557288110256),
-				new google.maps.LatLng(44.565359971332036, -123.27557019889355),
-				new google.maps.LatLng(44.565359971332036, -123.27554270625114),
-				new google.maps.LatLng(44.565351849832425, -123.27551521360874),
-				new google.maps.LatLng(44.56534325059629, -123.27549107372761),
-				new google.maps.LatLng(44.56532796306226, -123.27547095716),
-				new google.maps.LatLng(44.565312197788586, -123.27545687556267),
-				new google.maps.LatLng(44.56529069968123, -123.27544882893562),
-				new google.maps.LatLng(44.56526872382994, -123.27544748783112),
-				new google.maps.LatLng(44.56524961438728, -123.2754535228014),
-				new google.maps.LatLng(44.56523384909239, -123.27546492218971),
-				new google.maps.LatLng(44.565217128320384, -123.27548369765282),
-				new google.maps.LatLng(44.565204707172356, -123.27550783753395),
-				new google.maps.LatLng(44.565197063387636, -123.27553197741508),
-				new google.maps.LatLng(44.56519563017789, -123.27559299767017),
-				new google.maps.LatLng(44.565165532765064, -123.27559232711792),
-				new google.maps.LatLng(44.565164099554536, -123.27553868293762),
-				new google.maps.LatLng(44.565077629120964, -123.27557288110256),
-				new google.maps.LatLng(44.56507619590827, -123.27561914920807),
-				new google.maps.LatLng(44.56490850977993, -123.27561780810356),
-				new google.maps.LatLng(44.564908032040975, -123.27570766210556),
-				new google.maps.LatLng(44.56476279921892, -123.2757056504488),
-				new google.maps.LatLng(44.564755155376126, -123.27652104198933),
-				new google.maps.LatLng(44.564754199895724, -123.27661626040936),
-				new google.maps.LatLng(44.5648526142964, -123.27661693096161),
-				new google.maps.LatLng(44.56485452525399, -123.27652305364609),
-				new google.maps.LatLng(44.5650714185324, -123.27652774751186),
-				new google.maps.LatLng(44.5650714185324, -123.2765981554985),
-				new google.maps.LatLng(44.56519324149491, -123.27660016715527),
-				new google.maps.LatLng(44.565194196968115, -123.27654853463173)
-			];
-			var Library = new google.maps.Polygon({
-				path: path,
-				strokeColor: "#DC4405",
-				strokeOpacity: 1.0,
-				strokeWeight: 2
-			});
-			Library.setMap($scope.map);
-			google.maps.event.addListener(Library, 'click', function (event) {
-				infoWindow.setContent(
-					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Valley Library" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
-				);
-				infoWindow.setPosition(event.latLng);
-				infoWindow.open($scope.map);
-			});
-			shapes.push(Library);
 
 			//Weatherford 
 			var path = [
@@ -1302,5 +1036,217 @@ angular.module('mapController', [])
 			shapes.push(Wilson);
 
 		};
+
+        function buildMapObject(obj, path){
+            var map = new google.maps.Polygon({
+                path: path,
+                strokeColor: "#DC4405",
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+            });
+            map.setMap($scope.map);
+
+            var content = '<div><h5 class="Stratum2-Light" style="width:150px; min-height:30px">' + obj.name + '</h5>' +
+                '<button ng-controller="buildingController"' +
+                'class="btn" style="color: white; background-color: #DC4405 !important;">View</button>  </div>';
+            var compiledContent = $compile(content)($scope);
+
+            google.maps.event.addListener(map, 'click', function (event) {
+                $rootScope.$broadcast("MapBuilding", { building: obj });
+            });
+            return map;
+
+
+		}
+
+        function getPaths(){
+        	return {
+        		dixon: {name: "Dixon Recreation Center", path : [
+                    new google.maps.LatLng(44.56370832164261, -123.27905881407332),
+                    new google.maps.LatLng(44.56371023263777, -123.27824074032378),
+                    new google.maps.LatLng(44.56340638361597, -123.2782434225328),
+                    new google.maps.LatLng(44.56340447261081, -123.27832657101226),
+                    new google.maps.LatLng(44.563391095572946, -123.27831852438521),
+                    new google.maps.LatLng(44.56338918456728, -123.2781897783525),
+                    new google.maps.LatLng(44.563322299329585, -123.27818441393447),
+                    new google.maps.LatLng(44.56332038832165, -123.27822196486068),
+                    new google.maps.LatLng(44.563274524112714, -123.27822196486068),
+                    new google.maps.LatLng(44.563274524112714, -123.27830779554915),
+                    new google.maps.LatLng(44.56324585896378, -123.27831315996718),
+                    new google.maps.LatLng(44.56324585896378, -123.27816563847136),
+                    new google.maps.LatLng(44.56295156258851, -123.27816832068038),
+                    new google.maps.LatLng(44.56295156258851, -123.27845263483596),
+                    new google.maps.LatLng(44.5629255727127, -123.27845075727737),
+                    new google.maps.LatLng(44.562924521652626, -123.27846121788639),
+                    new google.maps.LatLng(44.56288152366525, -123.27846188843864),
+                    new google.maps.LatLng(44.56288247917641, -123.27844043076652),
+                    new google.maps.LatLng(44.56287101304127, -123.27844043076652),
+                    new google.maps.LatLng(44.562871968552614, -123.27827145159858),
+                    new google.maps.LatLng(44.56259534736897, -123.27827078104633),
+                    new google.maps.LatLng(44.56259439185307, -123.27832710743564),
+                    new google.maps.LatLng(44.56258388117721, -123.27832710743564),
+                    new google.maps.LatLng(44.56258388117721, -123.27841293812412),
+                    new google.maps.LatLng(44.56259458295334, -123.27841313928673),
+                    new google.maps.LatLng(44.56259486961103, -123.27844043076652),
+                    new google.maps.LatLng(44.56258579220935, -123.27844110131878),
+                    new google.maps.LatLng(44.56258483669329, -123.278481334454),
+                    new google.maps.LatLng(44.56256238206162, -123.278481334454),
+                    new google.maps.LatLng(44.56256094878696, -123.27879515291897),
+                    new google.maps.LatLng(44.56259439185307, -123.27879515291897),
+                    new google.maps.LatLng(44.56259343633717, -123.27887427808491),
+                    new google.maps.LatLng(44.562581492387, -123.27887561918942),
+                    new google.maps.LatLng(44.562581492387, -123.27895876766888),
+                    new google.maps.LatLng(44.56256668188538, -123.27896010877339),
+                    new google.maps.LatLng(44.56256620412718, -123.2791337818071),
+                    new google.maps.LatLng(44.562666533244226, -123.2791337818071),
+                    new google.maps.LatLng(44.5626670110016, -123.27915523947922),
+                    new google.maps.LatLng(44.563098902060844, -123.27915859224049),
+                    new google.maps.LatLng(44.56310081307605, -123.27907343210427),
+                    new google.maps.LatLng(44.56322646218748, -123.27907611431328),
+                    new google.maps.LatLng(44.56322837319847, -123.27919077874867),
+                    new google.maps.LatLng(44.563474893121125, -123.27919077874867),
+                    new google.maps.LatLng(44.56347680412395, -123.27914786340443),
+                    new google.maps.LatLng(44.56357378743596, -123.27914585174767),
+                    new google.maps.LatLng(44.56357569843555, -123.27905935050694)
+                ]},
+				sackett : {name: "Sackett Hall",
+					        path : [
+							new google.maps.LatLng(44.56485070333875, -123.28408822417259),
+							new google.maps.LatLng(44.565138301759085, -123.28408688306808),
+							new google.maps.LatLng(44.565138301759085, -123.28393265604973),
+							new google.maps.LatLng(44.56513113570275, -123.28393265604973),
+							new google.maps.LatLng(44.565131613439874, -123.28378714621067),
+							new google.maps.LatLng(44.56535710492054, -123.28378915786743),
+							new google.maps.LatLng(44.56535806039104, -123.28408151865005),
+							new google.maps.LatLng(44.565641356706884, -123.28408688306808),
+							new google.maps.LatLng(44.56564183443981, -123.28393131494522),
+							new google.maps.LatLng(44.565447396814974, -123.28392997384071),
+							new google.maps.LatLng(44.565447396814974, -123.28378848731518),
+							new google.maps.LatLng(44.56554581004293, -123.28378982841969),
+							new google.maps.LatLng(44.56554628777661, -123.28363493084908),
+							new google.maps.LatLng(44.56525964684546, -123.28363358974457),
+							new google.maps.LatLng(44.56525964684546, -123.28357122838497),
+							new google.maps.LatLng(44.565296910246374, -123.28357122838497),
+							new google.maps.LatLng(44.565297387982135, -123.2834404706955),
+							new google.maps.LatLng(44.56525916910941, -123.2834418118),
+							new google.maps.LatLng(44.56525916910941, -123.28336268663406),
+							new google.maps.LatLng(44.565544854575464, -123.28336335718632),
+							new google.maps.LatLng(44.56554628777661, -123.28320845961571),
+							new google.maps.LatLng(44.56544596361139, -123.28320778906345),
+							new google.maps.LatLng(44.56544644134591, -123.2830622792244),
+							new google.maps.LatLng(44.56564183443981, -123.28306294977665),
+							new google.maps.LatLng(44.56564183443981, -123.2829100638628),
+							new google.maps.LatLng(44.56535806039104, -123.28290805220604),
+							new google.maps.LatLng(44.56535686605289, -123.28306160867214),
+							new google.maps.LatLng(44.56535304417068, -123.28306127339602),
+							new google.maps.LatLng(44.565351849832425, -123.2832071185112),
+							new google.maps.LatLng(44.565132091177006, -123.28320577740669),
+							new google.maps.LatLng(44.565132091177006, -123.2830673083663),
+							new google.maps.LatLng(44.565132330045536, -123.2829137519002),
+							new google.maps.LatLng(44.5648483146416, -123.28291341662407),
+							new google.maps.LatLng(44.56484783690215, -123.28306898474693),
+							new google.maps.LatLng(44.5650432320067, -123.28307032585144),
+							new google.maps.LatLng(44.56504275426884, -123.28320510685444),
+							new google.maps.LatLng(44.56493956280313, -123.28320577740669),
+							new google.maps.LatLng(44.564938607325736, -123.28336134552956),
+							new google.maps.LatLng(44.56522142794792, -123.28336201608181),
+							new google.maps.LatLng(44.56521999473878, -123.2834404706955),
+							new google.maps.LatLng(44.56519037507519, -123.28343980014324),
+							new google.maps.LatLng(44.56519037507519, -123.28357189893723),
+							new google.maps.LatLng(44.56522286115702, -123.28357391059399),
+							new google.maps.LatLng(44.56522142794792, -123.28363224864006),
+							new google.maps.LatLng(44.56493956280313, -123.28362956643105),
+							new google.maps.LatLng(44.56494051828051, -123.28378714621067),
+							new google.maps.LatLng(44.56503558820076, -123.28378714621067),
+							new google.maps.LatLng(44.56503463272493, -123.28393332660198),
+							new google.maps.LatLng(44.564850225599336, -123.28393399715424)
+                ]},
+                kelley:
+					{name: "Kelley Engineering Center",
+					 path: [new google.maps.LatLng(44.56718302819598, -123.27931201462889),
+							new google.maps.LatLng(44.56718374477637, -123.27925937627697),
+							new google.maps.LatLng(44.56717227948899, -123.27925769989633),
+							new google.maps.LatLng(44.567172040628826, -123.2789764032259),
+							new google.maps.LatLng(44.56729935296451, -123.27897707377815),
+							new google.maps.LatLng(44.567300308403134, -123.27886173879051),
+							new google.maps.LatLng(44.567382237205926, -123.27886173879051),
+							new google.maps.LatLng(44.567382237205926, -123.27885369216347),
+							new google.maps.LatLng(44.567448162339524, -123.27885402743959),
+							new google.maps.LatLng(44.567449356634725, -123.27814927696977),
+							new google.maps.LatLng(44.567375071426, -123.27814994752202),
+							new google.maps.LatLng(44.567375071426, -123.27812111377511),
+							new google.maps.LatLng(44.56728669340141, -123.27812077850922),
+							new google.maps.LatLng(44.567286215681975, -123.27813754231556),
+							new google.maps.LatLng(44.56718374477637, -123.27813821285758),
+							new google.maps.LatLng(44.56718398363651, -123.2781197726706),
+							new google.maps.LatLng(44.56708724523291, -123.27811876684223),
+							new google.maps.LatLng(44.56708796181448, -123.2781496122459),
+							new google.maps.LatLng(44.56700698804066, -123.27814894170388),
+							new google.maps.LatLng(44.567006749179775, -123.2781529650174),
+							new google.maps.LatLng(44.56696733712502, -123.27815229446514),
+							new google.maps.LatLng(44.56696518737582, -123.27927245204592),
+							new google.maps.LatLng(44.56710539860091, -123.2792734578743),
+							new google.maps.LatLng(44.56710587632182, -123.2793110088005)
+							]
+					},
+				valley: {name: "Valley Library",
+				path: [
+                    new google.maps.LatLng(44.56537334791716, -123.27654987573624),
+                    new google.maps.LatLng(44.56537764753316, -123.27606976032257),
+                    new google.maps.LatLng(44.56539914560839, -123.27606908977032),
+                    new google.maps.LatLng(44.565400578813126, -123.27595576643944),
+                    new google.maps.LatLng(44.565377169798076, -123.27595710754395),
+                    new google.maps.LatLng(44.56537764753316, -123.27566608786583),
+                    new google.maps.LatLng(44.56538290261896, -123.27563591301441),
+                    new google.maps.LatLng(44.5653824248839, -123.27557288110256),
+                    new google.maps.LatLng(44.565359971332036, -123.27557019889355),
+                    new google.maps.LatLng(44.565359971332036, -123.27554270625114),
+                    new google.maps.LatLng(44.565351849832425, -123.27551521360874),
+                    new google.maps.LatLng(44.56534325059629, -123.27549107372761),
+                    new google.maps.LatLng(44.56532796306226, -123.27547095716),
+                    new google.maps.LatLng(44.565312197788586, -123.27545687556267),
+                    new google.maps.LatLng(44.56529069968123, -123.27544882893562),
+                    new google.maps.LatLng(44.56526872382994, -123.27544748783112),
+                    new google.maps.LatLng(44.56524961438728, -123.2754535228014),
+                    new google.maps.LatLng(44.56523384909239, -123.27546492218971),
+                    new google.maps.LatLng(44.565217128320384, -123.27548369765282),
+                    new google.maps.LatLng(44.565204707172356, -123.27550783753395),
+                    new google.maps.LatLng(44.565197063387636, -123.27553197741508),
+                    new google.maps.LatLng(44.56519563017789, -123.27559299767017),
+                    new google.maps.LatLng(44.565165532765064, -123.27559232711792),
+                    new google.maps.LatLng(44.565164099554536, -123.27553868293762),
+                    new google.maps.LatLng(44.565077629120964, -123.27557288110256),
+                    new google.maps.LatLng(44.56507619590827, -123.27561914920807),
+                    new google.maps.LatLng(44.56490850977993, -123.27561780810356),
+                    new google.maps.LatLng(44.564908032040975, -123.27570766210556),
+                    new google.maps.LatLng(44.56476279921892, -123.2757056504488),
+                    new google.maps.LatLng(44.564755155376126, -123.27652104198933),
+                    new google.maps.LatLng(44.564754199895724, -123.27661626040936),
+                    new google.maps.LatLng(44.5648526142964, -123.27661693096161),
+                    new google.maps.LatLng(44.56485452525399, -123.27652305364609),
+                    new google.maps.LatLng(44.5650714185324, -123.27652774751186),
+                    new google.maps.LatLng(44.5650714185324, -123.2765981554985),
+                    new google.maps.LatLng(44.56519324149491, -123.27660016715527),
+                    new google.maps.LatLng(44.565194196968115, -123.27654853463173)
+                ]},
+				dryden: {name: "Dryden Hall",
+                    path : [
+                        new google.maps.LatLng(44.56322598446386, -123.2849756331234),
+                        new google.maps.LatLng(44.56322569779472, -123.285184711267),
+                        new google.maps.LatLng(44.563220920266865, -123.28518571709537),
+                        new google.maps.LatLng(44.563221398019664, -123.2852896526947),
+                        new google.maps.LatLng(44.56314758516507, -123.28528931741857),
+                        new google.maps.LatLng(44.56314686853495, -123.28518772875213),
+                        new google.maps.LatLng(44.562932834597596, -123.2851860523715),
+                        new google.maps.LatLng(44.56293259572, -123.28519342844629),
+                        new google.maps.LatLng(44.56287478731172, -123.28519342840536),
+                        new google.maps.LatLng(44.56287478731172, -123.28497449309452),
+                        new google.maps.LatLng(44.56293104301569, -123.28497469425201),
+                        new google.maps.LatLng(44.562931162454475, -123.28498153389319),
+                        new google.maps.LatLng(44.56317171170715, -123.28498086334093),
+                        new google.maps.LatLng(44.56317171170715, -123.2849741578184)
+                    ]}
+			}
+		}
 
 	});
