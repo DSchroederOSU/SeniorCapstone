@@ -355,6 +355,10 @@ i {
     cursor: pointer;
 }
 
+.profile-pic{
+	border-radius: 50%;
+}
+
 .select-none {
     -moz-user-select: none;
     -webkit-user-select: none;
