@@ -948,38 +948,65 @@ module.exports = function (app, passport) {
     });
     // Function to simply iteratively change any negative values in DataEntries
     // into postive numbers.
-    app.post('/updateNegativeDBValues', async (req, res) => {
-        let finalArray = await DataEntry.find({
-            point: {
-                $elemMatch: {
-                    value: {
-                        $lt: 0
-                    }
-                }
-            }
-        }).limit(8000).exec(async (err, docs) => {
-            for (let i = 0; i < docs.length; i++) {
-                for (let j = 0; j < docs[i].point.length; j++) {
-                    docs[i].point[j].value = Math.abs(docs[i].point[j].value);
-                }
-            }
-        });
+    // app.post('/updateNegativeDBValues', async (req, res) => {
+    //     let finalArray = await DataEntry.find({
+    //         point: {
+    //             $elemMatch: {
+    //                 value: {
+    //                     $lt: 0
+    //                 }
+    //             }
+    //         }
+    //     }).limit(8000).exec(async (err, docs) => {
+    //         for (let i = 0; i < docs.length; i++) {
+    //             for (let j = 0; j < docs[i].point.length; j++) {
+    //                 docs[i].point[j].value = Math.abs(docs[i].point[j].value);
+    //             }
+    //         }
+    //     });
 
-        for (let i = 0; i < finalArray.length; i++) {
-            DataEntry.findByIdAndUpdate({
-                _id: finalArray[i]._id
-            }, {
-                $set: {
-                    point: finalArray[i].point
-                }
-            }, (err, doc) => {
-                if (err) {
-                    console.log(err);
-                }
-            });
-        }
-        res.jsonp(200);
-    });
+    //     for (let i = 0; i < finalArray.length; i++) {
+    //         DataEntry.findByIdAndUpdate({
+    //             _id: finalArray[i]._id
+    //         }, {
+    //             $set: {
+    //                 point: finalArray[i].point
+    //             }
+    //         }, (err, doc) => {
+    //             if (err) {
+    //                 console.log(err);
+    //             }
+    //         });
+    //     }
+    //     res.jsonp(200);
+    // });
+
+    // app.post('/moveMeterReferences', async (req,res) => {
+    //     let oldMeters = [];
+    //     let newMeters = [];
+    //     let asyncMeter = await Meter.find((err,docs) => {
+       
+    //         for (let i = 0; i < docs.length; i++) {
+    //             if(docs[i].meter_id.substr(-2) === '_1'){
+    //                 newMeters.push(docs[i]);
+    //             }
+    //         }
+    //         // console.log(newMeters);
+    //         for (let j = 0; j < newMeters.length; j++) { 
+    //             for (let k = 0; k < docs.length; k++){
+    //                 if(newMeters[j].meter_id === docs[k].meter_id + '_1'){
+    //                     oldMeters.push(docs[k]);
+    //                 }
+    //             }
+    //         }
+    //     });
+    //     console.log(oldMeters[0]);
+    //     console.log(newMeters[0]);
+    //     for (let i = 0; i < newMeters.length; i++) { 
+    //         DataEntry.updateMany({meter_id: oldMeters[i]},{$set: {meter_id: newMeters[i]}});
+    //     }
+    //     res.jsonp(200);
+    // });
 }
 
 
