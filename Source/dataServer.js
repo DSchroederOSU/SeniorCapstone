@@ -49,26 +49,26 @@ app.post('/receiveXML', xmlparser({
     explicitArray: false
 }), function (req, res) {
     if (req.body.das.mode === 'LOGFILEUPLOAD') {
+        console.log('Received XML data on: ' + new Date().toUTCString());
         if (req.body.das.serial === '001EC60527B4') {
             console.log('McNary AcquiSuite Meter hit with address of ' + req.body.das.devices.device.address);
         }
-        console.log('Received XML data on: ' + new Date().toUTCString());
         pathShortener = req.body.das.devices.device.records;
+        
         // Checks if meter exists. If it doesn't adds one.
         // Then/else adds incoming data entry
         Meter.findOne({
             meter_id: (req.body.das.serial + '_' + req.body.das.devices.device.address)
         }, (err, doc) => {
             if (!doc) {
-                addMeter(req.body.das).then(data => addEntry(data, pathShortener));
+                addMeter(req.body.das).then(data => addEntry(data, pathShortener, req.body.das));
             } else {
-                addEntry(doc, pathShortener);
+                addEntry(doc, pathShortener,req.body.das);
             }
         });
     } else {
         console.log('STATUS file received');
     }
-    console.log('About to return with res.status')
     res.status("200");
     res.set({
         'content-type': 'text/xml',
@@ -95,19 +95,30 @@ function addMeter(meter) {
     });
 }
 
-function addEntry(meter, body) {
+function addEntry(meter, body, serialAddress) {
     return new Promise((resolve, reject) => {
         entryArray = new Array();
         if (body.record.length == undefined) {
+            console.log('-------------------------- XML DATA --------------------------');
+            console.log(`AcquiSuite: ${serialAddress.serial}\tAddress: ${serialAddress.devices.device.address}`);
+            console.log(`Timestamp: ${pathShortener.record.time._}`);
+            console.log(`point[0]: ${pathShortener.record.point[0].$.value}`);
+            console.log('--------------------------------------------------------------');
             entry = new DataEntry();
             entry.meter_id = meter._id;
             entry.timestamp = body.record.time._;
             entry.building = meter.building;
             body.record.point.forEach((e, i) => {
                 entry.point[i] = e.$;
+                entry.point[i].value = Math.abs(entry.point[i].value);
             });
             entryArray.push(entry);
         } else {
+            console.log('-------------------------- XML DATA --------------------------');
+            console.log(`AcquiSuite: ${serialAddress.serial}\tAddress: ${serialAddress.devices.device.address}`);
+            console.log(`Timestamp: ${pathShortener.record[0].time._}`);
+            console.log(`point[0]: ${pathShortener.record[0].point[0].$.value}`);
+            console.log('--------------------------------------------------------------');
             for (var i = 0; i < body.record.length; i++) {
                 entry = new DataEntry();
                 entry.meter_id = meter._id;
@@ -115,6 +126,7 @@ function addEntry(meter, body) {
                 entry.building = meter.building;
                 body.record[i].point.forEach((e, i) => {
                     entry.point[i] = e.$;
+                    entry.point[i].value = Math.abs(entry.point[i].value);
                 });
                 entryArray.push(entry);
             }
@@ -146,7 +158,7 @@ function addEntry(meter, body) {
                     console.log('Data entry id "' + x._id + '" with timestamp ' + x.timestamp + ' added to the meter named "' + meter.name + '" which is assigned to building id: "' + meter.building + '"');
                 } else {
                     console.log('Duplicate detected and nothing has been added!');
-                    console.log('Incoming Data\'s timestamp:\t' + x.timestamp + '  meter_id:\t' + x.meter_id);
+                    console.log('Incoming Data\'s timestamp:\t' + x.timestamp + '  meter "_id":\t' + x.meter_id);
                     console.log('Existing Data\'s timestamp:\t' + doc.timestamp + '  meter_id:\t' + doc.meter_id);
                 }
             });
