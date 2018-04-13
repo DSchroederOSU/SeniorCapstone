@@ -165,6 +165,8 @@ module.exports = function (app, passport) {
                 select: 'id'
             })
             .exec(function (err, dataEntries) {
+                console.log("------");
+                console.log(dataEntries);
                 if (err) {
                     res.jsonp({
                         building: null

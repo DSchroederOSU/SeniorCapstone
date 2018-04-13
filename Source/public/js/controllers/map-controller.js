@@ -1052,7 +1052,7 @@ angular.module('mapController', [])
             $scope.b = obj;
             console.log(obj);
             var content = '<div><h5 class="Stratum2-Light" style="width:150px; min-height:30px">' + obj.name + '</h5>' +
-                '<button ng-controller="buildingController" ng-click="view('+$scope.b+')" '+
+                '<button ng-controller="buildingController" ng-click="view()" '+
                 'class="btn" style="color: white; background-color: #DC4405 !important;">View</button>  </div>';
             var compiledContent = $compile(content)($scope);
 
@@ -1060,7 +1060,7 @@ angular.module('mapController', [])
                 infoWindow.setContent(compiledContent[0]);
                 infoWindow.setPosition(event.latLng);
                 infoWindow.open($scope.map);
-                //$rootScope.$broadcast("MapBuilding", { building: obj });
+                $rootScope.$broadcast("MapBuilding", { building: obj });
             });
             return map;
 
