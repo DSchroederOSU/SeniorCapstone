@@ -16,7 +16,14 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var xmlparser = require('express-xml-bodyparser');
 var AWS = require('aws-sdk');
-var moment = require('moment')
+var moment = require('moment');
+var math = require('mathjs');
+
+
+var test = checkAverages()
+
+
+
 // configuration ===============================================================
 mongoose.connect(process.env.MONGO_DATABASE_URL, {
     useMongoClient: true
@@ -141,8 +148,8 @@ function emailAlert(email) {
 
 // helper function to see when the last time a meter posted, sends alert if too long
 function checkMeterTimestamps() {
-    var yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
-    var twoDaysAgo = moment().subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss');
+    var yesterday = moment.utc().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
+    var twoDaysAgo = moment.utc().subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss');
     var meterCount = 0;
     var email = {
         body: '',
@@ -171,6 +178,56 @@ function checkMeterTimestamps() {
             })
         })
     })
+}
+
+// Function used to find and alert during high usage spikes
+function checkAverages(meter_id) {
+    var now = moment.utc().format('YYYY-MM-DD HH:mm:ss');
+    var yesterday = moment.utc().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
+    var oneWeekAgo = moment.utc().subtract(1, 'week').format('YYYY-MM-DD HH:mm:ss');
+    var meterCount = 0;
+    var email = {
+        body: '',
+        subject: 'Meter(s) detected as offline!'
+    }
+    Meter.find().then(meters => {
+        meters.forEach(e => {
+            DataEntry.find({
+                meter_id: e._id,
+                timestamp: {
+                    $gte: oneWeekAgo,
+                    $lt: now
+                }
+            }, (err, docs) => {
+                pastData = docs.filter(t => {
+                    return t.timestamp >= oneWeekAgo && t.timestamp <= yesterday
+                });
+                currentData = docs.filter(t => {
+                    return t.timestamp >= yesterday && t.timestamp <= now
+                });
+                console.log(currentData)
+                if (pastData.length){
+                    pastDataArray = [];
+                    for (i = 0; i < pastData.length; i++){
+                        pastDataArray.push(pastData[i].point[0].value);
+                    }
+                    pastDataAvg = math.mean(pastDataArray);
+                    console.log(pastDataAvg)
+                    pastDataSD = math.std(pastDataArray);
+                    pastDataThreshhold = pastDataAvg + pastDataSD;
+                    if (currentData.length) {
+                        currentDataArray = [];
+                        for (i = 0; i <  currentData.length; i++){
+                            currentDataArray.push( currentData[i].point[0].value);
+                        }
+                        currentDataAvg = math.mean( currentDataArray);
+                        console.log( currentDataAvg)
+                        currentDataSD = math.std(currentDataArray);
+                    }
+            }
+            });
+        });
+    });
 }
 
 function addMeter(meter) {
@@ -224,7 +281,6 @@ function addEntry(meter, body, serialAddress) {
                 entryArray.push(entry);
             }
         }
-
         entryArray.forEach(x => {
             DataEntry.findOne({
                 timestamp: x.timestamp,
