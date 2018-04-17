@@ -19,11 +19,6 @@ var AWS = require('aws-sdk');
 var moment = require('moment');
 var math = require('mathjs');
 
-
-var test = checkAverages()
-
-
-
 // configuration ===============================================================
 mongoose.connect(process.env.MONGO_DATABASE_URL, {
     useMongoClient: true
@@ -188,7 +183,7 @@ function checkAverages(meter_id) {
     var meterCount = 0;
     var email = {
         body: '',
-        subject: 'Meter(s) detected as offline!'
+        subject: 'High Energy Usage Detected!'
     }
     Meter.find().then(meters => {
         meters.forEach(e => {
@@ -205,26 +200,39 @@ function checkAverages(meter_id) {
                 currentData = docs.filter(t => {
                     return t.timestamp >= yesterday && t.timestamp <= now
                 });
-                console.log(currentData)
-                if (pastData.length){
+                // console.log(currentData)
+                if (pastData.length) {
                     pastDataArray = [];
-                    for (i = 0; i < pastData.length; i++){
+                    for (i = 0; i < pastData.length; i++) {
                         pastDataArray.push(pastData[i].point[0].value);
                     }
                     pastDataAvg = math.mean(pastDataArray);
+                    console.log('pastDataAvg')
                     console.log(pastDataAvg)
                     pastDataSD = math.std(pastDataArray);
+                    console.log('pastDataSD')
+                    console.log(pastDataSD)
                     pastDataThreshhold = pastDataAvg + pastDataSD;
+                    console.log('pastThresh')
+                    console.log(pastDataThreshhold)
                     if (currentData.length) {
                         currentDataArray = [];
-                        for (i = 0; i <  currentData.length; i++){
-                            currentDataArray.push( currentData[i].point[0].value);
+                        for (i = 0; i < currentData.length; i++) {
+                            currentDataArray.push(currentData[i].point[0].value);
                         }
-                        currentDataAvg = math.mean( currentDataArray);
-                        console.log( currentDataAvg)
-                        currentDataSD = math.std(currentDataArray);
+                        currentDataAvg = math.mean(currentDataArray);
+                        console.log('currentDataAvg')
+                        console.log(currentDataAvg)
+                        if (currentDataAvg > pastDataThreshhold) {
+                            email.body += (`The meter named <b>"${e.name}"</b> with a serial of <b>"${e.meter_id}"</b> has reported high energy usage.`
+                            + ` Over the past week, the meter had an average of <b>${pastDataAvg.toFixed(1)}</b> kWh,` 
+                            + ` but has reported <b style="color:red">${currentDataAvg.toFixed(1)}</b> kWh in the past 24 hours. <br>`)
+                        }
                     }
-            }
+                }
+                if (meterCount++ == meters.length - 1 && email.body !== '') {
+                    emailAlert(email);
+                }
             });
         });
     });
