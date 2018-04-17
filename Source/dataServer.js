@@ -18,12 +18,6 @@ var xmlparser = require('express-xml-bodyparser');
 var AWS = require('aws-sdk');
 var moment = require('moment')
 // configuration ===============================================================
-
-// take this out after testing
-var bleh = checkMeterTimestamps();
-
-
-
 mongoose.connect(process.env.MONGO_DATABASE_URL, {
     useMongoClient: true
 }); // connect to our database
@@ -42,6 +36,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json()); // get information from html forms
 
+var emailFlag = false;
+
 // =====================================
 // XML POST PARSING
 // =====================================
@@ -50,15 +46,24 @@ app.use(bodyParser.json()); // get information from html forms
 // the 'xmlparser' in parameters converts XML to String
 // then bodyParser converts this string to JSON
 
-
 app.post('/receiveXML', xmlparser({
     trim: false,
     explicitArray: false
 }), function (req, res) {
     if (req.body.das.mode === 'LOGFILEUPLOAD') {
-        console.log('Received XML data on: ' + new Date().toUTCString());
+        timestamp = moment().utc().format('HH:mm:ss');
+        console.log('Received XML data on: ' + moment.utc().format('YYYY-MM-DD HH:mm:ss'));
         if (req.body.das.serial === '001EC60527B4') {
             console.log('McNary AcquiSuite Meter hit with address of ' + req.body.das.devices.device.address);
+        }
+        // calls email helper func once per day.
+        if (emailFlag && timestamp > '00:00:00' && timestamp < '00:20:00') {
+            console.log('Meters being reviewed for outage.')
+            emailFlag = false;
+            checkMeterTimestamps();
+        } else if (!emailFlag && timestamp > '12:00:00' && timestamp < '12:15:00') {
+            console.log('Email flag being reset');
+            emailFlag = true;
         }
         pathShortener = req.body.das.devices.device.records;
 
@@ -131,7 +136,7 @@ function emailAlert(email) {
         function (err) {
             console.error(err, err.stack);
         });
- 
+
 }
 
 // helper function to see when the last time a meter posted, sends alert if too long
@@ -144,17 +149,24 @@ function checkMeterTimestamps() {
         subject: 'Meter(s) detected as offline!'
     }
     Meter.find().then(meters => {
-        
         meters.forEach(e => {
-            DataEntry.find({meter_id: e._id, timestamp: {$gte: twoDaysAgo, $lt: yesterday}}, (err,docs) => {
+            DataEntry.find({
+                meter_id: e._id,
+                timestamp: {
+                    $gte: twoDaysAgo,
+                    $lt: yesterday
+                }
+            }, (err, docs) => {
                 if (!err) {
-                    timestamps = docs.filter(t => {return t.timestamp >= twoDaysAgo && t.timestamp <= yesterday});
+                    timestamps = docs.filter(t => {
+                        return t.timestamp >= twoDaysAgo && t.timestamp <= yesterday
+                    });
                     if (timestamps.length) {
                         email.body += `The meter named <b>"${e.name}"</b> with a serial of <b>"${e.meter_id}"</b> has not reported anything in 1-2 days. <br>`
                     }
                 }
-                if(meterCount++ == meters.length-1 && email.body !== '') {
-                   emailAlert(email);
+                if (meterCount++ == meters.length - 1 && email.body !== '') {
+                    emailAlert(email);
                 }
             })
         })
@@ -239,7 +251,7 @@ function addEntry(meter, body, serialAddress) {
                     console.log('Data entry id "' + x._id + '" with timestamp ' + x.timestamp + ' added to the meter named "' + meter.name + '" which is assigned to building id: "' + meter.building + '"');
                 } else {
                     console.log('Duplicate detected and nothing has been added!');
-                    console.log('Incoming Data\'s timestamp:\t' + x.timestamp + '  meter "_id":\t' + x.meter_id);
+                    console.log('Incoming Data\'s timestamp:\t' + x.timestamp + '  meter_id:\t' + x.meter_id);
                     console.log('Existing Data\'s timestamp:\t' + doc.timestamp + '  meter_id:\t' + doc.meter_id);
                 }
             });
