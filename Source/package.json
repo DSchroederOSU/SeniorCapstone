@@ -41,6 +41,7 @@
     "express-xml-bodyparser": "^0.3.0",
     "json2csv": "^4.0.2",
     "method-override": "~2.3.6",
+    "moment": "^2.22.1",
     "mongoose": "^4.13.9",
     "morgan": "~1.7.0",
     "nodemon": "^1.14.11",

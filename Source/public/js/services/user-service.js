@@ -16,11 +16,4 @@ angular.module('UserService', [])
                 return $http.post('/api/emailRegistration', email)
             }
         }
-    })
-    .factory('EmailAlert', function ($http) {
-        return {
-            post: function (email) {
-                return $http.post('/api/emailAlert', email)
-            }
-        }
     });

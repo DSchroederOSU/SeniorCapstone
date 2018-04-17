@@ -15,8 +15,14 @@ var fs = require('fs'); // TEMP - for saving acquisuite POST data\
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var xmlparser = require('express-xml-bodyparser');
-
+var AWS = require('aws-sdk');
+var moment = require('moment')
 // configuration ===============================================================
+
+// take this out after testing
+var bleh = checkMeterTimestamps();
+
+
 
 mongoose.connect(process.env.MONGO_DATABASE_URL, {
     useMongoClient: true
@@ -44,6 +50,7 @@ app.use(bodyParser.json()); // get information from html forms
 // the 'xmlparser' in parameters converts XML to String
 // then bodyParser converts this string to JSON
 
+
 app.post('/receiveXML', xmlparser({
     trim: false,
     explicitArray: false
@@ -54,7 +61,7 @@ app.post('/receiveXML', xmlparser({
             console.log('McNary AcquiSuite Meter hit with address of ' + req.body.das.devices.device.address);
         }
         pathShortener = req.body.das.devices.device.records;
-        
+
         // Checks if meter exists. If it doesn't adds one.
         // Then/else adds incoming data entry
         Meter.findOne({
@@ -63,7 +70,7 @@ app.post('/receiveXML', xmlparser({
             if (!doc) {
                 addMeter(req.body.das).then(data => addEntry(data, pathShortener, req.body.das));
             } else {
-                addEntry(doc, pathShortener,req.body.das);
+                addEntry(doc, pathShortener, req.body.das);
             }
         });
     } else {
@@ -79,6 +86,78 @@ app.post('/receiveXML', xmlparser({
         "<DAS></DAS>" +
         "</xml>");
 });
+
+// sends out alert to users (admins) when a meter goes down.
+function emailAlert(body) {
+    AWS.config.update({
+        region: 'us-west-2'
+    });
+    var credentials = new AWS.EnvironmentCredentials('AWS');
+    credentials.accessKeyId = process.env.AWS_ACCESS_KEY_ID
+    credentials.secretAccessKey = process.env.SECRET_ACCESS_KEY
+    AWS.config.credentials = credentials;
+    var params = {
+        Destination: {
+            CcAddresses: [],
+            ToAddresses: [process.env.TEST_EMAIL_USER]
+        },
+        Message: {
+            Body: {
+                Html: {
+                    Charset: "UTF-8",
+                    Data: email.body
+                },
+                Text: {
+                    Charset: "UTF-8",
+                    Data: "TEXT_FORMAT_BODY"
+                }
+            },
+            Subject: {
+                Charset: 'UTF-8',
+                Data: email.subject
+            }
+        },
+        Source: process.env.TEST_EMAIL_USER,
+        ReplyToAddresses: [],
+    };
+    var sendPromise = new AWS.SES({
+        apiVersion: '2010-12-01'
+    }).sendEmail(params).promise();
+    // Handle promise's fulfilled/rejected states
+    sendPromise.then(
+        function (data) {
+            console.log(data.MessageId);
+        }).catch(
+        function (err) {
+            console.error(err, err.stack);
+        });
+    res.json({
+        message: "success"
+    });
+}
+
+// helper function to see when the last time a meter posted, sends alert if too long
+function checkMeterTimestamps() {
+    var yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
+    var twoDaysAgo = moment().subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss');
+    Meter.find().then(meters => {
+        meters.forEach(e => {
+            DataEntry.find({meter_id: e._id}, (err,docs) => {
+                if (!err){
+                   
+                    timestamps = docs.filter(t => {return t.timestamp >= twoDaysAgo && t.timestamp <= yesterday} );
+                    if (timestamps.length) {
+                        console.log('Send Alert!')
+                    }
+                //    if (timestamps.indexOf('true') > -1){
+                //        console.log(timestamps.indexOf('true'))
+                //    }
+                }
+               
+            })
+        })
+    });
+}
 
 function addMeter(meter) {
     return new Promise((resolve, reject) => {
@@ -150,7 +229,7 @@ function addEntry(meter, body, serialAddress) {
                                 $push: {
                                     data_entries: x
                                 }
-                            }, 
+                            },
                             (err) => {
                                 if (err) throw (err)
                             });
@@ -165,7 +244,6 @@ function addEntry(meter, body, serialAddress) {
         });
         resolve()
     });
-
 }
 
 // launch ======================================================================
