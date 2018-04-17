@@ -88,7 +88,7 @@ app.post('/receiveXML', xmlparser({
 });
 
 // sends out alert to users (admins) when a meter goes down.
-function emailAlert(body) {
+function emailAlert(email) {
     AWS.config.update({
         region: 'us-west-2'
     });
@@ -131,32 +131,34 @@ function emailAlert(body) {
         function (err) {
             console.error(err, err.stack);
         });
-    res.json({
-        message: "success"
-    });
+ 
 }
 
 // helper function to see when the last time a meter posted, sends alert if too long
 function checkMeterTimestamps() {
     var yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
     var twoDaysAgo = moment().subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss');
+    var meterCount = 0;
+    var email = {
+        body: '',
+        subject: 'Meter(s) detected as offline!'
+    }
     Meter.find().then(meters => {
+        
         meters.forEach(e => {
-            DataEntry.find({meter_id: e._id}, (err,docs) => {
-                if (!err){
-                   
-                    timestamps = docs.filter(t => {return t.timestamp >= twoDaysAgo && t.timestamp <= yesterday} );
+            DataEntry.find({meter_id: e._id, timestamp: {$gte: twoDaysAgo, $lt: yesterday}}, (err,docs) => {
+                if (!err) {
+                    timestamps = docs.filter(t => {return t.timestamp >= twoDaysAgo && t.timestamp <= yesterday});
                     if (timestamps.length) {
-                        console.log('Send Alert!')
+                        email.body += `The meter named <b>"${e.name}"</b> with a serial of <b>"${e.meter_id}"</b> has not reported anything in 1-2 days. <br>`
                     }
-                //    if (timestamps.indexOf('true') > -1){
-                //        console.log(timestamps.indexOf('true'))
-                //    }
                 }
-               
+                if(meterCount++ == meters.length-1 && email.body !== '') {
+                   emailAlert(email);
+                }
             })
         })
-    });
+    })
 }
 
 function addMeter(meter) {
