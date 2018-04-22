@@ -19,7 +19,7 @@ var AWS = require('aws-sdk');
 var moment = require('moment');
 var math = require('mathjs');
 
-// configuration ===============================================================
+// configuration
 mongoose.connect(process.env.MONGO_DATABASE_URL, {
     useMongoClient: true
 }); // connect to our database
@@ -38,16 +38,15 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json()); // get information from html forms
 
+// globals to check against email alert status
 var emailFlag = false;
+var dataFlag = false;
 
-// =====================================
-// XML POST PARSING
-// =====================================
-// Function for handling xml post requests
-// Receives post requests, converts from XML to JSON
-// the 'xmlparser' in parameters converts XML to String
-// then bodyParser converts this string to JSON
-
+/**
+ * Handles POST requests received in XML format
+ * Receives POST requests, converts from XML to JSON
+ * @param {function} xmlparser - in parameters converts XML to String to JSON
+ */
 app.post('/receiveXML', xmlparser({
     trim: false,
     explicitArray: false
@@ -55,17 +54,18 @@ app.post('/receiveXML', xmlparser({
     if (req.body.das.mode === 'LOGFILEUPLOAD') {
         timestamp = moment().utc().format('HH:mm:ss');
         console.log('Received XML data on: ' + moment.utc().format('YYYY-MM-DD HH:mm:ss'));
-        if (req.body.das.serial === '001EC60527B4') {
-            console.log('McNary AcquiSuite Meter hit with address of ' + req.body.das.devices.device.address);
-        }
+
         // calls email helper func once per day.
         if (emailFlag && timestamp > '00:00:00' && timestamp < '00:20:00') {
             console.log('Meters being reviewed for outage.')
             emailFlag = false;
+            dataFlag = false;
+            checkUsage();
             checkMeterTimestamps();
         } else if (!emailFlag && timestamp > '12:00:00' && timestamp < '12:15:00') {
             console.log('Email flag being reset');
             emailFlag = true;
+            dataFlag = true;
         }
         pathShortener = req.body.das.devices.device.records;
 
@@ -94,7 +94,13 @@ app.post('/receiveXML', xmlparser({
         "</xml>");
 });
 
-// sends out alert to users (admins) when a meter goes down.
+/**
+ * Sends out alert to users (admins)
+ * Specifically when:
+ *      - a meter hasn't checked in over a day
+ *      - a meter reports unusually high usage
+ * @param {Object} email - contains body and subject to be sent
+ */
 function emailAlert(email) {
     AWS.config.update({
         region: 'us-west-2'
@@ -141,7 +147,12 @@ function emailAlert(email) {
 
 }
 
-// helper function to see when the last time a meter posted, sends alert if too long
+/**
+ *  Helper function to see when the last time a meter posted
+ *  Conditions: 
+ *      - Called once per day
+ *      - Sends email if meter hasn't checked in for over a day but under two
+ */
 function checkMeterTimestamps() {
     var yesterday = moment.utc().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
     var twoDaysAgo = moment.utc().subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss');
@@ -175,8 +186,13 @@ function checkMeterTimestamps() {
     })
 }
 
-// Function used to find and alert during high usage spikes
-function checkAverages(meter_id) {
+/**
+ * Function used to find and alert during high usage spikes
+ * Conditions - Only sends email if:
+ *      - Average for day is greater than the average for week plus a standard deviation
+ *      - The meter has more than 100 entries 
+ */
+function checkUsage() {
     var now = moment.utc().format('YYYY-MM-DD HH:mm:ss');
     var yesterday = moment.utc().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
     var oneWeekAgo = moment.utc().subtract(1, 'week').format('YYYY-MM-DD HH:mm:ss');
@@ -194,50 +210,64 @@ function checkAverages(meter_id) {
                     $lt: now
                 }
             }, (err, docs) => {
-                pastData = docs.filter(t => {
-                    return t.timestamp >= oneWeekAgo && t.timestamp <= yesterday
-                });
-                currentData = docs.filter(t => {
-                    return t.timestamp >= yesterday && t.timestamp <= now
-                });
-                // console.log(currentData)
-                if (pastData.length) {
-                    pastDataArray = [];
-                    for (i = 0; i < pastData.length; i++) {
-                        pastDataArray.push(pastData[i].point[0].value);
-                    }
-                    pastDataAvg = math.mean(pastDataArray);
-                    console.log('pastDataAvg')
-                    console.log(pastDataAvg)
-                    pastDataSD = math.std(pastDataArray);
-                    console.log('pastDataSD')
-                    console.log(pastDataSD)
-                    pastDataThreshhold = pastDataAvg + pastDataSD;
-                    console.log('pastThresh')
-                    console.log(pastDataThreshhold)
-                    if (currentData.length) {
-                        currentDataArray = [];
-                        for (i = 0; i < currentData.length; i++) {
-                            currentDataArray.push(currentData[i].point[0].value);
+                if (err) throw (err);
+
+                // We want the length to be greater than 100 in the past week (96 are entered per day)
+                // Without this, a meter might report some weird things, so this forces at least two days of entries
+                if (docs.length && docs.length >= 100) {
+                    pastData = docs.filter(t => {
+                        return t.timestamp >= oneWeekAgo && t.timestamp <= yesterday
+                    });
+                    currentData = docs.filter(t => {
+                        return t.timestamp >= yesterday && t.timestamp <= now
+                    });
+                    // console.log(currentData)
+                    if (pastData.length) {
+                        pastDataArray = [];
+                        for (i = 0; i < pastData.length; i++) {
+                            pastDataArray.push(pastData[i].point[0].value);
                         }
-                        currentDataAvg = math.mean(currentDataArray);
-                        console.log('currentDataAvg')
-                        console.log(currentDataAvg)
-                        if (currentDataAvg > pastDataThreshhold) {
-                            email.body += (`The meter named <b>"${e.name}"</b> with a serial of <b>"${e.meter_id}"</b> has reported high energy usage.`
-                            + ` Over the past week, the meter had an average of <b>${pastDataAvg.toFixed(1)}</b> kWh,` 
-                            + ` but has reported <b style="color:red">${currentDataAvg.toFixed(1)}</b> kWh in the past 24 hours. <br>`)
+                        pastDataAvg = math.mean(pastDataArray);
+                        console.log('pastDataAvg')
+                        console.log(pastDataAvg)
+                        pastDataSD = math.std(pastDataArray);
+                        console.log('pastDataSD')
+                        console.log(pastDataSD)
+                        pastDataThreshhold = pastDataAvg + pastDataSD;
+                        console.log('pastThresh')
+                        console.log(pastDataThreshhold)
+                        if (currentData.length) {
+                            currentDataArray = [];
+                            for (i = 0; i < currentData.length; i++) {
+                                currentDataArray.push(currentData[i].point[0].value);
+                            }
+                            currentDataAvg = math.mean(currentDataArray);
+                            console.log('currentDataAvg')
+                            console.log(currentDataAvg)
+                            if (currentDataAvg > pastDataThreshhold) {
+                                email.body += (`The meter named <b>"${e.name}"</b> with a serial of <b>"${e.meter_id}"</b> has reported high energy usage.` +
+                                    ` Over the past week, the meter had an average of <b>${pastDataAvg.toFixed(1)}</b> kWh,` +
+                                    ` but has reported <b style="color:red">${currentDataAvg.toFixed(1)}</b> kWh in the past 24 hours. <br>`)
+                            }
                         }
                     }
-                }
-                if (meterCount++ == meters.length - 1 && email.body !== '') {
-                    emailAlert(email);
+                    if (meterCount++ == meters.length - 1 && email.body !== '') {
+                        emailAlert(email);
+                    }
                 }
             });
         });
     });
 }
 
+/**
+ * Function that is called when the server gets a POST request from a meter
+ * that is not in our database already.
+ * Conditions:
+ *      - Only called when a matching meter cannot be located in the database
+ * @param {Object} meter - Contains a POST request body that is slightly trimmed
+ * @returns {Promise<Meter>} newmeter
+ */
 function addMeter(meter) {
     return new Promise((resolve, reject) => {
         newmeter = new Meter({
@@ -253,7 +283,20 @@ function addMeter(meter) {
     });
 }
 
+/**
+ * Function to add a data entry to a database. Checks for duplicate first.
+ * Conditions:
+ *      - Called whenever POST request comes in
+ * @param {Object} meter - Contains elements of the source meter
+ * @param {String} meter._id - Contains the ID of the meter as it is in the database
+ * @param {String} meter.name - Contains the public facing name of the meter as it is in the database
+ * @param {String} meter.building - Contains the building that the meter is associated with as it is in the database
+ * @param {Object} body - Contains the POST request body with all extraneous pieces cut
+ * @param {Object} serialAddress - Contains the POST request body that can access the serial and address information
+ * @returns {Promise<>}
+ */
 function addEntry(meter, body, serialAddress) {
+    console.log(body);
     return new Promise((resolve, reject) => {
         entryArray = new Array();
         if (body.record.length == undefined) {
