@@ -162,27 +162,30 @@ function checkMeterTimestamps() {
         subject: 'Meter(s) detected as offline!'
     }
     Meter.find().then(meters => {
-        meters.forEach(e => {
-            DataEntry.find({
-                meter_id: e._id,
-                timestamp: {
-                    $gte: twoDaysAgo,
-                    $lt: yesterday
-                }
-            }, (err, docs) => {
-                if (!err) {
-                    timestamps = docs.filter(t => {
-                        return t.timestamp >= twoDaysAgo && t.timestamp <= yesterday
-                    });
-                    if (timestamps.length) {
-                        email.body += `The meter named <b>"${e.name}"</b> with a serial of <b>"${e.meter_id}"</b> has not reported anything in 1-2 days. <br>`
+        if (meters) {
+            // finds data entries for each meter and checks the last data entries time.
+            meters.forEach(e => {
+                DataEntry.find({
+                    meter_id: e._id,
+                    timestamp: {
+                        $gte: twoDaysAgo,
+                        $lt: yesterday
                     }
-                }
-                if (meterCount++ == meters.length - 1 && email.body !== '') {
-                    emailAlert(email);
-                }
+                }, (err, docs) => {
+                    if (!err) {
+                        timestamps = docs.filter(t => {
+                            return t.timestamp >= twoDaysAgo && t.timestamp <= yesterday
+                        });
+                        if (timestamps.length) {
+                            email.body += `The meter named <b>"${e.name}"</b> with a serial of <b>"${e.meter_id}"</b> has not reported anything in 1-2 days. <br>`
+                        }
+                    }
+                    if (meterCount++ == meters.length - 1 && email.body !== '') {
+                        emailAlert(email);
+                    }
+                })
             })
-        })
+        }
     })
 }
 
@@ -211,39 +214,33 @@ function checkUsage() {
                 }
             }, (err, docs) => {
                 if (err) throw (err);
-
                 // We want the length to be greater than 100 in the past week (96 are entered per day)
                 // Without this, a meter might report some weird things, so this forces at least two days of entries
                 if (docs.length && docs.length >= 100) {
                     pastData = docs.filter(t => {
                         return t.timestamp >= oneWeekAgo && t.timestamp <= yesterday
                     });
+
                     currentData = docs.filter(t => {
                         return t.timestamp >= yesterday && t.timestamp <= now
                     });
-                    // console.log(currentData)
+
                     if (pastData.length) {
                         pastDataArray = [];
+                        // gets the energy usage values for the past week
                         for (i = 0; i < pastData.length; i++) {
                             pastDataArray.push(pastData[i].point[0].value);
                         }
                         pastDataAvg = math.mean(pastDataArray);
-                        console.log('pastDataAvg')
-                        console.log(pastDataAvg)
                         pastDataSD = math.std(pastDataArray);
-                        console.log('pastDataSD')
-                        console.log(pastDataSD)
                         pastDataThreshhold = pastDataAvg + pastDataSD;
-                        console.log('pastThresh')
-                        console.log(pastDataThreshhold)
+                        // checks for empty array so it doesn't report on down meter
                         if (currentData.length) {
                             currentDataArray = [];
                             for (i = 0; i < currentData.length; i++) {
                                 currentDataArray.push(currentData[i].point[0].value);
                             }
                             currentDataAvg = math.mean(currentDataArray);
-                            console.log('currentDataAvg')
-                            console.log(currentDataAvg)
                             if (currentDataAvg > pastDataThreshhold) {
                                 email.body += (`The meter named <b>"${e.name}"</b> with a serial of <b>"${e.meter_id}"</b> has reported high energy usage.` +
                                     ` Over the past week, the meter had an average of <b>${pastDataAvg.toFixed(1)}</b> kWh,` +
@@ -343,7 +340,7 @@ function addEntry(meter, body, serialAddress) {
                         res.status(400)
                     })
                     // add it to building
-                    if (x.building) {
+                    if (x.building != null && x.building != 'null') {
                         Building.findOneAndUpdate({
                                 _id: entry.building
                             }, {
