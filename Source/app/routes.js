@@ -751,7 +751,7 @@ module.exports = function (app, passport) {
         });
     });
 
-    
+
 
     app.post('/api/emailRegistration', function (req, res) {
         AWS.config.update({
@@ -761,7 +761,28 @@ module.exports = function (app, passport) {
         credentials.accessKeyId = process.env.AWS_ACCESS_KEY_ID
         credentials.secretAccessKey = process.env.SECRET_ACCESS_KEY
         AWS.config.credentials = credentials;
-
+        console.log(req.body);
+        console.log('Something');
+        User.findOneAndUpdate({
+            'google.email': req.body.email
+        }, {
+            $set: {
+                accountAccess: req.body.access
+            }
+        }, {
+            upsert: true,
+            new: true
+        }, (err, doc) => {
+            console.log('callback')
+            if (err) throw err;
+            if (doc) {
+                console.log(doc);
+                if (doc.accountAccess !== req.body.access) {
+                    console.log(doc)
+                }
+                
+            }
+        });
         var params = {
             Destination: { /* required */
                 CcAddresses: [],
@@ -801,7 +822,6 @@ module.exports = function (app, passport) {
             function (err) {
                 console.error(err, err.stack);
             });
-
         res.json({
             message: "success"
         });
@@ -894,7 +914,7 @@ module.exports = function (app, passport) {
             });
 
     });
-    
+
     // Function to simply iteratively change any negative values in DataEntries
     // into postive numbers.
     // app.post('/updateNegativeDBValues', async (req, res) => {
@@ -934,7 +954,7 @@ module.exports = function (app, passport) {
     //     let oldMeters = [];
     //     let newMeters = [];
     //     let asyncMeter = await Meter.find((err,docs) => {
-       
+
     //         for (let i = 0; i < docs.length; i++) {
     //             if(docs[i].meter_id.substr(-2) === '_1'){
     //                 newMeters.push(docs[i]);
