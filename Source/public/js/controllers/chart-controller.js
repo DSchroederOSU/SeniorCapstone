@@ -52,13 +52,17 @@ angular.module('chartController', [])
             };
             var buildingAxisData = [];
             Building.getBuildingData(to_pass).then(function (data) {
+                console.log(data);
                 //each building's points received from service
+                buildingAxisData.push({name: buildingsArray.building.filter(b => b._id == data.data.building)[0].name, data:  data.data.data});
+                /*
                 data.data.forEach(function (buildingData) {
 
                     var name = buildingsArray.building.filter(b => b._id == buildingData.id)[0].name;
                     var chartdata = getDailyData(daterange, buildingData);
+                    console.log(chartdata);
                     buildingAxisData.push({name: name, data: chartdata});
-                });
+                });*/
 
                 //push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
@@ -87,12 +91,14 @@ angular.module('chartController', [])
             var buildingAxisData = [];
             Building.getBuildingData(to_pass).then(function (data) {
                 //each building's points received from service
+                buildingAxisData.push({name: object.building.filter(b => b._id == data.data.building)[0].name, data:  data.data.data});
+                /*
                 data.data.forEach(function (buildingData) {
 
                     var name = object.building.filter(b => b._id == buildingData.id)[0].name;
                     var chartdata = getDailyData(range.daterange, buildingData);
                     buildingAxisData.push({name: name, data: chartdata});
-                });
+                });*/
 
                 ///push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
@@ -302,6 +308,8 @@ angular.module('chartController', [])
          */
         function getDailyData(range, data){
             var to_return = [];
+            console.log(data);
+            console.log(data);
             range.forEach(function (date){
                 //get data points for just one whole day
                 var temp = data.points.filter(p => {
@@ -396,10 +404,9 @@ angular.module('chartController', [])
                         startDate = "" + curr.getFullYear() + "-0" + (curr.getMonth()) + "-" + curr.getDate();
                         endDate = "" + curr.getFullYear() + "-0" + (curr.getMonth() + 1) + "-" + curr.getDate();
                     }
-
             }
-
             return {start: startDate, end : endDate, daterange: daterange}
         }
 
     });
+

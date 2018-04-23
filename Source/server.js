@@ -52,7 +52,8 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 // require('./config/DBsampledata.js');
 
 var b = require('./public/js/buildingData');
-b.getMilneData();
+
+
 // launch ======================================================================
 app.listen(port);
 console.log('The magic happens on port ' + port);

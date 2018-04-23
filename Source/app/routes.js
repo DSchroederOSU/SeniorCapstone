@@ -16,7 +16,9 @@ var blackList = ['$', '{', '&&', '||']
 var options = {
     urlBlackList: blackList,
     bodyBlackList: blackList
-}
+};
+
+var dataMethods = require('../public/js/buildingData');
 module.exports = function (app, passport) {
     app.use(filter(options));
     app.get('/', function (req, res) {
@@ -142,6 +144,7 @@ module.exports = function (app, passport) {
     });
 
     app.get('/api/getBuildingData', function (req, res) {
+
         var match;
         if (req.query && req.query.start && req.query.end) {
             match = {
@@ -165,57 +168,75 @@ module.exports = function (app, passport) {
                 select: 'id'
             })
             .exec(function (err, dataEntries) {
-                console.log("------");
-                console.log(dataEntries);
-                if (err) {
-                    res.jsonp({
-                        building: null
+                console.log(dataEntries[0].meters);
+                if(dataEntries[0].name == 'Milne Computing Center' || dataEntries[0].name == 'Memorial Union' || dataEntries[0].name == 'Nash Hall'){
+                    dataMethods.add_meters(dataEntries[0].meters, req.query.start, req.query.end).then(function(data){
+                        res.jsonp({building: req.query.buildings, data: data});
                     });
-                } else {
-                    DataEntry.find({
+
+                }else {
+                    console.log("------");
+                    if (err) {
+                        res.jsonp({
+                            building: null
+                        });
+                    } else {
+                        DataEntry.find({
                             _id: {
                                 $in: [].concat.apply([], dataEntries.map(d => d.data_entries))
                             }
                         })
-                        .select({
-                            point: {
-                                $elemMatch: {
-                                    name: "Accumulated Real Energy Net"
-                                },
-                            }
-                        })
-                        .select('-_id timestamp point.value building')
-                        .exec(function (err, datapoints) {
-                            /*
-                            datapoints: [
-                                {
-                                    building: 5aab24bfdbdd3c325439a219,
-                                    timestamp: '2018-04-03 22:00:00',
-                                    point: [ { value: 1355244.13 } ]
-                                 }
-                            ]
-                            */
-                            console.log(datapoints[0]);
-                            if (err) {
-                                res.jsonp({
-                                    building: null
-                                });
-                            } else {
-                                var to_return = [];
-                                var b_array = [];
-
-                                //if only one building is being charted,
-                                //the value is a string not an array, needs to be handled
-                                if (typeof req.query.buildings == 'string') {
-                                    b_array.push(req.query.buildings);
-                                } else {
-                                    b_array = req.query.buildings
+                            .select({
+                                point: {
+                                    $elemMatch: {
+                                        name: "Accumulated Real Energy Net"
+                                    },
                                 }
-                                if (b_array && req.query.buildings.length > 1 && dataEntries != '[]') {
-                                    b_array.forEach(function (building_id) {
+                            })
+                            .select('-_id timestamp point.value building')
+                            .exec(function (err, datapoints) {
+                                /*
+                                datapoints: [
+                                    {
+                                        building: 5aab24bfdbdd3c325439a219,
+                                        timestamp: '2018-04-03 22:00:00',
+                                        point: [ { value: 1355244.13 } ]
+                                     }
+                                ]
+                                */
+                                if (err) {
+                                    res.jsonp({
+                                        building: null
+                                    });
+                                } else {
+                                    var to_return = [];
+                                    var b_array = [];
+
+                                    //if only one building is being charted,
+                                    //the value is a string not an array, needs to be handled
+                                    if (typeof req.query.buildings == 'string') {
+                                        b_array.push(req.query.buildings);
+                                    } else {
+                                        b_array = req.query.buildings
+                                    }
+                                    if (b_array && req.query.buildings.length > 1 && dataEntries != '[]') {
+                                        b_array.forEach(function (building_id) {
+                                            to_return.push({
+                                                id: building_id,
+                                                points: datapoints.filter(entry => entry.building == building_id).map(x => {
+                                                    if (x.point.length != 0)
+                                                        return {
+                                                            building: x.building,
+                                                            timestamp: x.timestamp,
+                                                            point: x.point[0].value
+                                                        }
+                                                })
+                                            });
+                                        });
+                                    } else {
                                         to_return.push({
-                                            id: building_id,
-                                            points: datapoints.filter(entry => entry.building == building_id).map(x => {
+                                            id: req.query.buildings,
+                                            points: datapoints.filter(entry => entry.building == req.query.buildings).map(x => {
                                                 if (x.point.length != 0)
                                                     return {
                                                         building: x.building,
@@ -224,37 +245,25 @@ module.exports = function (app, passport) {
                                                     }
                                             })
                                         });
-                                    });
-                                } else {
-                                    to_return.push({
-                                        id: req.query.buildings,
-                                        points: datapoints.filter(entry => entry.building == req.query.buildings).map(x => {
-                                            if (x.point.length != 0)
-                                                return {
-                                                    building: x.building,
-                                                    timestamp: x.timestamp,
-                                                    point: x.point[0].value
-                                                }
-                                        })
-                                    });
+                                    }
+                                    /*
+                                    This returns a structure like this to the client
+                                    to_return: [
+                                        {
+                                            id: building_id,
+                                            points: [ {building: building_id, timestamp: timestamp, value: 1355244.13 } ]
+                                        },
+                                        {
+                                            id: building_id,
+                                            points: [ {building: building_id, timestamp: timestamp, value: 1355244.13 } ]
+                                        },
+                                    ]
+                                    */
+                                    console.log('Returning with value: ' + to_return);
+                                    res.jsonp(to_return);
                                 }
-                                /*
-                                This returns a structure like this to the client
-                                to_return: [
-                                    {
-                                        id: building_id,
-                                        points: [ {building: building_id, timestamp: timestamp, value: 1355244.13 } ]
-                                    },
-                                    {
-                                        id: building_id,
-                                        points: [ {building: building_id, timestamp: timestamp, value: 1355244.13 } ]
-                                    },
-                                ]
-                                */
-                                console.log('Returning with value: ' + to_return);
-                                res.jsonp(to_return);
-                            }
-                        });
+                            });
+                    }
                 }
             });
 
@@ -1135,3 +1144,4 @@ function isLoggedIn(req, res, next) {
 function saveBlock(blockData) {
 
 }
+
