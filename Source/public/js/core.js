@@ -124,14 +124,17 @@ myApp.controller('buildingEditController', function ($scope, $location, $route, 
     }
 });
 
-myApp.controller('userController', function ($scope, EmailUser) {
+myApp.controller('userController', function ($scope, EmailRegistration) {
     $scope.email = {
-        email: ''
+        email: '',
+        access: '0'
     };
     $scope.submit = function () {
+        console.log('controller hit');
         EmailRegistration.post($scope.email)
             .success(function () {
-                $scope.email = '';
+                $scope.email.email = '';
+                $scope.email.access = '0';
             });
     };
 });
