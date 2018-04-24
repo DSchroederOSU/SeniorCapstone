@@ -3,7 +3,6 @@ var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'b
     'BlockService', 'UserService', 'MeterService', 'BuildingService',
     'DashboardService', 'StoryService', 'ngRoute'
 ]);
-
 myApp.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         ///////////////////////////

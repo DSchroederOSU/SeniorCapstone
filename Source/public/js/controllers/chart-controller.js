@@ -11,7 +11,7 @@ angular.module('chartController', [])
         var randomNum = function (range) {
             var num = Math.floor(Math.random() * range);
             return num;
-        }
+        };
 
         /*
         This function gets either no argument or an array of ranges
@@ -52,25 +52,27 @@ angular.module('chartController', [])
             };
             var buildingAxisData = [];
             Building.getBuildingData(to_pass).then(function (data) {
-                console.log(data);
                 //each building's points received from service
-                buildingAxisData.push({name: buildingsArray.building.filter(b => b._id == data.data.building)[0].name, data:  data.data.data});
-                /*
-                data.data.forEach(function (buildingData) {
+                if(data.data.building){
+                    buildingAxisData.push({name: buildingsArray.building.filter(b => b._id == data.data.building)[0].name, data:  data.data.data});
+                }
+               else {
+                    data.data.forEach(function (buildingData) {
+                        var name = buildingsArray.building.filter(b => b._id == buildingData.id)[0].name;
+                        var chartdata = getDailyData(daterange, buildingData);
 
-                    var name = buildingsArray.building.filter(b => b._id == buildingData.id)[0].name;
-                    var chartdata = getDailyData(daterange, buildingData);
-                    console.log(chartdata);
-                    buildingAxisData.push({name: name, data: chartdata});
-                });*/
+                        buildingAxisData.push({name: name, data: chartdata});
+                    });
+                }
 
                 //push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
-                //$scope.chartData = buildingAxisData;
-                buildChart(buildingAxisData, buildingsArray.type, buildingsArray.id );
+
+                buildChart(buildingAxisData, buildingsArray.type, buildingsArray.building[0]._id );
                 if(buildingsArray.vals != 'none'){
                     calculateVals(buildingAxisData, buildingsArray.id);
                 }
+
             });
         };
 
@@ -79,6 +81,8 @@ angular.module('chartController', [])
         passes a date range into the service to filter results from query
          */
         $scope.filterResults = function (object) {
+
+
             var range = getDateRange(object.range);
             //will hold each buildings data in the block
             //x and y axis data
@@ -90,15 +94,18 @@ angular.module('chartController', [])
             };
             var buildingAxisData = [];
             Building.getBuildingData(to_pass).then(function (data) {
-                //each building's points received from service
-                buildingAxisData.push({name: object.building.filter(b => b._id == data.data.building)[0].name, data:  data.data.data});
-                /*
-                data.data.forEach(function (buildingData) {
 
-                    var name = object.building.filter(b => b._id == buildingData.id)[0].name;
-                    var chartdata = getDailyData(range.daterange, buildingData);
-                    buildingAxisData.push({name: name, data: chartdata});
-                });*/
+                //each building's points received from service
+                if(data.data.building){
+                    buildingAxisData.push({name: object.building.filter(b => b._id == data.data.building)[0].name, data:  data.data.data});
+                }
+                else {
+                    data.data.forEach(function (buildingData) {
+                        var name = object.building.filter(b => b._id == buildingData.id)[0].name;
+                        var chartdata = getDailyData(range.daterange, buildingData);
+                        buildingAxisData.push({name: name, data: chartdata});
+                    });
+                }
 
                 ///push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
@@ -108,7 +115,7 @@ angular.module('chartController', [])
                     $scope.medValues = $scope.medValues.filter(b => b.id != object.id);
                     $scope.minValues = $scope.minValues.filter(b => b.id != object.id);
                 }
-                updateChart(buildingAxisData, object.index, object.id);
+                updateChart(buildingAxisData, object.index, object.building[0]._id);
                 if(object.vals != 'none'){
                     calculateVals(buildingAxisData, object.id);
                 }
@@ -177,7 +184,7 @@ angular.module('chartController', [])
                 });
             });
 
-            var c = charts.find(c => c.id == id);
+            var c = charts.find(c => c.buildingid == id);
             c.chart.data.datasets = datasetsArray;
             c.chart.data.labels = buildingAxisData[0].data.map(x=> x.date);
             c.chart.update();
@@ -213,7 +220,7 @@ angular.module('chartController', [])
         This function is what creates the chart in the canvas element once the data is retrieved and parsed
         the $element is the calling element of the function, which is the canvas element that called createChart
          */
-        function buildChart(buildingAxisData, type, id) {
+        function buildChart(buildingAxisData, type, bid) {
             //function could be made here to dynamically fill the datasetsArray's for each value in block.buildings
             var datasetsArray = [];
             buildingAxisData.forEach(function (element) {
@@ -255,13 +262,8 @@ angular.module('chartController', [])
                     }
                 });
             }
-
-            charts.push({id: id, chart : myChart});
+            charts.push({buildingid: bid, chart : myChart});
         }
-        $scope.clearCharts = function(){
-            charts = [];
-        };
-
         $scope.printCSV =function(block){
             var b = block.building.map(b => b._id);
             Building.csv(b).then(function(csv){
@@ -308,8 +310,6 @@ angular.module('chartController', [])
          */
         function getDailyData(range, data){
             var to_return = [];
-            console.log(data);
-            console.log(data);
             range.forEach(function (date){
                 //get data points for just one whole day
                 var temp = data.points.filter(p => {
@@ -409,4 +409,3 @@ angular.module('chartController', [])
         }
 
     });
-

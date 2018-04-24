@@ -4,8 +4,8 @@
 		<a href="#createblock" ng-click="create()" class="btn border-orange-thin background-orange text-white float-right">Create Block+</a>
 	</h1>
 	<br>
-	<div>
-		<div ng-controller="chartController" ng-init="initVals()">
+	<div >
+		<div ng-init="initVals()">
 		<div  class="card mb-3 Stratum2-Light font-weight-bold border-orange-thin" style="width: 100%;"
 		    ng-repeat="block in userBlocks">
 			<div class="card-header h-100">
@@ -101,8 +101,8 @@
 							</ul>
 						</div>
 					</div>
-					<div class="col-7" >
-						<div ng-controller="chartController" class="row container p-0 m-0">
+					<div class="col-7" ng-controller="chartController">
+						<div class="row container p-0 m-0">
 							<canvas ng-init="createChart({building: block.building, var : 'Accumulated Real Energy Net', type : block.chart, id:block._id})"
 							    class="myChart d-inline-block w-100"></canvas>
 						</div>

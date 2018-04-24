@@ -65,7 +65,11 @@ angular.module('buildingController', [])
             $scope.BuildingName = building.name;
             $scope.buildingModel = building;
             $location.path('/viewBuilding');
-            $route.reload();
+        };
+
+        $scope.initBuildings= function (){
+            $scope.buildingModel = {};
+            selectedBuilding = {};
         };
 
         $scope.getViewBuilding = function () {
@@ -227,7 +231,6 @@ angular.module('buildingController', [])
 
         $scope.getBuildingType = function () {
             if (editBuilding != null) {
-                console.log(editBuilding);
                 $scope.buildingSelection = editBuilding.building_type;
 
             }
@@ -247,7 +250,6 @@ angular.module('buildingController', [])
         };
 
         $scope.getDataDay = function (date) {
-            console.log(date.substring(9, 10));
             return parseInt(date.substring(9, 10))
         };
 

@@ -1,9 +1,9 @@
-<div ng-controller="buildingController">
+<div ng-controller="buildingController" ng-init="initBuildings()">
     <br>
     <h1 class="Stratum2-Light font-weight-bold">Buildings
         <a href="#addBuilding" ng-click="create()" class="btn border-orange-thin background-orange text-white float-right">Add Building+</a>
     </h1>
-    <div class="row mt-4">
+    <div class="row mt-4" ng-controller="chartController" ng-init="initCharts()">
         <div class="col-sm-3 pb-4 Stratum2-Light" ng-repeat="building in buildings track by building._id">
             <div class="card card-shadow border-orange-thin pointer building-card-highlight" style="max-height: 400px; min-width: 200px;"
                 ng-click="viewBuilding(building)">

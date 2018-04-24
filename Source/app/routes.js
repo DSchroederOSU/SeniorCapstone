@@ -143,7 +143,6 @@ module.exports = function (app, passport) {
     });
 
     app.get('/api/getBuildingData', function (req, res) {
-
         var match;
         if (req.query && req.query.start && req.query.end) {
             match = {
@@ -167,14 +166,12 @@ module.exports = function (app, passport) {
                 select: 'id'
             })
             .exec(function (err, dataEntries) {
-                console.log(dataEntries[0].meters);
                 if(dataEntries[0].name == 'Milne Computing Center' || dataEntries[0].name == 'Memorial Union' || dataEntries[0].name == 'Nash Hall'){
                     dataMethods.add_meters(dataEntries[0].meters, req.query.start, req.query.end).then(function(data){
                         res.jsonp({building: req.query.buildings, data: data});
                     });
 
                 }else {
-                    console.log("------");
                     if (err) {
                         res.jsonp({
                             building: null
