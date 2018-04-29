@@ -166,11 +166,42 @@ module.exports = function (app, passport) {
                 select: 'id'
             })
             .exec(function (err, dataEntries) {
-                if(dataEntries[0].name == 'Milne Computing Center' || dataEntries[0].name == 'Memorial Union' || dataEntries[0].name == 'Nash Hall'){
-                    dataMethods.add_meters(dataEntries[0].meters, req.query.start, req.query.end).then(function(data){
-                        res.jsonp({building: req.query.buildings, data: data});
+                /*
+                return new Promise(function(resolve, reject) {
+                    var to_return = [];
+                    //console.log(dataEntries);
+                    var promises = [];
+                    dataEntries.forEach(function (x){
+                        //console.log(x);
+                        switch(x.name){
+                            case 'Milne Computing Center' || 'Memorial Union' || 'Nash Hall':
+                                promises.push(dataMethods.add_meters(x._id, x.meters, req.query.start, req.query.end));
+                                /*dataMethods.add_meters(x.meters, req.query.start, req.query.end).then(function(data){
+                                    to_return.push({building: x._id, data: data});
+                                    console.log(to_return);
+                                });
+                                break;
+                            default:
+                                promises.push(dataMethods.getBuildingData(x._id, x.meters, req.query.start, req.query.end));
+                                /*dataMethods.getBuildingData(x.meters, req.query.start, req.query.end).then(function(data){
+                                    to_return.push({building: x._id, data: data});
+                                    console.log(to_return);
+                                });
+                        }
+                    });
+                    Promise.all(promises).then(function(data){
+                        res.jsonp(data);
                     });
 
+                });
+                console.log(to_return);
+                */
+
+                //if(dataEntries[0].name == 'Milne Computing Center' || dataEntries[0].name == 'Memorial Union' || dataEntries[0].name == 'Nash Hall'){
+                if(dataEntries[0].name == "NEVER"){
+                    dataMethods.add_meters([].concat.apply([], dataEntries.map(d => d.data_entries), req.query.start, req.query.end)).then(function(data){
+                        res.jsonp({building: req.query.buildings, data: data});
+                    });
                 }else {
                     if (err) {
                         res.jsonp({
@@ -180,6 +211,9 @@ module.exports = function (app, passport) {
                         DataEntry.find({
                             _id: {
                                 $in: [].concat.apply([], dataEntries.map(d => d.data_entries))
+                            },
+                            meter_id: {
+                                $in: [].concat.apply([], dataEntries.map(d => d.meters))
                             }
                         })
                             .select({
@@ -189,7 +223,8 @@ module.exports = function (app, passport) {
                                     },
                                 }
                             })
-                            .select('-_id timestamp point.value building')
+                            .sort('timestamp')
+                            .select('meter_id timestamp point.value building')
                             .exec(function (err, datapoints) {
                                 /*
                                 datapoints: [
@@ -205,30 +240,52 @@ module.exports = function (app, passport) {
                                         building: null
                                     });
                                 } else {
-                                    var to_return = [];
-                                    var b_array = [];
+
+                                    var meters = [].concat.apply([], dataEntries.map(d => d.meters));
 
                                     //if only one building is being charted,
                                     //the value is a string not an array, needs to be handled
-                                    if (typeof req.query.buildings == 'string') {
-                                        b_array.push(req.query.buildings);
-                                    } else {
-                                        b_array = req.query.buildings
-                                    }
-                                    if (b_array && req.query.buildings.length > 1 && dataEntries != '[]') {
-                                        b_array.forEach(function (building_id) {
+
+                                        var to_return = [];
+                                    var temp = [];
+                                        meters.forEach(function (meter) {
+                                            var start = new Date(req.query.start);
+                                            var end = new Date(req.query.end);
+                                            var array = datapoints.filter(entry => entry.meter_id.toString() === meter.toString());
+
+                                            while (start.toISOString().substring(0, 10) < end.toISOString().substring(0, 10)) {
+                                                var daily = array.filter(x => {
+                                                    if (x)
+                                                        return x.timestamp.substring(0, 10) == start.toISOString().substring(0, 10);
+                                                });
+
+                                                if(daily.length>0){
+                                                    var val = Math.abs(daily[daily.length - 1].point[0].value) - Math.abs(daily[0].point[0].value);
+                                                    temp.push({
+                                                        building_id : daily[0].building,
+                                                        meter_id: meter,
+                                                        date: daily[0].timestamp.substring(0, 10),
+                                                        val: val
+                                                    });
+                                                }
+                                                start.setDate(start.getDate() + 1);
+                                            }
+
+                                            /*
                                             to_return.push({
                                                 id: building_id,
                                                 points: datapoints.filter(entry => entry.building == building_id).map(x => {
                                                     if (x.point.length != 0)
                                                         return {
                                                             building: x.building,
+                                                            meter: x.meter_id,
                                                             timestamp: x.timestamp,
-                                                            point: x.point[0].value
+                                                            val: x.point[0].value
                                                         }
                                                 })
-                                            });
+                                            });*/
                                         });
+                                    /*
                                     } else {
                                         to_return.push({
                                             id: req.query.buildings,
@@ -236,8 +293,9 @@ module.exports = function (app, passport) {
                                                 if (x.point.length != 0)
                                                     return {
                                                         building: x.building,
+                                                        meter: x.meter_id,
                                                         timestamp: x.timestamp,
-                                                        point: x.point[0].value
+                                                        val: x.point[0].value
                                                     }
                                             })
                                         });
@@ -255,8 +313,9 @@ module.exports = function (app, passport) {
                                         },
                                     ]
                                     */
+                                    console.log(temp);
                                     console.log('Returning with value: ' + to_return);
-                                    res.jsonp(to_return);
+                                    res.jsonp(temp);
                                 }
                             });
                     }

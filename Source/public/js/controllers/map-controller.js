@@ -46,11 +46,8 @@ angular.module('mapController', [])
 			var shapes = [];
 
             jQuery.each(getPaths(), function(i, val) {
-            	console.log(map_buildings);
-
 				var check = map_buildings.filter(x => x.name == val.name);
             	if(!check.length < 1){
-            		console.log(check);
             		//console.log(buildMapObject(check[0], val.path));
             		shapes.push(buildMapObject(check[0], val.path));
                     //console.log(check);
@@ -1050,7 +1047,6 @@ angular.module('mapController', [])
             });
             map.setMap($scope.map);
             $scope.b = obj;
-            console.log(obj);
             var content = '<div><h5 class="Stratum2-Light" style="width:150px; min-height:30px">' + obj.name + '</h5>' +
                 '<button ng-controller="buildingController" ng-click="view()" '+
                 'class="btn" style="color: white; background-color: #DC4405 !important;">View</button>  </div>';
@@ -1068,7 +1064,7 @@ angular.module('mapController', [])
 		}
 
 		$scope.view = function(o){
-        	console.log(o);
+        	//console.log(o);
 		}
         function getPaths(){
         	return {

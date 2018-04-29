@@ -52,18 +52,15 @@ angular.module('chartController', [])
             };
             var buildingAxisData = [];
             Building.getBuildingData(to_pass).then(function (data) {
-                //each building's points received from service
-                if(data.data.building){
-                    buildingAxisData.push({name: buildingsArray.building.filter(b => b._id == data.data.building)[0].name, data:  data.data.data});
-                }
-               else {
-                    data.data.forEach(function (buildingData) {
-                        var name = buildingsArray.building.filter(b => b._id == buildingData.id)[0].name;
-                        var chartdata = getDailyData(daterange, buildingData);
 
-                        buildingAxisData.push({name: name, data: chartdata});
-                    });
-                }
+                var to_chart = [];
+                buildingsArray.building.forEach(function(x){
+                    buildingAxisData.push({name: x.name, data: data.data.filter(b => b.building_id === x._id)});
+                });
+                console.log(buildingAxisData);
+                //each building's points received from service
+                //buildingAxisData.push({name: buildingsArray.building.filter(b => b._id == to_chart.b_id)[0].name, data:  to_chart.points});
+
 
                 //push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
@@ -93,19 +90,10 @@ angular.module('chartController', [])
                 end: range.end
             };
             var buildingAxisData = [];
-            Building.getBuildingData(to_pass).then(function (data) {
 
+            Building.getBuildingData(to_pass).then(function (data) {
                 //each building's points received from service
-                if(data.data.building){
-                    buildingAxisData.push({name: object.building.filter(b => b._id == data.data.building)[0].name, data:  data.data.data});
-                }
-                else {
-                    data.data.forEach(function (buildingData) {
-                        var name = object.building.filter(b => b._id == buildingData.id)[0].name;
-                        var chartdata = getDailyData(range.daterange, buildingData);
-                        buildingAxisData.push({name: name, data: chartdata});
-                    });
-                }
+                buildingAxisData.push({name: object.building.filter(b => b._id == data.data[0].building_id)[0].name, data:  data.data});
 
                 ///push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
