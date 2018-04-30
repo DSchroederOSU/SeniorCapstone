@@ -47,6 +47,15 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+var User = require('./app/models/user-schema');
+var Building = require('./app/models/building-schema');
+var Meter = require('./app/models/meter-schema');
+var DataEntry = require('./app/models/data-entry-schema');
+var Dashboard = require('./app/models/dashboard-schema');
+var Block = require('./app/models/block-schema');
+var Story = require('./app/models/story-schema');
+
+
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 // require('./config/DBsampledata.js');

@@ -1,5 +1,6 @@
 require('mongoose');
-require('mongodb')
+require('mongodb');
+var _ = require('underscore');
 const Json2csvParser = require('json2csv').Parser;
 var parseString = require('xml2js').parseString;
 var bodyParser = require('body-parser');
@@ -166,43 +167,12 @@ module.exports = function (app, passport) {
                 select: 'id'
             })
             .exec(function (err, dataEntries) {
-                /*
-                return new Promise(function(resolve, reject) {
-                    var to_return = [];
-                    //console.log(dataEntries);
-                    var promises = [];
-                    dataEntries.forEach(function (x){
-                        //console.log(x);
-                        switch(x.name){
-                            case 'Milne Computing Center' || 'Memorial Union' || 'Nash Hall':
-                                promises.push(dataMethods.add_meters(x._id, x.meters, req.query.start, req.query.end));
-                                /*dataMethods.add_meters(x.meters, req.query.start, req.query.end).then(function(data){
-                                    to_return.push({building: x._id, data: data});
-                                    console.log(to_return);
-                                });
-                                break;
-                            default:
-                                promises.push(dataMethods.getBuildingData(x._id, x.meters, req.query.start, req.query.end));
-                                /*dataMethods.getBuildingData(x.meters, req.query.start, req.query.end).then(function(data){
-                                    to_return.push({building: x._id, data: data});
-                                    console.log(to_return);
-                                });
-                        }
-                    });
-                    Promise.all(promises).then(function(data){
-                        res.jsonp(data);
-                    });
+                console.log(dataEntries);
+                var buildings = [];
+                dataEntries.forEach(function(b){
+                    buildings.push({name: b.name, building_id: b._id});
+                })
 
-                });
-                console.log(to_return);
-                */
-
-                //if(dataEntries[0].name == 'Milne Computing Center' || dataEntries[0].name == 'Memorial Union' || dataEntries[0].name == 'Nash Hall'){
-                if(dataEntries[0].name == "NEVER"){
-                    dataMethods.add_meters([].concat.apply([], dataEntries.map(d => d.data_entries), req.query.start, req.query.end)).then(function(data){
-                        res.jsonp({building: req.query.buildings, data: data});
-                    });
-                }else {
                     if (err) {
                         res.jsonp({
                             building: null
@@ -216,109 +186,170 @@ module.exports = function (app, passport) {
                                 $in: [].concat.apply([], dataEntries.map(d => d.meters))
                             }
                         })
-                            .select({
-                                point: {
-                                    $elemMatch: {
-                                        name: "Accumulated Real Energy Net"
-                                    },
-                                }
-                            })
-                            .sort('timestamp')
-                            .select('meter_id timestamp point.value building')
-                            .exec(function (err, datapoints) {
-                                /*
-                                datapoints: [
-                                    {
-                                        building: 5aab24bfdbdd3c325439a219,
-                                        timestamp: '2018-04-03 22:00:00',
-                                        point: [ { value: 1355244.13 } ]
-                                     }
-                                ]
-                                */
-                                if (err) {
-                                    res.jsonp({
-                                        building: null
+                        .select({
+                            point: {
+                                $elemMatch: {
+                                    name: "Accumulated Real Energy Net"
+                                },
+                            }
+                        })
+                        .sort('timestamp')
+                        .select('meter_id timestamp point.value building')
+                        .exec(function (err, datapoints) {
+                            /*
+                            datapoints: [
+                                {
+                                    building: 5aab24bfdbdd3c325439a219,
+                                    timestamp: '2018-04-03 22:00:00',
+                                    point: [ { value: 1355244.13 } ]
+                                 }
+                            ]
+                            */
+                        if (err) {
+                            res.jsonp({
+                                building: null
+                            });
+                        } else {
+
+                            var meters = [].concat.apply([], dataEntries.map(d => d.meters));
+                            var to_return = [];
+                            var temp = [];
+                            meters.forEach(function (meter) {
+                                var start = new Date(req.query.start);
+                                var end = new Date(req.query.end);
+                                var array = datapoints.filter(entry => entry.meter_id.toString() === meter.toString());
+                                console.log(array);
+                                console.log(array.length);
+                                while (start.toISOString().substring(0, 10) < end.toISOString().substring(0, 10)) {
+                                    var daily = array.filter(x => {
+                                        if (x)
+                                            return x.timestamp.substring(0, 10) == start.toISOString().substring(0, 10);
                                     });
-                                } else {
-
-                                    var meters = [].concat.apply([], dataEntries.map(d => d.meters));
-
-                                    //if only one building is being charted,
-                                    //the value is a string not an array, needs to be handled
-
-                                        var to_return = [];
-                                    var temp = [];
-                                        meters.forEach(function (meter) {
-                                            var start = new Date(req.query.start);
-                                            var end = new Date(req.query.end);
-                                            var array = datapoints.filter(entry => entry.meter_id.toString() === meter.toString());
-
-                                            while (start.toISOString().substring(0, 10) < end.toISOString().substring(0, 10)) {
-                                                var daily = array.filter(x => {
-                                                    if (x)
-                                                        return x.timestamp.substring(0, 10) == start.toISOString().substring(0, 10);
-                                                });
-
-                                                if(daily.length>0){
-                                                    var val = Math.abs(daily[daily.length - 1].point[0].value) - Math.abs(daily[0].point[0].value);
-                                                    temp.push({
-                                                        building_id : daily[0].building,
-                                                        meter_id: meter,
-                                                        date: daily[0].timestamp.substring(0, 10),
-                                                        val: val
-                                                    });
+                                    if(daily.length>0){
+                                        var end_index = 1;
+                                        var start_index = 0;
+                                        var val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
+                                        // start by decreasing the end value
+                                        var startflag = 0;
+                                        while(val < 0 || val > 10000){
+                                            if(startflag == 0){
+                                                end_index += 1;
+                                                if(daily[daily.length - end_index].point[0] && daily[start_index].point[0]){
+                                                    val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
                                                 }
-                                                start.setDate(start.getDate() + 1);
+                                                startflag = 1;
                                             }
+                                            else{
+                                                start_index += 1;
+                                                if(daily[daily.length - end_index].point[0] && daily[start_index].point[0]){
+                                                    val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
+                                                }
 
-                                            /*
-                                            to_return.push({
-                                                id: building_id,
-                                                points: datapoints.filter(entry => entry.building == building_id).map(x => {
-                                                    if (x.point.length != 0)
-                                                        return {
-                                                            building: x.building,
-                                                            meter: x.meter_id,
-                                                            timestamp: x.timestamp,
-                                                            val: x.point[0].value
-                                                        }
-                                                })
-                                            });*/
-                                        });
-                                    /*
-                                    } else {
-                                        to_return.push({
-                                            id: req.query.buildings,
-                                            points: datapoints.filter(entry => entry.building == req.query.buildings).map(x => {
-                                                if (x.point.length != 0)
-                                                    return {
-                                                        building: x.building,
-                                                        meter: x.meter_id,
-                                                        timestamp: x.timestamp,
-                                                        val: x.point[0].value
-                                                    }
-                                            })
+                                                startflag = 0;
+                                            }
+                                        }
+                                        temp.push({
+                                            building_id : daily[0].building,
+                                            meter_id: meter,
+                                            date: daily[0].timestamp.substring(0, 10),
+                                            val: val
                                         });
                                     }
-                                    /*
-                                    This returns a structure like this to the client
-                                    to_return: [
-                                        {
-                                            id: building_id,
-                                            points: [ {building: building_id, timestamp: timestamp, value: 1355244.13 } ]
-                                        },
-                                        {
-                                            id: building_id,
-                                            points: [ {building: building_id, timestamp: timestamp, value: 1355244.13 } ]
-                                        },
-                                    ]
-                                    */
-                                    console.log(temp);
-                                    console.log('Returning with value: ' + to_return);
-                                    res.jsonp(temp);
+                                    start.setDate(start.getDate() + 1);
                                 }
+
                             });
-                    }
+
+                            //A check for Milne to Sum Values
+                            if(buildings.filter(n => n.name === "Milne Computing Center").length > 0){
+                                let milne_id = buildings.filter(n => n.name === "Milne Computing Center")[0].building_id;
+                                // add values with common timestamps
+                                let milne = temp.filter(d => d.building_id.toString() === milne_id.toString());
+                                temp = temp.filter(d => d.building_id.toString() !== milne_id.toString());
+
+                                let vals = milne.reduce((prev, curr) => {
+                                    let count = prev.get(curr.date) || 0;
+                                    prev.set(curr.date, curr.val + count);
+                                    return prev;
+                                }, new Map());
+                                [...vals].map(([key, value]) => {
+                                    return {key, value}
+                                }).forEach(function(point){
+                                    temp.push({building_id: milne_id, date: point.key, val: point.value})
+                                })
+                            }
+                            else if(buildings.filter(n => n.name === "Memorial Union").length > 0){
+                                let union_id = buildings.filter(n => n.name === "Memorial Union")[0].building_id;
+                                // add values with common timestamps
+                                let union = temp.filter(d => d.building_id.toString() === union_id.toString());
+                                temp = temp.filter(d => d.building_id.toString() !== union_id.toString());
+
+                                let vals = union.reduce((prev, curr) => {
+                                    let count = prev.get(curr.date) || 0;
+                                    prev.set(curr.date, curr.val + count);
+                                    return prev;
+                                }, new Map());
+                                [...vals].map(([key, value]) => {
+                                    return {key, value}
+                                }).forEach(function(point){
+                                    temp.push({building_id: union_id, date: point.key, val: point.value})
+                                })
+                            }
+                            else if(buildings.filter(n => n.name === "Nash Hall").length > 0){
+                                let nash_id = buildings.filter(n => n.name === "Nash Hall")[0].building_id;
+                                // add values with common timestamps
+                                let nash = temp.filter(d => d.building_id.toString() === nash_id.toString());
+                                temp = temp.filter(d => d.building_id.toString() !== nash_id.toString());
+
+                                let vals = nash.reduce((prev, curr) => {
+                                    let count = prev.get(curr.date) || 0;
+                                    prev.set(curr.date, curr.val + count);
+                                    return prev;
+                                }, new Map());
+                                [...vals].map(([key, value]) => {
+                                    return {key, value}
+                                }).forEach(function(point){
+                                    temp.push({building_id: nash_id, date: point.key, val: point.value})
+                                })
+                            }
+                            else if(buildings.filter(n => n.name === "Kelley Engineering Center").length > 0){
+                                let kelley_id = buildings.filter(n => n.name === "Kelley Engineering Center")[0].building_id;
+                                // add values with common timestamps
+                                let kelley = temp.filter(d => d.building_id.toString() === kelley_id.toString());
+                                temp = temp.filter(d => d.building_id.toString() !== kelley_id.toString());
+
+                                let vals = kelley.reduce((prev, curr) => {
+                                    let count = prev.get(curr.date) || 0;
+                                    prev.set(curr.date, curr.val + count);
+                                    return prev;
+                                }, new Map());
+                                [...vals].map(([key, value]) => {
+                                    return {key, value}
+                                }).forEach(function(point){
+                                    temp.push({building_id: kelley_id, date: point.key, val: point.value})
+                                })
+                            }
+                            else if(buildings.filter(n => n.name === "McNary Hall").length > 0){
+                                let mcnary_id = buildings.filter(n => n.name === "McNary Hall")[0].building_id;
+                                // add values with common timestamps
+                                let mcnary = temp.filter(d => d.building_id.toString() === mcnary_id.toString());
+                                temp = temp.filter(d => d.building_id.toString() !== mcnary_id.toString());
+
+                                let vals = mcnary.reduce((prev, curr) => {
+                                    let count = prev.get(curr.date) || 0;
+                                    prev.set(curr.date, curr.val + count);
+                                    return prev;
+                                }, new Map());
+                                [...vals].map(([key, value]) => {
+                                    return {key, value}
+                                }).forEach(function(point){
+                                    temp.push({building_id: mcnary_id, date: point.key, val: point.value})
+                                })
+                            }
+
+                            res.jsonp(temp);
+                        }
+                    });
                 }
             });
 
@@ -759,7 +790,8 @@ module.exports = function (app, passport) {
     app.get('/api/getMeters', function (req, res) {
         Meter.find({})
             .populate({
-                path: 'building'
+                path: 'building',
+                select: 'name building_type meters'
             })
             .exec(function (err, meters) {
                 if (err) return handleError(err);

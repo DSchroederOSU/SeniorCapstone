@@ -40,6 +40,21 @@ angular.module('chartController', [])
 		 and updates a canvas element with a chart based on data parameters
          */
         $scope.createChart = function (buildingsArray) {
+            let objArr = [
+                {key: 'Mon Sep 23 2013 00:00:00 GMT-0400', val: 42},
+                {key: 'Mon Sep 24 2013 00:00:00 GMT-0400', val: 78},
+                {key: 'Mon Sep 25 2013 00:00:00 GMT-0400', val: 23},
+                {key: 'Mon Sep 23 2013 00:00:00 GMT-0400', val: 54}
+            ];
+
+// first, convert data into a Map with reduce
+            let counts = objArr.reduce((prev, curr) => {
+                let count = prev.get(curr.key) || 0;
+                prev.set(curr.key, curr.val + count);
+                return prev;
+            }, new Map());
+
+
             var daterange = Last7Days();
 
             //will hold each buildings data in the block

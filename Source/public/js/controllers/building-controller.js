@@ -52,6 +52,7 @@ angular.module('buildingController', [])
                 "building_type": $scope.buildingSelection,
                 "meters": selectedMeters
             };
+            console.log(update_building_data);
             Building.update(update_building_data)
                 .success(function () {
                     $location.path('/allBuildings')
