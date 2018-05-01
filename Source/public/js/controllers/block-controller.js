@@ -217,7 +217,31 @@ angular.module('blockController', [])
                     });
             }
         }
+        $scope.printCSV =function(block){
+            $scope.$broadcast("GetBlockData", block);
+            var to_pass = {
+                buildings: block.building.map(b => b._id),
+                start: daterange[0],
+                end: daterange[daterange.length -1]
+            };
+            var buildingAxisData = [];
+            Building.getBuildingData(to_pass).then(function (data) {
 
+            });
+            console.log(block);
+            var b = block.building.map(b => b._id);
+            Building.csv(b).then(function(csv){
+                let csvContent = "data:text/csv;charset=utf-8,";
+                console.log(csv.data);
+                csv.data.forEach(function(rowArray){
+                    let row = [rowArray].join(",");
+                    csvContent += row + "\r\n";
+                });
+
+                var encodedUri = encodeURI(csvContent);
+                window.open(encodedUri);
+            });
+        };
         /*
         Function to update block information by taking the id of the current block and 
         taking the $scope variables for updated info.

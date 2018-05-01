@@ -2,7 +2,7 @@ var charts = [];
 var blockData = [];
 
 angular.module('chartController', [])
-    .controller('chartController', function ($route, $scope, $element, $timeout, Building) {
+    .controller('chartController', function ($route, $scope, $rootScope, $element, $timeout, Building) {
 
         /*
         This function gets a range int and produces a random number within 
@@ -64,7 +64,7 @@ angular.module('chartController', [])
                 //push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
 
-                buildChart(buildingAxisData, buildingsArray.type, buildingsArray.building[0]._id );
+                buildChart(buildingAxisData, buildingsArray.type, buildingsArray.name );
                 if(buildingsArray.vals != 'none'){
                     calculateVals(buildingAxisData, buildingsArray.id);
                 }
@@ -78,8 +78,8 @@ angular.module('chartController', [])
          */
         $scope.filterResults = function (object) {
 
-
             var range = getDateRange(object.range);
+            console.log(range);
             //will hold each buildings data in the block
             //x and y axis data
             var to_pass = {
@@ -92,9 +92,11 @@ angular.module('chartController', [])
 
             Building.getBuildingData(to_pass).then(function (data) {
                 console.log(data);
-                //each building's points received from service
-                buildingAxisData.push({name: object.building.filter(b => b._id == data.data[0].building_id)[0].name, data:  data.data});
 
+                //each building's points received from service
+                object.building.forEach(function(x){
+                    buildingAxisData.push({name: x.name, data: data.data.filter(b => b.building_id === x._id)});
+                });
                 ///push all the values to the array of each buildings x axis data
                 //fills buildingAxisData array with building data.
                 $scope.chartData = buildingAxisData;
@@ -103,7 +105,7 @@ angular.module('chartController', [])
                     $scope.medValues = $scope.medValues.filter(b => b.id != object.id);
                     $scope.minValues = $scope.minValues.filter(b => b.id != object.id);
                 }
-                updateChart(buildingAxisData, object.index, object.building[0]._id);
+                updateChart(buildingAxisData, object.index, object.name);
                 if(object.vals != 'none'){
                     calculateVals(buildingAxisData, object.id);
                 }
@@ -161,7 +163,7 @@ angular.module('chartController', [])
         the global array charts holds the chart objects as they are created
         it simply updates the dataset of the calling chart
          */
-        function updateChart(buildingAxisData, index, id) {
+        function updateChart(buildingAxisData, index, name) {
             var datasetsArray = [];
             buildingAxisData.forEach(function (element) {
                 datasetsArray.push({
@@ -171,8 +173,13 @@ angular.module('chartController', [])
                     data: element.data.map(x=> x.val)
                 });
             });
+            if(name){
+                var c = charts.find(c => c.block_name.toString() === name.toString());
+            }else{
+                console.log(charts);
+                var c = charts[0];
+            }
 
-            var c = charts.find(c => c.buildingid == id);
             c.chart.data.datasets = datasetsArray;
             c.chart.data.labels = buildingAxisData[0].data.map(x=> x.date);
             c.chart.update();
@@ -208,7 +215,7 @@ angular.module('chartController', [])
         This function is what creates the chart in the canvas element once the data is retrieved and parsed
         the $element is the calling element of the function, which is the canvas element that called createChart
          */
-        function buildChart(buildingAxisData, type, bid) {
+        function buildChart(buildingAxisData, type, name) {
             //function could be made here to dynamically fill the datasetsArray's for each value in block.buildings
             var datasetsArray = [];
             buildingAxisData.forEach(function (element) {
@@ -250,21 +257,8 @@ angular.module('chartController', [])
                     }
                 });
             }
-            charts.push({buildingid: bid, chart : myChart});
+            charts.push({block_name: name, chart : myChart});
         }
-        $scope.printCSV =function(block){
-            var b = block.building.map(b => b._id);
-            Building.csv(b).then(function(csv){
-                let csvContent = "data:text/csv;charset=utf-8,";
-                csv.data.forEach(function(rowArray){
-                    let row = [rowArray].join(",");
-                    csvContent += row + "\r\n";
-                });
-
-                var encodedUri = encodeURI(csvContent);
-                window.open(encodedUri);
-            });
-        };
 
         function formatDate(date){
             var dd = date.getDate();
@@ -286,6 +280,16 @@ angular.module('chartController', [])
             return(result.sort());
         }
 
+        function LastWeek() {
+            var result = [];
+            for (var i=0; i<15; i++) {
+                var d = new Date();
+                d.setDate(d.getDate() - i);
+                result.push( formatDate(d).toString() )
+            }
+            console.log(result.sort());
+            return(result.sort().slice(0, 7));
+        }
         /*
         Input:
         range - Array of date string
@@ -324,51 +328,15 @@ angular.module('chartController', [])
             switch (range) {
                 case "lastweek":
 
-                    for(var i = 0; i < 7; i++){
-                        var dat = new Date(curr.valueOf());
-                        dat.setDate(dat.getDate() - i);
-                        if(dat.getDate().toString().length == 1){
-                            daterange.push("" + dat.getFullYear() + "-0" + (dat.getMonth()+ 1) + "-" + "0"+dat.getDate());
-                        }
-                        else{
-                            daterange.push("" + dat.getFullYear() + "-0" + (dat.getMonth()+ 1) + "-" + dat.getDate());
-                        }
-                    }
-                    daterange = daterange.sort();
+                    daterange = LastWeek();
                     startDate = daterange[0];
                     endDate = daterange[daterange.length - 1];
 
                     break;
                 case "thisweek":
-                    first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
-
-                    last = first + 6; // last day is the first day + 6
-                    startDate = new Date(curr.setDate(first));
-
-                    if(startDate.getDate().toString().length == 1){
-                        startDate = "" + startDate.getFullYear() + "-0" + (startDate.getMonth() + 1) + "-" + "0"+startDate.getDate();
-                    }
-                    else{
-                        startDate = "" + startDate.getFullYear() + "-0" + (startDate.getMonth() + 1) + "-" + startDate.getDate();
-                    }
-                    endDate = new Date(curr.setDate(last));
-                    if(endDate.getDate().toString().length == 1){
-                        endDate = "" + endDate.getFullYear() + "-0" + (endDate.getMonth() + 1) + "-" + "0"+endDate.getDate();
-                    }
-                    else{
-                        endDate = "" + endDate.getFullYear() + "-0" + (endDate.getMonth() + 1) + "-" + endDate.getDate();
-                    }
-
-                    for(var i = 0; i < 7; i++){
-                        var dat = new Date(startDate.valueOf());
-                        dat.setDate(dat.getDate() + i);
-                        if(dat.getDate().toString().length == 1){
-                            daterange.push("" + dat.getFullYear() + "-0" + (dat.getMonth()+ 1) + "-" + "0"+dat.getDate());
-                        }
-                        else{
-                            daterange.push("" + dat.getFullYear() + "-0" + (dat.getMonth()+ 1) + "-" + dat.getDate());
-                        }
-                    }
+                    daterange = Last7Days();
+                    startDate = daterange[0];
+                    endDate = daterange[daterange.length - 1];
                     break;
                 default:
                     curr.setMonth(curr.getMonth() -1);
@@ -396,4 +364,13 @@ angular.module('chartController', [])
             return {start: startDate, end : endDate, daterange: daterange}
         }
 
+        $scope.$on("GetBlockData", function(evt, data) {
+            console.log(data);
+
+            // handler code here });
+        });
+
+        $scope.initCharts = function(){
+            charts = [];
+        }
     });

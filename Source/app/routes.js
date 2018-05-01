@@ -60,7 +60,6 @@ module.exports = function (app, passport) {
     });
 
     app.post('/api/updateBuilding', function (req, res) {
-        console.log(req.body);
         Building.findByIdAndUpdate({
             _id: req.body._id
         }, {
@@ -207,7 +206,6 @@ module.exports = function (app, passport) {
                     if (err) {
                         console.log(err);
                     } else {
-                        console.log(datapoints.length);
                         var meters = [].concat.apply([], dataEntries.map(d => d.meters));
 
                         var temp = [];
@@ -498,7 +496,6 @@ module.exports = function (app, passport) {
     /////////////////////////////DASHBOARD API//////////////////////////////
     // =====================================================================
     app.post('/api/addDashboard', function (req, res) {
-        console.log(req.body);
         var user = req.user;
         var dashboard = new Dashboard();
         dashboard.name = req.body.name;
@@ -611,7 +608,6 @@ module.exports = function (app, passport) {
     });
 
     app.post('/api/updateDashboard', function (req, res) {
-        console.log(req.body);
         Dashboard.findByIdAndUpdate({
             _id: req.body._id
         }, {
@@ -662,7 +658,6 @@ module.exports = function (app, passport) {
     });
 
     app.post('/api/addStory', function (req, res) {
-        console.log(req.body);
         var user = req.user;
         var story = new Story();
         story.name = req.body.name;
@@ -695,7 +690,6 @@ module.exports = function (app, passport) {
         });
     });
     app.post('/api/updateStory', function (req, res) {
-        console.log(req.body);
         Story.findByIdAndUpdate({
             _id: req.body._id
         }, {
@@ -718,7 +712,6 @@ module.exports = function (app, passport) {
     });
 
     app.post('/api/deleteStory', function (req, res) {
-        console.log(req.body);
         User.findByIdAndUpdate({
             _id: req.user._id
         }, {
@@ -807,7 +800,6 @@ module.exports = function (app, passport) {
     });
 
     app.post('/api/updateMeter', function (req, res) {
-        console.log(req.body);
         Meter.findByIdAndUpdate({
             _id: req.body.id
         }, {
@@ -946,66 +938,208 @@ module.exports = function (app, passport) {
         });
     });
     app.post('/api/toCSV', function (req, res) {
-        var match = {
-            timestamp: {
-                $lt: "2018-03-12",
-                $gte: "2018-03-06"
-            }
-        };
-        Building.find({
-                _id: {
-                    $in: req.body
+
+        var match;
+        if (req.query && req.query.start && req.query.end) {
+            match = {
+                timestamp: {
+                    $lt: req.query.end,
+                    $gte: req.query.start
                 }
-            })
+            }
+        } else {
+            match = {};
+        }
+
+        Building.find({
+            _id: {
+                $in: req.query.buildings
+            }
+        })
             .populate({
                 path: 'data_entries',
                 match: match, //THIS WORKS TO FILTER DATES
                 select: 'id'
             })
             .exec(function (err, dataEntries) {
-                if (err || !dataEntries) {
-                    res.json({
+                var buildings = [];
+                dataEntries.forEach(function(b){
+                    buildings.push({name: b.name, building_id: b._id});
+                });
+                if (err) {
+                    res.jsonp({
                         building: null
                     });
                 } else {
                     DataEntry.find({
-                            _id: {
-                                $in: [].concat.apply([], dataEntries.map(d => d.data_entries))
-                            }
-                        })
+                        _id: {
+                            $in: [].concat.apply([], dataEntries.map(d => d.data_entries))
+                        },
+                        meter_id: {
+                            $in: [].concat.apply([], dataEntries.map(d => d.meters))
+                        }
+                    })
                         .select({
                             point: {
                                 $elemMatch: {
                                     name: "Accumulated Real Energy Net"
-                                }
+                                },
                             }
                         })
-                        .select('-_id timestamp point.value building')
+                        .sort('timestamp')
+                        .select('meter_id timestamp point.value building')
                         .exec(function (err, datapoints) {
-                            if (err || datapoints == []) {
-                                res.json({
-                                    building: null
-                                });
-                            } else {
 
-                                var to_return = [];
-                                datapoints.forEach(function (d) {
-                                    if (d.point[0]) {
-                                        to_return.push([d.building, d.timestamp, d.point[0].value])
+                            /*
+                            datapoints: [
+                                {
+                                    building: 5aab24bfdbdd3c325439a219,
+                                    timestamp: '2018-04-03 22:00:00',
+                                    point: [ { value: 1355244.13 } ]
+                                 }
+                            ]
+                            */
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                var meters = [].concat.apply([], dataEntries.map(d => d.meters));
+
+                                var temp = [];
+                                meters.forEach(function (meter) {
+                                    var start = new Date(req.query.start);
+                                    var end = new Date(req.query.end);
+                                    var array = datapoints.filter(entry => entry.meter_id.toString() === meter.toString());
+                                    while (start.toISOString().substring(0, 10) < end.toISOString().substring(0, 10)) {
+                                        var daily = array.filter(x => {
+                                            if (x)
+                                                return x.timestamp.substring(0, 10) == start.toISOString().substring(0, 10);
+                                        });
+                                        if(daily.length>0){
+                                            var end_index = 1;
+                                            var start_index = 0;
+                                            var val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
+                                            // start by decreasing the end value
+                                            var startflag = 0;
+                                            while(val < 0 || val > 10000){
+                                                if(startflag == 0){
+                                                    end_index += 1;
+                                                    if(daily[daily.length - end_index].point[0] && daily[start_index].point[0]){
+                                                        val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
+                                                    }
+                                                    startflag = 1;
+                                                }
+                                                else{
+                                                    start_index += 1;
+                                                    if(daily[daily.length - end_index].point[0] && daily[start_index].point[0]){
+                                                        val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
+                                                    }
+                                                    startflag = 0;
+                                                }
+                                            }
+                                            temp.push({
+                                                building_id : daily[0].building,
+                                                meter_id: meter,
+                                                date: daily[0].timestamp.substring(0, 10),
+                                                val: val
+                                            });
+                                        }
+                                        start.setDate(start.getDate() + 1);
                                     }
 
                                 });
-                                const fields = ['building', 'timestamp', 'val'];
-                                const json2csvParser = new Json2csvParser({
-                                    fields
-                                });
-                                const csv = json2csvParser.parse(to_return);
-                                res.send(to_return);
+
+                                //A check for Milne to Sum Values
+                                if(buildings.filter(n => n.name === "Milne Computing Center").length > 0){
+                                    let milne_id = buildings.filter(n => n.name === "Milne Computing Center")[0].building_id;
+                                    // add values with common timestamps
+                                    let milne = temp.filter(d => d.building_id.toString() === milne_id.toString());
+                                    temp = temp.filter(d => d.building_id.toString() !== milne_id.toString());
+
+                                    let vals = milne.reduce((prev, curr) => {
+                                        let count = prev.get(curr.date) || 0;
+                                        prev.set(curr.date, curr.val + count);
+                                        return prev;
+                                    }, new Map());
+                                    [...vals].map(([key, value]) => {
+                                        return {key, value}
+                                    }).forEach(function(point){
+                                        temp.push({building_id: milne_id, date: point.key, val: point.value})
+                                    })
+                                }
+                                else if(buildings.filter(n => n.name === "Memorial Union").length > 0){
+                                    let union_id = buildings.filter(n => n.name === "Memorial Union")[0].building_id;
+                                    // add values with common timestamps
+                                    let union = temp.filter(d => d.building_id.toString() === union_id.toString());
+                                    temp = temp.filter(d => d.building_id.toString() !== union_id.toString());
+
+                                    let vals = union.reduce((prev, curr) => {
+                                        let count = prev.get(curr.date) || 0;
+                                        prev.set(curr.date, curr.val + count);
+                                        return prev;
+                                    }, new Map());
+                                    [...vals].map(([key, value]) => {
+                                        return {key, value}
+                                    }).forEach(function(point){
+                                        temp.push({building_id: union_id, date: point.key, val: point.value})
+                                    })
+                                }
+                                else if(buildings.filter(n => n.name === "Nash Hall").length > 0){
+                                    let nash_id = buildings.filter(n => n.name === "Nash Hall")[0].building_id;
+                                    // add values with common timestamps
+                                    let nash = temp.filter(d => d.building_id.toString() === nash_id.toString());
+                                    temp = temp.filter(d => d.building_id.toString() !== nash_id.toString());
+
+                                    let vals = nash.reduce((prev, curr) => {
+                                        let count = prev.get(curr.date) || 0;
+                                        prev.set(curr.date, curr.val + count);
+                                        return prev;
+                                    }, new Map());
+                                    [...vals].map(([key, value]) => {
+                                        return {key, value}
+                                    }).forEach(function(point){
+                                        temp.push({building_id: nash_id, date: point.key, val: point.value})
+                                    })
+                                }
+                                else if(buildings.filter(n => n.name === "Kelley Engineering Center").length > 0){
+                                    let kelley_id = buildings.filter(n => n.name === "Kelley Engineering Center")[0].building_id;
+                                    // add values with common timestamps
+                                    let kelley = temp.filter(d => d.building_id.toString() === kelley_id.toString());
+                                    temp = temp.filter(d => d.building_id.toString() !== kelley_id.toString());
+
+                                    let vals = kelley.reduce((prev, curr) => {
+                                        let count = prev.get(curr.date) || 0;
+                                        prev.set(curr.date, curr.val + count);
+                                        return prev;
+                                    }, new Map());
+                                    [...vals].map(([key, value]) => {
+                                        return {key, value}
+                                    }).forEach(function(point){
+                                        temp.push({building_id: kelley_id, date: point.key, val: point.value})
+                                    })
+                                }
+                                else if(buildings.filter(n => n.name === "McNary Hall").length > 0){
+                                    let mcnary_id = buildings.filter(n => n.name === "McNary Hall")[0].building_id;
+                                    // add values with common timestamps
+                                    let mcnary = temp.filter(d => d.building_id.toString() === mcnary_id.toString());
+                                    temp = temp.filter(d => d.building_id.toString() !== mcnary_id.toString());
+
+                                    let vals = mcnary.reduce((prev, curr) => {
+                                        let count = prev.get(curr.date) || 0;
+                                        prev.set(curr.date, curr.val + count);
+                                        return prev;
+                                    }, new Map());
+                                    [...vals].map(([key, value]) => {
+                                        return {key, value}
+                                    }).forEach(function(point){
+                                        temp.push({building_id: mcnary_id, date: point.key, val: point.value})
+                                    })
+                                }
+
+                                res.jsonp(temp);
                             }
                         });
                 }
             });
-
     });
 
     // Function to simply iteratively change any negative values in DataEntries
@@ -1127,8 +1261,6 @@ function addMeter(meter, savedBuilding) {
 }
 
 function pushNullMeter(meter, savedBuilding) {
-
-    console.log(savedBuilding);
     // DataEntry.update({building: null}, {$set: {building: savedBuilding}});
     return new Promise((resolve, reject) => {
         Meter.findById(meter, (err, doc) => {
