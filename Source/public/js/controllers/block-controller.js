@@ -1,9 +1,9 @@
 var editBlock = null;
 //needs a function that goes through each block in User.blocks and retrieves chart data from that object.
 var blocksChartData = [];
-
+let accept = true;
 angular.module('blockController', [])
-    .controller('blockController', function ($route, $scope, $http, $location, $timeout, Building, Block, GetBlockByID) {
+    .controller('blockController', function ($route, $scope, $rootScope, $http, $location, $timeout, Building, Block, GetBlockByID) {
         //this is to clear the selection
         $scope.maxValues = [];
         $scope.medValues = [];
@@ -218,6 +218,28 @@ angular.module('blockController', [])
             }
         }
 
+        $scope.printCSV =function(block){
+            accept = true;
+            $scope.$broadcast("GetBlockData", block);
+
+        };
+        $rootScope.$on("SendCSV", function(evt, data) {
+
+            if(accept){
+                accept = false;
+                let csvContent = "data:application/octet-stream,";
+                let row = "building," + data.l.join(",");
+                csvContent += row + "\r\n";
+                data.v.forEach(function(rowArray){
+                    let row = rowArray.data.join(",");
+                    csvContent += rowArray.label+","+ row + "\r\n";
+                });
+
+                var encodedUri = encodeURI(csvContent);
+                window.open(encodedUri);
+            }
+
+        });
         /*
         Function to update block information by taking the id of the current block and 
         taking the $scope variables for updated info.
