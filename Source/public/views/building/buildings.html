@@ -1,7 +1,7 @@
 <div ng-controller="buildingController">
     <br>
     <h1 class="Stratum2-Light font-weight-bold">Buildings
-        <a href="#addBuilding" ng-click="create()" class="btn border-orange-thin background-orange text-white float-right">Add Building+</a>
+        <a href="#addBuilding" ng-hide="userLoggedIn" ng-click="create()" class="btn border-orange-thin background-orange text-white float-right">Add Building+</a>
     </h1>
     <div class="row mt-4">
         <div class="col-sm-3 pb-4 Stratum2-Light" ng-repeat="building in buildings track by building._id">
@@ -14,7 +14,7 @@
                     </div>
                     <p class="mt-3" style="height: 30px;">
                         <b>Type: </b>{{building.building_type}}</p>
-                    <div class="float-right pr-3 dropdown" style="font-size:18px">
+                    <div ng-hide="userLoggedIn" class="float-right pr-3 dropdown" style="font-size:18px">
                         <button class="fa fa-gear border-orange-thin border-curve-button" style="font-size:24px"></button>
                         <div class="dropdown-content border-orange font-weight-normal">
                             <a class="" ng-click="EditBuilding(building)">Edit</a>
@@ -25,6 +25,8 @@
             </div>
         </div>
     </div>
+   
+<!--
     <h1 class="Stratum2-Light font-weight-bold">KILOWATT CRACKDOWN </h1>
     <hr>
     <div class="row mt-4 Stratum2-Light">
@@ -96,3 +98,4 @@
 
     });
 </script>
+-->
