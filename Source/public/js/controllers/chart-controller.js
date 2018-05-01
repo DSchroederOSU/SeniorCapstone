@@ -40,21 +40,6 @@ angular.module('chartController', [])
 		 and updates a canvas element with a chart based on data parameters
          */
         $scope.createChart = function (buildingsArray) {
-            let objArr = [
-                {key: 'Mon Sep 23 2013 00:00:00 GMT-0400', val: 42},
-                {key: 'Mon Sep 24 2013 00:00:00 GMT-0400', val: 78},
-                {key: 'Mon Sep 25 2013 00:00:00 GMT-0400', val: 23},
-                {key: 'Mon Sep 23 2013 00:00:00 GMT-0400', val: 54}
-            ];
-
-// first, convert data into a Map with reduce
-            let counts = objArr.reduce((prev, curr) => {
-                let count = prev.get(curr.key) || 0;
-                prev.set(curr.key, curr.val + count);
-                return prev;
-            }, new Map());
-
-
             var daterange = Last7Days();
 
             //will hold each buildings data in the block
@@ -68,11 +53,10 @@ angular.module('chartController', [])
             var buildingAxisData = [];
             Building.getBuildingData(to_pass).then(function (data) {
 
-                var to_chart = [];
+                console.log(data);
                 buildingsArray.building.forEach(function(x){
                     buildingAxisData.push({name: x.name, data: data.data.filter(b => b.building_id === x._id)});
                 });
-                console.log(buildingAxisData);
                 //each building's points received from service
                 //buildingAxisData.push({name: buildingsArray.building.filter(b => b._id == to_chart.b_id)[0].name, data:  to_chart.points});
 
@@ -107,6 +91,7 @@ angular.module('chartController', [])
             var buildingAxisData = [];
 
             Building.getBuildingData(to_pass).then(function (data) {
+                console.log(data);
                 //each building's points received from service
                 buildingAxisData.push({name: object.building.filter(b => b._id == data.data[0].building_id)[0].name, data:  data.data});
 
