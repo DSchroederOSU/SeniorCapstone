@@ -1,0 +1,184 @@
+\documentclass[letterpaper,10pt,serif,draftclsnofoot,onecolumn,compsoc,titlepage]{IEEEtran}
+\usepackage[margin=0.75in]{geometry} 
+\usepackage{pdfpages} 
+\usepackage{graphicx}  
+\usepackage{caption} 
+\usepackage{float}
+\graphicspath{/images}
+\usepackage{url}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{changepage}% http://ctan.org/pkg/changepage
+
+  %pull in the necessary preamble matter for pygments output
+\input{pygments.tex}
+
+%% The following metadata will show up in the PDF properties
+\usepackage{listings}
+\usepackage{color}
+\definecolor{lightgray}{rgb}{0.95, 0.95, 0.95}
+\definecolor{darkgray}{rgb}{0.4, 0.4, 0.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+\definecolor{ocherCode}{rgb}{1, 0.5, 0} % #FF7F00 -> rgb(239, 169, 0)
+\definecolor{blueCode}{rgb}{0, 0, 0.93} % #0000EE -> rgb(0, 0, 238)
+\definecolor{greenCode}{rgb}{0, 0.6, 0} % #009900 -> rgb(0, 153, 0) 
+\usepackage{upquote}
+\usepackage{listings}
+\makeatletter
+\lstdefinelanguage{HTML5}{
+sensitive=true,
+keywords={%
+% JavaScript
+ng-src, ng-repeat, typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break,
+% HTML
+html, title, meta, style, head, body, script, canvas,
+% CSS
+border:, transform:, -moz-transform:, transition-duration:, transition-property:,
+transition-timing-function:
+},
+% http://texblog.org/tag/otherkeywords/
+otherkeywords={<, >, \/},   
+ndkeywords={class, export, boolean, throw, implements, import, this},   
+comment=[l]{//}, 
+% morecomment=[s][keywordstyle]{<}{>},  
+morecomment=[s]{/*}{*/},
+morecomment=[s]{<!}{>},
+morestring=[b]',
+morestring=[b]",    
+alsoletter={-},
+alsodigit={:}
+}
+\lstset{%
+% Basic design
+backgroundcolor=\color{lightgray},
+basicstyle={\small\ttfamily},   
+frame=l,
+% Line numbers
+xleftmargin={0.75cm},
+numbers=left,
+stepnumber=1,
+firstnumber=1,
+numberfirstline=true,
+% Code design
+identifierstyle=\color{black},
+keywordstyle=\color{blue}\bfseries,
+ndkeywordstyle=\color{greenCode}\bfseries,
+stringstyle=\color{ocherCode}\ttfamily,
+commentstyle=\color{darkgray}\ttfamily, 
+% Code 
+tabsize=1,
+showtabs=false,
+showspaces=false,
+showstringspaces=false,
+extendedchars=true,
+breaklines=true
+}
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+} 
+
+%% The following metadata will show up in the PDF properties
+\hypersetup{
+   colorlinks = true,
+   citecolor = black,
+   linkcolor = black,
+   urlcolor = black,
+   breaklinks = true,
+   pdfauthor = {Daniel Schroeder, Aubrey Thenell, Parker Bruni},
+   pdfkeywords = {CS462 Senior Project Progress Report},
+   pdftitle = {CS462 Winter Midterm Progress Report},
+   pdfsubject = {CS462 Winter Midterm Progress Report},
+   pdfpagemode = UseNone
+}
+\def \CapstoneTeamName{The Dream Team}
+\def \CapstoneTeamNumber{57}
+\def \GroupMemberOne{Daniel Schroeder}
+\def \GroupMemberTwo{Aubrey Thenell}
+\def \GroupMemberThree{Parker Bruni}
+\def \CapstoneProjectName{A Scalable Web Application Framework for Monitoring Energy Usage on Campus  }
+\def \CapstoneSponsorCompany{Oregon State Office of Sustainability}
+\def \CapstoneSponsorPerson{Jack Woods}
+
+% 2. Uncomment the appropriate line below so that the document type works
+ \def \DocType{		%Problem Statement
+		 %Requirements Document
+		 %Technology Review
+		 %Design Document
+		 Winter 2018 Midterm Progress Report
+		 }
+	   
+ \newcommand{\NameSigPair}[1]{\par
+ \makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+ \par\vspace{-12pt} \textit{\tiny\noindent
+ \makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+ % 3. If the document is not to be signed, uncomment the RENEWcommand below
+ %\renewcommand{\NameSigPair}[1]{#1}
+ 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \title{Spring 2018 Progress Report for: \linebreak Scalable Web Application Framework for Monitoring Energy Usage on Campus}
+ \author{Daniel Schroeder, Aubrey Thenell, Parker Bruni}
+ \date{\today}
+ 
+ \begin{document}
+ \maketitle
+ \vspace{2cm}
+ \begin{center}
+ \noindent \textbf{Abstract} \\
+			 \indent The purpose of this progress report document is to outline the progress made on the Scalable Web Application
+Framework for Monitoring Energy Usage on Campus project over the past six weeks. Provided in this outline
+are the accomplishments and problems, our project's goals and purpose, and the current status of our project.
+ \end{center}         
+ 
+ \newpage
+ \pagenumbering{arabic}
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\subsection{Purpose} 
+    Our project is to create a web application to monitor energy use on Oregon State University's campus. The application should serve all the requirements outlined by the client and be easy to use for users of all experience levels.
+    \noindent Some specific functionalities that our application should contain are:
+    \begin{itemize}
+        \item Receive data from Obvius AcquiSuite data acquisition servers and process this data into interpretable graphs.
+        \item Allow administrative users to add buildings and meters to the database as monitoring efforts expand to more buildings on campus.
+        \item Allow users to create unique dashboards and dashboard collections in an effort to organize data into related subsets.
+        \item Have a public facing interface where administrators can produce content for anyone to see.
+        \item Contain modular components with individualized functionality and the ability to share data across components.
+        \item Update graphs being displayed as new data is received.
+        \item Undergo usability testing and produce an interface that is user friendly and easily navigable.
+        \item Embrace AngularJS concepts to inject content to the page as new requests are made.
+    \end{itemize}
+
+\subsection{Overview}
+This document provides a recap of the progress made on our project during the Spring 2018 term. Overall, we have seen some great progress. We went from a basic template website to something that has some great functionality. \\ 
+\section{Contributor: Daniel Schroeder} 
+
+\section{Contributor: Aubrey Thenell}
+
+\section{Contributor: Parker Bruni}
+
+\section{Current State of the Project:} 
+
+\section{Problems that have impeded our progress}
+When our group reconvened after Winter Break, we had our application's minimum viable product completed with all requirements satisfied as was due. We then got new information about the XML electricity data that was being sent from the data acquisition servers and how the data was being handled. New information detailed that multiple energy meters could be wired to the AcquiSuite and be sent through successive posts with differing ``address'' fields. This caused complications with our back-end as we needed to change the way we store data points relative to buildings. New information suggested that some buildings require the sum of two separate energy meter readings (i.e. North and South Meters) and some buildings required the difference of two meter readings (i.e. Complex minus Dining Hall yields residence hall consumption).
+\section{Describe what you have left to do}
+    Some things I still need to accomplish:
+    \begin{itemize}
+      \item Finish Data Charting
+    \end{itemize}
+\newpage
+\cite{mongoose}
+\bibliographystyle{ieeetr}
+\bibliography{refs}
+\end{document}
