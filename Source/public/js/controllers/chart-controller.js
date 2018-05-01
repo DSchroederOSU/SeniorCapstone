@@ -52,8 +52,6 @@ angular.module('chartController', [])
             };
             var buildingAxisData = [];
             Building.getBuildingData(to_pass).then(function (data) {
-
-                console.log(data);
                 buildingsArray.building.forEach(function(x){
                     buildingAxisData.push({name: x.name, data: data.data.filter(b => b.building_id === x._id)});
                 });
@@ -365,8 +363,12 @@ angular.module('chartController', [])
         }
 
         $scope.$on("GetBlockData", function(evt, data) {
-            console.log(data);
+            var c = charts.find(c => c.block_name == data.block.name);
 
+            var vals = c.chart.data.datasets;
+            var labels = c.chart.data.labels;
+
+            $rootScope.$broadcast("SendCSV", {l:labels, v: vals});
             // handler code here });
         });
 
