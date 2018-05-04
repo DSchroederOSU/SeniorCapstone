@@ -18,7 +18,7 @@ var userSchema = mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'Story'
     }],
-    accountAccess: String
+    accountAccess: {type: String, default: '0'}
 });
 // create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);

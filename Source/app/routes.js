@@ -13,13 +13,13 @@ var Block = require('./models/block-schema');
 var Story = require('./models/story-schema');
 var AWS = require('aws-sdk');
 var filter = require('content-filter');
-var blackList = ['$', '{', '&&', '||']
+var blackList = ['$', '{', '&&', '||'];
 var options = {
     urlBlackList: blackList,
     bodyBlackList: blackList
 };
 
-var dataMethods = require('../public/js/buildingData');
+
 module.exports = function (app, passport) {
     app.use(filter(options));
     app.get('/', function (req, res) {
