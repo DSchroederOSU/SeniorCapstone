@@ -26,7 +26,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addEntry">addEntry</a></li><li><a href="global.html#addMeter">addMeter</a></li><li><a href="global.html#checkMeterTimestamps">checkMeterTimestamps</a></li><li><a href="global.html#checkUsage">checkUsage</a></li><li><a href="global.html#emailAlert">emailAlert</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addEntry">addEntry</a></li><li><a href="global.html#addMeter">addMeter</a></li><li><a href="global.html#checkMeterTimestamps">checkMeterTimestamps</a></li><li><a href="global.html#checkUsage">checkUsage</a></li><li><a href="global.html#emailAlert">emailAlert</a></li><li><a href="global.html#receiveXML">receiveXML</a></li></ul>
 </nav>
 
 <div id="main">
@@ -108,6 +108,72 @@
 
     
 
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="receiveXML"><span class="type-signature"></span>receiveXML<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Handles POST requests received in XML formatReceives POST requests, converts from XML to JSON
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
     
 
     
@@ -359,7 +425,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line295">line 295</a>
+        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line293">line 293</a>
     </li></ul></dd>
     
 
@@ -415,7 +481,7 @@
 
 
 <div class="description">
-    Function that is called when the server gets a POST request from a meterthat is not in our database already.Conditions:     - Only called when a matching meter cannot be located in the database
+    Function that is called when the server gets a POST request from a meterthat is not in our database already.Only called when a matching meter cannot be located in the database
 </div>
 
 
@@ -508,7 +574,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line268">line 268</a>
+        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line266">line 266</a>
     </li></ul></dd>
     
 
@@ -568,7 +634,7 @@
 
 
 <div class="description">
-    Helper function to see when the last time a meter posted Conditions:      - Called once per day     - Sends email if meter hasn't checked in for over a day but under two
+    Helper function to see when the last time a meter posted Called once per day and Sends email if meter hasn't checked in for over a day but under two
 </div>
 
 
@@ -650,7 +716,7 @@
 
 
 <div class="description">
-    Function used to find and alert during high usage spikesConditions - Only sends email if:     - Average for day is greater than the average for week plus a standard deviation     - The meter has more than 100 entries
+    Function used to find and alert during high usage spikesConditions - Only sends email if Average for day is greater than the average for week plus a standard deviation andthe meter has more than 100 entries
 </div>
 
 
@@ -694,7 +760,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line198">line 198</a>
+        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line197">line 197</a>
     </li></ul></dd>
     
 
@@ -732,7 +798,7 @@
 
 
 <div class="description">
-    Sends out alert to users (admins)Specifically when:     - a meter hasn't checked in over a day     - a meter reports unusually high usage
+    Sends out alert to users (admins).Specifically when A meter hasn't checked in over a day. Also when a meter reports unusually high usage.
 </div>
 
 
@@ -784,7 +850,79 @@
 
             
 
-            <td class="description last">contains body and subject to be sent</td>
+            <td class="description last">Contains email contents to be sent.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>subject</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#String">String</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains the email's subject.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>body</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#String">String</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains the email's body.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
         </tr>
 
     
@@ -825,7 +963,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line104">line 104</a>
+        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line106">line 106</a>
     </li></ul></dd>
     
 
@@ -3247,7 +3385,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri May 04 2018 01:04:07 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri May 04 2018 02:24:58 GMT-0700 (Pacific Daylight Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
