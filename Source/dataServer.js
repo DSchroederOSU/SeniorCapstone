@@ -45,7 +45,8 @@ var dataFlag = false;
 /**
  * Handles POST requests received in XML format
  * Receives POST requests, converts from XML to JSON
- * @param {function} xmlparser - in parameters converts XML to String to JSON
+ * @name receiveXML
+ * @route {POST} /receiveXML
  */
 app.post('/receiveXML', xmlparser({
     trim: false,
@@ -95,11 +96,12 @@ app.post('/receiveXML', xmlparser({
 });
 
 /**
- * Sends out alert to users (admins)
- * Specifically when:
- *      - a meter hasn't checked in over a day
- *      - a meter reports unusually high usage
- * @param {Object} email - contains body and subject to be sent
+ * Sends out alert to users (admins).
+ * Specifically when A meter hasn't checked in over a day. 
+ * Also when a meter reports unusually high usage.
+ * @param {Object} email          - Contains email contents to be sent.
+ * @param {String} email.subject  - Contains the email's subject.
+ * @param {String} email.body     - Contains the email's body.
  */
 function emailAlert(email) {
     AWS.config.update({
@@ -149,9 +151,7 @@ function emailAlert(email) {
 
 /**
  *  Helper function to see when the last time a meter posted
- *  Conditions: 
- *      - Called once per day
- *      - Sends email if meter hasn't checked in for over a day but under two
+ *  Called once per day and Sends email if meter hasn't checked in for over a day but under two
  */
 function checkMeterTimestamps() {
     var yesterday = moment.utc().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
@@ -191,9 +191,8 @@ function checkMeterTimestamps() {
 
 /**
  * Function used to find and alert during high usage spikes
- * Conditions - Only sends email if:
- *      - Average for day is greater than the average for week plus a standard deviation
- *      - The meter has more than 100 entries 
+ * Conditions - Only sends email if Average for day is greater than the average for week plus a standard deviation and
+ * the meter has more than 100 entries 
  */
 function checkUsage() {
     var now = moment.utc().format('YYYY-MM-DD HH:mm:ss');
@@ -260,8 +259,7 @@ function checkUsage() {
 /**
  * Function that is called when the server gets a POST request from a meter
  * that is not in our database already.
- * Conditions:
- *      - Only called when a matching meter cannot be located in the database
+ * Only called when a matching meter cannot be located in the database
  * @param {Object} meter - Contains a POST request body that is slightly trimmed
  * @returns {Promise<Meter>} newmeter
  */
@@ -284,12 +282,12 @@ function addMeter(meter) {
  * Function to add a data entry to a database. Checks for duplicate first.
  * Conditions:
  *      - Called whenever POST request comes in
- * @param {Object} meter - Contains elements of the source meter
- * @param {String} meter._id - Contains the ID of the meter as it is in the database
- * @param {String} meter.name - Contains the public facing name of the meter as it is in the database
- * @param {String} meter.building - Contains the building that the meter is associated with as it is in the database
- * @param {Object} body - Contains the POST request body with all extraneous pieces cut
- * @param {Object} serialAddress - Contains the POST request body that can access the serial and address information
+ * @param   {Object} meter            - Contains elements of the source meter
+ * @param   {String} meter._id        - Contains the ID of the meter as it is in the database
+ * @param   {String} meter.name       - Contains the public facing name of the meter as it is in the database
+ * @param   {String} meter.building   - Contains the building that the meter is associated with as it is in the database
+ * @param   {Object} body             - Contains the POST request body with all extraneous pieces cut
+ * @param   {Object} serialAddress    - Contains the POST request body that can access the serial and address information
  * @returns {Promise}
  */
 function addEntry(meter, body, serialAddress) {
