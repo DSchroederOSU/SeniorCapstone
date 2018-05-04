@@ -1,4 +1,47 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>types.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/prism.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prism.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Google.html">Google</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">types.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @typedef String
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
  */
@@ -56,7 +99,7 @@
 
 /**
  * An Object that contains details about a User's Google account
- * @typedef  {Object} Google
+ * @class    Google
  * @property {String} id        - Contains the id of the Google acocunt.
  * @property {String} token     - Contains the auth token of the Google account.
  * @property {String} email     - Contains the email address of the Google account.
@@ -68,7 +111,7 @@
  * @typedef  {Object} Block
  * @property {String} name                  - The name of the Block as set by the User when created.
  * @property {ObjectId} created_by          - The ObjectId of the User responsible for creating the Block.
- * @property {Array<ObjectId>} building     - The array of ObjectId references to Building that the Block contains.
+ * @property {Array&lt;ObjectId>} building     - The array of ObjectId references to Building that the Block contains.
  * @property {String} chart                 - The type of chart used by this Block.
  * @property {Boolean} is_public            - The flag to determine if the Block should appear in the public Dashboard interface.
  * @property {String} variable              - The string to determine unit being measured (e.g. Killowatts/Hr).
@@ -79,8 +122,8 @@
  * @typedef  {Object} Building
  * @property {String} name                    - The name of the Building as set by the User when created.
  * @property {String} building_type           - The type of Building as set by the User when created.
- * @property {Array<ObjectId>} meters         - The array of ObjectId references to Meter that are connected to the Building.
- * @property {Array<ObjectId>} data_entries   - The array of ObjectId references to DataEntry that are connected to the Building.
+ * @property {Array&lt;ObjectId>} meters         - The array of ObjectId references to Meter that are connected to the Building.
+ * @property {Array&lt;ObjectId>} data_entries   - The array of ObjectId references to DataEntry that are connected to the Building.
  */
 
 /**
@@ -90,7 +133,7 @@
  * @property {String} description       - The brief description of the Dashboard pertaining to what is contained as set by the User when created.
  * @property {Boolean} is_public        - The flag to determine if the Dashboard should appear in the public Dashboard interface.
  * @property {ObjectId} created_by      - The ObjectId of the User responsible for creating the Dashboard.
- * @property {Array<ObjectId>} blocks   - The array of ObjectId references to Block as set by the User when created.
+ * @property {Array&lt;ObjectId>} blocks   - The array of ObjectId references to Block as set by the User when created.
  */
 
 /**
@@ -99,7 +142,7 @@
  * @property {ObjectId} building    - The ObjectId reference to Building that contains this DataEntry.
  * @property {ObjectId} meter_id    - The ObjectId reference to Meter that reported this DataEntry.
  * @property {String} timestamp     - The timestamp of the AcquiSuite POST data when it was collected.
- * @property {Array<Point>} point   - The array of Point as reported by the AcquiSuite POST data.
+ * @property {Array&lt;Point>} point   - The array of Point as reported by the AcquiSuite POST data.
  */
 
  /**
@@ -116,15 +159,34 @@
  * @property {String} name                  - The name of the Story as set by the User when created.
  * @property {Boolean} is_public            - The flag to determine if the Story should appear in the public Story interface.
  * @property {ObjectId} created_by          - The ObjectId of the User responsible for creating the Story.
- * @property {Array<ObjectId>} dashboards   - The array of ObjectId references to Dashboard as set by the User when created.
+ * @property {Array&lt;ObjectId>} dashboards   - The array of ObjectId references to Dashboard as set by the User when created.
  */
 
 /**
  * An object which contains the login token and customizable settings of any given person using the interface.
  * @typedef  {Object} User
  * @property {Google} google                    - The token and email information of the User's Google account.
- * @property {Array<ObjectId>} blocks           - The array of ObjectId references to Block that belong to this User.
- * @property {Array<ObjectId>} dashboards       - The array of ObjectId references to Dashboard that belong to this User.
- * @property {Array<ObjectId>} stories          - The array of ObjectId references to Story that belong to this User.
+ * @property {Array&lt;ObjectId>} blocks           - The array of ObjectId references to Block that belong to this User.
+ * @property {Array&lt;ObjectId>} dashboards       - The array of ObjectId references to Dashboard that belong to this User.
+ * @property {Array&lt;ObjectId>} stories          - The array of ObjectId references to Story that belong to this User.
  * @property {String} accountAccess             - The permission level of this account.
  */
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri May 04 2018 01:01:28 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
