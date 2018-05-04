@@ -1,3 +1,8 @@
+/**
+ * @file Contains the Express routes for the server responsible for user input as well as serving content.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 require('mongoose');
 require('mongodb');
 var _ = require('underscore');
