@@ -1,4 +1,47 @@
-// dataServer.js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Source/dataServer.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/prism.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prism.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addEntry">addEntry</a></li><li><a href="global.html#addMeter">addMeter</a></li><li><a href="global.html#checkMeterTimestamps">checkMeterTimestamps</a></li><li><a href="global.html#checkUsage">checkUsage</a></li><li><a href="global.html#emailAlert">emailAlert</a></li><li><a href="global.html#receiveXML">receiveXML</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Source/dataServer.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// dataServer.js
 // This is a seperate server that's dedicated to accepting data from acquisuites
 // in real time.
 
@@ -57,13 +100,13 @@ app.post('/receiveXML', xmlparser({
         console.log('Received XML data on: ' + moment.utc().format('YYYY-MM-DD HH:mm:ss'));
 
         // calls email helper func once per day.
-        if (emailFlag && timestamp > '00:00:00' && timestamp < '00:20:00') {
+        if (emailFlag &amp;&amp; timestamp > '00:00:00' &amp;&amp; timestamp &lt; '00:20:00') {
             console.log('Meters being reviewed for outage.')
             emailFlag = false;
             dataFlag = false;
             checkUsage();
             checkMeterTimestamps();
-        } else if (!emailFlag && timestamp > '12:00:00' && timestamp < '12:15:00') {
+        } else if (!emailFlag &amp;&amp; timestamp > '12:00:00' &amp;&amp; timestamp &lt; '12:15:00') {
             console.log('Email flag being reset');
             emailFlag = true;
             dataFlag = true;
@@ -89,10 +132,10 @@ app.post('/receiveXML', xmlparser({
         'content-type': 'text/xml',
         'Connection': 'close'
     });
-    res.send("<?xml version='1.0' encoding='UTF-8' ?>\n" +
-        "<result>SUCCESS</result>\n" +
-        "<DAS></DAS>" +
-        "</xml>");
+    res.send("&lt;?xml version='1.0' encoding='UTF-8' ?>\n" +
+        "&lt;result>SUCCESS&lt;/result>\n" +
+        "&lt;DAS>&lt;/DAS>" +
+        "&lt;/xml>");
 });
 
 /**
@@ -174,13 +217,13 @@ function checkMeterTimestamps() {
                 }, (err, docs) => {
                     if (!err) {
                         timestamps = docs.filter(t => {
-                            return t.timestamp >= twoDaysAgo && t.timestamp <= yesterday
+                            return t.timestamp >= twoDaysAgo &amp;&amp; t.timestamp &lt;= yesterday
                         });
                         if (timestamps.length) {
-                            email.body += `The meter named <b>"${e.name}"</b> with a serial of <b>"${e.meter_id}"</b> has not reported anything in 1-2 days. <br>`
+                            email.body += `The meter named &lt;b>"${e.name}"&lt;/b> with a serial of &lt;b>"${e.meter_id}"&lt;/b> has not reported anything in 1-2 days. &lt;br>`
                         }
                     }
-                    if (meterCount++ == meters.length - 1 && email.body !== '') {
+                    if (meterCount++ == meters.length - 1 &amp;&amp; email.body !== '') {
                         emailAlert(email);
                     }
                 })
@@ -215,19 +258,19 @@ function checkUsage() {
                 if (err) throw (err);
                 // We want the length to be greater than 100 in the past week (96 are entered per day)
                 // Without this, a meter might report some weird things, so this forces at least two days of entries
-                if (docs.length && docs.length >= 100) {
+                if (docs.length &amp;&amp; docs.length >= 100) {
                     pastData = docs.filter(t => {
-                        return t.timestamp >= oneWeekAgo && t.timestamp <= yesterday
+                        return t.timestamp >= oneWeekAgo &amp;&amp; t.timestamp &lt;= yesterday
                     });
 
                     currentData = docs.filter(t => {
-                        return t.timestamp >= yesterday && t.timestamp <= now
+                        return t.timestamp >= yesterday &amp;&amp; t.timestamp &lt;= now
                     });
 
                     if (pastData.length) {
                         pastDataArray = [];
                         // gets the energy usage values for the past week
-                        for (i = 0; i < pastData.length; i++) {
+                        for (i = 0; i &lt; pastData.length; i++) {
                             pastDataArray.push(pastData[i].point[0].value);
                         }
                         pastDataAvg = math.mean(pastDataArray);
@@ -236,18 +279,18 @@ function checkUsage() {
                         // checks for empty array so it doesn't report on down meter
                         if (currentData.length) {
                             currentDataArray = [];
-                            for (i = 0; i < currentData.length; i++) {
+                            for (i = 0; i &lt; currentData.length; i++) {
                                 currentDataArray.push(currentData[i].point[0].value);
                             }
                             currentDataAvg = math.mean(currentDataArray);
                             if (currentDataAvg > pastDataThreshhold) {
-                                email.body += (`The meter named <b>"${e.name}"</b> with a serial of <b>"${e.meter_id}"</b> has reported high energy usage.` +
-                                    ` Over the past week, the meter had an average of <b>${pastDataAvg.toFixed(1)}</b> kWh,` +
-                                    ` but has reported <b style="color:red">${currentDataAvg.toFixed(1)}</b> kWh in the past 24 hours. <br>`)
+                                email.body += (`The meter named &lt;b>"${e.name}"&lt;/b> with a serial of &lt;b>"${e.meter_id}"&lt;/b> has reported high energy usage.` +
+                                    ` Over the past week, the meter had an average of &lt;b>${pastDataAvg.toFixed(1)}&lt;/b> kWh,` +
+                                    ` but has reported &lt;b style="color:red">${currentDataAvg.toFixed(1)}&lt;/b> kWh in the past 24 hours. &lt;br>`)
                             }
                         }
                     }
-                    if (meterCount++ == meters.length - 1 && email.body !== '') {
+                    if (meterCount++ == meters.length - 1 &amp;&amp; email.body !== '') {
                         emailAlert(email);
                     }
                 }
@@ -261,7 +304,7 @@ function checkUsage() {
  * that is not in our database already.
  * Only called when a matching meter cannot be located in the database
  * @param {Object} meter - Contains a POST request body that is slightly trimmed
- * @returns {Promise<Meter>} newmeter
+ * @returns {Promise&lt;Meter>} newmeter
  */
 function addMeter(meter) {
     return new Promise((resolve, reject) => {
@@ -315,7 +358,7 @@ function addEntry(meter, body, serialAddress) {
             console.log(`Timestamp: ${pathShortener.record[0].time._}`);
             console.log(`point[0]: ${pathShortener.record[0].point[0].$.value}`);
             console.log('--------------------------------------------------------------');
-            for (var i = 0; i < body.record.length; i++) {
+            for (var i = 0; i &lt; body.record.length; i++) {
                 entry = new DataEntry();
                 entry.meter_id = meter._id;
                 entry.timestamp = body.record[i].time._;
@@ -338,7 +381,7 @@ function addEntry(meter, body, serialAddress) {
                         res.status(400)
                     })
                     // add it to building
-                    if (x.building != null && x.building != 'null') {
+                    if (x.building != null &amp;&amp; x.building != 'null') {
                         Building.findOneAndUpdate({
                                 _id: entry.building
                             }, {
@@ -364,4 +407,22 @@ function addEntry(meter, body, serialAddress) {
 
 // launch ======================================================================
 app.listen(6121); // 6121 is open on most PCs
-console.log("Connected to AcquiSuite Receiver Server");
+console.log("Connected to AcquiSuite Receiver Server");</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri May 04 2018 02:24:58 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

@@ -32,17 +32,28 @@ module.exports = function (passport) {
             callbackURL: process.env.GOOGLE_CLIENT_CALLBACK
         },
         function (token, refreshToken, profile, done) {
+            // console.log(profile);
             // make the code asynchronous
             // User.findOne won't fire until we have all our data back from Google
             process.nextTick(function () {
-                // try to find the user based on their google id
+                // try to find the user based on their email-address
                 User.findOne({
-                    'google.id': profile.id
+                    'google.email': profile.emails[0].value
                 }, function (err, user) {
                     if (err)
                         return done(err);
                     if (user) {
-
+                        if (!user.google.id) {
+                            // up
+                            user.google.id = profile.id;
+                            user.google.token = token;
+                            user.google.name = profile.displayName;
+                            user.save(function (err) {
+                                if (err)
+                                    throw err;
+                                return done(null, user);
+                            });
+                        }
                         // if a user is found, log them in
                         return done(null, user);
                     } else {
@@ -54,6 +65,8 @@ module.exports = function (passport) {
                         newUser.google.token = token;
                         newUser.google.name = profile.displayName;
                         newUser.google.email = profile.emails[0].value; // pull the first email
+                        console.log(newUser);
+                        // newUser
 
                         // save the user
                         newUser.save(function (err) {

@@ -1,4 +1,47 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Source/app/routes.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/prism.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prism.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addEntry">addEntry</a></li><li><a href="global.html#addMeter">addMeter</a></li><li><a href="global.html#checkMeterTimestamps">checkMeterTimestamps</a></li><li><a href="global.html#checkUsage">checkUsage</a></li><li><a href="global.html#emailAlert">emailAlert</a></li><li><a href="global.html#receiveXML">receiveXML</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Source/app/routes.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @file Contains the Express routes for the server responsible for user input as well as serving content.
  * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
  */
@@ -18,7 +61,7 @@ var Block = require('./models/block-schema');
 var Story = require('./models/story-schema');
 var AWS = require('aws-sdk');
 var filter = require('content-filter');
-var blackList = ['$', '{', '&&', '||'];
+var blackList = ['$', '{', '&amp;&amp;', '||'];
 var options = {
     urlBlackList: blackList,
     bodyBlackList: blackList
@@ -149,7 +192,7 @@ module.exports = function (app, passport) {
 
     app.get('/api/getBuildingData', function (req, res) {
         var match;
-        if (req.query && req.query.start && req.query.end) {
+        if (req.query &amp;&amp; req.query.start &amp;&amp; req.query.end) {
             match = {
                 timestamp: {
                     $lt: req.query.end,
@@ -218,7 +261,7 @@ module.exports = function (app, passport) {
                             var start = new Date(req.query.start);
                             var end = new Date(req.query.end);
                             var array = datapoints.filter(entry => entry.meter_id.toString() === meter.toString());
-                            while (start.toISOString().substring(0, 10) < end.toISOString().substring(0, 10)) {
+                            while (start.toISOString().substring(0, 10) &lt; end.toISOString().substring(0, 10)) {
                                 var daily = array.filter(x => {
                                     if (x)
                                         return x.timestamp.substring(0, 10) == start.toISOString().substring(0, 10);
@@ -229,17 +272,17 @@ module.exports = function (app, passport) {
                                     var val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
                                     // start by decreasing the end value
                                     var startflag = 0;
-                                    while(val < 0 || val > 10000){
+                                    while(val &lt; 0 || val > 10000){
                                         if(startflag == 0){
                                             end_index += 1;
-                                            if(daily[daily.length - end_index].point[0] && daily[start_index].point[0]){
+                                            if(daily[daily.length - end_index].point[0] &amp;&amp; daily[start_index].point[0]){
                                                 val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
                                             }
                                             startflag = 1;
                                         }
                                         else{
                                             start_index += 1;
-                                            if(daily[daily.length - end_index].point[0] && daily[start_index].point[0]){
+                                            if(daily[daily.length - end_index].point[0] &amp;&amp; daily[start_index].point[0]){
                                                 val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
                                             }
                                             startflag = 0;
@@ -883,8 +926,8 @@ module.exports = function (app, passport) {
                 Body: { /* required */
                     Html: {
                         Charset: "UTF-8",
-                        Data: "<h1>This is an E-mail from the application</h1><br> <h4>Please click the link below to be taken there.</h4><br>" +
-                            "<a href=\"http://localhost:3000/login/\">Click me!</a>"
+                        Data: "&lt;h1>This is an E-mail from the application&lt;/h1>&lt;br> &lt;h4>Please click the link below to be taken there.&lt;/h4>&lt;br>" +
+                            "&lt;a href=\"http://localhost:3000/login/\">Click me!&lt;/a>"
                     },
                     Text: {
                         Charset: "UTF-8",
@@ -945,7 +988,7 @@ module.exports = function (app, passport) {
     app.post('/api/toCSV', function (req, res) {
 
         var match;
-        if (req.query && req.query.start && req.query.end) {
+        if (req.query &amp;&amp; req.query.start &amp;&amp; req.query.end) {
             match = {
                 timestamp: {
                     $lt: req.query.end,
@@ -1014,7 +1057,7 @@ module.exports = function (app, passport) {
                                     var start = new Date(req.query.start);
                                     var end = new Date(req.query.end);
                                     var array = datapoints.filter(entry => entry.meter_id.toString() === meter.toString());
-                                    while (start.toISOString().substring(0, 10) < end.toISOString().substring(0, 10)) {
+                                    while (start.toISOString().substring(0, 10) &lt; end.toISOString().substring(0, 10)) {
                                         var daily = array.filter(x => {
                                             if (x)
                                                 return x.timestamp.substring(0, 10) == start.toISOString().substring(0, 10);
@@ -1025,17 +1068,17 @@ module.exports = function (app, passport) {
                                             var val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
                                             // start by decreasing the end value
                                             var startflag = 0;
-                                            while(val < 0 || val > 10000){
+                                            while(val &lt; 0 || val > 10000){
                                                 if(startflag == 0){
                                                     end_index += 1;
-                                                    if(daily[daily.length - end_index].point[0] && daily[start_index].point[0]){
+                                                    if(daily[daily.length - end_index].point[0] &amp;&amp; daily[start_index].point[0]){
                                                         val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
                                                     }
                                                     startflag = 1;
                                                 }
                                                 else{
                                                     start_index += 1;
-                                                    if(daily[daily.length - end_index].point[0] && daily[start_index].point[0]){
+                                                    if(daily[daily.length - end_index].point[0] &amp;&amp; daily[start_index].point[0]){
                                                         val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
                                                     }
                                                     startflag = 0;
@@ -1159,14 +1202,14 @@ module.exports = function (app, passport) {
     //             }
     //         }
     //     }).limit(8000).exec(async (err, docs) => {
-    //         for (let i = 0; i < docs.length; i++) {
-    //             for (let j = 0; j < docs[i].point.length; j++) {
+    //         for (let i = 0; i &lt; docs.length; i++) {
+    //             for (let j = 0; j &lt; docs[i].point.length; j++) {
     //                 docs[i].point[j].value = Math.abs(docs[i].point[j].value);
     //             }
     //         }
     //     });
 
-    //     for (let i = 0; i < finalArray.length; i++) {
+    //     for (let i = 0; i &lt; finalArray.length; i++) {
     //         DataEntry.findByIdAndUpdate({
     //             _id: finalArray[i]._id
     //         }, {
@@ -1187,14 +1230,14 @@ module.exports = function (app, passport) {
     //     let newMeters = [];
     //     let asyncMeter = await Meter.find((err,docs) => {
 
-    //         for (let i = 0; i < docs.length; i++) {
+    //         for (let i = 0; i &lt; docs.length; i++) {
     //             if(docs[i].meter_id.substr(-2) === '_1'){
     //                 newMeters.push(docs[i]);
     //             }
     //         }
     //         // console.log(newMeters);
-    //         for (let j = 0; j < newMeters.length; j++) { 
-    //             for (let k = 0; k < docs.length; k++){
+    //         for (let j = 0; j &lt; newMeters.length; j++) { 
+    //             for (let k = 0; k &lt; docs.length; k++){
     //                 if(newMeters[j].meter_id === docs[k].meter_id + '_1'){
     //                     oldMeters.push(docs[k]);
     //                 }
@@ -1203,7 +1246,7 @@ module.exports = function (app, passport) {
     //     });
     //     console.log(oldMeters[0]);
     //     console.log(newMeters[0]);
-    //     for (let i = 0; i < newMeters.length; i++) { 
+    //     for (let i = 0; i &lt; newMeters.length; i++) { 
     //         DataEntry.updateMany({meter_id: oldMeters[i]},{$set: {meter_id: newMeters[i]}});
     //     }
     //     res.jsonp(200);
@@ -1333,3 +1376,22 @@ function saveBlock(blockData) {
 
 }
 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri May 04 2018 02:24:58 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
