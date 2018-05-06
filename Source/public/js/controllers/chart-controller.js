@@ -77,7 +77,6 @@ angular.module('chartController', [])
         $scope.filterResults = function (object) {
 
             var range = getDateRange(object.range);
-            console.log(range);
             //will hold each buildings data in the block
             //x and y axis data
             var to_pass = {
@@ -89,8 +88,6 @@ angular.module('chartController', [])
             var buildingAxisData = [];
 
             Building.getBuildingData(to_pass).then(function (data) {
-                console.log(data);
-
                 //each building's points received from service
                 object.building.forEach(function(x){
                     buildingAxisData.push({name: x.name, data: data.data.filter(b => b.building_id === x._id)});
@@ -108,8 +105,6 @@ angular.module('chartController', [])
                     calculateVals(buildingAxisData, object.id);
                 }
             });
-
-
         };
 
 
