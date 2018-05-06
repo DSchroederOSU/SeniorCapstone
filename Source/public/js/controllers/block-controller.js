@@ -219,12 +219,12 @@ angular.module('blockController', [])
         }
 
         $scope.printCSV =function(block){
+            console.log(block);
             accept = true;
             $scope.$broadcast("GetBlockData", block);
 
         };
         $rootScope.$on("SendCSV", function(evt, data) {
-
             if(accept){
                 accept = false;
                 let csvContent = "data:application/octet-stream,";
@@ -238,7 +238,6 @@ angular.module('blockController', [])
                 var encodedUri = encodeURI(csvContent);
                 window.open(encodedUri);
             }
-
         });
         /*
         Function to update block information by taking the id of the current block and 

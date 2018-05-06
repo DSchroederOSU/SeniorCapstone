@@ -5,6 +5,7 @@
         <span style="font-size:0.8em;">{{selectedDashboard.description}}</span>
     </h5>
     <br>
+    <div ng-controller="blockController">
     <div ng-controller="chartController" ng-init="initVals()">
         <div class="card mb-3 Stratum2-Light font-weight-bold border-orange-thin" style="width: 100%;"
              ng-repeat="block in selectedDashboard.blocks">
@@ -25,9 +26,9 @@
                             <div class="dropdown-content border-orange font-weight-normal">
                                 <a class="" ng-click="EditBlock(block)">Edit</a>
                                 <a class="" ng-click="DeleteBlock(block)">Delete</a>
+                                <a class="" ng-click="printCSV({block: block, index: $index})">Export Data</a>
                             </div>
                         </div>
-                        <button class="btn border-orange-thin background-orange text-white" ng-click="printCSV(block)">Export</button>
                     </div>
                 </div>
             </div>
@@ -100,26 +101,26 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-7">
-                        <div class="row container p-0 m-0" ng-controller="chartController">
-                            <canvas ng-init="createChart({building: block.building, var : 'Accumulated Real Energy Net', type : block.chart, id:block._id})"
+                    <div class="col-7" ng-controller="chartController">
+                        <div class="row container p-0 m-0">
+                            <canvas ng-init="createChart({building: block.building, name : block.name, var : 'Accumulated Real Energy Net', type : block.chart, id:block._id})"
                                     class="myChart d-inline-block w-100"></canvas>
                         </div>
                         <div class="row p-1 m-3">
                             <div class="col-2"></div>
                             <div class="col-3">
                                 <button class="btn btn-success" ng-click="filterResults({building: block.building,
-								var : 'Accumulated Real Energy Net', range : 'lastweek', index : $index, type : block.chart, id:block._id})">
+								var : 'Accumulated Real Energy Net', range : 'lastweek',name : block.name, index : $index, type : block.chart, id:block._id})">
                                     Last Week</button>
                             </div>
                             <div class="col-3">
                                 <button class="btn btn-success" ng-click="filterResults({building: block.building,
-								var : 'Accumulated Real Energy Net', range : 'thisweek', index : $index, type : block.chart, id:block._id})">
+								var : 'Accumulated Real Energy Net', range : 'thisweek', name : block.name,index : $index, type : block.chart, id:block._id})">
                                     This Week</button>
                             </div>
                             <div class="col-3">
                                 <button class="btn btn-success" ng-click="filterResults({building: block.building,
-								var : 'Accumulated Real Energy Net', range : 'month', index : $index, type : block.chart, id:block._id})">
+								var : 'Accumulated Real Energy Net', range : 'month', name : block.name,index : $index, type : block.chart, id:block._id})">
                                     This Month</button>
                             </div>
                         </div>
@@ -127,5 +128,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>

@@ -163,7 +163,315 @@ are the accomplishments and problems, our project's goals and purpose, and the c
 \subsection{Overview}
 This document provides a recap of the progress made on our project during the Spring 2018 term. Overall, we have seen some great progress. We went from a basic template website to something that has some great functionality. \\ 
 \section{Contributor: Daniel Schroeder} 
+\subsection{Describe where you are currently on the project}
+The application is complete except for one main data retrieval function which ``subtracts'' two meters in order to get the total consumption for a specific building. We are still debating the semantics about how to implement this but will have it done bu expo without a doubt.
+\subsubsection{Buildings}
+The building components are data models stored in the database with attributes like name, type, id, serial, and array of data points. To generate components that display these buildings, we needed to store the data along with building images and create a page to list them in a logical way. To accomplish this, I scraped the internet for a photo of each building we needed in the application and stored them in our assets folder with a name that corresponds to the building object name that is stored in the database. On the ``/buildings'' page, a building service retrieves all the building objects from the database which are used as the data model for an AngularJS ``ng-repeat'' directive to generate identical components. The outcome is a precise, columned list of card components that link to specific building pages and display the object's name and photo. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=17cm]{images/buildings.eps}
+  \caption{A screen shot of the building components being listed by the ng-repeat AngularJS directive.}
+\end{figure}
+Some clever code I used for the building components includes a regular expression used to parse the building name and convert it to the image address for the photo. As shown below, each building component has an ``\textless img\textgreater'' tag inside its card which calls a controller function ``getImageAddress''. This function executes a regular expression in the controller based on the building object that gets passed in from the view.
+\begin{lstlisting}[language=HTML5]
+<!--buildings.html-->
+<div class="card-body ml-3">
+  <h5 class="card-title">{{building.name}}</h5>
+  <div class="rounded mx-auto mt-3" style="height: 100px; width: 100px;">
+      <img class="rounded" ng-src="{{getImageAddress(building)}}" alt="">
+  </div>
+  <p class="mt-3"><b>Type: </b>{{building.building_type}}</p>
+  <p><b>Meter ID: </b>{{building.meter_id}}</p>
+  <a ng-click="viewBuilding(building)" href="#viewBuilding" class="...">View</a>
+</div>
+\end{lstlisting}
+\begin{lstlisting}[language=JavaScript]
+//building-controller.js
+$scope.getImageAddress = function(building) {
+  return "../assets/buildings/"+building.name.replace(/\s+/g, '-').toLowerCase()+".jpg";
+};
+\end{lstlisting}
+These building components will be publicly viewable and each building card has a ``view'' button which links to the individualized building page. These individual pages contain information about the building like photos, name, and type, and a personalized report for the specific building with consumption information and charts. Below is an example of a single building's page.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=17cm]{images/building-ex.eps}
+  \caption{A screen shot of the building page for McNary Hall.}
+\end{figure}
+\subsubsection{Blocks}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=17cm]{images/block-example.eps}
+  \caption{A screen shot of a block component created by the user with three building objects.}
+\end{figure}
+The block components I built are the ``building blocks'' of user dashboards and the hub for user created graphs/reports. A Block object contains an array of buildings, a graph, and a name. A block generates a specific type of graph based on the building(s) selected and the type of graph the user selected. The D3.js visualizations have not been implemented yet, but each block will retrieve and parse the data for each building it stored in its building array and generate a D3.js visualization. These graphs can range from simple consumption over time line graphs, to comparison graphs between multiple buildings.\\
 
+\noindent To implement these components, I had to create a model schema, build a create form page, and design the UI. Additionally, I needed to create controller functions and AngularJS services to handle data creation, retrieval, and storing. We wanted a way to keep track of which blocks were created by which users, so in addition to a Blocks table in the database, each user has an array of type Block within their user object that gets pushed to and pulled from on creation or deletion. This architecture makes data retrieval much simpler for a few reasons:
+\begin{itemize}
+  \item Do not need to iterate through the entire Block table when retrieving user blocks.
+  \item Mongoose.js has a .populate function that populates sub-documents referenced by other documents. 
+  \item Block retrieval service can be user-specific.
+\end{itemize}
+To elaborate more on this style of NoSQL database management, I will show our User and Block schemas and explain how I implemented the storing and retrieval.
+\begin{lstlisting}[language=JavaScript]
+var blockSchema = mongoose.Schema({
+  name         : String,
+  created_by   : {type:mongoose.Schema.ObjectId, ref: 'User'},
+  building     : [{type:mongoose.Schema.ObjectId, ref: 'Building'}],
+  chart        : String,
+  variable     : String
+});
+
+var userSchema = mongoose.Schema({
+  google           : {
+      id           : String,
+      token        : String,
+      email        : String,
+      name         : String
+  },
+  blocks           : [{type:mongoose.Schema.ObjectId, ref: 'Block'}],
+  dashboards       : [{type:mongoose.Schema.ObjectId, ref: 'Dashboard'}]
+});
+\end{lstlisting}
+The User schema defines a User as having an array of block objects and an array of Dashboard objects (defined by the ``[ ]'' in the attribute definition). One thing to notice is the mongoose syntax for referencing another schema with the definition mongoose.Schema.ObjectId. This is the mongoose equivalent of setting a foreign key. When we push a document to the User.block array, the Block.\_id will be stored in this block array, effectively creating what mongoose likes to call a sub-document. More explicitly: ``Sub-documents are documents embedded in other documents. In Mongoose, this means you can nest schemas in other schemas''\cite{mongoose}. Creating a ``relational database'' like this with NoSQL allowed me to generate simple queries in our API route handlers that find a User, populate all the referencing sub-documents, and return the resulting JSON back to the controller. From here, we are able to store references to buildings in the block objects, references to blocks in the dashboard objects, and only populate data when we need it in the application. 
+\subsubsection{Dashboards} 
+The dashboard components are the last thing I worked on and are not yet fully complete. What I wanted to get finished before the midterm milestone was creating dashboards and storing dashboards, which I accomplished. There is a ``create-dashboard'' form that data-binds all user blocks to a drop down menu using AngularJS directive ``ng-options'' so that a user is able select which blocks they want to include in the dashboard. In addition, the form has a text-box for a dashboard name and a multi-line text-box for a description attribute, all of which are gathered up by the dashboard controller and passed to an API route-handler that stores the new Dashboard object in the database.\\
+
+\noindent The dashboards followed the same suit as the Block objects as they were stored in an array within the creating User's object as well as in their own table in the database. This produced some difficulties when querying updates and deletes as we had to ensure that both references were updated for a successful return. I still have to implement the ``view dashboard'' feature which will consist of iterating over each Block stored in the Dashboard and rending its content/graphs in a sequential order. Our dashboards are essentially the same as the ``view blocks'' page with block components listed one after the other, except it contains a user-defined subset of blocks for a specific analysis. 
+\subsubsection{Important Data-Binding Code}
+Throughout the application, I have implemented AngularJS directives/services to retrieve and render data to the screen. Here are a few specific code samples I want to share that were either duplicated and used on multiple pages, or I just thought they were impressive implementations.\\
+
+\noindent First is the ``ng-repeat'' directive we use for buildings, dashboards, and blocks to iterate through a data set and produce multiple HTML elements ``for-each'' object in the set. This implementation requires a data set to be provided by the controller and an HTML template to be repeated. A particularly interesting example of this was a nested ``ng-repeat'' used to display all the user blocks, and all the buildings inside each block. 
+\begin{lstlisting}[language=HTML5]
+<!--blocks.html-->
+<div ng-controller="blockController">
+<div class="card mb-3" style="width: 90%;" ng-repeat="block in userBlocks">
+  <div class="card-header h-100">
+    <div class="h-100 d-inline-flex">
+      <span class=" align-middle ">
+        {{block.name}}
+      </span>
+    </div>
+    ...
+    <h3>Buildings:</h3>
+    <ul>
+      <li ng-repeat="building in block.building">
+        {{building.name}}
+      </li>
+    </ul>
+  ...
+\end{lstlisting}
+On line 13 of the listing, we see that the data model being repeated is being taken from the block object returned by the ``ng-repeat'' directive on line 3. This essentially allows ``double for-loop'' style data-binding to occur in the view and which displays all the necessary information to the user with only a couple lines of code.\\
+
+\noindent Next, I wanted to share how I was able to create a functioning relation database with MongoDB and mongoose.js using sub-documents and the mongoose.js ``.populate()'' function in our API. In order to keep our object sizes small, we only store references (ObjectId's) into model arrays like Block.buildings or User.dashboards. In order to retrieve this data and render it for the user, we need to dereference the ObjectId's in the back-end before returning the object to the controller. To do this, we have to populate the sub-documents so mongoose can retrieve the actual objects from the database and return all the necessary information. I'm going to share the API query for achieving this for the same situation as the nested ``ng-repeat'' above, as it also required a nested ``.populate()'' call to dereference sub-documents and sub-sub-documents.
+\begin{lstlisting}[language=JavaScript]
+app.get('/api/getUserBlocks', function(req, res) {
+  User.findOne({_id : req.user._id})
+    .populate({ path: 'blocks',
+        populate: {path: 'building'}
+    })
+    .exec(function (err, user) {
+      if (err) return handleError(err);
+      res.json(user.blocks); });
+});
+\end{lstlisting}
+As seen on line 4 of the listing, we call a populate from within a populate which dereferences the sub-sub-documents ``building'' that are being referenced by the sub-document ``blocks.'' This ensures that we have access to the building names and types when returning the user blocks to the controller. If we did not populate these sub-documents, the query would only return the ObjectId's with no relevant information for display.\\
+\noindent 
+\subsubsection{Data Retrieval} 
+I wanted to add a code listing of our new data retrieval algorithm as it has changed significantly to include date formatting, data validation for correct value ranges, and summations of multiple meters.
+\begin{lstlisting}[language=JavaScript]
+  app.get('/api/getBuildingData', function (req, res) {
+    var match;
+    if (req.query && req.query.start && req.query.end) {
+      match = {
+        timestamp: {
+            $lt: req.query.end,
+            $gte: req.query.start
+        }
+      }
+    } else {
+      match = {};
+    }
+
+    Building.find({
+      _id: {
+        $in: req.query.buildings
+      }
+      })
+      .populate({
+        path: 'data_entries',
+        match: match, //THIS WORKS TO FILTER DATES
+        select: 'id'
+      })
+      .exec(function (err, dataEntries) {
+        var buildings = [];
+        dataEntries.forEach(function(b){
+          buildings.push({name: b.name, building_id: b._id});
+        });
+        if (err) {
+          res.jsonp({
+            building: null
+          });
+        } else {
+          DataEntry.find({
+            _id: {
+              $in: [].concat.apply([], dataEntries.map(d => d.data_entries))
+            },
+            meter_id: {
+              $in: [].concat.apply([], dataEntries.map(d => d.meters))
+            }
+          })
+          .select({
+            point: {
+              $elemMatch: {
+                name: "Accumulated Real Energy Net"
+              },
+            }
+          })
+          .sort('timestamp')
+          .select('meter_id timestamp point.value building')
+          .exec(function (err, datapoints) {
+          if (err) {
+              console.log(err);
+          } else {
+          var meters = [].concat.apply([], dataEntries.map(d => d.meters));
+
+          var temp = [];
+          meters.forEach(function (meter) {
+            var start = new Date(req.query.start);
+            var end = new Date(req.query.end);
+            var array = datapoints.filter(entry => entry.meter_id.toString() === meter.toString());
+            while (start.toISOString().substring(0, 10) < end.toISOString().substring(0, 10)) {
+              var daily = array.filter(x => {
+                if (x)
+                  return x.timestamp.substring(0, 10) == start.toISOString().substring(0, 10);
+              });
+              if(daily.length>0){
+                var end_index = 1;
+                var start_index = 0;
+                var val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
+                // start by decreasing the end value
+                var startflag = 0;
+                while(val < 0 || val > 10000){
+                  if(startflag == 0){
+                    end_index += 1;
+                    if(daily[daily.length - end_index].point[0] && daily[start_index].point[0]){
+                        val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
+                    }
+                    startflag = 1;
+                  }
+                  else{
+                    start_index += 1;
+                    if(daily[daily.length - end_index].point[0] && daily[start_index].point[0]){
+                        val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
+                    }
+                    startflag = 0;
+                  }
+                }
+                temp.push({
+                    building_id : daily[0].building,
+                    meter_id: meter,
+                    date: daily[0].timestamp.substring(0, 10),
+                    val: val
+                });
+            }
+            start.setDate(start.getDate() + 1);
+        }
+      });
+      //A check for Milne to Sum Values
+      if(buildings.filter(n => n.name === "Milne Computing Center").length > 0){
+          let milne_id = buildings.filter(n => n.name === "Milne Computing Center")[0].building_id;
+          // add values with common timestamps
+          let milne = temp.filter(d => d.building_id.toString() === milne_id.toString());
+          temp = temp.filter(d => d.building_id.toString() !== milne_id.toString());
+
+          let vals = milne.reduce((prev, curr) => {
+              let count = prev.get(curr.date) || 0;
+              prev.set(curr.date, curr.val + count);
+              return prev;
+          }, new Map());
+          [...vals].map(([key, value]) => {
+              return {key, value}
+          }).forEach(function(point){
+              temp.push({building_id: milne_id, date: point.key, val: point.value})
+          })
+      }
+      else if(buildings.filter(n => n.name === "Memorial Union").length > 0){
+          let union_id = buildings.filter(n => n.name === "Memorial Union")[0].building_id;
+          // add values with common timestamps
+          let union = temp.filter(d => d.building_id.toString() === union_id.toString());
+          temp = temp.filter(d => d.building_id.toString() !== union_id.toString());
+
+          let vals = union.reduce((prev, curr) => {
+              let count = prev.get(curr.date) || 0;
+              prev.set(curr.date, curr.val + count);
+              return prev;
+          }, new Map());
+          [...vals].map(([key, value]) => {
+              return {key, value}
+          }).forEach(function(point){
+              temp.push({building_id: union_id, date: point.key, val: point.value})
+          })
+      }
+      else if(buildings.filter(n => n.name === "Nash Hall").length > 0){
+          let nash_id = buildings.filter(n => n.name === "Nash Hall")[0].building_id;
+          // add values with common timestamps
+          let nash = temp.filter(d => d.building_id.toString() === nash_id.toString());
+          temp = temp.filter(d => d.building_id.toString() !== nash_id.toString());
+
+          let vals = nash.reduce((prev, curr) => {
+              let count = prev.get(curr.date) || 0;
+              prev.set(curr.date, curr.val + count);
+              return prev;
+          }, new Map());
+          [...vals].map(([key, value]) => {
+              return {key, value}
+          }).forEach(function(point){
+              temp.push({building_id: nash_id, date: point.key, val: point.value})
+          })
+      }
+      else if(buildings.filter(n => n.name === "Kelley Engineering Center").length > 0){
+          let kelley_id = buildings.filter(n => n.name === "Kelley Engineering Center")[0].building_id;
+          // add values with common timestamps
+          let kelley = temp.filter(d => d.building_id.toString() === kelley_id.toString());
+          temp = temp.filter(d => d.building_id.toString() !== kelley_id.toString());
+
+          let vals = kelley.reduce((prev, curr) => {
+              let count = prev.get(curr.date) || 0;
+              prev.set(curr.date, curr.val + count);
+              return prev;
+          }, new Map());
+          [...vals].map(([key, value]) => {
+              return {key, value}
+          }).forEach(function(point){
+              temp.push({building_id: kelley_id, date: point.key, val: point.value})
+          })
+      }
+      else if(buildings.filter(n => n.name === "McNary Hall").length > 0){
+        let mcnary_id = buildings.filter(n => n.name === "McNary Hall")[0].building_id;
+        // add values with common timestamps
+        let mcnary = temp.filter(d => d.building_id.toString() === mcnary_id.toString());
+        temp = temp.filter(d => d.building_id.toString() !== mcnary_id.toString());
+
+        let vals = mcnary.reduce((prev, curr) => {
+            let count = prev.get(curr.date) || 0;
+            prev.set(curr.date, curr.val + count);
+            return prev;
+        }, new Map());
+        [...vals].map(([key, value]) => {
+            return {key, value}
+        }).forEach(function(point){
+            temp.push({building_id: mcnary_id, date: point.key, val: point.value})
+        })
+      }
+      res.jsonp(temp);
+  }
+});
+}
+});
+});
+\end{lstlisting}
+
+Although it is not very interesting as a large blob of code, the effect it has on our application with data filtering, formatting, and retrieval is substantially important.
 \section{Contributor: Aubrey Thenell}
 
 \section{Contributor: Parker Bruni}
@@ -172,11 +480,11 @@ This document provides a recap of the progress made on our project during the Sp
 
 \section{Problems that have impeded our progress}
 When our group reconvened after Winter Break, we had our application's minimum viable product completed with all requirements satisfied as was due. We then got new information about the XML electricity data that was being sent from the data acquisition servers and how the data was being handled. New information detailed that multiple energy meters could be wired to the AcquiSuite and be sent through successive posts with differing ``address'' fields. This caused complications with our back-end as we needed to change the way we store data points relative to buildings. New information suggested that some buildings require the sum of two separate energy meter readings (i.e. North and South Meters) and some buildings required the difference of two meter readings (i.e. Complex minus Dining Hall yields residence hall consumption).
-\section{Describe what you have left to do}
-    Some things I still need to accomplish:
-    \begin{itemize}
-      \item Finish Data Charting
-    \end{itemize}
+\subsection{Describe what you have left to do}
+Some things I still need to accomplish:
+\begin{itemize}
+  \item Complete meter subtraction for monitoring McNary residence hall consumption.
+\end{itemize}
 \newpage
 \cite{mongoose}
 \bibliographystyle{ieeetr}
