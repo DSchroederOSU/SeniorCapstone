@@ -475,6 +475,50 @@ Although it is not very interesting as a large blob of code, the effect it has o
 \section{Contributor: Aubrey Thenell}
 
 \section{Contributor: Parker Bruni}
+\subsection{Describe where you are currently on the project}
+The UI an UX designs have been essentially fully implemented into the application and the various UI/UX elements have been tested for to confirm proper functionality. The color scheme has been solidified and all elements have been adjusted to fit this scheme appropriately. Animations have been added and tested and give the website the desired aesthetic appeal and modern feel to make the usage of the application more pleasing and presentable. The top navigation pages have been essentially finalized, and the professional head shots of all members involved have been added.
+\subsection{Updates}
+\subsubsection{Contact Page}
+The contact page has been recently finalized, as the requests for professional head shots of all members involved has been fulfilled. The contacts page now shows circular images associated with each members description on that page. Requests were made by the head of the Office of Sustainability to exclude certain members of the Office of Sustainability and update the emailing functionality so as to reduce the issues related to email spam bots that may get access to our publicly facing interface. A general email has been used for members of the Office of Sustainability rather than personal emails to direct any inquiries about the office or the project to that location.
+Below is an example section of code that demonstrates how we display our members, as well as the system that we have implemented to reduce spam. 
+
+\begin{lstlisting}
+<div class="col-sm-4 p-0 h-100">
+        <div class="container">
+            <div class="w-100 pb-3">
+                <img class="profile-pic border-orange" style="width:60%;" src="../../assets/people/lety_square.jpg" alt="Card image cap">
+            </div>
+            <div class="w-100 p-2 ml-2">
+                <p class="font-weight-normal" style="font-size: 150%; color: #DC4405;">
+                    <a class="text-orange Stratum2-Thin">Leticia Cavazos</a>
+                    <a href="http://fa.oregonstate.edu/email/node/936/field_group_email" target="_top">
+                        <img class="rounded" style="width:8%;" src="../../assets/email-icon.png" alt="email">
+                    </a>
+                </p>
+                <p class="Stratum2-Light font-weight-light" style="font-size: 110%;">Program Specialist</p>
+                <p style="font-size: 85%;">Leticia was hired as a student at the Sustainability Office in June of 2014. In December 2016, she transitioned
+                    to the full-time position of Program Specialist. Her primary duties include utility data acquisition,
+                    management, and analysis, meter hardware management, and sustainability assessment.</p>
+            </div>
+        </div>
+    </div>
+\end{lstlisting}
+\subsubsection{Public vs. Authorized User Access}
+Previously, public users that did not have an authorized user access account had the ability to exploit certain elements that existed on the public facing page to potentially manipulate the higher level access data. This would cause problems as a general user with malicious intent could delete buildings, public dashboards, public stories, and potentially more. This was possible because a UI element that had access to this functionality was being populated on public facing pages because it did not check the current users privilege levels. This element has since been updated to be hidden on public facing pages to prevent these issues.
+Below is an example of the code that controls if the UI elements are displayed or not.
+\begin{lstlisting}
+<div ng-hide="userLoggedIn" class="float-right pr-3 dropdown" style="font-size:18px">
+\end{lstlisting}
+The variable "userLoggedIn" is a simple switch statement variable that is controlled by the authentication implementation and checks if a user with correct privileges is logged in. You can see the module that controls this variable below.
+\begin{lstlisting}[language=JavaScript]
+angular.module('sideNavController', [])
+    .controller('sideNavController', function ($scope, $rootScope, GetUser, Story) {
+
+        $scope.loggedIn = true;
+
+
+    });
+\end{lstlisting}
 
 \section{Current State of the Project:} 
 
