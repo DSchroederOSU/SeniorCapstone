@@ -162,9 +162,12 @@ are the accomplishments and problems, our project's goals and purpose, and the c
 
 \subsection{Overview}
 This document provides a recap of the progress made on our project during the Spring 2018 term. Overall, we have seen some great progress. We went from a basic template website to something that has some great functionality. \\ 
-\section{Contributor: Daniel Schroeder} 
 \subsection{Describe where you are currently on the project}
 The application is complete except for one main data retrieval function which ``subtracts'' two meters in order to get the total consumption for a specific building. We are still debating the semantics about how to implement this but will have it done bu expo without a doubt.
+The UI an UX designs have been essentially fully implemented into the application and the various UI/UX elements have been tested for to confirm proper functionality. The color scheme has been solidified and all elements have been adjusted to fit this scheme appropriately. Animations have been added and tested and give the website the desired aesthetic appeal and modern feel to make the usage of the application more pleasing and presentable. The top navigation pages have been essentially finalized, and the professional head shots of all members involved have been added.
+
+\section{Contributor: Daniel Schroeder} 
+
 \subsubsection{Buildings}
 The building components are data models stored in the database with attributes like name, type, id, serial, and array of data points. To generate components that display these buildings, we needed to store the data along with building images and create a page to list them in a logical way. To accomplish this, I scraped the internet for a photo of each building we needed in the application and stored them in our assets folder with a name that corresponds to the building object name that is stored in the database. On the ``/buildings'' page, a building service retrieves all the building objects from the database which are used as the data model for an AngularJS ``ng-repeat'' directive to generate identical components. The outcome is a precise, columned list of card components that link to specific building pages and display the object's name and photo. 
 \begin{figure}[H]
@@ -472,11 +475,282 @@ I wanted to add a code listing of our new data retrieval algorithm as it has cha
 \end{lstlisting}
 
 Although it is not very interesting as a large blob of code, the effect it has on our application with data filtering, formatting, and retrieval is substantially important.
+
 \section{Contributor: Aubrey Thenell}
+\subsection{XML Parsing}
+I implemented functionality to parse XML data that is sent to our server via POST. When I say parsed, I would like to specify that the XML object is being parsed and converted into a JSON object. As the functionality is currently set up, once the data is parsed, it will call a separate function after this asynchronous parsing function resolves and returns the JSON. 
+\subsection{Buildings and Meters}
+Buildings and meters are fully functioning and can be added to the database via the `/api/addBuilding` and `/api/addMeter` function calls respectively. Shown below is a snippet demonstrating adding a building. Functionally both the building and meter functions look and work about the same way. Buildings can only be added to the database through this function on the client server, compared to meters when can be added by both servers.
+\begin{lstlisting}[language=JavaScript]
+ app.post('/api/addBuilding', function (req, res) {
+        var building = new Building();
+        building.name = req.body.name;
+        building.building_type = req.body.building_type;
+        building.meters = req.body.meters;
+        building.save(function (err, savedBuilding) {
+            if (err)
+                throw err;
+            else {
+                savedBuilding.meters.forEach(meter => {
+                    updateOldBuildingMeters(meter, savedBuilding)
+                        .then(addMeter(meter, savedBuilding))
+                });
+                res.json(savedBuilding);
+
+            }
+        });
+    });
+\end{lstlisting}
+\noindent Once a building or meter is added to the database, it can be updated like any of the other components. Shown below is the function to update buildings. In the else block towards the bottom of the function, you will notice that it makes two function calls. What those functions do is remove any meters from the old building and add them to the new building. By doing this, it ensures that data entries will only ever go to one building at a time and this prevents duplicate and incorrect data from entering our database. \\
+\begin{lstlisting}[language=JavaScript]
+ app.post('/api/updateBuilding', function (req, res) {
+        Building.findByIdAndUpdate({
+            _id: req.body._id
+        }, {
+            $set: {
+                'name': req.body.name,
+                'building_type': req.body.building_type,
+                'meters': req.body.meters
+                // instead of pushing meters here, might do similar function call like in addBuilding
+            }
+        }, {
+            safe: true,
+            upsert: true,
+            new: true
+        }, function (err, meter) {
+            if (err)
+                throw (err);
+            else {
+                req.body.meters.forEach(meter => {
+                    updateOldBuildingMeters(meter._id, req.body)
+                        .then(addMeter(meter._id, req.body))
+                });
+
+            }
+        });
+        res.json(req.body);
+    });
+\end{lstlisting}
+\noindent Once a new building is made, or if it already existed, it will take the data from the JSON object and push it into the data entry array of that respective building. It completes this with the following function.
+\begin{lstlisting}[language=JavaScript]
+ entryArray.forEach(x => {
+            DataEntry.findOne({
+                timestamp: x.timestamp,
+                meter_id: meter._id
+            }, (err, doc) => {
+                if (doc === null || doc === undefined) {
+                    // save it to data entries
+                    x.save().catch(err => {
+                        res.status(400)
+                    })
+                    // add it to building
+                    if (x.building != null && x.building != 'null') {
+                        Building.findOneAndUpdate({
+                                _id: entry.building
+                            }, {
+                                $push: {
+                                    data_entries: x
+                                }
+                            },
+                            (err) => {
+                                if (err) throw (err)
+                            });
+                    }
+                    console.log('Data entry id "' + x._id + '" with timestamp ' + x.timestamp + ' added to the meter named "' + meter.name + '" which is assigned to building id: "' + meter.building + '"');
+                } else {
+                    console.log('Duplicate detected and nothing has been added!');
+                    console.log('Incoming Data\'s timestamp:\t' + x.timestamp + '  meter_id:\t' + x.meter_id);
+                    console.log('Existing Data\'s timestamp:\t' + doc.timestamp + '  meter_id:\t' + doc.meter_id);
+                }
+            });
+        });
+\end{lstlisting}
+\noindent This function will iterate over the received data entries from a given AcquiSuite meter and add each one to the DataEntry database as well as push a reference to that DataEntry entry to the connected building's DataEntry array.
+
+\subsection{Email}
+There are a few email related functions that are fully working within sandbox mode. This means that we can only send to AWS verified email addresses. Once the client decides he wants to move to production, then email functionality will work on any and all email addresses.
+\subsubsection{Registration}
+The registration allows the Administrative users of the site to invite other users with various permission levels. Below is the full function that shows the AWS format for sending emails
+\begin{lstlisting}[language=JavaScript]
+app.post('/api/emailRegistration', function (req, res) {
+        AWS.config.update({
+            region: 'us-west-2'
+        });
+        var credentials = new AWS.EnvironmentCredentials('AWS');
+        credentials.accessKeyId = process.env.AWS_ACCESS_KEY_ID
+        credentials.secretAccessKey = process.env.SECRET_ACCESS_KEY
+        AWS.config.credentials = credentials;
+        console.log(req.body);
+        console.log('Something');
+        User.findOneAndUpdate({
+            'google.email': req.body.email
+        }, {
+            $set: {
+                accountAccess: req.body.access
+            }
+        }, {
+            upsert: true,
+            new: true
+        }, (err, doc) => {
+            console.log('callback')
+            if (err) throw err;
+            if (doc) {
+                console.log(doc);
+                if (doc.accountAccess !== req.body.access) {
+                    console.log(doc)
+                }
+                
+            }
+        });
+        var params = {
+            Destination: { /* required */
+                CcAddresses: [],
+                ToAddresses: [req.body.email]
+            },
+
+            Message: { /* required */
+                Body: { /* required */
+                    Html: {
+                        Charset: "UTF-8",
+                        Data: "<h1>This is an E-mail from the application</h1><br> <h4>Please click the link below to be taken there.</h4><br>" +
+                            "<a href=\"http://localhost:3000/login/\">Click me!</a>"
+                    },
+                    Text: {
+                        Charset: "UTF-8",
+                        Data: "TEXT_FORMAT_BODY"
+                    }
+                },
+                Subject: {
+                    Charset: 'UTF-8',
+                    Data: 'Test email from AWS'
+                }
+            },
+            Source: process.env.TEST_EMAIL_USER,
+            /* required */
+            ReplyToAddresses: [],
+        };
+        var sendPromise = new AWS.SES({
+            apiVersion: '2010-12-01'
+        }).sendEmail(params).promise();
+
+        // Handle promise's fulfilled/rejected states
+        sendPromise.then(
+            function (data) {
+                console.log(data.MessageId);
+            }).catch(
+            function (err) {
+                console.error(err, err.stack);
+            });
+        res.json({
+            message: "success"
+        });
+    });
+\end{lstlisting}
+I felt it was important to list the whole function because the other two email based functions will use this same format, but with different data.
+\subsubsection{Usage Monitoring}
+One of the core requirements was to send out email alerts whenever a meter's consumption was way higher than normal. This function does exactly that. To do this, it takes the average energy usage of the past week and sums one standard deviation. Then it takes the average consumption for the past day. If the of the past day is one standard deviation above the weekly consumption, an email will be sent out. This function is automatically called once per day.
+\begin{lstlisting}[language=JavaScript]
+Meter.find().then(meters => {
+        meters.forEach(e => {
+            DataEntry.find({
+                meter_id: e._id,
+                timestamp: {
+                    $gte: oneWeekAgo,
+                    $lt: now
+                }
+            }, (err, docs) => {
+                if (err) throw (err);
+                // We want the length to be greater than 100 in the past week (96 are entered per day)
+                // Without this, a meter might report some weird things, so this forces at least two days of entries
+                if (docs.length && docs.length >= 100) {
+                    pastData = docs.filter(t => {
+                        return t.timestamp >= oneWeekAgo && t.timestamp <= yesterday
+                    });
+
+                    currentData = docs.filter(t => {
+                        return t.timestamp >= yesterday && t.timestamp <= now
+                    });
+
+                    if (pastData.length) {
+                        pastDataArray = [];
+                        // gets the energy usage values for the past week
+                        for (i = 0; i < pastData.length; i++) {
+                            pastDataArray.push(pastData[i].point[0].value);
+                        }
+                        pastDataAvg = math.mean(pastDataArray);
+                        pastDataSD = math.std(pastDataArray);
+                        pastDataThreshhold = pastDataAvg + pastDataSD;
+                        // checks for empty array so it doesn't report on down meter
+                        if (currentData.length) {
+                            currentDataArray = [];
+                            for (i = 0; i < currentData.length; i++) {
+                                currentDataArray.push(currentData[i].point[0].value);
+                            }
+                            currentDataAvg = math.mean(currentDataArray);
+                            if (currentDataAvg > pastDataThreshhold) {
+                                email.body += (`The meter named <b>"${e.name}"</b> with a serial of <b>"${e.meter_id}"</b> has reported high energy usage.` +
+                                    ` Over the past week, the meter had an average of <b>${pastDataAvg.toFixed(1)}</b> kWh,` +
+                                    ` but has reported <b style="color:red">${currentDataAvg.toFixed(1)}</b> kWh in the past 24 hours. <br>`)
+                            }
+                        }
+                    }
+                    if (meterCount++ == meters.length - 1 && email.body !== '') {
+                        emailAlert(email);
+                    }
+\end{lstlisting}
+\subsubsection{Down Meter}
+\noindent Another requirement is to send out an alert email whenever a meter goes down. To do this, we check to see the last time each meter has checked in. If the last checkin was between 24 and 48 hours, it will send out a alert email. Like the usage function, this is only called once per day. Because of this, users will only ever receive one notification for down meters. This was intentional as it would be pure chaos if it sent an email every time data was received. The functionality of this function is shown below
+\begin{lstlisting}[language=Javascript]
+function checkMeterTimestamps() {
+    var yesterday = moment.utc().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
+    var twoDaysAgo = moment.utc().subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss');
+    var meterCount = 0;
+    var email = {
+        body: '',
+        subject: 'Meter(s) detected as offline!'
+    }
+    Meter.find().then(meters => {
+        if (meters) {
+            // finds data entries for each meter and checks the last data entries time.
+            meters.forEach(e => {
+                DataEntry.find({
+                    meter_id: e._id,
+                    timestamp: {
+                        $gte: twoDaysAgo,
+                        $lt: yesterday
+                    }
+                }, (err, docs) => {
+                    if (!err) {
+                        timestamps = docs.filter(t => {
+                            return t.timestamp >= twoDaysAgo && t.timestamp <= yesterday
+                        });
+                        if (timestamps.length) {
+                            email.body += `The meter named <b>"${e.name}"</b> with a serial of <b>"${e.meter_id}"</b> has not reported anything in 1-2 days. <br>`
+                        }
+                    }
+                    if (meterCount++ == meters.length - 1 && email.body !== '') {
+                        emailAlert(email);
+                    }
+                })
+            })
+        }
+    })
+}
+\end{lstlisting}
+You will notice the email bodies of both the usage and down meter functions to have markup. The result is emails with formatted data. Below are screenshots of what each look like.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=17cm]{images/outage.eps}
+  \caption{A screen shot of an email showing a meter that is not reporting data.}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=17cm]{images/usage.eps}  
+  \caption{A screen shot of an email showing a meter that has detected energy usage spikes.}
+\end{figure}
 
 \section{Contributor: Parker Bruni}
-\subsection{Describe where you are currently on the project}
-The UI an UX designs have been essentially fully implemented into the application and the various UI/UX elements have been tested for to confirm proper functionality. The color scheme has been solidified and all elements have been adjusted to fit this scheme appropriately. Animations have been added and tested and give the website the desired aesthetic appeal and modern feel to make the usage of the application more pleasing and presentable. The top navigation pages have been essentially finalized, and the professional head shots of all members involved have been added.
+
 \subsection{Updates}
 \subsubsection{Contact Page}
 The contact page has been recently finalized, as the requests for professional head shots of all members involved has been fulfilled. The contacts page now shows circular images associated with each members description on that page. Requests were made by the head of the Office of Sustainability to exclude certain members of the Office of Sustainability and update the emailing functionality so as to reduce the issues related to email spam bots that may get access to our publicly facing interface. A general email has been used for members of the Office of Sustainability rather than personal emails to direct any inquiries about the office or the project to that location.
@@ -520,14 +794,14 @@ angular.module('sideNavController', [])
     });
 \end{lstlisting}
 
-\section{Current State of the Project:} 
 
 \section{Problems that have impeded our progress}
 When our group reconvened after Winter Break, we had our application's minimum viable product completed with all requirements satisfied as was due. We then got new information about the XML electricity data that was being sent from the data acquisition servers and how the data was being handled. New information detailed that multiple energy meters could be wired to the AcquiSuite and be sent through successive posts with differing ``address'' fields. This caused complications with our back-end as we needed to change the way we store data points relative to buildings. New information suggested that some buildings require the sum of two separate energy meter readings (i.e. North and South Meters) and some buildings required the difference of two meter readings (i.e. Complex minus Dining Hall yields residence hall consumption).
-\subsection{Describe what you have left to do}
-Some things I still need to accomplish:
+\section{Describe what you have left to do}
 \begin{itemize}
   \item Complete meter subtraction for monitoring McNary residence hall consumption.
+  \item Slight code polish. and then writing documentation.
+  \item Writing documentation.
 \end{itemize}
 \newpage
 \cite{mongoose}
