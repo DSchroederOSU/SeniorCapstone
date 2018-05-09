@@ -52,7 +52,6 @@ angular.module('chartController', [])
             };
             var buildingAxisData = [];
             Building.getBuildingData(to_pass).then(function (data) {
-                console.log(data);
                 buildingsArray.building.forEach(function(x){
                     buildingAxisData.push({name: x.name, data: data.data.filter(b => b.building_id === x._id)});
                 });
