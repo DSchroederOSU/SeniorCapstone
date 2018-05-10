@@ -159,7 +159,6 @@ module.exports = function (app, passport) {
         } else {
             match = {};
         }
-
         Building.find({
                 _id: {
                     $in: req.query.buildings
@@ -180,14 +179,11 @@ module.exports = function (app, passport) {
                         building: null
                     });
                 } else {
-                    DataEntry.find({
-                        _id: {
-                            $in: [].concat.apply([], dataEntries.map(d => d.data_entries))
-                        },
-                        meter_id: {
-                            $in: [].concat.apply([], dataEntries.map(d => d.meters))
-                        }
-                    })
+
+                    let query = {_id: { $in: [].concat.apply([], dataEntries.map(d => d.data_entries))},
+                                    meter_id: {  $in: [].concat.apply([], dataEntries.map(d => d.meters)) } };
+
+                    DataEntry.find(query)
                     .select({
                         point: {
                             $elemMatch: {
@@ -326,25 +322,31 @@ module.exports = function (app, passport) {
                                 temp.push({building_id: kelley_id, date: point.key, val: point.value})
                             })
                         }
-                        else if(buildings.filter(n => n.name === "McNary Hall").length > 0){
-                            let mcnary_id = buildings.filter(n => n.name === "McNary Hall")[0].building_id;
-                            // add values with common timestamps
-                            let mcnary = temp.filter(d => d.building_id.toString() === mcnary_id.toString());
-                            temp = temp.filter(d => d.building_id.toString() !== mcnary_id.toString());
-
-                            let vals = mcnary.reduce((prev, curr) => {
-                                let count = prev.get(curr.date) || 0;
-                                prev.set(curr.date, curr.val + count);
-                                return prev;
-                            }, new Map());
-                            [...vals].map(([key, value]) => {
-                                return {key, value}
-                            }).forEach(function(point){
-                                temp.push({building_id: mcnary_id, date: point.key, val: point.value})
-                            })
+                        if(buildings.filter(n => n.name === "McNary Dining Center").length > 0){
+                            getMcNaryDining(match)
+                                .then(function(results){
+                                    let vals = results.reduce((prev, curr) => {
+                                        let count = prev.get(curr.date) || 0;
+                                        if(curr.val > count) {
+                                            prev.set(curr.date, curr.val - count);
+                                        }
+                                        else{
+                                            prev.set(curr.date, count - curr.val);
+                                        }
+                                        return prev;
+                                    }, new Map());
+                                    [...vals].map(([key, value]) => {
+                                        return {key, value}
+                                    }).forEach(function(point){
+                                        temp.push({building_id: buildings.filter(n => n.name === "McNary Dining Center")[0].building_id, date: point.key, val: point.value})
+                                    });
+                                    res.jsonp(temp);
+                                })
+                        }
+                        else{
+                            res.jsonp(temp);
                         }
 
-                        res.jsonp(temp);
                     }
                 });
             }
@@ -1263,6 +1265,90 @@ function addMeter(meter, savedBuilding) {
                 })
             });
     })
+}
+
+function getMcNaryDining(match){
+    return new Promise((resolve, reject) => {
+    Meter.find({meter_id: { $in: ['001EC60527B4_1', '001EC60527B4_2']}})
+        .select('_id')
+        .exec(function (err, meters){
+            if (err) {
+                console.log(err);
+            } else {
+                DataEntry.find({
+                    meter_id: {
+                        $in: meters
+                    },
+                    "timestamp": {"$gte": match.timestamp.$gte, "$lt": match.timestamp.$lt}
+                })
+                .select({
+                    point: {
+                        $elemMatch: {
+                            name: "Accumulated Real Energy Net"
+                        },
+                    }
+                })
+                .sort('timestamp')
+                .select('meter_id timestamp point.value building')
+                .exec(function (err, datapoints) {
+
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        var temp = [];
+                        console.log(meters);
+                        meters.forEach(function (meter) {
+                            var start = new Date(match.timestamp.$gte);
+                            var end = new Date(match.timestamp.$lt);
+                            var array = datapoints.filter(entry => entry.meter_id.toString() === meter._id.toString());
+                            console.log(array);
+                            while (start.toISOString().substring(0, 10) < end.toISOString().substring(0, 10)) {
+                                var daily = array.filter(x => {
+                                    if (x)
+                                        return x.timestamp.substring(0, 10) == start.toISOString().substring(0, 10);
+                                });
+                                if (daily.length > 0) {
+                                    var end_index = 1;
+                                    var start_index = 0;
+                                    var val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
+                                    // start by decreasing the end value
+                                    var startflag = 0;
+                                    while (val < 0 || val > 10000) {
+                                        if (startflag == 0) {
+                                            end_index += 1;
+                                            if (daily[daily.length - end_index].point[0] && daily[start_index].point[0]) {
+                                                val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
+                                            }
+                                            startflag = 1;
+                                        }
+                                        else {
+                                            start_index += 1;
+                                            if (daily[daily.length - end_index].point[0] && daily[start_index].point[0]) {
+                                                val = Math.abs(daily[daily.length - end_index].point[0].value) - Math.abs(daily[start_index].point[0].value);
+                                            }
+                                            startflag = 0;
+                                        }
+                                    }
+                                    temp.push({
+                                        building_id: daily[0].building,
+                                        meter_id: meter,
+                                        date: daily[0].timestamp.substring(0, 10),
+                                        val: val
+                                    });
+                                }
+                                start.setDate(start.getDate() + 1);
+                            }
+
+                        });
+                        console.log(temp);
+                        resolve(temp);
+                    }
+                });
+            }
+        });
+
+    });
+
 }
 
 function pushNullMeter(meter, savedBuilding) {
