@@ -17,9 +17,9 @@
                         rows="4"></textarea>
                 </div>
             </div>
-            <div class="form-check ml-4">
+            <div class="form-check ml-4" ng-hide="accountAccess < 2">
                 <input ng-init="getPublicFlag()" class="form-check-input" type="checkbox"
-                       ng-model="publicCheck" id="defaultCheck1">
+                       ng-model="publicCheck" id="defaultCheck1" >
                 <label class="form-check-label pl-1" for="defaultCheck1">
                     Make Public
                 </label>
