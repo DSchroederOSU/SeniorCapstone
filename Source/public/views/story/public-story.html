@@ -7,7 +7,7 @@
             <div class="row px-2 mb-2">
                 <div class="col-sm-12">
                     <h4 class="m-0 ">{{story.name}}
-                        <div ng-hide="userLoggedIn" class="float-right pr-3 dropdown" style="font-size:18px">
+                        <div ng-hide="accountAccess < 2" class="float-right pr-3 dropdown" style="font-size:18px">
                             <button class="fa fa-gear border-orange-thin border-curve-button" style="font-size:24px"></button>
                             <div class="dropdown-content border-orange font-weight-normal">
                                 <a class="" ng-click="EditDashboard(dashboard)">Edit</a>

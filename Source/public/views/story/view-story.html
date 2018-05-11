@@ -1,7 +1,7 @@
 <div ng-controller="storyController" ng-model="selectedStory" class="Stratum2-Light">
     <br>
     <h1 class="font-weight-bold"> {{selectedStory.name}}
-        <a href="#createStory" ng-hide="userLoggedIn" ng-click="EditStory(selectedStory)" class="btn border-orange-thin background-orange text-white float-right">Edit</a>
+        <a href="#createStory" ng-hide="accountAccess < 1" ng-click="EditStory(selectedStory)" class="btn border-orange-thin background-orange text-white float-right">Edit</a>
     </h1>
     <br>
     <h2 class="border-bottom-orange">Dashboards</h2>
@@ -21,6 +21,6 @@
         </div>
     </div>
 
-    <button ng-hide="userLoggedIn" ng-click="DeleteStory(selectedStory)" class="btn btn-danger text-white">Delete</button>
+    <button ng-hide="accountAccess < 1" ng-click="DeleteStory(selectedStory)" class="btn btn-danger text-white">Delete</button>
 
 </div>
