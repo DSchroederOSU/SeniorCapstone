@@ -4,16 +4,20 @@ angular.module('mainController', [])
         GetUser.get()
             .success(function (data) {
                 if (data) {
+                    console.log(data);
                     $scope.login_status = "Logout";
-                    $scope.greeting = "Hello " + data.name.split(' ')[0] + "!";
+                    $scope.greeting = "Hello " + data.google.name.split(' ')[0] + "!";
                     $scope.myLink = "logout";
-                    $scope.userLoggedIn = false;
+                    $scope.userLoggedIn = true;
+                    $scope.accountAccess = data.accessLevel;
                     $scope.mainContent = 'shiftRight';
+                    
                 } else {
                     $scope.login_status = "Login";
                     $scope.greeting = '';
                     $scope.myLink = "auth/google";
-                    $scope.userLoggedIn = true;
+                    $scope.userLoggedIn = false;
+                    $scope.accountAccess = -1;
                     $scope.mainContent = 'shiftLeft';
                 }
             });
