@@ -34,12 +34,10 @@ module.exports = function (app, passport) {
 
     app.get('/api/google_user', function (req, res) {
         if (req.user) {
-            res.json(req.user.google);
+            res.json({google: req.user.google, accessLevel: req.user.accountAccess});
         } else {
             res.send(null)
         }
-
-
     });
 
     // =====================================================================
