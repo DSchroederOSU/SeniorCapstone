@@ -72,11 +72,11 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div ng-hide="userLoggedIn" class="custom-side-nav navbar-fixed-side navbar-fixed-side-left pl-0 pr-0 col-sm-2 col-md-2 Stratum2-Light card-shadow"
+            <div ng-hide="accountAccess < 0" class="custom-side-nav navbar-fixed-side navbar-fixed-side-left pl-0 pr-0 col-sm-2 col-md-2 Stratum2-Light card-shadow"
                 style="width: 162px; height: 100vh;">
                 <side-nav model="$parent"></side-nav>
             </div>
-            <div ng-hide="userLoggedIn" id="dashboardSelector" class="navbar-fixed-side navbar-fixed-side-left bg-dark" ng-include="'/storyNav'"
+            <div ng-hide="accountAccess < 0" id="dashboardSelector" class="navbar-fixed-side navbar-fixed-side-left bg-dark" ng-include="'/storyNav'"
                 ng-class="dashboardClass">
             </div>
             <main ng-class="mainContent" role="main" class="container-fluid pt-3">
