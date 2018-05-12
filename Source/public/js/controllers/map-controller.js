@@ -553,6 +553,40 @@ angular.module('mapController', [])
 			shapes.push(MPW);
 
 	
+	
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	MCNARY HALL	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			var path = [
+				new google.maps.LatLng(44.56449258883667, -123.27195042391395),
+				new google.maps.LatLng(44.56449449980609, -123.27180022020912),
+				new google.maps.LatLng(44.56448112301888, -123.27180022020912),
+				new google.maps.LatLng(44.56448112301888, -123.27129462380981),
+				new google.maps.LatLng(44.564368375690044, -123.27128791828727),
+				new google.maps.LatLng(44.564366464716485, -123.2717961968956),
+				new google.maps.LatLng(44.56430435804165, -123.2717961968956),
+				new google.maps.LatLng(44.56430149157815, -123.27240505834197),
+				new google.maps.LatLng(44.564415194522596, -123.27240103502845),
+				new google.maps.LatLng(44.5644218829242, -123.27194640060043)
+			];
+			var Mcnary = new google.maps.Polygon({
+				path: path,
+				strokeColor: "#DC4405",
+				strokeOpacity: 1.0,
+				strokeWeight: 2
+			});
+			
+			//Creates pop up html when polygon is clicked.
+			Mcnary.setMap($scope.map);
+			google.maps.event.addListener(Mcnary, 'click', function (event) {
+				infoWindow.setContent(
+					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Mcnary Hall" + "</h5>" +
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+				);
+				infoWindow.setPosition(event.latLng);
+				infoWindow.open($scope.map);
+			});
+			shapes.push(Mcnary);
 
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			////////////////////////////////////	MCNARY DINING CENTER	///////////////////////////////////////////////////
@@ -1338,20 +1372,6 @@ angular.module('mapController', [])
 							new google.maps.LatLng(44.5650714185324, -123.2765981554985),
 							new google.maps.LatLng(44.56519324149491, -123.27660016715527),
 							new google.maps.LatLng(44.565194196968115, -123.27654853463173)
-                ]},
-				mcnary: {name: "Mcnary Hall",
-							path: [
-							new google.maps.LatLng(44.56449258883667, -123.27195042391395),
-							new google.maps.LatLng(44.56449449980609, -123.27180022020912),
-							new google.maps.LatLng(44.56448112301888, -123.27180022020912),
-							new google.maps.LatLng(44.56448112301888, -123.27129462380981),
-							new google.maps.LatLng(44.564368375690044, -123.27128791828727),
-							new google.maps.LatLng(44.564366464716485, -123.2717961968956),
-							new google.maps.LatLng(44.56430435804165, -123.2717961968956),
-							new google.maps.LatLng(44.56430149157815, -123.27240505834197),
-							new google.maps.LatLng(44.564415194522596, -123.27240103502845),
-							new google.maps.LatLng(44.5644218829242, -123.27194640060043)
-							
                 ]},
 				dryden: {name: "Dryden Hall",
 							path : [
