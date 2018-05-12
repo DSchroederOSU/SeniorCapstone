@@ -8,6 +8,14 @@ angular.module('mapController', [])
             });
 
 		};
+		
+		//FUNCTIONALITY OF GOOGLE MAPS METHODS AND VARIABLES CAN BE FOUND IN THE GOOGLE MAPS DOCUMENTATION
+		
+		//POLYGON CREATION FOR NEW BUILDINGS CAN BE MADE SIMPLY AND QUICKLY USING: https://www.doogal.co.uk/polylines.php
+		
+		//TO ADD NEW BUILDING POLYGON, SIMPLY COPY AND PASTE ONE OF THE BUILDING POLYGON CREATION CODE SEGMENTS,
+		//CHANGE THE CORRECT VARIABLES TO ASSOCIATE THE CODE TO THE NEW BUILDING, AND REPLACE THE POLYGON COORDINATES WITH
+		//THE NEWLY CREATED COORDINATES FROM THE PROVIDED WEBSITE
         function loadMap() {
 			$scope.map;
 			$scope.markers = [];
@@ -53,7 +61,10 @@ angular.module('mapController', [])
                     //console.log(check);
 				}
             });
-			//Arnold Dining Center
+			
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	Arnold Dining Center	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.56064873786082, -123.27814686300826),
 				new google.maps.LatLng(44.56057038288392, -123.27815759184432),
@@ -77,16 +88,20 @@ angular.module('mapController', [])
 			});
 			arnold_dining_center.setMap($scope.map);
 			shapes.push(arnold_dining_center);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(arnold_dining_center, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Arnold Dining Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 
-			//Bloss
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	BLOSS	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.56024969961465, -123.277697324761),
 				new google.maps.LatLng(44.56024530411668, -123.27732288837637),
@@ -111,17 +126,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Bloss.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Bloss, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Bloss Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Bloss);
 
-			//Buxton
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	BUXTON	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.564468892734894, -123.28211653239123),
 				new google.maps.LatLng(44.56446507079434, -123.28144329792849),
@@ -143,17 +162,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Buxton.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Buxton, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Buxton Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Buxton);
 
-			//Callahan
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	CALLAHANN	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.563975860327574, -123.27392238376888),
 				new google.maps.LatLng(44.56398732624495, -123.2733322977856),
@@ -174,17 +197,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Callahan.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Callahan, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Callahan Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Callahan);
 
-			//Cauthorn
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	CAUTHORN	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.56405994366929, -123.28280049569003),
 				new google.maps.LatLng(44.56378476137159, -123.28280049569003),
@@ -202,17 +229,22 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Cauthorn.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Cauthorn, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Cauthorn Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Cauthorn);
 
-			//CH2M Hill Alumni Center
+
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	CH2M Hill Alumni Center	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.560140384122526, -123.27939945461821),
 				new google.maps.LatLng(44.560140384122526, -123.2786055207498),
@@ -231,17 +263,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			CH2M.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(CH2M, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "CH2M Hill Alumni Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(CH2M);
 
-			//Finley 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	FINLEY	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.56114339102153, -123.277897283441),
 				new google.maps.LatLng(44.56115915742497, -123.277897283441),
@@ -271,17 +307,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Finley.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Finley, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Finley Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Finley);
 
-			//Halsell 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	HALSELL	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.56123563237605, -123.27722337843625),
 				new google.maps.LatLng(44.56123611014515, -123.277177780883),
@@ -371,17 +411,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Halsell.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Halsell, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Halsell Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Halsell);
 
-			//Hawley 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	HAWLEY	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.56446889288068, -123.28282731810759),
 				new google.maps.LatLng(44.56446908387274, -123.28211840997028),
@@ -399,17 +443,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Hawley.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Hawley, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Hawley Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Hawley);
 
-			//ILLC 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	ILLC	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.56000249725427, -123.27628259370613),
 				new google.maps.LatLng(44.56000631948799, -123.27624705443668),
@@ -459,10 +507,12 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			ILLC.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(ILLC, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "ILLC" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -470,7 +520,9 @@ angular.module('mapController', [])
 			shapes.push(ILLC);
 
 
-			//MPW Dining Center 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	MPW DINING CENTER	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.56409606132508, -123.28402572857158),
 				new google.maps.LatLng(44.56409415034256, -123.28304940481758),
@@ -488,47 +540,53 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			MPW.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(MPW, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Marketplace West Dining Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(MPW);
 
-			//Mcnary 
+	
+
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	MCNARY DINING CENTER	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
-				new google.maps.LatLng(44.56449258883667, -123.27195042391395),
-				new google.maps.LatLng(44.56449449980609, -123.27180022020912),
-				new google.maps.LatLng(44.56448112301888, -123.27180022020912),
-				new google.maps.LatLng(44.56448112301888, -123.27129462380981),
-				new google.maps.LatLng(44.564368375690044, -123.27128791828727),
-				new google.maps.LatLng(44.564366464716485, -123.2717961968956),
-				new google.maps.LatLng(44.56430435804165, -123.2717961968956),
-				new google.maps.LatLng(44.56430149157815, -123.27240505834197),
-				new google.maps.LatLng(44.564415194522596, -123.27240103502845),
-				new google.maps.LatLng(44.5644218829242, -123.27194640060043)
+				new google.maps.LatLng(44.56393630293017, -123.27180084586416),
+				new google.maps.LatLng(44.564256392492744, -123.27181023359572),
+				new google.maps.LatLng(44.56425065956085, -123.27239763736998),
+				new google.maps.LatLng(44.56408344879857, -123.27239227295195),
+				new google.maps.LatLng(44.56408249330712, -123.2724553048638),
+				new google.maps.LatLng(44.563925792496775, -123.2724553048638)
 			];
-			var Mcnary = new google.maps.Polygon({
+			var Mcnary_D = new google.maps.Polygon({
 				path: path,
 				strokeColor: "#DC4405",
 				strokeOpacity: 1.0,
 				strokeWeight: 2
 			});
-			Mcnary.setMap($scope.map);
-			google.maps.event.addListener(Mcnary, 'click', function (event) {
+			
+			//Creates pop up html when polygon is clicked.
+			Mcnary_D.setMap($scope.map);
+			google.maps.event.addListener(Mcnary_D, 'click', function (event) {
 				infoWindow.setContent(
-					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Mcnary Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Mcnary Dining Center" + "</h5>" +
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
-			shapes.push(Mcnary);
-
-			//MU 
+			shapes.push(Mcnary_D);
+			
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	MU	///////////////////////////////////////////////////
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 			var path = [
 				new google.maps.LatLng(44.5647086502834, -123.27978247816645),
 				new google.maps.LatLng(44.5647086502834, -123.27982237602555),
@@ -602,17 +660,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			MU.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(MU, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Memorial Union" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(MU);
 
-			//Milam 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	MILAM	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.5664620960863, -123.27958278357983),
 				new google.maps.LatLng(44.566463051538626, -123.27951103448868),
@@ -644,17 +706,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Milam.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Milam, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Milam Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Milam);
 
-			//Milne_Comp_Center 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	MILNE COMPUTER CENTER	///////////////////////////////////////////////////
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 			var path = [
 				new google.maps.LatLng(44.56654092085375, -123.27554404735565),
 				new google.maps.LatLng(44.566543787206896, -123.2750853896141),
@@ -668,17 +734,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Milne_Comp_Center.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Milne_Comp_Center, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Milne Computer Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Milne_Comp_Center);
 
-			//Nash 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	NASH	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.56643295478157, -123.28291743993759),
 				new google.maps.LatLng(44.566431043875845, -123.28248023986816),
@@ -692,17 +762,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Nash.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Nash, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Nash Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Nash);
 
-			//Poling 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	POLING	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.56408106004074, -123.28161522746086),
 				new google.maps.LatLng(44.56408106004074, -123.2814734056592),
@@ -720,17 +794,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Poling.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Poling, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Poling Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Poling);
 
-			//SEC 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	SEC	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.56506329699248, -123.27767707407475),
 				new google.maps.LatLng(44.56506425246783, -123.27757850289345),
@@ -752,17 +830,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			SEC.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(SEC, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Student Experience Center" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(SEC);
 
-			//Tebeau 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	TEBEAU	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.5634972518155, -123.27242597937584),
 				new google.maps.LatLng(44.563495340813304, -123.2723280787468),
@@ -812,10 +894,12 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Tebeau.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Tebeau, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Tebeau Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -823,7 +907,9 @@ angular.module('mapController', [])
 			shapes.push(Tebeau);
 
 
-			//Weatherford 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	WEATHERFORD	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.56443506855793, -123.28118607401848),
 				new google.maps.LatLng(44.56443554630076, -123.28106302767992),
@@ -915,17 +1001,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Weatherford.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Weatherford, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Weatherford Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Weatherford);
 
-			//Weniger 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	WENIGER	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.56812073775991, -123.27769450843334),
 				new google.maps.LatLng(44.56830370138455, -123.27769383788109),
@@ -955,17 +1045,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Weniger.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Weniger, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Weniger Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(Weniger);
 
-			//West 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	WEST	///////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			var path = [
 				new google.maps.LatLng(44.563896411018696, -123.28415762633085),
 				new google.maps.LatLng(44.56389569439779, -123.28406978398561),
@@ -995,17 +1089,21 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			West.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(West, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "West Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
 			});
 			shapes.push(West);
 
-			//Wilson 
+			////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////	WILSON	///////////////////////////////////////////////////
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 			var path = [
 				new google.maps.LatLng(44.563827376499, -123.27238373458385),
 				new google.maps.LatLng(44.563888050441086, -123.27238574624062),
@@ -1025,10 +1123,12 @@ angular.module('mapController', [])
 				strokeWeight: 2
 			});
 			Wilson.setMap($scope.map);
+			
+			//Creates pop up html when polygon is clicked.
 			google.maps.event.addListener(Wilson, 'click', function (event) {
 				infoWindow.setContent(
 					"<h5 class='Stratum2-Light' style='width:150px; min-height:30px'>" + "Wilson Hall" + "</h5>" +
-					"<a ng-click='viewBuilding(building)' href='#viewBuilding' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
+					"<a ng-click='viewBuilding(building)' href='#allBuildings' class='btn' style='color: white; background-color: #DC4405 !important;'>View</a>"
 				);
 				infoWindow.setPosition(event.latLng);
 				infoWindow.open($scope.map);
@@ -1036,6 +1136,7 @@ angular.module('mapController', [])
 			shapes.push(Wilson);
 
 		};
+
 
         function buildMapObject(obj, path){
             var infoWindow = new google.maps.InfoWindow;
@@ -1047,6 +1148,7 @@ angular.module('mapController', [])
             });
             map.setMap($scope.map);
             $scope.b = obj;
+			
             var content = '<div><h5 class="Stratum2-Light" style="width:150px; min-height:30px">' + obj.name + '</h5>' +
                 '<button ng-controller="buildingController" ng-click="view()" '+
                 'class="btn" style="color: white; background-color: #DC4405 !important;">View</button>  </div>';
@@ -1068,53 +1170,54 @@ angular.module('mapController', [])
 		}
         function getPaths(){
         	return {
-        		dixon: {name: "Dixon Recreation Center", path : [
-                    new google.maps.LatLng(44.56370832164261, -123.27905881407332),
-                    new google.maps.LatLng(44.56371023263777, -123.27824074032378),
-                    new google.maps.LatLng(44.56340638361597, -123.2782434225328),
-                    new google.maps.LatLng(44.56340447261081, -123.27832657101226),
-                    new google.maps.LatLng(44.563391095572946, -123.27831852438521),
-                    new google.maps.LatLng(44.56338918456728, -123.2781897783525),
-                    new google.maps.LatLng(44.563322299329585, -123.27818441393447),
-                    new google.maps.LatLng(44.56332038832165, -123.27822196486068),
-                    new google.maps.LatLng(44.563274524112714, -123.27822196486068),
-                    new google.maps.LatLng(44.563274524112714, -123.27830779554915),
-                    new google.maps.LatLng(44.56324585896378, -123.27831315996718),
-                    new google.maps.LatLng(44.56324585896378, -123.27816563847136),
-                    new google.maps.LatLng(44.56295156258851, -123.27816832068038),
-                    new google.maps.LatLng(44.56295156258851, -123.27845263483596),
-                    new google.maps.LatLng(44.5629255727127, -123.27845075727737),
-                    new google.maps.LatLng(44.562924521652626, -123.27846121788639),
-                    new google.maps.LatLng(44.56288152366525, -123.27846188843864),
-                    new google.maps.LatLng(44.56288247917641, -123.27844043076652),
-                    new google.maps.LatLng(44.56287101304127, -123.27844043076652),
-                    new google.maps.LatLng(44.562871968552614, -123.27827145159858),
-                    new google.maps.LatLng(44.56259534736897, -123.27827078104633),
-                    new google.maps.LatLng(44.56259439185307, -123.27832710743564),
-                    new google.maps.LatLng(44.56258388117721, -123.27832710743564),
-                    new google.maps.LatLng(44.56258388117721, -123.27841293812412),
-                    new google.maps.LatLng(44.56259458295334, -123.27841313928673),
-                    new google.maps.LatLng(44.56259486961103, -123.27844043076652),
-                    new google.maps.LatLng(44.56258579220935, -123.27844110131878),
-                    new google.maps.LatLng(44.56258483669329, -123.278481334454),
-                    new google.maps.LatLng(44.56256238206162, -123.278481334454),
-                    new google.maps.LatLng(44.56256094878696, -123.27879515291897),
-                    new google.maps.LatLng(44.56259439185307, -123.27879515291897),
-                    new google.maps.LatLng(44.56259343633717, -123.27887427808491),
-                    new google.maps.LatLng(44.562581492387, -123.27887561918942),
-                    new google.maps.LatLng(44.562581492387, -123.27895876766888),
-                    new google.maps.LatLng(44.56256668188538, -123.27896010877339),
-                    new google.maps.LatLng(44.56256620412718, -123.2791337818071),
-                    new google.maps.LatLng(44.562666533244226, -123.2791337818071),
-                    new google.maps.LatLng(44.5626670110016, -123.27915523947922),
-                    new google.maps.LatLng(44.563098902060844, -123.27915859224049),
-                    new google.maps.LatLng(44.56310081307605, -123.27907343210427),
-                    new google.maps.LatLng(44.56322646218748, -123.27907611431328),
-                    new google.maps.LatLng(44.56322837319847, -123.27919077874867),
-                    new google.maps.LatLng(44.563474893121125, -123.27919077874867),
-                    new google.maps.LatLng(44.56347680412395, -123.27914786340443),
-                    new google.maps.LatLng(44.56357378743596, -123.27914585174767),
-                    new google.maps.LatLng(44.56357569843555, -123.27905935050694)
+        		dixon: {name: "Dixon Recreation Center", 
+							path : [
+							new google.maps.LatLng(44.56370832164261, -123.27905881407332),
+							new google.maps.LatLng(44.56371023263777, -123.27824074032378),
+							new google.maps.LatLng(44.56340638361597, -123.2782434225328),
+							new google.maps.LatLng(44.56340447261081, -123.27832657101226),
+							new google.maps.LatLng(44.563391095572946, -123.27831852438521),
+							new google.maps.LatLng(44.56338918456728, -123.2781897783525),
+							new google.maps.LatLng(44.563322299329585, -123.27818441393447),
+							new google.maps.LatLng(44.56332038832165, -123.27822196486068),
+							new google.maps.LatLng(44.563274524112714, -123.27822196486068),
+							new google.maps.LatLng(44.563274524112714, -123.27830779554915),
+							new google.maps.LatLng(44.56324585896378, -123.27831315996718),
+							new google.maps.LatLng(44.56324585896378, -123.27816563847136),
+							new google.maps.LatLng(44.56295156258851, -123.27816832068038),
+							new google.maps.LatLng(44.56295156258851, -123.27845263483596),
+							new google.maps.LatLng(44.5629255727127, -123.27845075727737),
+							new google.maps.LatLng(44.562924521652626, -123.27846121788639),
+							new google.maps.LatLng(44.56288152366525, -123.27846188843864),
+							new google.maps.LatLng(44.56288247917641, -123.27844043076652),
+							new google.maps.LatLng(44.56287101304127, -123.27844043076652),
+							new google.maps.LatLng(44.562871968552614, -123.27827145159858),
+							new google.maps.LatLng(44.56259534736897, -123.27827078104633),
+							new google.maps.LatLng(44.56259439185307, -123.27832710743564),
+							new google.maps.LatLng(44.56258388117721, -123.27832710743564),
+							new google.maps.LatLng(44.56258388117721, -123.27841293812412),
+							new google.maps.LatLng(44.56259458295334, -123.27841313928673),
+							new google.maps.LatLng(44.56259486961103, -123.27844043076652),
+							new google.maps.LatLng(44.56258579220935, -123.27844110131878),
+							new google.maps.LatLng(44.56258483669329, -123.278481334454),
+							new google.maps.LatLng(44.56256238206162, -123.278481334454),
+							new google.maps.LatLng(44.56256094878696, -123.27879515291897),
+							new google.maps.LatLng(44.56259439185307, -123.27879515291897),
+							new google.maps.LatLng(44.56259343633717, -123.27887427808491),
+							new google.maps.LatLng(44.562581492387, -123.27887561918942),
+							new google.maps.LatLng(44.562581492387, -123.27895876766888),
+							new google.maps.LatLng(44.56256668188538, -123.27896010877339),
+							new google.maps.LatLng(44.56256620412718, -123.2791337818071),
+							new google.maps.LatLng(44.562666533244226, -123.2791337818071),
+							new google.maps.LatLng(44.5626670110016, -123.27915523947922),
+							new google.maps.LatLng(44.563098902060844, -123.27915859224049),
+							new google.maps.LatLng(44.56310081307605, -123.27907343210427),
+							new google.maps.LatLng(44.56322646218748, -123.27907611431328),
+							new google.maps.LatLng(44.56322837319847, -123.27919077874867),
+							new google.maps.LatLng(44.563474893121125, -123.27919077874867),
+							new google.maps.LatLng(44.56347680412395, -123.27914786340443),
+							new google.maps.LatLng(44.56357378743596, -123.27914585174767),
+							new google.maps.LatLng(44.56357569843555, -123.27905935050694)
                 ]},
 				sackett : {name: "Sackett Hall",
 					        path : [
@@ -1167,10 +1270,11 @@ angular.module('mapController', [])
 							new google.maps.LatLng(44.56503558820076, -123.28378714621067),
 							new google.maps.LatLng(44.56503463272493, -123.28393332660198),
 							new google.maps.LatLng(44.564850225599336, -123.28393399715424)
-                ]},
+				]},
                 kelley:
 					{name: "Kelley Engineering Center",
-					 path: [new google.maps.LatLng(44.56718302819598, -123.27931201462889),
+							path : 
+							[new google.maps.LatLng(44.56718302819598, -123.27931201462889),
 							new google.maps.LatLng(44.56718374477637, -123.27925937627697),
 							new google.maps.LatLng(44.56717227948899, -123.27925769989633),
 							new google.maps.LatLng(44.567172040628826, -123.2789764032259),
@@ -1194,64 +1298,77 @@ angular.module('mapController', [])
 							new google.maps.LatLng(44.56696518737582, -123.27927245204592),
 							new google.maps.LatLng(44.56710539860091, -123.2792734578743),
 							new google.maps.LatLng(44.56710587632182, -123.2793110088005)
-							]
-					},
+				]},
 				valley: {name: "Valley Library",
-				path: [
-                    new google.maps.LatLng(44.56537334791716, -123.27654987573624),
-                    new google.maps.LatLng(44.56537764753316, -123.27606976032257),
-                    new google.maps.LatLng(44.56539914560839, -123.27606908977032),
-                    new google.maps.LatLng(44.565400578813126, -123.27595576643944),
-                    new google.maps.LatLng(44.565377169798076, -123.27595710754395),
-                    new google.maps.LatLng(44.56537764753316, -123.27566608786583),
-                    new google.maps.LatLng(44.56538290261896, -123.27563591301441),
-                    new google.maps.LatLng(44.5653824248839, -123.27557288110256),
-                    new google.maps.LatLng(44.565359971332036, -123.27557019889355),
-                    new google.maps.LatLng(44.565359971332036, -123.27554270625114),
-                    new google.maps.LatLng(44.565351849832425, -123.27551521360874),
-                    new google.maps.LatLng(44.56534325059629, -123.27549107372761),
-                    new google.maps.LatLng(44.56532796306226, -123.27547095716),
-                    new google.maps.LatLng(44.565312197788586, -123.27545687556267),
-                    new google.maps.LatLng(44.56529069968123, -123.27544882893562),
-                    new google.maps.LatLng(44.56526872382994, -123.27544748783112),
-                    new google.maps.LatLng(44.56524961438728, -123.2754535228014),
-                    new google.maps.LatLng(44.56523384909239, -123.27546492218971),
-                    new google.maps.LatLng(44.565217128320384, -123.27548369765282),
-                    new google.maps.LatLng(44.565204707172356, -123.27550783753395),
-                    new google.maps.LatLng(44.565197063387636, -123.27553197741508),
-                    new google.maps.LatLng(44.56519563017789, -123.27559299767017),
-                    new google.maps.LatLng(44.565165532765064, -123.27559232711792),
-                    new google.maps.LatLng(44.565164099554536, -123.27553868293762),
-                    new google.maps.LatLng(44.565077629120964, -123.27557288110256),
-                    new google.maps.LatLng(44.56507619590827, -123.27561914920807),
-                    new google.maps.LatLng(44.56490850977993, -123.27561780810356),
-                    new google.maps.LatLng(44.564908032040975, -123.27570766210556),
-                    new google.maps.LatLng(44.56476279921892, -123.2757056504488),
-                    new google.maps.LatLng(44.564755155376126, -123.27652104198933),
-                    new google.maps.LatLng(44.564754199895724, -123.27661626040936),
-                    new google.maps.LatLng(44.5648526142964, -123.27661693096161),
-                    new google.maps.LatLng(44.56485452525399, -123.27652305364609),
-                    new google.maps.LatLng(44.5650714185324, -123.27652774751186),
-                    new google.maps.LatLng(44.5650714185324, -123.2765981554985),
-                    new google.maps.LatLng(44.56519324149491, -123.27660016715527),
-                    new google.maps.LatLng(44.565194196968115, -123.27654853463173)
+							path: [
+							new google.maps.LatLng(44.56537334791716, -123.27654987573624),
+							new google.maps.LatLng(44.56537764753316, -123.27606976032257),
+							new google.maps.LatLng(44.56539914560839, -123.27606908977032),
+							new google.maps.LatLng(44.565400578813126, -123.27595576643944),
+							new google.maps.LatLng(44.565377169798076, -123.27595710754395),
+							new google.maps.LatLng(44.56537764753316, -123.27566608786583),
+							new google.maps.LatLng(44.56538290261896, -123.27563591301441),
+							new google.maps.LatLng(44.5653824248839, -123.27557288110256),
+							new google.maps.LatLng(44.565359971332036, -123.27557019889355),
+							new google.maps.LatLng(44.565359971332036, -123.27554270625114),
+							new google.maps.LatLng(44.565351849832425, -123.27551521360874),
+							new google.maps.LatLng(44.56534325059629, -123.27549107372761),
+							new google.maps.LatLng(44.56532796306226, -123.27547095716),
+							new google.maps.LatLng(44.565312197788586, -123.27545687556267),
+							new google.maps.LatLng(44.56529069968123, -123.27544882893562),
+							new google.maps.LatLng(44.56526872382994, -123.27544748783112),
+							new google.maps.LatLng(44.56524961438728, -123.2754535228014),
+							new google.maps.LatLng(44.56523384909239, -123.27546492218971),
+							new google.maps.LatLng(44.565217128320384, -123.27548369765282),
+							new google.maps.LatLng(44.565204707172356, -123.27550783753395),
+							new google.maps.LatLng(44.565197063387636, -123.27553197741508),
+							new google.maps.LatLng(44.56519563017789, -123.27559299767017),
+							new google.maps.LatLng(44.565165532765064, -123.27559232711792),
+							new google.maps.LatLng(44.565164099554536, -123.27553868293762),
+							new google.maps.LatLng(44.565077629120964, -123.27557288110256),
+							new google.maps.LatLng(44.56507619590827, -123.27561914920807),
+							new google.maps.LatLng(44.56490850977993, -123.27561780810356),
+							new google.maps.LatLng(44.564908032040975, -123.27570766210556),
+							new google.maps.LatLng(44.56476279921892, -123.2757056504488),
+							new google.maps.LatLng(44.564755155376126, -123.27652104198933),
+							new google.maps.LatLng(44.564754199895724, -123.27661626040936),
+							new google.maps.LatLng(44.5648526142964, -123.27661693096161),
+							new google.maps.LatLng(44.56485452525399, -123.27652305364609),
+							new google.maps.LatLng(44.5650714185324, -123.27652774751186),
+							new google.maps.LatLng(44.5650714185324, -123.2765981554985),
+							new google.maps.LatLng(44.56519324149491, -123.27660016715527),
+							new google.maps.LatLng(44.565194196968115, -123.27654853463173)
+                ]},
+				mcnary: {name: "Mcnary Hall",
+							path: [
+							new google.maps.LatLng(44.56449258883667, -123.27195042391395),
+							new google.maps.LatLng(44.56449449980609, -123.27180022020912),
+							new google.maps.LatLng(44.56448112301888, -123.27180022020912),
+							new google.maps.LatLng(44.56448112301888, -123.27129462380981),
+							new google.maps.LatLng(44.564368375690044, -123.27128791828727),
+							new google.maps.LatLng(44.564366464716485, -123.2717961968956),
+							new google.maps.LatLng(44.56430435804165, -123.2717961968956),
+							new google.maps.LatLng(44.56430149157815, -123.27240505834197),
+							new google.maps.LatLng(44.564415194522596, -123.27240103502845),
+							new google.maps.LatLng(44.5644218829242, -123.27194640060043)
+							
                 ]},
 				dryden: {name: "Dryden Hall",
-                    path : [
-                        new google.maps.LatLng(44.56322598446386, -123.2849756331234),
-                        new google.maps.LatLng(44.56322569779472, -123.285184711267),
-                        new google.maps.LatLng(44.563220920266865, -123.28518571709537),
-                        new google.maps.LatLng(44.563221398019664, -123.2852896526947),
-                        new google.maps.LatLng(44.56314758516507, -123.28528931741857),
-                        new google.maps.LatLng(44.56314686853495, -123.28518772875213),
-                        new google.maps.LatLng(44.562932834597596, -123.2851860523715),
-                        new google.maps.LatLng(44.56293259572, -123.28519342844629),
-                        new google.maps.LatLng(44.56287478731172, -123.28519342840536),
-                        new google.maps.LatLng(44.56287478731172, -123.28497449309452),
-                        new google.maps.LatLng(44.56293104301569, -123.28497469425201),
-                        new google.maps.LatLng(44.562931162454475, -123.28498153389319),
-                        new google.maps.LatLng(44.56317171170715, -123.28498086334093),
-                        new google.maps.LatLng(44.56317171170715, -123.2849741578184)
+							path : [
+							new google.maps.LatLng(44.56322598446386, -123.2849756331234),
+							new google.maps.LatLng(44.56322569779472, -123.285184711267),
+							new google.maps.LatLng(44.563220920266865, -123.28518571709537),
+							new google.maps.LatLng(44.563221398019664, -123.2852896526947),
+							new google.maps.LatLng(44.56314758516507, -123.28528931741857),
+							new google.maps.LatLng(44.56314686853495, -123.28518772875213),
+							new google.maps.LatLng(44.562932834597596, -123.2851860523715),
+							new google.maps.LatLng(44.56293259572, -123.28519342844629),
+							new google.maps.LatLng(44.56287478731172, -123.28519342840536),
+							new google.maps.LatLng(44.56287478731172, -123.28497449309452),
+							new google.maps.LatLng(44.56293104301569, -123.28497469425201),
+							new google.maps.LatLng(44.562931162454475, -123.28498153389319),
+							new google.maps.LatLng(44.56317171170715, -123.28498086334093),
+							new google.maps.LatLng(44.56317171170715, -123.2849741578184)
                     ]}
 			}
 		}
