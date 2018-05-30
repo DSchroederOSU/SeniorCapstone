@@ -2,11 +2,9 @@
 \usepackage[margin=0.75in]{geometry} 
 \usepackage{pdfpages} 
 \usepackage{graphicx}  
+
 \graphicspath{/images} 
 \usepackage[english]{babel}
- 
-\usepackage{color}
-
 \usepackage{blindtext}
 
 \makeatletter
@@ -37,6 +35,7 @@ text width=7em, text centered, rounded corners, minimum height=2em]
 \usepackage{url}
 \usepackage{setspace}
 \usepackage{geometry}
+\geometry{textheight=9.5in, textwidth=7in}
 \usepackage{hyperref}
 \usepackage{caption} 
 \usepackage{float} 
@@ -50,6 +49,40 @@ text width=7em, text centered, rounded corners, minimum height=2em]
     urlcolor=black
 }
 \geometry{textheight=9.5in, textwidth=7in}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{cite}
+\lstdefinelanguage{JavaScript}{
+    keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+    keywordstyle=\color{blue}\bfseries,
+    ndkeywords={class, export, boolean, throw, implements, import, this},
+    ndkeywordstyle=\color{darkgray}\bfseries,
+    identifierstyle=\color{black},
+    sensitive=false,
+    comment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    commentstyle=\color{purple}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    morestring=[b]',
+    morestring=[b]"
+  }
+  \lstset{
+    language=JavaScript,
+    backgroundcolor=\color{lightgray},
+    extendedchars=true,
+    basicstyle=\footnotesize\ttfamily,
+    linewidth=7in,
+    xleftmargin=.25in,
+    showstringspaces=false,
+    showspaces=false,
+    numbers=left,
+    numberstyle=\footnotesize,
+    numbersep=9pt,
+    tabsize=2,
+    breaklines=true,
+    showtabs=false,
+    captionpos=b
+ }
 
 % 1. Fill in these details
 \def \CapstoneTeamName{		The Dream Team}
@@ -114,6 +147,7 @@ text width=7em, text centered, rounded corners, minimum height=2em]
 include the original document, showing what you thought, at the time, was the project design
 Add (your client should have okay'd): What design aspects were changed, deleted or added? Why? 
 \section{Tech Review (original)}
+%\input{documents/tech_review}
 \section{Weekly Blog Posts (all team members' posts)}
 formatted nicely and clearly distinct from one another
 include all members posts, clearly distinct, clearly organized
@@ -150,5 +184,6 @@ You don't have to include absolutely everything, but if someone wants to underst
 Photos, etc.
 \input{documents/appendix}
 
-
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
 \end{document}
