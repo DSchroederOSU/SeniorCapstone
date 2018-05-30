@@ -1,0 +1,154 @@
+\documentclass[journal,10pt,onecolumn,compsoc]{IEEEtran} 
+\usepackage[margin=0.75in]{geometry} 
+\usepackage{pdfpages} 
+\usepackage{graphicx}  
+\graphicspath{/images} 
+\usepackage[english]{babel}
+ 
+\usepackage{color}
+
+\usepackage{blindtext}
+
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{0ex}%
+   {-3.25ex plus -1ex minus -0.2ex}%
+   {1.5ex plus 0.2ex}%
+   {\normalfont\normalsize\itshape}}
+\makeatother
+\stepcounter{secnumdepth}
+\stepcounter{tocdepth}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+text width=5.5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{subblock} = [rectangle, draw, fill=blue!20, 
+text width=7em, text centered, rounded corners, minimum height=2em]
+\tikzstyle{datablock} = [rectangle, draw, fill=red!20, 
+text width=7em, text centered, rounded corners, minimum height=2em]
+\tikzstyle{line} = [draw, -latex']  
+
+\newenvironment{paddedtikzpicture}{\vspace*{0.5cm}
+\begin{center}\begin{tikzpicture}}
+{\
+\end{tikzpicture}\end{center}
+}  
+\setlength{\parskip}{\baselineskip} \setlength\parindent{24pt}
+\usepackage{url}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{caption} 
+\usepackage{float} 
+\usepackage{rotating} 
+\usepackage{ragged2e} % provides \RaggedLeft
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+\geometry{textheight=9.5in, textwidth=7in}
+
+% 1. Fill in these details
+\def \CapstoneTeamName{		The Dream Team}
+\def \CapstoneTeamNumber{		57}
+\def \GroupMemberOne{			Daniel Schroeder}
+\def \GroupMemberTwo{			Aubrey Thenell}
+\def \GroupMemberThree{			Parker Bruni}
+\def \CapstoneProjectName{		A Scalable Web Application Framework for Monitoring Energy Usage on Campus  }
+\def \CapstoneSponsorCompany{	Oregon State Office of Sustainability}
+\def \CapstoneSponsorPerson{		Jack Woods}
+
+% 2. Uncomment the appropriate line below so that the document type works
+\def \DocType{		%Problem Statement
+        %Requirements Document
+        %Technology Review
+        Design Document
+        %Progress Report
+        }
+        
+\newcommand{\NameSigPair}[1]{\par
+\makebox[2.75in][r]{#1} \hfil 	\makebox[3.25in]{\makebox[2.25in]{\hrulefill} \hfill		\makebox[.75in]{\hrulefill}}
+\par\vspace{-12pt} \textit{\tiny\noindent
+\makebox[2.75in]{} \hfil		\makebox[3.25in]{\makebox[2.25in][r]{Signature} \hfill	\makebox[.75in][r]{Date}}}}
+% 3. If the document is not to be signed, uncomment the RENEWcommand below
+%\renewcommand{\NameSigPair}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Design Document for: \linebreak Scalable Web Application Framework for Monitoring Energy Usage on Campus}
+\author{Daniel Schroeder, Aubrey Thenell, Parker Bruni}
+\date{\today}
+
+\begin{document}
+\maketitle
+\vspace{2cm}
+\begin{center}
+\noindent \textbf{Abstract} \\
+            \indent The purpose of this document is to outline the architecture and component design for a Scalable Web Application Framework for Monitoring Energy Usage on Campus. The designs for each modular component are discussed in detail, outlining the data residing in each object and the functionality it holds in the application. Additionally, this document aims to discuss the rationale for each design decision and the interactions between individual components. 
+\end{center}         
+
+\newpage
+\pagenumbering{arabic}
+\tableofcontents
+    
+% 8. now you write! 
+\section{Introduction to Project} 
+(Hint, refer to project proposal and problem statement)
+\subsection{Who requested it?}
+\subsection{Why was it requested?}
+\subsection{What is its importance?}
+\subsection{Who was/were your client(s)?}
+\subsection{Who are the members of your team?}
+\subsection{What were their roles?}
+\subsection{What was the role of the client(s)?} (I.e., did they supervise only, or did they participate in doing development)
+\section{Requirements Document}
+%%%%%%% ---------------------------------
+% Insert the requirements document
+%%%%%%% ---------------------------------
+\input{documents/requirements}
+
+\section{Design Document (original)}
+\input{documents/design}
+include the original document, showing what you thought, at the time, was the project design
+Add (your client should have okay'd): What design aspects were changed, deleted or added? Why? 
+\section{Tech Review (original)}
+\section{Weekly Blog Posts (all team members' posts)}
+formatted nicely and clearly distinct from one another
+include all members posts, clearly distinct, clearly organized
+\section{Final Poster}
+scaled to fit on a color-printed on a single 8.5"x11" paper.
+\section{Project Documentation}
+\subsection{How does your project work? (Could include the following...)}
+\begin{itemize}
+\item What is its structure?
+\item What is its Theory of Operation?
+\item Block and flow diagrams are good here.
+\end{itemize}
+\subsection{How does one install your software, if any?}
+\subsection{How does one run it?}
+\subsection{Are there any special hardware, OS, or runtime requirements to run your software?}
+\subsection{Any user guides, API documentation, etc.}
+This needs to be detailed enough to recreate and/or use your project!
+\section{Recommended Technical Resources for Learning More}
+What web sites were helpful? (Listed in order of helpfulness.)
+What, if any, reference books really helped?
+Were there any people on campus that were really helpful?
+\section{Conclusions and Reflections (each team member answers all questions individually)}
+What technical information did you learn?
+What non-technical information did you learn?
+What have you learned about project work?
+What have you learned about project management?
+What have you learned about working in teams?
+If you could do it all over, what would you do differently?
+Be honest here -- no B.S.
+
+\section{Appendix 1: Essential Code Listings.}
+You don't have to include absolutely everything, but if someone wants to understand your project, there should be enough here to learn from. If you worked within a larger project, something like a patch file might be a good way to go.
+\section{Appendix 2: Anything else you want to include.}
+Photos, etc.
+\input{documents/appendix}
+
+
+\end{document}

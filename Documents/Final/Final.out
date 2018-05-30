@@ -1,0 +1,134 @@
+\BOOKMARK [1][-]{section.1}{Introduction to Project}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Who requested it?}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Why was it requested?}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{What is its importance?}{section.1}% 4
+\BOOKMARK [2][-]{subsection.1.4}{Who was/were your client\(s\)?}{section.1}% 5
+\BOOKMARK [2][-]{subsection.1.5}{Who are the members of your team?}{section.1}% 6
+\BOOKMARK [2][-]{subsection.1.6}{What were their roles?}{section.1}% 7
+\BOOKMARK [2][-]{subsection.1.7}{What was the role of the client\(s\)?}{section.1}% 8
+\BOOKMARK [1][-]{section.2}{Requirements Document}{}% 9
+\BOOKMARK [2][-]{subsection.2.1}{Introduction}{section.2}% 10
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Purpose}{subsection.2.1}% 11
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Scope}{subsection.2.1}% 12
+\BOOKMARK [3][-]{subsubsection.2.1.3}{Definitions, acronyms, and abbreviations}{subsection.2.1}% 13
+\BOOKMARK [3][-]{subsubsection.2.1.4}{References}{subsection.2.1}% 14
+\BOOKMARK [3][-]{subsubsection.2.1.5}{Document Overview}{subsection.2.1}% 15
+\BOOKMARK [2][-]{subsection.2.2}{Overall description}{section.2}% 16
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Product perspective}{subsection.2.2}% 17
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Product functions}{subsection.2.2}% 18
+\BOOKMARK [3][-]{subsubsection.2.2.3}{User characteristics}{subsection.2.2}% 19
+\BOOKMARK [3][-]{subsubsection.2.2.4}{Constraints}{subsection.2.2}% 20
+\BOOKMARK [3][-]{subsubsection.2.2.5}{Assumptions and Dependencies}{subsection.2.2}% 21
+\BOOKMARK [3][-]{subsubsection.2.2.6}{Apportioning of Requirements}{subsection.2.2}% 22
+\BOOKMARK [2][-]{subsection.2.3}{Specific Requirements}{section.2}% 23
+\BOOKMARK [3][-]{subsubsection.2.3.1}{External Interfaces}{subsection.2.3}% 24
+\BOOKMARK [3][-]{subsubsection.2.3.2}{Functions}{subsection.2.3}% 25
+\BOOKMARK [3][-]{subsubsection.2.3.3}{Performance Requirements}{subsection.2.3}% 26
+\BOOKMARK [4][-]{paragraph.2.3.3.1}{Users}{subsubsection.2.3.3}% 27
+\BOOKMARK [4][-]{paragraph.2.3.3.2}{Data Management}{subsubsection.2.3.3}% 28
+\BOOKMARK [4][-]{paragraph.2.3.3.3}{Visualization}{subsubsection.2.3.3}% 29
+\BOOKMARK [4][-]{paragraph.2.3.3.4}{Objects}{subsubsection.2.3.3}% 30
+\BOOKMARK [3][-]{subsubsection.2.3.4}{Logical Database Requirements}{subsection.2.3}% 31
+\BOOKMARK [3][-]{subsubsection.2.3.5}{Design Constraints}{subsection.2.3}% 32
+\BOOKMARK [4][-]{paragraph.2.3.5.1}{Standards Compliance}{subsubsection.2.3.5}% 33
+\BOOKMARK [3][-]{subsubsection.2.3.6}{Software System Attributes}{subsection.2.3}% 34
+\BOOKMARK [4][-]{paragraph.2.3.6.1}{Reliability}{subsubsection.2.3.6}% 35
+\BOOKMARK [4][-]{paragraph.2.3.6.2}{Availability}{subsubsection.2.3.6}% 36
+\BOOKMARK [4][-]{paragraph.2.3.6.3}{Security}{subsubsection.2.3.6}% 37
+\BOOKMARK [4][-]{paragraph.2.3.6.4}{Maintainability}{subsubsection.2.3.6}% 38
+\BOOKMARK [4][-]{paragraph.2.3.6.5}{Portability}{subsubsection.2.3.6}% 39
+\BOOKMARK [1][-]{section.3}{Design Document \(original\)}{}% 40
+\BOOKMARK [2][-]{subsection.3.1}{Introduction}{section.3}% 41
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Purpose}{subsection.3.1}% 42
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Scope}{subsection.3.1}% 43
+\BOOKMARK [3][-]{subsubsection.3.1.3}{Overview}{subsection.3.1}% 44
+\BOOKMARK [3][-]{subsubsection.3.1.4}{Reference Material}{subsection.3.1}% 45
+\BOOKMARK [3][-]{subsubsection.3.1.5}{Definitions and Acronyms}{subsection.3.1}% 46
+\BOOKMARK [2][-]{subsection.3.2}{System Overview}{section.3}% 47
+\BOOKMARK [2][-]{subsection.3.3}{Design Viewpoints and Concerns}{section.3}% 48
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Stakeholders and Concerns}{subsection.3.3}% 49
+\BOOKMARK [3][-]{subsubsection.3.3.2}{Design Viewpoints}{subsection.3.3}% 50
+\BOOKMARK [4][-]{paragraph.3.3.2.1}{Context Viewpoint}{subsubsection.3.3.2}% 51
+\BOOKMARK [4][-]{paragraph.3.3.2.2}{Composition Viewpoint}{subsubsection.3.3.2}% 52
+\BOOKMARK [4][-]{paragraph.3.3.2.3}{Dependency Viewpoint}{subsubsection.3.3.2}% 53
+\BOOKMARK [4][-]{paragraph.3.3.2.4}{Information Viewpoint}{subsubsection.3.3.2}% 54
+\BOOKMARK [4][-]{paragraph.3.3.2.5}{Logical Viewpoint}{subsubsection.3.3.2}% 55
+\BOOKMARK [4][-]{paragraph.3.3.2.6}{Interface Viewpoint}{subsubsection.3.3.2}% 56
+\BOOKMARK [4][-]{paragraph.3.3.2.7}{Structure Viewpoint}{subsubsection.3.3.2}% 57
+\BOOKMARK [4][-]{paragraph.3.3.2.8}{Interaction Viewpoint}{subsubsection.3.3.2}% 58
+\BOOKMARK [2][-]{subsection.3.4}{System Architecture}{section.3}% 59
+\BOOKMARK [3][-]{subsubsection.3.4.1}{Architectural Design}{subsection.3.4}% 60
+\BOOKMARK [3][-]{subsubsection.3.4.2}{Decomposition Description}{subsection.3.4}% 61
+\BOOKMARK [4][-]{paragraph.3.4.2.1}{Log In}{subsubsection.3.4.2}% 62
+\BOOKMARK [4][-]{paragraph.3.4.2.2}{Navigation}{subsubsection.3.4.2}% 63
+\BOOKMARK [4][-]{paragraph.3.4.2.3}{Create Block}{subsubsection.3.4.2}% 64
+\BOOKMARK [4][-]{paragraph.3.4.2.4}{View Blocks}{subsubsection.3.4.2}% 65
+\BOOKMARK [4][-]{paragraph.3.4.2.5}{Create Dashboard}{subsubsection.3.4.2}% 66
+\BOOKMARK [4][-]{paragraph.3.4.2.6}{Create Story}{subsubsection.3.4.2}% 67
+\BOOKMARK [4][-]{paragraph.3.4.2.7}{Add Building/Meter}{subsubsection.3.4.2}% 68
+\BOOKMARK [4][-]{paragraph.3.4.2.8}{Create Graph}{subsubsection.3.4.2}% 69
+\BOOKMARK [4][-]{paragraph.3.4.2.9}{Get AcquiSuite Data}{subsubsection.3.4.2}% 70
+\BOOKMARK [3][-]{subsubsection.3.4.3}{Design Rationale}{subsection.3.4}% 71
+\BOOKMARK [2][-]{subsection.3.5}{Component Design}{section.3}% 72
+\BOOKMARK [3][-]{subsubsection.3.5.1}{Block}{subsection.3.5}% 73
+\BOOKMARK [4][-]{paragraph.3.5.1.1}{Element}{subsubsection.3.5.1}% 74
+\BOOKMARK [4][-]{paragraph.3.5.1.2}{Functionality}{subsubsection.3.5.1}% 75
+\BOOKMARK [4][-]{paragraph.3.5.1.3}{Rationale}{subsubsection.3.5.1}% 76
+\BOOKMARK [3][-]{subsubsection.3.5.2}{Dashboard}{subsection.3.5}% 77
+\BOOKMARK [4][-]{paragraph.3.5.2.1}{Element}{subsubsection.3.5.2}% 78
+\BOOKMARK [4][-]{paragraph.3.5.2.2}{Functionality}{subsubsection.3.5.2}% 79
+\BOOKMARK [4][-]{paragraph.3.5.2.3}{Rationale}{subsubsection.3.5.2}% 80
+\BOOKMARK [3][-]{subsubsection.3.5.3}{Login}{subsection.3.5}% 81
+\BOOKMARK [4][-]{paragraph.3.5.3.1}{Element}{subsubsection.3.5.3}% 82
+\BOOKMARK [4][-]{paragraph.3.5.3.2}{Functionality}{subsubsection.3.5.3}% 83
+\BOOKMARK [4][-]{paragraph.3.5.3.3}{Rationale}{subsubsection.3.5.3}% 84
+\BOOKMARK [3][-]{subsubsection.3.5.4}{Navigation Bar}{subsection.3.5}% 85
+\BOOKMARK [4][-]{paragraph.3.5.4.1}{Element}{subsubsection.3.5.4}% 86
+\BOOKMARK [4][-]{paragraph.3.5.4.2}{Functionality}{subsubsection.3.5.4}% 87
+\BOOKMARK [4][-]{paragraph.3.5.4.3}{Rationale}{subsubsection.3.5.4}% 88
+\BOOKMARK [3][-]{subsubsection.3.5.5}{Graph Component}{subsection.3.5}% 89
+\BOOKMARK [4][-]{paragraph.3.5.5.1}{Element}{subsubsection.3.5.5}% 90
+\BOOKMARK [4][-]{paragraph.3.5.5.2}{Functionality}{subsubsection.3.5.5}% 91
+\BOOKMARK [4][-]{paragraph.3.5.5.3}{Rationale}{subsubsection.3.5.5}% 92
+\BOOKMARK [3][-]{subsubsection.3.5.6}{Story}{subsection.3.5}% 93
+\BOOKMARK [4][-]{paragraph.3.5.6.1}{Element}{subsubsection.3.5.6}% 94
+\BOOKMARK [4][-]{paragraph.3.5.6.2}{Functionality}{subsubsection.3.5.6}% 95
+\BOOKMARK [3][-]{subsubsection.3.5.7}{Content View}{subsection.3.5}% 96
+\BOOKMARK [4][-]{paragraph.3.5.7.1}{Element}{subsubsection.3.5.7}% 97
+\BOOKMARK [4][-]{paragraph.3.5.7.2}{Functionality}{subsubsection.3.5.7}% 98
+\BOOKMARK [4][-]{paragraph.3.5.7.3}{Rationale}{subsubsection.3.5.7}% 99
+\BOOKMARK [2][-]{subsection.3.6}{Human Interface Design}{section.3}% 100
+\BOOKMARK [3][-]{subsubsection.3.6.1}{Overview of User Interface}{subsection.3.6}% 101
+\BOOKMARK [4][-]{paragraph.3.6.1.1}{Public User}{subsubsection.3.6.1}% 102
+\BOOKMARK [4][-]{paragraph.3.6.1.2}{Authorized User}{subsubsection.3.6.1}% 103
+\BOOKMARK [4][-]{paragraph.3.6.1.3}{Administrative User}{subsubsection.3.6.1}% 104
+\BOOKMARK [3][-]{subsubsection.3.6.2}{Screen Images}{subsection.3.6}% 105
+\BOOKMARK [4][-]{paragraph.3.6.2.1}{Home Webpage \(Public Access\)}{subsubsection.3.6.2}% 106
+\BOOKMARK [4][-]{paragraph.3.6.2.2}{Home Webpage \(Logged in Access\)}{subsubsection.3.6.2}% 107
+\BOOKMARK [4][-]{paragraph.3.6.2.3}{Buildings Webpage}{subsubsection.3.6.2}% 108
+\BOOKMARK [4][-]{paragraph.3.6.2.4}{Selected Building Page}{subsubsection.3.6.2}% 109
+\BOOKMARK [4][-]{paragraph.3.6.2.5}{Dashboards Page}{subsubsection.3.6.2}% 110
+\BOOKMARK [4][-]{paragraph.3.6.2.6}{Selected Dashboard Webpage}{subsubsection.3.6.2}% 111
+\BOOKMARK [4][-]{paragraph.3.6.2.7}{Story Webage}{subsubsection.3.6.2}% 112
+\BOOKMARK [1][-]{section.4}{Tech Review \(original\)}{}% 113
+\BOOKMARK [1][-]{section.5}{Weekly Blog Posts \(all team members' posts\)}{}% 114
+\BOOKMARK [1][-]{section.6}{Final Poster}{}% 115
+\BOOKMARK [1][-]{section.7}{Project Documentation}{}% 116
+\BOOKMARK [2][-]{subsection.7.1}{How does your project work? \(Could include the following...\)}{section.7}% 117
+\BOOKMARK [2][-]{subsection.7.2}{How does one install your software, if any?}{section.7}% 118
+\BOOKMARK [2][-]{subsection.7.3}{How does one run it?}{section.7}% 119
+\BOOKMARK [2][-]{subsection.7.4}{Are there any special hardware, OS, or runtime requirements to run your software?}{section.7}% 120
+\BOOKMARK [2][-]{subsection.7.5}{Any user guides, API documentation, etc.}{section.7}% 121
+\BOOKMARK [1][-]{section.8}{Recommended Technical Resources for Learning More}{}% 122
+\BOOKMARK [1][-]{section.9}{Conclusions and Reflections \(each team member answers all questions individually\)}{}% 123
+\BOOKMARK [1][-]{section.10}{Appendix 1: Essential Code Listings.}{}% 124
+\BOOKMARK [1][-]{section.11}{Appendix 2: Anything else you want to include.}{}% 125
+\BOOKMARK [2][-]{subsection.11.1}{Design Document Images}{section.11}% 126
+\BOOKMARK [3][-]{subsubsection.11.1.1}{Home Webpage \(Public Access\)}{subsection.11.1}% 127
+\BOOKMARK [3][-]{subsubsection.11.1.2}{Home Webpage \(Logged in Access\)}{subsection.11.1}% 128
+\BOOKMARK [3][-]{subsubsection.11.1.3}{Buildings Webpage}{subsection.11.1}% 129
+\BOOKMARK [3][-]{subsubsection.11.1.4}{Selected Building Page}{subsection.11.1}% 130
+\BOOKMARK [3][-]{subsubsection.11.1.5}{Dashboards Page}{subsection.11.1}% 131
+\BOOKMARK [3][-]{subsubsection.11.1.6}{Selected Dashboard Webpage}{subsection.11.1}% 132
+\BOOKMARK [3][-]{subsubsection.11.1.7}{Stories Webpage}{subsection.11.1}% 133
+\BOOKMARK [2][-]{subsection.11.2}{Technology Review Images}{section.11}% 134
