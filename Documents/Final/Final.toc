@@ -1,153 +1,177 @@
 \select@language {english}
-\contentsline {section}{\numberline {1}Introduction to Project}{6}{section.1}
-\contentsline {subsection}{\numberline {1.1}Who requested it?}{6}{subsection.1.1}
-\contentsline {subsection}{\numberline {1.2}Why was it requested?}{6}{subsection.1.2}
-\contentsline {subsection}{\numberline {1.3}What is its importance?}{6}{subsection.1.3}
-\contentsline {subsection}{\numberline {1.4}Who was/were your client(s)?}{6}{subsection.1.4}
-\contentsline {subsection}{\numberline {1.5}Who are the members of your team?}{6}{subsection.1.5}
-\contentsline {subsection}{\numberline {1.6}What were their roles?}{6}{subsection.1.6}
-\contentsline {subsection}{\numberline {1.7}What was the role of the client(s)?}{6}{subsection.1.7}
-\contentsline {section}{\numberline {2}Requirements Document}{6}{section.2}
-\contentsline {subsection}{\numberline {2.1}Introduction}{6}{subsection.2.1}
-\contentsline {subsubsection}{\numberline {2.1.1}Purpose}{6}{subsubsection.2.1.1}
+\contentsline {section}{\numberline {1}Introduction to Project}{7}{section.1}
+\contentsline {subsection}{\numberline {1.1}Who requested it?}{7}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Why was it requested?}{7}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}What is its importance?}{7}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Who was/were your client(s)?}{7}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Who are the members of your team?}{7}{subsection.1.5}
+\contentsline {subsection}{\numberline {1.6}What were their roles?}{7}{subsection.1.6}
+\contentsline {subsection}{\numberline {1.7}What was the role of the client(s)?}{7}{subsection.1.7}
+\contentsline {section}{\numberline {2}Requirements Document}{7}{section.2}
+\contentsline {subsection}{\numberline {2.1}Introduction}{7}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Purpose}{7}{subsubsection.2.1.1}
 \contentsline {subsubsection}{\numberline {2.1.2}Scope}{7}{subsubsection.2.1.2}
-\contentsline {subsubsection}{\numberline {2.1.3}Definitions, acronyms, and abbreviations}{7}{subsubsection.2.1.3}
-\contentsline {subsubsection}{\numberline {2.1.4}References}{7}{subsubsection.2.1.4}
-\contentsline {subsubsection}{\numberline {2.1.5}Document Overview}{7}{subsubsection.2.1.5}
-\contentsline {subsection}{\numberline {2.2}Overall description}{7}{subsection.2.2}
-\contentsline {subsubsection}{\numberline {2.2.1}Product perspective}{7}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.1.3}Definitions, acronyms, and abbreviations}{8}{subsubsection.2.1.3}
+\contentsline {subsubsection}{\numberline {2.1.4}References}{8}{subsubsection.2.1.4}
+\contentsline {subsubsection}{\numberline {2.1.5}Document Overview}{8}{subsubsection.2.1.5}
+\contentsline {subsection}{\numberline {2.2}Overall description}{8}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Product perspective}{8}{subsubsection.2.2.1}
 \contentsline {subsubsection}{\numberline {2.2.2}Product functions}{8}{subsubsection.2.2.2}
-\contentsline {subsubsection}{\numberline {2.2.3}User characteristics}{8}{subsubsection.2.2.3}
-\contentsline {subsubsection}{\numberline {2.2.4}Constraints}{8}{subsubsection.2.2.4}
-\contentsline {subsubsection}{\numberline {2.2.5}Assumptions and Dependencies}{8}{subsubsection.2.2.5}
-\contentsline {subsubsection}{\numberline {2.2.6}Apportioning of Requirements}{8}{subsubsection.2.2.6}
+\contentsline {subsubsection}{\numberline {2.2.3}User characteristics}{9}{subsubsection.2.2.3}
+\contentsline {subsubsection}{\numberline {2.2.4}Constraints}{9}{subsubsection.2.2.4}
+\contentsline {subsubsection}{\numberline {2.2.5}Assumptions and Dependencies}{9}{subsubsection.2.2.5}
+\contentsline {subsubsection}{\numberline {2.2.6}Apportioning of Requirements}{9}{subsubsection.2.2.6}
 \contentsline {subsection}{\numberline {2.3}Specific Requirements}{9}{subsection.2.3}
 \contentsline {subsubsection}{\numberline {2.3.1}External Interfaces}{9}{subsubsection.2.3.1}
-\contentsline {subsubsection}{\numberline {2.3.2}Functions}{9}{subsubsection.2.3.2}
-\contentsline {subsubsection}{\numberline {2.3.3}Performance Requirements}{9}{subsubsection.2.3.3}
-\contentsline {paragraph}{\numberline {2.3.3.1}Users}{9}{paragraph.2.3.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2}Functions}{10}{subsubsection.2.3.2}
+\contentsline {subsubsection}{\numberline {2.3.3}Performance Requirements}{10}{subsubsection.2.3.3}
+\contentsline {paragraph}{\numberline {2.3.3.1}Users}{10}{paragraph.2.3.3.1}
 \contentsline {paragraph}{\numberline {2.3.3.2}Data Management}{10}{paragraph.2.3.3.2}
-\contentsline {paragraph}{\numberline {2.3.3.3}Visualization}{10}{paragraph.2.3.3.3}
-\contentsline {paragraph}{\numberline {2.3.3.4}Objects}{10}{paragraph.2.3.3.4}
-\contentsline {subsubsection}{\numberline {2.3.4}Logical Database Requirements}{10}{subsubsection.2.3.4}
-\contentsline {subsubsection}{\numberline {2.3.5}Design Constraints}{10}{subsubsection.2.3.5}
-\contentsline {paragraph}{\numberline {2.3.5.1}Standards Compliance}{10}{paragraph.2.3.5.1}
-\contentsline {subsubsection}{\numberline {2.3.6}Software System Attributes}{10}{subsubsection.2.3.6}
-\contentsline {paragraph}{\numberline {2.3.6.1}Reliability}{10}{paragraph.2.3.6.1}
+\contentsline {paragraph}{\numberline {2.3.3.3}Visualization}{11}{paragraph.2.3.3.3}
+\contentsline {paragraph}{\numberline {2.3.3.4}Objects}{11}{paragraph.2.3.3.4}
+\contentsline {subsubsection}{\numberline {2.3.4}Logical Database Requirements}{11}{subsubsection.2.3.4}
+\contentsline {subsubsection}{\numberline {2.3.5}Design Constraints}{11}{subsubsection.2.3.5}
+\contentsline {paragraph}{\numberline {2.3.5.1}Standards Compliance}{11}{paragraph.2.3.5.1}
+\contentsline {subsubsection}{\numberline {2.3.6}Software System Attributes}{11}{subsubsection.2.3.6}
+\contentsline {paragraph}{\numberline {2.3.6.1}Reliability}{11}{paragraph.2.3.6.1}
 \contentsline {paragraph}{\numberline {2.3.6.2}Availability}{11}{paragraph.2.3.6.2}
 \contentsline {paragraph}{\numberline {2.3.6.3}Security}{11}{paragraph.2.3.6.3}
-\contentsline {paragraph}{\numberline {2.3.6.4}Maintainability}{11}{paragraph.2.3.6.4}
-\contentsline {paragraph}{\numberline {2.3.6.5}Portability}{11}{paragraph.2.3.6.5}
-\contentsline {section}{\numberline {3}Design Document (original)}{11}{section.3}
-\contentsline {subsection}{\numberline {3.1}Introduction}{11}{subsection.3.1}
-\contentsline {subsubsection}{\numberline {3.1.1}Purpose}{11}{subsubsection.3.1.1}
-\contentsline {subsubsection}{\numberline {3.1.2}Scope}{11}{subsubsection.3.1.2}
+\contentsline {paragraph}{\numberline {2.3.6.4}Maintainability}{12}{paragraph.2.3.6.4}
+\contentsline {paragraph}{\numberline {2.3.6.5}Portability}{12}{paragraph.2.3.6.5}
+\contentsline {section}{\numberline {3}Design Document (original)}{12}{section.3}
+\contentsline {subsection}{\numberline {3.1}Introduction}{12}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Purpose}{12}{subsubsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.2}Scope}{12}{subsubsection.3.1.2}
 \contentsline {subsubsection}{\numberline {3.1.3}Overview}{12}{subsubsection.3.1.3}
-\contentsline {subsubsection}{\numberline {3.1.4}Reference Material}{12}{subsubsection.3.1.4}
-\contentsline {subsubsection}{\numberline {3.1.5}Definitions and Acronyms}{12}{subsubsection.3.1.5}
+\contentsline {subsubsection}{\numberline {3.1.4}Reference Material}{13}{subsubsection.3.1.4}
+\contentsline {subsubsection}{\numberline {3.1.5}Definitions and Acronyms}{13}{subsubsection.3.1.5}
 \contentsline {subsection}{\numberline {3.2}System Overview}{13}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Design Viewpoints and Concerns}{13}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Stakeholders and Concerns}{13}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}Design Viewpoints}{13}{subsubsection.3.3.2}
-\contentsline {paragraph}{\numberline {3.3.2.1}Context Viewpoint}{13}{paragraph.3.3.2.1}
-\contentsline {paragraph}{\numberline {3.3.2.2}Composition Viewpoint}{13}{paragraph.3.3.2.2}
-\contentsline {paragraph}{\numberline {3.3.2.3}Dependency Viewpoint}{13}{paragraph.3.3.2.3}
+\contentsline {subsection}{\numberline {3.3}Design Viewpoints and Concerns}{14}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Stakeholders and Concerns}{14}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}Design Viewpoints}{14}{subsubsection.3.3.2}
+\contentsline {paragraph}{\numberline {3.3.2.1}Context Viewpoint}{14}{paragraph.3.3.2.1}
+\contentsline {paragraph}{\numberline {3.3.2.2}Composition Viewpoint}{14}{paragraph.3.3.2.2}
+\contentsline {paragraph}{\numberline {3.3.2.3}Dependency Viewpoint}{14}{paragraph.3.3.2.3}
 \contentsline {paragraph}{\numberline {3.3.2.4}Information Viewpoint}{14}{paragraph.3.3.2.4}
-\contentsline {paragraph}{\numberline {3.3.2.5}Logical Viewpoint}{14}{paragraph.3.3.2.5}
-\contentsline {paragraph}{\numberline {3.3.2.6}Interface Viewpoint}{14}{paragraph.3.3.2.6}
-\contentsline {paragraph}{\numberline {3.3.2.7}Structure Viewpoint}{14}{paragraph.3.3.2.7}
+\contentsline {paragraph}{\numberline {3.3.2.5}Logical Viewpoint}{15}{paragraph.3.3.2.5}
+\contentsline {paragraph}{\numberline {3.3.2.6}Interface Viewpoint}{15}{paragraph.3.3.2.6}
+\contentsline {paragraph}{\numberline {3.3.2.7}Structure Viewpoint}{15}{paragraph.3.3.2.7}
 \contentsline {paragraph}{\numberline {3.3.2.8}Interaction Viewpoint}{15}{paragraph.3.3.2.8}
-\contentsline {subsection}{\numberline {3.4}System Architecture}{15}{subsection.3.4}
-\contentsline {subsubsection}{\numberline {3.4.1}Architectural Design}{15}{subsubsection.3.4.1}
-\contentsline {subsubsection}{\numberline {3.4.2}Decomposition Description}{15}{subsubsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4}System Architecture}{16}{subsection.3.4}
+\contentsline {subsubsection}{\numberline {3.4.1}Architectural Design}{16}{subsubsection.3.4.1}
+\contentsline {subsubsection}{\numberline {3.4.2}Decomposition Description}{16}{subsubsection.3.4.2}
 \contentsline {paragraph}{\numberline {3.4.2.1}Log In}{16}{paragraph.3.4.2.1}
-\contentsline {paragraph}{\numberline {3.4.2.2}Navigation}{16}{paragraph.3.4.2.2}
-\contentsline {paragraph}{\numberline {3.4.2.3}Create Block}{16}{paragraph.3.4.2.3}
-\contentsline {paragraph}{\numberline {3.4.2.4}View Blocks}{16}{paragraph.3.4.2.4}
+\contentsline {paragraph}{\numberline {3.4.2.2}Navigation}{17}{paragraph.3.4.2.2}
+\contentsline {paragraph}{\numberline {3.4.2.3}Create Block}{17}{paragraph.3.4.2.3}
+\contentsline {paragraph}{\numberline {3.4.2.4}View Blocks}{17}{paragraph.3.4.2.4}
 \contentsline {paragraph}{\numberline {3.4.2.5}Create Dashboard}{17}{paragraph.3.4.2.5}
-\contentsline {paragraph}{\numberline {3.4.2.6}Create Story}{17}{paragraph.3.4.2.6}
-\contentsline {paragraph}{\numberline {3.4.2.7}Add Building/Meter}{17}{paragraph.3.4.2.7}
-\contentsline {paragraph}{\numberline {3.4.2.8}Create Graph}{17}{paragraph.3.4.2.8}
+\contentsline {paragraph}{\numberline {3.4.2.6}Create Story}{18}{paragraph.3.4.2.6}
+\contentsline {paragraph}{\numberline {3.4.2.7}Add Building/Meter}{18}{paragraph.3.4.2.7}
+\contentsline {paragraph}{\numberline {3.4.2.8}Create Graph}{18}{paragraph.3.4.2.8}
 \contentsline {paragraph}{\numberline {3.4.2.9}Get AcquiSuite Data}{18}{paragraph.3.4.2.9}
-\contentsline {subsubsection}{\numberline {3.4.3}Design Rationale}{18}{subsubsection.3.4.3}
-\contentsline {subsection}{\numberline {3.5}Component Design}{18}{subsection.3.5}
-\contentsline {subsubsection}{\numberline {3.5.1}Block}{18}{subsubsection.3.5.1}
-\contentsline {paragraph}{\numberline {3.5.1.1}Element}{18}{paragraph.3.5.1.1}
-\contentsline {paragraph}{\numberline {3.5.1.2}Functionality}{18}{paragraph.3.5.1.2}
+\contentsline {subsubsection}{\numberline {3.4.3}Design Rationale}{19}{subsubsection.3.4.3}
+\contentsline {subsection}{\numberline {3.5}Component Design}{19}{subsection.3.5}
+\contentsline {subsubsection}{\numberline {3.5.1}Block}{19}{subsubsection.3.5.1}
+\contentsline {paragraph}{\numberline {3.5.1.1}Element}{19}{paragraph.3.5.1.1}
+\contentsline {paragraph}{\numberline {3.5.1.2}Functionality}{19}{paragraph.3.5.1.2}
 \contentsline {paragraph}{\numberline {3.5.1.3}Rationale}{19}{paragraph.3.5.1.3}
 \contentsline {subsubsection}{\numberline {3.5.2}Dashboard}{19}{subsubsection.3.5.2}
-\contentsline {paragraph}{\numberline {3.5.2.1}Element}{19}{paragraph.3.5.2.1}
-\contentsline {paragraph}{\numberline {3.5.2.2}Functionality}{19}{paragraph.3.5.2.2}
-\contentsline {paragraph}{\numberline {3.5.2.3}Rationale}{19}{paragraph.3.5.2.3}
-\contentsline {subsubsection}{\numberline {3.5.3}Login}{19}{subsubsection.3.5.3}
-\contentsline {paragraph}{\numberline {3.5.3.1}Element}{19}{paragraph.3.5.3.1}
-\contentsline {paragraph}{\numberline {3.5.3.2}Functionality}{19}{paragraph.3.5.3.2}
+\contentsline {paragraph}{\numberline {3.5.2.1}Element}{20}{paragraph.3.5.2.1}
+\contentsline {paragraph}{\numberline {3.5.2.2}Functionality}{20}{paragraph.3.5.2.2}
+\contentsline {paragraph}{\numberline {3.5.2.3}Rationale}{20}{paragraph.3.5.2.3}
+\contentsline {subsubsection}{\numberline {3.5.3}Login}{20}{subsubsection.3.5.3}
+\contentsline {paragraph}{\numberline {3.5.3.1}Element}{20}{paragraph.3.5.3.1}
+\contentsline {paragraph}{\numberline {3.5.3.2}Functionality}{20}{paragraph.3.5.3.2}
 \contentsline {paragraph}{\numberline {3.5.3.3}Rationale}{20}{paragraph.3.5.3.3}
 \contentsline {subsubsection}{\numberline {3.5.4}Navigation Bar}{20}{subsubsection.3.5.4}
-\contentsline {paragraph}{\numberline {3.5.4.1}Element}{20}{paragraph.3.5.4.1}
-\contentsline {paragraph}{\numberline {3.5.4.2}Functionality}{20}{paragraph.3.5.4.2}
-\contentsline {paragraph}{\numberline {3.5.4.3}Rationale}{20}{paragraph.3.5.4.3}
-\contentsline {subsubsection}{\numberline {3.5.5}Graph Component}{20}{subsubsection.3.5.5}
-\contentsline {paragraph}{\numberline {3.5.5.1}Element}{20}{paragraph.3.5.5.1}
-\contentsline {paragraph}{\numberline {3.5.5.2}Functionality}{20}{paragraph.3.5.5.2}
+\contentsline {paragraph}{\numberline {3.5.4.1}Element}{21}{paragraph.3.5.4.1}
+\contentsline {paragraph}{\numberline {3.5.4.2}Functionality}{21}{paragraph.3.5.4.2}
+\contentsline {paragraph}{\numberline {3.5.4.3}Rationale}{21}{paragraph.3.5.4.3}
+\contentsline {subsubsection}{\numberline {3.5.5}Graph Component}{21}{subsubsection.3.5.5}
+\contentsline {paragraph}{\numberline {3.5.5.1}Element}{21}{paragraph.3.5.5.1}
+\contentsline {paragraph}{\numberline {3.5.5.2}Functionality}{21}{paragraph.3.5.5.2}
 \contentsline {paragraph}{\numberline {3.5.5.3}Rationale}{21}{paragraph.3.5.5.3}
-\contentsline {subsubsection}{\numberline {3.5.6}Story}{21}{subsubsection.3.5.6}
-\contentsline {paragraph}{\numberline {3.5.6.1}Element}{21}{paragraph.3.5.6.1}
-\contentsline {paragraph}{\numberline {3.5.6.2}Functionality}{21}{paragraph.3.5.6.2}
-\contentsline {subsubsection}{\numberline {3.5.7}Content View}{21}{subsubsection.3.5.7}
-\contentsline {paragraph}{\numberline {3.5.7.1}Element}{21}{paragraph.3.5.7.1}
-\contentsline {paragraph}{\numberline {3.5.7.2}Functionality}{21}{paragraph.3.5.7.2}
-\contentsline {paragraph}{\numberline {3.5.7.3}Rationale}{21}{paragraph.3.5.7.3}
+\contentsline {subsubsection}{\numberline {3.5.6}Story}{22}{subsubsection.3.5.6}
+\contentsline {paragraph}{\numberline {3.5.6.1}Element}{22}{paragraph.3.5.6.1}
+\contentsline {paragraph}{\numberline {3.5.6.2}Functionality}{22}{paragraph.3.5.6.2}
+\contentsline {subsubsection}{\numberline {3.5.7}Content View}{22}{subsubsection.3.5.7}
+\contentsline {paragraph}{\numberline {3.5.7.1}Element}{22}{paragraph.3.5.7.1}
+\contentsline {paragraph}{\numberline {3.5.7.2}Functionality}{22}{paragraph.3.5.7.2}
+\contentsline {paragraph}{\numberline {3.5.7.3}Rationale}{22}{paragraph.3.5.7.3}
 \contentsline {subsection}{\numberline {3.6}Human Interface Design}{22}{subsection.3.6}
 \contentsline {subsubsection}{\numberline {3.6.1}Overview of User Interface}{22}{subsubsection.3.6.1}
 \contentsline {paragraph}{\numberline {3.6.1.1}Public User}{22}{paragraph.3.6.1.1}
-\contentsline {paragraph}{\numberline {3.6.1.2}Authorized User}{22}{paragraph.3.6.1.2}
-\contentsline {paragraph}{\numberline {3.6.1.3}Administrative User}{22}{paragraph.3.6.1.3}
-\contentsline {subsubsection}{\numberline {3.6.2}Screen Images}{22}{subsubsection.3.6.2}
-\contentsline {paragraph}{\numberline {3.6.2.1}Home Webpage (Public Access)}{22}{paragraph.3.6.2.1}
-\contentsline {paragraph}{\numberline {3.6.2.2}Home Webpage (Logged in Access)}{22}{paragraph.3.6.2.2}
+\contentsline {paragraph}{\numberline {3.6.1.2}Authorized User}{23}{paragraph.3.6.1.2}
+\contentsline {paragraph}{\numberline {3.6.1.3}Administrative User}{23}{paragraph.3.6.1.3}
+\contentsline {subsubsection}{\numberline {3.6.2}Screen Images}{23}{subsubsection.3.6.2}
+\contentsline {paragraph}{\numberline {3.6.2.1}Home Webpage (Public Access)}{23}{paragraph.3.6.2.1}
+\contentsline {paragraph}{\numberline {3.6.2.2}Home Webpage (Logged in Access)}{23}{paragraph.3.6.2.2}
 \contentsline {paragraph}{\numberline {3.6.2.3}Buildings Webpage}{23}{paragraph.3.6.2.3}
-\contentsline {paragraph}{\numberline {3.6.2.4}Selected Building Page}{23}{paragraph.3.6.2.4}
-\contentsline {paragraph}{\numberline {3.6.2.5}Dashboards Page}{23}{paragraph.3.6.2.5}
-\contentsline {paragraph}{\numberline {3.6.2.6}Selected Dashboard Webpage}{23}{paragraph.3.6.2.6}
-\contentsline {paragraph}{\numberline {3.6.2.7}Story Webage}{23}{paragraph.3.6.2.7}
-\contentsline {section}{\numberline {4}Tech Review (original)}{24}{section.4}
-\contentsline {subsection}{\numberline {4.1}Daniel Technology Review Overview}{24}{subsection.4.1}
-\contentsline {subsubsection}{\numberline {4.1.1}Introduction}{24}{subsubsection.4.1.1}
-\contentsline {subsubsection}{\numberline {4.1.2}Visualization Frameworks}{25}{subsubsection.4.1.2}
-\contentsline {paragraph}{\numberline {4.1.2.1}D3.js}{25}{paragraph.4.1.2.1}
-\contentsline {paragraph}{\numberline {4.1.2.2}Vis.js}{25}{paragraph.4.1.2.2}
-\contentsline {paragraph}{\numberline {4.1.2.3}Chart.js}{26}{paragraph.4.1.2.3}
-\contentsline {paragraph}{\numberline {4.1.2.4}Conclusion}{26}{paragraph.4.1.2.4}
-\contentsline {subsubsection}{\numberline {4.1.3}Means of Incorporating Authentication}{26}{subsubsection.4.1.3}
-\contentsline {paragraph}{\numberline {4.1.3.1}Building Our Own Authentication Layer}{27}{paragraph.4.1.3.1}
+\contentsline {paragraph}{\numberline {3.6.2.4}Selected Building Page}{24}{paragraph.3.6.2.4}
+\contentsline {paragraph}{\numberline {3.6.2.5}Dashboards Page}{24}{paragraph.3.6.2.5}
+\contentsline {paragraph}{\numberline {3.6.2.6}Selected Dashboard Webpage}{24}{paragraph.3.6.2.6}
+\contentsline {paragraph}{\numberline {3.6.2.7}Story Webage}{24}{paragraph.3.6.2.7}
+\contentsline {section}{\numberline {4}Tech Review (original)}{25}{section.4}
+\contentsline {subsection}{\numberline {4.1}Daniel Technology Review Overview}{25}{subsection.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}Introduction}{25}{subsubsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.2}Visualization Frameworks}{26}{subsubsection.4.1.2}
+\contentsline {paragraph}{\numberline {4.1.2.1}D3.js}{26}{paragraph.4.1.2.1}
+\contentsline {paragraph}{\numberline {4.1.2.2}Vis.js}{26}{paragraph.4.1.2.2}
+\contentsline {paragraph}{\numberline {4.1.2.3}Chart.js}{27}{paragraph.4.1.2.3}
+\contentsline {paragraph}{\numberline {4.1.2.4}Conclusion}{27}{paragraph.4.1.2.4}
+\contentsline {subsubsection}{\numberline {4.1.3}Means of Incorporating Authentication}{27}{subsubsection.4.1.3}
+\contentsline {paragraph}{\numberline {4.1.3.1}Building Our Own Authentication Layer}{28}{paragraph.4.1.3.1}
 \contentsline {paragraph}{\numberline {4.1.3.2}Outsourcing Authentication to Google}{28}{paragraph.4.1.3.2}
-\contentsline {paragraph}{\numberline {4.1.3.3}Use CAS (Central Authentication Service)}{28}{paragraph.4.1.3.3}
-\contentsline {paragraph}{\numberline {4.1.3.4}Conclusion}{29}{paragraph.4.1.3.4}
-\contentsline {subsubsection}{\numberline {4.1.4}Front-end Framework}{29}{subsubsection.4.1.4}
-\contentsline {paragraph}{\numberline {4.1.4.1}CSS Bootstrap}{29}{paragraph.4.1.4.1}
+\contentsline {paragraph}{\numberline {4.1.3.3}Use CAS (Central Authentication Service)}{29}{paragraph.4.1.3.3}
+\contentsline {paragraph}{\numberline {4.1.3.4}Conclusion}{30}{paragraph.4.1.3.4}
+\contentsline {subsubsection}{\numberline {4.1.4}Front-end Framework}{30}{subsubsection.4.1.4}
+\contentsline {paragraph}{\numberline {4.1.4.1}CSS Bootstrap}{30}{paragraph.4.1.4.1}
 \contentsline {paragraph}{\numberline {4.1.4.2}Pure CSS}{31}{paragraph.4.1.4.2}
-\contentsline {paragraph}{\numberline {4.1.4.3}Foundation}{31}{paragraph.4.1.4.3}
-\contentsline {paragraph}{\numberline {4.1.4.4}Conclusion}{31}{paragraph.4.1.4.4}
+\contentsline {paragraph}{\numberline {4.1.4.3}Foundation}{32}{paragraph.4.1.4.3}
+\contentsline {paragraph}{\numberline {4.1.4.4}Conclusion}{32}{paragraph.4.1.4.4}
 \contentsline {section}{\numberline {5}Weekly Blog Posts (all team members' posts)}{32}{section.5}
-\contentsline {section}{\numberline {6}Final Poster}{32}{section.6}
-\contentsline {section}{\numberline {7}Project Documentation}{32}{section.7}
-\contentsline {subsection}{\numberline {7.1}How does your project work? (Could include the following...)}{32}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}How does one install your software, if any?}{32}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}How does one run it?}{32}{subsection.7.3}
-\contentsline {subsection}{\numberline {7.4}Are there any special hardware, OS, or runtime requirements to run your software?}{32}{subsection.7.4}
-\contentsline {subsection}{\numberline {7.5}Any user guides, API documentation, etc.}{32}{subsection.7.5}
-\contentsline {section}{\numberline {8}Recommended Technical Resources for Learning More}{32}{section.8}
-\contentsline {section}{\numberline {9}Conclusions and Reflections (each team member answers all questions individually)}{32}{section.9}
-\contentsline {section}{\numberline {10}Appendix 1: Essential Code Listings.}{32}{section.10}
-\contentsline {section}{\numberline {11}Appendix 2: Anything else you want to include.}{32}{section.11}
-\contentsline {subsection}{\numberline {11.1}Design Document Images}{33}{subsection.11.1}
-\contentsline {subsubsection}{\numberline {11.1.1}Home Webpage (Public Access)}{33}{subsubsection.11.1.1}
-\contentsline {subsubsection}{\numberline {11.1.2}Home Webpage (Logged in Access)}{33}{subsubsection.11.1.2}
-\contentsline {subsubsection}{\numberline {11.1.3}Buildings Webpage}{34}{subsubsection.11.1.3}
-\contentsline {subsubsection}{\numberline {11.1.4}Selected Building Page}{34}{subsubsection.11.1.4}
-\contentsline {subsubsection}{\numberline {11.1.5}Dashboards Page}{35}{subsubsection.11.1.5}
-\contentsline {subsubsection}{\numberline {11.1.6}Selected Dashboard Webpage}{35}{subsubsection.11.1.6}
-\contentsline {subsubsection}{\numberline {11.1.7}Stories Webpage}{36}{subsubsection.11.1.7}
-\contentsline {subsection}{\numberline {11.2}Technology Review Images}{36}{subsection.11.2}
-\contentsline {section}{References}{36}{section*.21}
+\contentsline {subsection}{\numberline {5.1}Daniel Blog Posts}{32}{subsection.5.1}
+\contentsline {subsubsection}{\numberline {5.1.1}Fall 2017}{32}{subsubsection.5.1.1}
+\contentsline {paragraph}{\numberline {5.1.1.1}Week 1}{32}{paragraph.5.1.1.1}
+\contentsline {paragraph}{\numberline {5.1.1.2}Week 2}{33}{paragraph.5.1.1.2}
+\contentsline {paragraph}{\numberline {5.1.1.3}Week 3}{33}{paragraph.5.1.1.3}
+\contentsline {paragraph}{\numberline {5.1.1.4}Week 4}{34}{paragraph.5.1.1.4}
+\contentsline {paragraph}{\numberline {5.1.1.5}Week 5}{34}{paragraph.5.1.1.5}
+\contentsline {paragraph}{\numberline {5.1.1.6}Week 6}{34}{paragraph.5.1.1.6}
+\contentsline {paragraph}{\numberline {5.1.1.7}Week 7}{35}{paragraph.5.1.1.7}
+\contentsline {paragraph}{\numberline {5.1.1.8}Week 8}{35}{paragraph.5.1.1.8}
+\contentsline {paragraph}{\numberline {5.1.1.9}Week 9}{36}{paragraph.5.1.1.9}
+\contentsline {paragraph}{\numberline {5.1.1.10}Week 10}{36}{paragraph.5.1.1.10}
+\contentsline {subsubsection}{\numberline {5.1.2}Winter 2018}{37}{subsubsection.5.1.2}
+\contentsline {paragraph}{\numberline {5.1.2.1}Week 1}{37}{paragraph.5.1.2.1}
+\contentsline {paragraph}{\numberline {5.1.2.2}Week 2}{37}{paragraph.5.1.2.2}
+\contentsline {paragraph}{\numberline {5.1.2.3}Week 3}{37}{paragraph.5.1.2.3}
+\contentsline {paragraph}{\numberline {5.1.2.4}Week 4}{38}{paragraph.5.1.2.4}
+\contentsline {paragraph}{\numberline {5.1.2.5}Week 5}{38}{paragraph.5.1.2.5}
+\contentsline {paragraph}{\numberline {5.1.2.6}Week 6}{39}{paragraph.5.1.2.6}
+\contentsline {paragraph}{\numberline {5.1.2.7}Week 7}{39}{paragraph.5.1.2.7}
+\contentsline {paragraph}{\numberline {5.1.2.8}Week 8}{39}{paragraph.5.1.2.8}
+\contentsline {paragraph}{\numberline {5.1.2.9}Week 9}{40}{paragraph.5.1.2.9}
+\contentsline {paragraph}{\numberline {5.1.2.10}Week 10}{40}{paragraph.5.1.2.10}
+\contentsline {subsubsection}{\numberline {5.1.3}Spring 2018}{40}{subsubsection.5.1.3}
+\contentsline {paragraph}{\numberline {5.1.3.1}Week 1}{40}{paragraph.5.1.3.1}
+\contentsline {paragraph}{\numberline {5.1.3.2}Week 2}{41}{paragraph.5.1.3.2}
+\contentsline {paragraph}{\numberline {5.1.3.3}Week 3}{41}{paragraph.5.1.3.3}
+\contentsline {paragraph}{\numberline {5.1.3.4}Week 4}{42}{paragraph.5.1.3.4}
+\contentsline {paragraph}{\numberline {5.1.3.5}Week 5}{42}{paragraph.5.1.3.5}
+\contentsline {paragraph}{\numberline {5.1.3.6}Week 6}{42}{paragraph.5.1.3.6}
+\contentsline {paragraph}{\numberline {5.1.3.7}Week 7}{43}{paragraph.5.1.3.7}
+\contentsline {paragraph}{\numberline {5.1.3.8}Week 8}{43}{paragraph.5.1.3.8}
+\contentsline {paragraph}{\numberline {5.1.3.9}Week 9}{43}{paragraph.5.1.3.9}
+\contentsline {section}{\numberline {6}Final Poster}{44}{section.6}
+\contentsline {section}{\numberline {7}Project Documentation}{44}{section.7}
+\contentsline {subsection}{\numberline {7.1}How does your project work? (Could include the following...)}{44}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}How does one install your software, if any?}{44}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}How does one run it?}{44}{subsection.7.3}
+\contentsline {subsection}{\numberline {7.4}Are there any special hardware, OS, or runtime requirements to run your software?}{44}{subsection.7.4}
+\contentsline {subsection}{\numberline {7.5}Any user guides, API documentation, etc.}{44}{subsection.7.5}
+\contentsline {section}{\numberline {8}Recommended Technical Resources for Learning More}{44}{section.8}
+\contentsline {section}{\numberline {9}Conclusions and Reflections (each team member answers all questions individually)}{44}{section.9}
+\contentsline {section}{\numberline {10}Appendix 1: Essential Code Listings.}{44}{section.10}
+\contentsline {section}{\numberline {11}Appendix 2: Anything else you want to include.}{44}{section.11}
+\contentsline {section}{References}{44}{section*.14}
