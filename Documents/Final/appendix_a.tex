@@ -1,0 +1,132 @@
+\subsubsection{Node.js crypto salt/hash password example}
+\label{sec:node_crypto}
+\begin{lstlisting}[
+caption={[An example of how to salt hash passwords using the Node.js crypto module]An example of how to salt hash passwords using the Node.js crypto module (Taken from \href{https://ciphertrick.com/2016/01/18/salt-hash-passwords-using-Node.js-crypto/}{\textit{Rahil Shaikh's example}})\cite{Rahil_Shaikh}}
+]
+'use strict';
+var crypto = require('crypto');
+/**
+    * generates random string of characters i.e salt
+    */
+var genRandomString = function(length){
+    return crypto.randomBytes(Math.ceil(length/2))
+            .toString('hex') /** convert to hexadecimal format */
+            .slice(0,length);   /** return required number of characters */
+};
+/** hash password with sha512.
+    * @function
+    * @param {string} password - List of required fields.
+    * @param {string} salt - Data to be validated.
+    */
+var sha512 = function(password, salt){
+    var hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
+    hash.update(password);
+    var value = hash.digest('hex');
+    return {
+        salt:salt,
+        passwordHash:value
+    };
+};
+function saltHashPassword(userpassword) {
+    var salt = genRandomString(16); /** Gives us salt of length 16 */
+    var passwordData = sha512(userpassword, salt);
+    console.log('UserPassword = '+userpassword);
+    console.log('Passwordhash = '+passwordData.passwordHash);
+    console.log('nSalt = '+passwordData.salt);
+}
+\end{lstlisting}
+\subsubsection{Using Passport.js to include Google oAuth 2.0 authentication}
+\label{sec:passport_oauth}
+\begin{lstlisting}[
+caption={[Using passport to include Google oAuth 2.0 authentication]Using passport to include Google oAuth 2.0 authentication. (Taken from \href{http://www.passportjs.org/docs/username-password}{\textit{Passport Documentation}})\cite{passport_doc}}
+]
+var passport = require('passport');
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+
+// Use the GoogleStrategy within Passport.
+//   Strategies in Passport require a `verify` function, which accept
+//   credentials (in this case, an accessToken, refreshToken, and Google
+//   profile), and invoke a callback with a user object.
+passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://www.example.com/auth/google/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+        User.findOrCreate({ googleId: profile.id }, function (err, user) {
+            return done(err, user);
+        });
+    }
+));
+\end{lstlisting}    
+\subsubsection{Using Passport.js to maintain user sessions.}
+\label{sec:passport_session}
+\begin{lstlisting}[
+caption={[The user ID is serialized to the session, keeping the amount of data stored within the session small. When subsequent requests are received, this ID is used to find the user, which will be restored to req.user.]The user ID is serialized to the session, keeping the amount of data stored within the session small. When subsequent requests are received, this ID is used to find the user, which will be restored to req.user. (Taken from \href{http://www.passportjs.org/docs}{\textit{Passport Documentation}})\cite{passport_session}}
+]
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+    });
+    
+    passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+        done(err, user);
+    });
+    });
+\end{lstlisting}
+
+\subsubsection{Using UI Bootstrap to create a datepicker object.}
+\label{sec:ui_bootstrap}
+\begin{lstlisting}[
+    caption={[An example of using UI Bootstrap to create a datepicker object with an Angular controller.]An example of using UI Bootstrap to create a datepicker object with an Angular controller. (Taken from \href{https://codepen.io/joe-watkins/pen/KsAgp}{\textit{Angular - Bootstrap UI - Datepicker}})\cite{Watkins}}
+    ]
+    // HTML Declaration
+    <input type="text" class="form-control" 
+        datepicker-popup="{{format}}" 
+        ng-model="dt" 
+        is-open="opened" 
+        min-date="minDate" 
+        max-date="'2015-06-22'"
+        datepicker-options="dateOptions" 
+        date-disabled="disabled(date, mode)" 
+        ng-required="true" 
+        close-text="Close" 
+        id="date-picker" 
+        readonly
+        ng-click="open($event)"
+    />
+    
+    // Angular Controller
+    var calPicker = angular.module("calPicker", ['ui.bootstrap']);
+    
+    calPicker.controller("DatepickerDemoCtrl", ["$scope", function($scope){
+        
+        // grab today and inject into field
+        $scope.today = function() {
+        $scope.dt = new Date();
+        };
+        
+        // run today() function
+        $scope.today();
+    
+        // setup clear
+        $scope.clear = function () {
+        $scope.dt = null;
+        };
+    
+        // open min-cal
+        $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+    
+        $scope.opened = true;
+        };
+        
+        // handle formats
+        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        
+        // assign custom format
+        $scope.format = $scope.formats[0];
+        
+    }]);
+    \end{lstlisting}
