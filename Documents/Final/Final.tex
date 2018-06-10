@@ -99,7 +99,7 @@
     \def \DocType{		%Problem Statement
             %Requirements Document
             %Technology Review
-            Design Document
+            % Design Document
             %Progress Report
             }
             
@@ -111,7 +111,7 @@
     %\renewcommand{\NameSigPair}[1]{#1}
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \title{Design Document for: \linebreak Scalable Web Application Framework for Monitoring Energy Usage on Campus}
+    \title{Final Report for: \linebreak Scalable Web Application Framework for Monitoring Energy Usage on Campus}
     \author{Daniel Schroeder, Aubrey Thenell, Parker Bruni}
     \date{\today}
     
@@ -120,7 +120,7 @@
     \vspace{2cm}
     \begin{center}
     \noindent \textbf{Abstract} \\
-                \indent The purpose of this document is to outline the architecture and component design for a Scalable Web Application Framework for Monitoring Energy Usage on Campus. The designs for each modular component are discussed in detail, outlining the data residing in each object and the functionality it holds in the application. Additionally, this document aims to discuss the rationale for each design decision and the interactions between individual components. 
+                \indent The purpose of this document is to provide final documentation for Group fifty-seven's capstone project. 
     \end{center}         
     
     \newpage
@@ -128,15 +128,22 @@
     \tableofcontents
         
     % 8. now you write! 
-    \section{Introduction to Project} 
-    (Hint, refer to project proposal and problem statement)
+    \section{Introduction to Project}  
+    \subsection{Why is this project important?}
+    \indent As the population of the world grows exponentially, the demand for energy grows with it. Unfortunately, a massive source of energy for humans comes from non-sustainable fuel burning. This burning releases greenhouse gasses into the earth’s atmosphere, which results in the heating of our planet and many consequences that come as a result. To combat this, communities have decided that it is time to get our energy from more sustainable sources, as well as use it in more sustainable ways. In order to be more sustainable and conscious of our energy consumption, we need to implement modern tools to monitor energy usage data and use that data to make informed decisions on future infrastructure projects. This is necessary to reduce our carbon footprint, reduce costs, and move society to a more sustainable (and eventually fully sustainable) future in regards to energy consumption.
+
+    \indent Oregon State University is revered for its energy efficiency and sustainability and is committed to reducing its carbon footprint through renovations and sustainable consideration with new projects. In this era of technology it is necessary to utilize the tools that are available to us when designing and implementing systems that will increase energy efficiency. Oregon State focuses on reducing its overall costs while supporting a more sustainable environment through less consumption and emissions. With this in mind, OSU has installed energy meters in campus buildings to monitor and record energy data so that it may be analysed by members of Oregon State University’s Sustainability Office. The data that is gathered from these systems can be used to make educated decisions about the current energy usage systems in place, such as monitoring strange fluctuations or anomalies in energy usage in any given building. OSU can address and correct any potential waste from occurring as well as provide a foundation of knowledge to reference when planning future infrastructure projects by utilizing these systems.
     \subsection{Who requested it?}
-    \subsection{Why was it requested?}
-    \subsection{What is its importance?}
-    \subsection{Who was/were your client(s)?}
-    \subsection{Who are the members of your team?}
-    \subsection{What were their roles?}
-    \subsection{What was the role of the client(s)?} (I.e., did they supervise only, or did they participate in doing development)
+    \indent Oregon State University's Office of Sustainability previously had contracted a company Lucid to create a web application that acted as an administrative dashboard for monitoring energy use across campus. However, as Oregon State University Sustainability Office scales up its operations and automated reporting, the price of Lucids contract becomes exponentially expensive to maintain. In order to continue data aggregation efforts, the Oregon State Sustainability office has recognized an opportunity for our team to create and plan a project that can take the place of the legacy system. Through creating an EECS capstone project, the Office of Sustainability was able to have an internally sourced web application that can be modified to whichever specifications they desire. It will also save the University hundreds of thousands of dollars that was previously spent on Lucid's services and direct that money towards more sustainable projects for the entire University and help Oregon State reach its carbon neutrality goal of 2025.
+    \subsection{Meet the team}
+    %%%%% answers the prompts: 
+    % Who are the members of your team? 
+    % What were their roles?
+    % What was the role of the client(s)?} (I.e., did they supervise only, or did they participate in doing development
+    \subsubsection{Daniel Schroeder - Developer}
+    Daniel was responsible for generating a lot of the front-end data binding implementations with AngularJS. He implement the majority of functionality for all of the main components of the application (blocks, dashboards, stories, buildings). A lot of this process involved finding intuitive ways to query for aggregated data and populate web forms or UI components according to what is needed. A majority of Daniel's contributions revolved around generating a lot of Bootstrap4 and AngularJS webpages that auto-populated drop-down menus, graph data, or user objects so the user could view, create, edit, and delete all of the major components of the application. Additionally, Daniel needed to write route handler functions for and Express.js app that aggregated certain datasets and returned the correct data to the client. 
+
+
     \section{Requirements Document}
     %%%%%%% ---------------------------------
     % Insert the requirements document
@@ -174,14 +181,37 @@
     What, if any, reference books really helped?
     Were there any people on campus that were really helpful?
     \section{Conclusions and Reflections (each team member answers all questions individually)}
-    What technical information did you learn?
-    What non-technical information did you learn?
-    What have you learned about project work?
-    What have you learned about project management?
-    What have you learned about working in teams?
-    If you could do it all over, what would you do differently?
-    Be honest here -- no B.S.
-    
+    \subsection{Daniel}
+    \subsubsection{What technical information did you learn?}    
+    Before building this project, I had very little (if any) knowledge about AngularJS as a front-end framework, MongoDB, Amazon web services, or Express.js. While I had previously tried to do small scale M.E.A.N. stack applications, they were always bootstrapped from an example code source and I never truly understood the fundamentals behind a RESTful API or a full stack web application. I think building this project allowed me to really learn 3 main concepts:
+    \begin{itemize}
+        \item Read and learn from documentation
+        \item Reach proficiency with the M.E.A.N. stack frameworks
+        \item Understand how to design and implement a large software architecture
+    \end{itemize}
+    This was my first project built from scratch of something to this size and scale and it taught me a lot about the design process. I now understand why it is so common for companies to migrate legacy monolith architectures into smaller microservices. Systems that are extremely large become easily cluttered and become filled with minute work-arounds or case-dependent implementations that are not good for readability or robustness. I found that we lacked a large amount of understanding during the design process and it made a huge impact during the implementation of our project.
+    \subsubsection{What non-technical information did you learn?}
+    The biggest non-technical skill I learned during the course of this project was time-management and team-management. Towards the end of the project, I began setting myself hard deadlines for feature completion and implementation which proved to be extremely helpful for finishing everything that needed to get done. During the winter term, I would pick away at something here, do a little bit on something there, but never set myself deadlines for finishing up concrete requirements. I found myself becoming more and more relaxed with finishing up code and that made me fall behind at the start of spring term. I think better planning with both the architecture design and Gantt chart/read map would have proven extremely helpful throughout the development of this project.
+    \subsubsection{What have you learned about project work/project management?}
+    Planning and sharing work to ensure completion is crucial. Towards the end of the project, I found myself assigning personal tasks and tasks to group members with hard deadlines to speed up completion. Prior to having concrete due dates for features, the rate of implementation was slow and it seemed we were always crunched for time. I think breaking the project up into small pieces and following a concrete road map for implementations would have proven extremely helpful. 
+    \subsubsection{What have you learned about working in teams?}
+    I think it is important to lay out your values and expectations of yourself and others at the beginning of the project. I found that my expectations for quality and time-management differed from my group members. Putting this on the table and discussing what everyone expects from each other I think would have reduced a lot of that uncertainty and frustration throughout the year. 
+    \subsubsection{If you could do it all over, what would you do differently?} 
+    There are specific technical changes I would make to this project if I could do it all over again. First and foremost, for the amount of relations we had in our data, I think using MySQL as a back-end would have benefitted us immensely. Secondly, and as mentioned above, I think that a thorough Gantt chart and implementation roadmap would have assisted the flow and overall quality of the project. If we had a lot of the necessary backend requirements or charting implementations done sooner, it would have alleviated a lot of the debigging and error testing that was needed towards the end of the project. I would have also like to have everyone working on and understanding every aspect of the project. Learning curves and skill-level limitations played a large role in preventing contributions in many areas of the project.
+    \subsection{Parker}
+    \subsubsection{What technical information did you learn?}    
+    \subsubsection{What non-technical information did you learn?}
+    \subsubsection{What have you learned about project work?}
+    \subsubsection{What have you learned about project management?}
+    \subsubsection{What have you learned about working in teams?}
+    \subsubsection{If you could do it all over, what would you do differently?} 
+    \subsection{Aubrey}
+    \subsubsection{What technical information did you learn?}    
+    \subsubsection{What non-technical information did you learn?}
+    \subsubsection{What have you learned about project work?}
+    \subsubsection{What have you learned about project management?}
+    \subsubsection{What have you learned about working in teams?}
+    \subsubsection{If you could do it all over, what would you do differently?} 
     \section{Appendix 1: Essential Code Listings.}
     You don't have to include absolutely everything, but if someone wants to understand your project, there should be enough here to learn from. If you worked within a larger project, something like a patch file might be a good way to go.
     \input{appendix_a}
