@@ -142,8 +142,11 @@
     % What was the role of the client(s)?} (I.e., did they supervise only, or did they participate in doing development
     \subsubsection{Daniel Schroeder - Developer}
     Daniel was responsible for generating a lot of the front-end data binding implementations with AngularJS. He implement the majority of functionality for all of the main components of the application (blocks, dashboards, stories, buildings). A lot of this process involved finding intuitive ways to query for aggregated data and populate web forms or UI components according to what is needed. A majority of Daniel's contributions revolved around generating a lot of Bootstrap4 and AngularJS webpages that auto-populated drop-down menus, graph data, or user objects so the user could view, create, edit, and delete all of the major components of the application. Additionally, Daniel needed to write route handler functions for and Express.js app that aggregated certain datasets and returned the correct data to the client. 
-
-
+	\subsubsection{Daniel Schroeder - Developer}
+	Parker was involved in designing the UI and overall look and feel of the application, as well as formatting many of the elements within the site. He used methods of CSS and Bootstrap as well as knowledge of what makes a web application appealing to a user to give the site a clean and modern feel by use of color schemes and minor site animations. He also implemented the initial stages of charting using chart.js and implemented the google maps API that is found on the home page. 
+	\subsection{Role of the Client}
+	Our client, Jack Woods, is a student at Oregon State University who is employed by the Office of Sustainability. He served as a direct line of communication between our development team and the Office of Sustainability. He worked very closely with the team on development having regular meetings and was involved in team discussions online. As well as communication, Jack has contributed to the project in other ways, such as setting up our EC2 instance so our site may be publicly accessible as well as working with the team on code to insure correct functionality of some components.
+	
     \section{Requirements Document}
     %%%%%%% ---------------------------------
     % Insert the requirements document
@@ -156,9 +159,12 @@
     Add (your client should have okay'd): What design aspects were changed, deleted or added? Why? 
     \section{Tech Review (original)}
     \input{tech_review}
+	\input{parker_tech_review}
     \section{Weekly Blog Posts (all team members' posts)}
     \subsection{Daniel Blog Posts}
     \input{daniel_blogs}
+	\subsection{Parker Blog Posts}
+	\input{parker_blogs}
     formatted nicely and clearly distinct from one another
     include all members posts, clearly distinct, clearly organized
     \section{Final Poster}
@@ -177,9 +183,20 @@
     \subsection{Any user guides, API documentation, etc.}
     This needs to be detailed enough to recreate and/or use your project!
     \section{Recommended Technical Resources for Learning More}
-    What web sites were helpful? (Listed in order of helpfulness.)
+    \subsection{Helpful Websites(Listed in order of helpfulness)}
+	\begin{itemize}
+    \item \href{https://github.com/}{Github}
+    \item \href{https://slack.com/}{Slack}
+    \item \href{https://stackoverflow.com/}{Stack Overflow}
+	\item \href{https://www.w3schools.com/}{W3 Schools}
+    \end{itemize}
     What, if any, reference books really helped?
-    Were there any people on campus that were really helpful?
+    \subsection{Helpful People on Campus}
+	\begin{itemize}
+    \item Kirsten Winters
+    \item Kevin McGrath
+    \item Jack Woods
+    \end{itemize}
     \section{Conclusions and Reflections (each team member answers all questions individually)}
     \subsection{Daniel}
     \subsubsection{What technical information did you learn?}    
@@ -197,14 +214,20 @@
     \subsubsection{What have you learned about working in teams?}
     I think it is important to lay out your values and expectations of yourself and others at the beginning of the project. I found that my expectations for quality and time-management differed from my group members. Putting this on the table and discussing what everyone expects from each other I think would have reduced a lot of that uncertainty and frustration throughout the year. 
     \subsubsection{If you could do it all over, what would you do differently?} 
-    There are specific technical changes I would make to this project if I could do it all over again. First and foremost, for the amount of relations we had in our data, I think using MySQL as a back-end would have benefitted us immensely. Secondly, and as mentioned above, I think that a thorough Gantt chart and implementation roadmap would have assisted the flow and overall quality of the project. If we had a lot of the necessary backend requirements or charting implementations done sooner, it would have alleviated a lot of the debigging and error testing that was needed towards the end of the project. I would have also like to have everyone working on and understanding every aspect of the project. Learning curves and skill-level limitations played a large role in preventing contributions in many areas of the project.
+    There are specific technical changes I would make to this project if I could do it all over again. First and foremost, for the amount of relations we had in our data, I think using MySQL as a back-end would have benefited us immensely. Secondly, and as mentioned above, I think that a thorough Gantt chart and implementation roadmap would have assisted the flow and overall quality of the project. If we had a lot of the necessary backend requirements or charting implementations done sooner, it would have alleviated a lot of the debigging and error testing that was needed towards the end of the project. I would have also like to have everyone working on and understanding every aspect of the project. Learning curves and skill-level limitations played a large role in preventing contributions in many areas of the project.
     \subsection{Parker}
-    \subsubsection{What technical information did you learn?}    
+    \subsubsection{What technical information did you learn?}  
+	I learned a huge amount of new information on web development technologies that I had previously had no knowledge of. I learned the ins and outs of what it takes to develop a full stack web application, and while most of my efforts were on UI, I learned a decent bit about backend frameworks as well as chart.js and google maps implementations.
     \subsubsection{What non-technical information did you learn?}
+	My teamwork skills have greatly improved. Specifically, communication within a team environment and the ability to adapt to different work styles to better suit the needs of the team. As well, I feel that my work ethic for large scale projects has improved. Specifically, the ability to assess requirements and the amount of work needed as well as estimating when and how much to work in order to meet deadlines. 
     \subsubsection{What have you learned about project work?}
+	I know now how crucial it is to divide the work into manageable pieces between people and establish good communication between those working parties so that the project can come together as a whole in a functional format. I have previously not worked on a project of this scale for this amount of time so I have gained some good insights on how the work on a project should be handeled.
     \subsubsection{What have you learned about project management?}
+	I learned that a project works well when someone on the team takes the lead role, namely Daniel. This seemed to promote work ethic within the group and helped us stay organized to meet deadlines for assignments and figure out who needs to do what portions of the project and when.
     \subsubsection{What have you learned about working in teams?}
+	Teamwork flows much better with good communication. The web based communication application "Slack" seemed to let us work much more efficiently as it allowed for instant text communication and file sharing. This workspace is organized with team collaboration in mind and I would recommend it to any team that is working on large scale projects. Communication is key, but so is group members who are willing and open to new ideas about changes or other aspects of the projects. In person team meetings were good to establish good relationships and in person interactions to get work done. 
     \subsubsection{If you could do it all over, what would you do differently?} 
+	I would ideally know more about web based technologies, as I had a relatively small amount of knowledge of potential technologies and if I had known more potential technologies and their pros and cons we would have been able to make decisions about the project much quicker and it is likely that the final product would function more efficiently. 
     \subsection{Aubrey}
     \subsubsection{What technical information did you learn?}    
     \subsubsection{What non-technical information did you learn?}
