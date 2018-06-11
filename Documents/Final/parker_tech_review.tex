@@ -22,7 +22,7 @@
 	of raw text based data that is presented to us from our energy metering systems. Having a database with proper functionality and
 	compatibility with the rest of our technologies is necessary so that our application can request and store data in meaningful ways. 
 	
-	\subsubsubsection{mongoDB}
+	\paragraph{mongoDB}
 	
 		MongoDB is a noSQL scalable open source JavaScript based database system. It is a non-relational database and it's documents are stored in json format essentially making all JavaScript data types compatible with this
 		database. It is often used in conjunction with Node.js projects because of this relationship with JavaScript. It is widely used because it is a "document" based
@@ -32,7 +32,7 @@
 		such as logs, graphs, account and user profiles, form data, etc. It has been used by many major industries and companies such as MetLife, government websites, Expedia, and more.
 		MongoDB is often referred to as new user friendly because it is widely documented and has many tutorials online. 
 		
-	\subsubsubsection{mySQL}	
+	\paragraph{mySQL}	
 	
 		MySQL is perhaps one of the most popular open-source relational database management systems, written in c and c++. It is an extremely well documented and mature database system and 
 		is used widely by many applications, include web based applications. It is compatible with nearly all operating systems and supports many storage engines. Data 
@@ -40,7 +40,7 @@
 		various levels of hierarchy within each entry, but each entry may be logically bound to other parts of the database which would be managed by those who
 		are designing the database. MySQL is proven reliable, high performance, and easy to use and is used by major company applications such as Facebook, Twitter, YouTube, and much more.
 
-	\subsubsubsection{Apache Cassandra}
+	\paragraph{Apache Cassandra}
 	
 		Apache Cassandra is an open source linearly scalable storage system that is build to handle large amounts of data. It is build using two core technologies: Google Big Table
 		and Amazon Dynamo. It is a noSQL class of database system developed to improve consistency, availability, and partition tolerance of the database. It is designed
@@ -51,7 +51,7 @@
 		An issue that presents itself is that it is not as widely used as either mongoDB or mySQL, and as a consequence is lacking the resources to learn about it as efficiently
 		as either mongoDB or mySQL.
 		
-	\subsubsubsection{Conclusion}
+	\paragraph{Conclusion}
 	
 		Our choice for the database framework for our application is mongoDB. Not only is it non-relational, provides us with scalability, and provides adequate functionality, it is
 		a JavaScript based framework that is very compatible with the rest of our applications technologies. It is widely popular, relatively easy to learn, and allows us
@@ -67,7 +67,7 @@
 	from hosting our site on a local machine that may not be nearly as reliable, secure, or structurally dynamic as cloud based services. Specifically, we will
 	compare and contrast the cloud service providers AWS EC2, Microsoft Azure Cosmos DB, and Google CE and decide which is best to suite our needs.
 	
-	\subsubsubsection{AWS EC2}
+	\paragraph{AWS EC2}
 	
 		Amazon Web Services (AWS) provides a secure, scalable, and non-constricting web based service for applications which may use the non-relational database that we chose mongoDB. It allows complete control of the application (just as root access 
 		to computing capabilities) and scales elastically to the needs of the application. Along with control and scalability, the operating system environment in which the application
@@ -75,7 +75,7 @@
 		range of services to its users. It is designed to be simple to learn and cost effective. Because of AWS many features, it has been an excellent choice for a huge number of applications to be ran on, including
 		Netflix, AirBnB, and Lamborghini. Companies have opted to use AWS because of its many great features, specifically cost of use, freedom of control, reliability, and ease to learn. 
 	
-	\subsubsubsection{Microsoft Azure Cosmos DB}
+	\paragraph{Microsoft Azure Cosmos DB}
 	
 		Microsoft Azure Cosmos DB accomplishes a similar functionality as AWS EC2 but is not nearly as widely used as AWS. It has support for applications based in
 		non-relational database services such as mongoDB. Essentially it offers all the functionality of a privately owned server but based in the "cloud", similar to AWS.
@@ -83,7 +83,7 @@
 		I/O performance, which may be scaled up for a larger price. Notable users that rely on this service include Pearson, Ford, and NBC News.  
 		In a lot of ways it is very similar to the other two technologies compared here, but Azure is perhaps less reliable than AWS and Google CE, having had a series of outages over the years.
 	
-	\subsubsubsection{Google CE}
+	\paragraph{Google CE}
 	
 		Google Compute Engine (CE) is Google cloud computing equivalent to Microsoft Azure and AWS. It is similar to other cloud computing services in that it supports all of 
 		the quality attributes of a good web hosting service, including scalability, security, control, area of distribution, reliability, support for non-relational databases
@@ -91,7 +91,7 @@
 		may take advantage of, but in our case we do not require that unique resource. Google CE may be more appealing to niche markets, as it focuses on smaller scale companies.
 		Essentially, Google CE is very similar to AWS but is much less widely adopted and does not offer as many resources to use as AWS EC2.
 		
-	\subsubsubsection{Conclusion}
+	\paragraph{Conclusion}
 	
 		The database hosting technology that we have opted for is the Amazon based service "AWS EC2". The main reasoning for this decision is that it has a massive
 		selection of other applications that may be utilized for our project, more so than either of the other two options. As well as more provided services, AWS EC2 is
@@ -106,7 +106,7 @@
 	changing informative entities within the page that will need to neatly and quickly display our data in formats that we desire, so a proper back-end framework technology
 	will be crucial to accomplish this. Comparisons will be made between node.js, PHP, and Golang to be used for our application.
 
-	\subsubsubsection{Node.js}
+	\paragraph{Node.js}
 	
 		Node.js is an open source cross-platform runtime environment for developing applications using JavaScript. It can be run on various operating systems such as Linux, Windows, or OS X.
 		It has a massive open source library of JavaScript libraries that may be easily installed and used by an application. It is extremely fast, scalable, asynchronous and
@@ -114,7 +114,7 @@
 		It is very popular and widely used by many large companies such as eBay, General Electric, PayPal, Yahoo!, and more. It performs exceptionally for applications that need to produce data
 		functions quickly and dynamically so as not to refresh a browser to display data. 
 	
-	\subsubsubsection{PHP}
+	\paragraph{PHP}
 	
 		PHP is a widely used and matured general purpose scripting language. It is perhaps more widely used than JavaScript as it is an older developed scripting language. PHP is perhaps
 		simpler than node.js as it does not require a server, simply a php file that may be interpreted by a web server. PHP uses a multi-threaded blocking I/O to achieve parallel task 
@@ -122,7 +122,7 @@
 		more big names. PHP is reliable and simple to use, but lacks modern functionality, organization, and resources that node.js has. As stated before, our application is JavaScript
 		dependant so it is wise to keep as many technologies as possible within this language.
 	
-	\subsubsubsection{Golang}
+	\paragraph{Golang}
 	
 		Golang, commonly referred to as "Go", is a more modern back-end framework developed by Google. It is not as widely used as node.js, but it is still and effective choice 
 		for many web based applications. Because it is in its early days of development use, it is still a relatively immature framework, but that is not necessarily a bad thing.
@@ -132,7 +132,7 @@
 		utilize for our application, it lacks the simplicity of node.js, and it is not a JavaScript based environment such as node.js. 
 	
 
-	\subsubsubsection{Conclusion}
+	\paragraph{Conclusion}
 	
 		Our application is very dependant on our back-end framework being able to dynamically and concurrently manipulate data on our web pages. 
 		While PHP and Golang are capable of doing this, they do not do it as simply as node.js. All of the technologies that are compared here are
