@@ -1,4 +1,8 @@
-// js/services/story-service.js
+/**
+ * @file Contains the services for our story component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 angular.module('StoryService', [])
 
     // super simple service

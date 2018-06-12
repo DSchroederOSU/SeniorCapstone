@@ -1,3 +1,8 @@
+/**
+ * @file Contains the controller for our chart component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 var charts = [];
 var blockData = [];
 

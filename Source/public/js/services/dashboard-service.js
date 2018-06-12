@@ -1,4 +1,8 @@
-// js/services/block-service.js
+/**
+ * @file Contains the services for our dashboard component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 angular.module('DashboardService', [])
 
     // super simple service

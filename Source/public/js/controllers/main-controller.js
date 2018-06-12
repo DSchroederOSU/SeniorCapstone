@@ -1,3 +1,8 @@
+/**
+ * @file Contains the controller for our main component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 angular.module('mainController', [])
     .controller('mainController', function ($scope, $rootScope, GetUser) {
 

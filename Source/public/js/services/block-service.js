@@ -1,4 +1,8 @@
-// js/services/block-service.js
+/**
+ * @file Contains the services for our block component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 angular.module('BlockService', [])
 
     // super simple service

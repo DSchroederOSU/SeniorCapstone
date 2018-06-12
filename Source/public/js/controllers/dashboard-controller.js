@@ -1,3 +1,8 @@
+/**
+ * @file Contains the controller for our dashboard component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 var viewDashboard;
 var editDashboard;
 angular.module('dashboardController', [])

@@ -1,3 +1,8 @@
+/**
+ * @file Contains the controller for our meter component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 var editMeter = null;
 angular.module('meterController', [])
     .controller('meterController', function ($scope, $location, $route, Meter, Building) {

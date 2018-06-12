@@ -1,4 +1,8 @@
-// js/services/block-service.js
+/**
+ * @file Contains the services for our meter component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 angular.module('MeterService', [])
     // super simple service
     // each function returns a promise object
