@@ -1,3 +1,8 @@
+/**
+ * @file Contains test functions to setup a dummy database.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 var Building = require('../app/models/building-schema');
 var DataEntry = require('../app/models/data-entry-schema');
 
