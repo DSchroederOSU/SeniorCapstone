@@ -1,3 +1,8 @@
+/**
+ * @file Contains the schema for our block object.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 var mongoose = require('mongoose');
 var blockSchema = mongoose.Schema({
         name: String,

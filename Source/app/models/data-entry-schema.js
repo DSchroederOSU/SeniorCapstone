@@ -1,3 +1,8 @@
+/**
+ * @file Contains the schema for our dataentry object.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 var mongoose = require('mongoose');
 var dataEntrySchema = mongoose.Schema({
     building: {
