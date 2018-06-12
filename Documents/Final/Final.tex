@@ -142,8 +142,12 @@
     % What was the role of the client(s)?} (I.e., did they supervise only, or did they participate in doing development
     \subsubsection{Daniel Schroeder - Developer}
     Daniel was responsible for generating a lot of the front-end data binding implementations with AngularJS. He implement the majority of functionality for all of the main components of the application (blocks, dashboards, stories, buildings). A lot of this process involved finding intuitive ways to query for aggregated data and populate web forms or UI components according to what is needed. A majority of Daniel's contributions revolved around generating a lot of Bootstrap4 and AngularJS webpages that auto-populated drop-down menus, graph data, or user objects so the user could view, create, edit, and delete all of the major components of the application. Additionally, Daniel needed to write route handler functions for and Express.js app that aggregated certain datasets and returned the correct data to the client. 
+	\subsubsection{Aubrey Thenell - Developer}
+	Aubrey was responsible for most of the backend based code. Specifically, she was responsible for the data collection server. This contribution allows data storage into the database, which is retrieved by the web application. She was also responsible for all email based functionality of the website. This includes invitation emails, high energy usage detection emails, and down meter emails. She was also responsible for a lot of the security based functionality. This includes all form validation to ensure malicious injection won't affect the database. It also includes sitewide permissions authentication. This ensures that people don't access things they shouldn't have access to. Aubrey also wrote the interface for the built in Kilowatt Crackdown Challenge that the Office of Sustainability runs annually. Finally, Aubrey contributed by documenting all of the code with JSDocs.
 	\subsubsection{Parker Bruni - Developer}
+	
 	Parker was involved in designing the UI and overall look and feel of the application, as well as formatting many of the elements within the site. He used methods of CSS and Bootstrap as well as knowledge of what makes a web application appealing to a user to give the site a clean and modern feel by use of color schemes and minor site animations. He also implemented the initial stages of charting using chart.js and implemented the google maps API that is found on the home page. 
+	
 	\subsection{Role of the Client}
 	Our client, Jack Woods, is a student at Oregon State University who is employed by the Office of Sustainability. He served as a direct line of communication between our development team and the Office of Sustainability. He worked very closely with the team on development having regular meetings and was involved in team discussions online. As well as communication, Jack has contributed to the project in other ways, such as setting up our EC2 instance so our site may be publicly accessible as well as working with the team on code to insure correct functionality of some components.
 	
@@ -160,13 +164,14 @@
     \section{Tech Review (original)}
     \input{tech_review}
 	\input{parker_tech_review}
+	\input{aubrey_tech_review}
     \section{Weekly Blog Posts (all team members' posts)}
     \subsection{Daniel Blog Posts}
     \input{daniel_blogs}
 	\subsection{Parker Blog Posts}
 	\input{parker_blogs}
-    formatted nicely and clearly distinct from one another
-    include all members posts, clearly distinct, clearly organized
+	\subsection{Aubrey Blog Posts}
+	\input{aubrey_blogs}
     \section{Final Poster}
     %--------------- include image poster
     %\includegraphics[angle=270,origin=c,width=18cm]{images/poster1} 
@@ -181,7 +186,6 @@
     \subsection{How does one run it?}
     \subsection{Are there any special hardware, OS, or runtime requirements to run your software?}
     \subsection{Any user guides, API documentation, etc.}
-    This needs to be detailed enough to recreate and/or use your project!
     \section{Recommended Technical Resources for Learning More}
     \subsection{Helpful Websites(Listed in order of helpfulness)}
 	\begin{itemize}
@@ -190,11 +194,11 @@
     \item \href{https://stackoverflow.com/}{Stack Overflow}
 	\item \href{https://www.w3schools.com/}{W3 Schools}
     \end{itemize}
-    What, if any, reference books really helped?
     \subsection{Helpful People on Campus}
 	\begin{itemize}
     \item Kirsten Winters
     \item Kevin McGrath
+	\item Behnam Saeedi
     \item Jack Woods
     \end{itemize}
     \section{Conclusions and Reflections (each team member answers all questions individually)}
@@ -214,14 +218,14 @@
     \subsubsection{What have you learned about working in teams?}
     I think it is important to lay out your values and expectations of yourself and others at the beginning of the project. I found that my expectations for quality and time-management differed from my group members. Putting this on the table and discussing what everyone expects from each other I think would have reduced a lot of that uncertainty and frustration throughout the year. 
     \subsubsection{If you could do it all over, what would you do differently?} 
-    There are specific technical changes I would make to this project if I could do it all over again. First and foremost, for the amount of relations we had in our data, I think using MySQL as a back-end would have benefited us immensely. Secondly, and as mentioned above, I think that a thorough Gantt chart and implementation roadmap would have assisted the flow and overall quality of the project. If we had a lot of the necessary backend requirements or charting implementations done sooner, it would have alleviated a lot of the debigging and error testing that was needed towards the end of the project. I would have also like to have everyone working on and understanding every aspect of the project. Learning curves and skill-level limitations played a large role in preventing contributions in many areas of the project.
+    There are specific technical changes I would make to this project if I could do it all over again. First and foremost, for the amount of relations we had in our data, I think using MySQL as a back-end would have benefited us immensely. Secondly, and as mentioned above, I think that a thorough Gantt chart and implementation roadmap would have assisted the flow and overall quality of the project. If we had a lot of the necessary backend requirements or charting implementations done sooner, it would have alleviated a lot of the debugging and error testing that was needed towards the end of the project. I would have also like to have everyone working on and understanding every aspect of the project. Learning curves and skill-level limitations played a large role in preventing contributions in many areas of the project.
     \subsection{Parker}
     \subsubsection{What technical information did you learn?}  
 	I learned a huge amount of new information on web development technologies that I had previously had no knowledge of. I learned the ins and outs of what it takes to develop a full stack web application, and while most of my efforts were on UI, I learned a decent bit about backend frameworks as well as chart.js and google maps implementations.
     \subsubsection{What non-technical information did you learn?}
 	My teamwork skills have greatly improved. Specifically, communication within a team environment and the ability to adapt to different work styles to better suit the needs of the team. As well, I feel that my work ethic for large scale projects has improved. Specifically, the ability to assess requirements and the amount of work needed as well as estimating when and how much to work in order to meet deadlines. 
     \subsubsection{What have you learned about project work?}
-	I know now how crucial it is to divide the work into manageable pieces between people and establish good communication between those working parties so that the project can come together as a whole in a functional format. I have previously not worked on a project of this scale for this amount of time so I have gained some good insights on how the work on a project should be handeled.
+	I know now how crucial it is to divide the work into manageable pieces between people and establish good communication between those working parties so that the project can come together as a whole in a functional format. I have previously not worked on a project of this scale for this amount of time so I have gained some good insights on how the work on a project should be handled.
     \subsubsection{What have you learned about project management?}
 	I learned that a project works well when someone on the team takes the lead role, namely Daniel. This seemed to promote work ethic within the group and helped us stay organized to meet deadlines for assignments and figure out who needs to do what portions of the project and when.
     \subsubsection{What have you learned about working in teams?}
@@ -230,14 +234,18 @@
 	I would ideally know more about web based technologies, as I had a relatively small amount of knowledge of potential technologies and if I had known more potential technologies and their pros and cons we would have been able to make decisions about the project much quicker and it is likely that the final product would function more efficiently. 
     \subsection{Aubrey}
     \subsubsection{What technical information did you learn?}    
+	This project has really solidified my understanding of AngularJS and related frameworks. Between this project and the projects I'm assigned at work, I am fairly solidified in what I'd like to focus on once I graduate. The most important technical takeaway is my backend knowledge. Since I focused building the backend side of the project, I have gained quite a bit of experience. This makes me happy because backend knowledge is applicable everywhere. Even if the language or framework is different, the concepts will be the same.
     \subsubsection{What non-technical information did you learn?}
-    \subsubsection{What have you learned about project work?}
-    \subsubsection{What have you learned about project management?}
+	I learned that my time management has some room for improvement. Between this project, working over 20 hours a week, and taking 19 credit hours, I feel that my time management and work ethic have improved drastically over the course of the project. Another non-technical thing I learned was about energy. Through talks with Jack and the Office of Sustainability, my understanding of how sustainable systems work as well as how Oregon State University implements techniques to make itself more sustainable.
+    \subsubsection{What have you learned about project work/management?}
+	I think my main takeaway from this section would be to not underestimate how much time a task will take. A seemingly simple task can (and has) take dozens of hours when I only thought a few hours were needed. I also think that breaking down tasks into smaller subtasks will not only make it seem like less, but will also make it less daunting.
     \subsubsection{What have you learned about working in teams?}
+	This has definitely been the most stressful group project I've done. While we got along just fine, it was rather difficult to get everyone on the same page on what needed to be done and how long dependency tasks were going to take. I think if we understood the scope of the project better from the get go, we could have worked together and figured out a better work distribution that would prevent less constant progress blocking.
     \subsubsection{If you could do it all over, what would you do differently?} 
+	First and foremost I would choose the more modern Angular2+ over AngularJS. Combine this with typescript and I feel like this would have helped us keep things better modularized. I suggested Angular2+ during the design phase, but we decided to go with AngularJS because Daniel had a decent amount of experience already.  I would also want to try out SQL to see how performances differed. There were times when I was writing mongo queries that just made me wish I could use SQL queries instead. Granted, Mongo does support SQL queries, but the performance isn't as good as native SQL, so not much point using them. I would also start on the coding aspect of the project sooner. If we had a lot of the information about how the AcquiSuites worked from the get go, that would have saved me several dozen hours of debugging.
     \section{Appendix 1: Essential Code Listings.}
-    You don't have to include absolutely everything, but if someone wants to understand your project, there should be enough here to learn from. If you worked within a larger project, something like a patch file might be a good way to go.
-    \input{appendix_a}
+    
+	\input{appendix_a}
     
     \section{Appendix 2: Anything else you want to include.}
     Photos, etc.
