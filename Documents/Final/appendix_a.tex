@@ -130,3 +130,135 @@ passport.serializeUser(function(user, done) {
         
     }]);
     \end{lstlisting}
+
+\subsubsection{XML Data Acquisition}
+\label{sec:XML}
+\begin{lstlisting}[
+    caption={[The function AcquiSuites send data to.]The function AcquiSuites send data to.}
+    ]
+    app.post('/receiveXML', xmlparser({
+    trim: false,
+    explicitArray: false
+}), function (req, res) {
+    if (req.body.das.mode === 'LOGFILEUPLOAD') {
+        timestamp = moment().utc().format('HH:mm:ss');
+        console.log('Received XML data on: ' + moment.utc().format('YYYY-MM-DD HH:mm:ss'));
+
+        // calls email helper func once per day.
+        if (emailFlag && timestamp > '00:00:00' && timestamp < '00:20:00') {
+            console.log('Meters being reviewed for outage.')
+            emailFlag = false;
+            dataFlag = false;
+            checkUsage();
+            checkMeterTimestamps();
+        } else if (!emailFlag && timestamp > '12:00:00' && timestamp < '12:15:00') {
+            console.log('Email flag being reset');
+            emailFlag = true;
+            dataFlag = true;
+        }
+        pathShortener = req.body.das.devices.device.records;
+
+        // Checks if meter exists. If it doesn't adds one.
+        // Then/else adds incoming data entry
+        Meter.findOne({
+            meter_id: (req.body.das.serial + '_' + req.body.das.devices.device.address)
+        }, (err, doc) => {
+            if (!doc) {
+                addMeter(req.body.das).then(data => addEntry(data, pathShortener, req.body.das));
+            } else {
+                addEntry(doc, pathShortener, req.body.das);
+            }
+        });
+    } else {
+        console.log('STATUS file received');
+    }
+    res.status("200");
+    res.set({
+        'content-type': 'text/xml',
+        'Connection': 'close'
+    });
+    res.send("<?xml version='1.0' encoding='UTF-8' ?>\n" +
+        "<result>SUCCESS</result>\n" +
+        "<DAS></DAS>" +
+        "</xml>");
+	});
+        
+\end{lstlisting}
+\subsubsection{Add Data Entry}
+\label{sec:addEntry}
+\begin{lstlisting}[
+    caption={[The function that is called to add incoming data entries to the database.]The function that is called to add incoming data entries to the database.}
+    ]
+    function addEntry(meter, body, serialAddress) {
+    console.log(body);
+    return new Promise((resolve, reject) => {
+        entryArray = new Array();
+        if (body.record.length == undefined) {
+            console.log('-------------------------- XML DATA --------------------------');
+            console.log(`AcquiSuite: ${serialAddress.serial}\tAddress: ${serialAddress.devices.device.address}`);
+            console.log(`Timestamp: ${pathShortener.record.time._}`);
+            console.log(`point[0]: ${pathShortener.record.point[0].$.value}`);
+            console.log('--------------------------------------------------------------');
+            entry = new DataEntry();
+            entry.meter_id = meter._id;
+            entry.timestamp = body.record.time._;
+            entry.building = meter.building;
+            body.record.point.forEach((e, i) => {
+                entry.point[i] = e.$;
+                entry.point[i].value = Math.abs(entry.point[i].value);
+            });
+            entryArray.push(entry);
+        } else {
+            console.log('-------------------------- XML DATA --------------------------');
+            console.log(`AcquiSuite: ${serialAddress.serial}\tAddress: ${serialAddress.devices.device.address}`);
+            console.log(`Timestamp: ${pathShortener.record[0].time._}`);
+            console.log(`point[0]: ${pathShortener.record[0].point[0].$.value}`);
+            console.log('--------------------------------------------------------------');
+            for (var i = 0; i < body.record.length; i++) {
+                entry = new DataEntry();
+                entry.meter_id = meter._id;
+                entry.timestamp = body.record[i].time._;
+                entry.building = meter.building;
+                body.record[i].point.forEach((e, i) => {
+                    entry.point[i] = e.$;
+                    entry.point[i].value = Math.abs(entry.point[i].value);
+                });
+                entryArray.push(entry);
+            }
+        }
+        entryArray.forEach(x => {
+            DataEntry.findOne({
+                timestamp: x.timestamp,
+                meter_id: meter._id
+            }, (err, doc) => {
+                if (doc === null || doc === undefined) {
+                    // save it to data entries
+                    x.save().catch(err => {
+                        res.status(400)
+                    })
+                    // add it to building
+                    if (x.building != null && x.building != 'null') {
+                        Building.findOneAndUpdate({
+                                _id: entry.building
+                            }, {
+                                $push: {
+                                    data_entries: x
+                                }
+                            },
+                            (err) => {
+                                if (err) throw (err)
+                            });
+                    }
+                    console.log('Data entry id "' + x._id + '" with timestamp ' + x.timestamp + ' added to the meter named "' + meter.name + '" which is assigned to building id: "' + meter.building + '"');
+                } else {
+                    console.log('Duplicate detected and nothing has been added!');
+                    console.log('Incoming Data\'s timestamp:\t' + x.timestamp + '  meter_id:\t' + x.meter_id);
+                    console.log('Existing Data\'s timestamp:\t' + doc.timestamp + '  meter_id:\t' + doc.meter_id);
+                }
+            });
+        });
+        resolve()
+    });
+}
+        
+\end{lstlisting}
