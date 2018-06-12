@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Documents/JSdocs/types.js - Documentation</title>
+    <title>Source/public/js/core.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -31,7 +31,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Documents/JSdocs/types.js</h1>
+    <h1 class="page-title">Source/public/js/core.js</h1>
     
 
     
@@ -42,136 +42,149 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @typedef String
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
+ * @file Contains the redirect routing for our website. Also contains an edit controller and user controller
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
  */
 
-/**
- * @typedef Boolean
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean
- */
+var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController',
+    'buildingController', 'mapController', 'meterController', 'storyController', 'sideNavController', 'chartController',
+    'BlockService', 'UserService', 'MeterService', 'BuildingService',
+    'DashboardService', 'StoryService', 'ngRoute'
+]);
+myApp.config(function ($routeProvider, $locationProvider) {
+    $routeProvider
+        ///////////////////////////
+        ///////HOME PAGE///////
+        ///////////////////////////
+        .when("/", {
+            templateUrl: "../views/home.html"
+        })
 
-/**
- * @typedef Object
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object
- */
+        ///////////////////////////
+        ///////TOP NAV ITEMS///////
+        ///////////////////////////
+        .when("/about", {
+            templateUrl: "../views/top-nav-views/about.html"
+        })
+        .when("/contact", {
+            templateUrl: "../views/top-nav-views/contact.html"
+        })
+        .when("/register", {
+            templateUrl: "../views/register.html"
+        })
 
-/**
- * @typedef Array
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
- */
+        ///////////////////////////
+        ////////DASHBOARDS/////////
+        ///////////////////////////
+        .when("/dashboards", {
+            templateUrl: "../views/dashboard/dashboards.html"
+        })
+        .when("/createdashboard", {
+            templateUrl: "../views/dashboard/create-dashboard.html"
+        })
+        .when("/viewdashboard", {
+            templateUrl: "../views/dashboard/view-dashboard.html"
+        })
+        .when("/public-dashboards", {
+            templateUrl: "../views/dashboard/public-dashboard.html"
+        })
 
-/**
- * @typedef {String|Number} Number
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
- */
 
-/**
- * @typedef null
- * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null
- */
+        ///////////////////////////
+        //////////BLOCKS///////////
+        ///////////////////////////
+        .when("/editblock", {
+            templateUrl: "../views/block/edit-block.html"
+        })
+        .when("/blocks", {
+            templateUrl: "../views/block/blocks.html"
+        })
+        .when("/createblock", {
+            templateUrl: "../views/block/create-block.html"
+        })
 
-/**
- * A 24-character hash string that references objects in a database. Assigned to each object entered into the database.
- * @typedef {String} ObjectId
- * @see http://docs.mongodb.org/manual/reference/object-id/
- * @example
- * var id = user._id;
- *
- * var id = new ObjectID(); // => such as '51b96d2a845cca7213000002'
- */
+        ///////////////////////////
+        /////////STORIES///////////
+        ///////////////////////////
+        .when("/createStory", {
+            templateUrl: "../views/story/create-story.html"
+        })
+        .when("/viewStory", {
+            templateUrl: "../views/story/view-story.html"
+        })
+        .when("/public-stories", {
+            templateUrl: "../views/story/public-story.html"
+        })
+        ///////////////////////////
+        ////////BUILDINGS//////////
+        ///////////////////////////
+        .when("/allBuildings", {
+            templateUrl: "../views/building/buildings.html"
+        })
+        .when("/viewBuilding", {
+            templateUrl: "../views/building/view-building.html",
+        })
+        .when("/addBuilding", {
+            templateUrl: "../views/building/create-building.html"
+        })
 
- /**
-  * An object that contains the properties of Chart.js
-  * @typedef {Object} Chart
-  * @see https://www.chartjs.org/docs/latest/
-  */
+        ///////////////////////////
+        ///////////METERS////////////
+        ///////////////////////////
 
-/**
- * An Object that contains the formatted AcquiSuite POST data.
- * @typedef  {Object} Point
- * @property {Number} number    - Contains the index of itself in the containing array.
- * @property {String} name      - Contains the name of the value being measured.
- * @property {String} units     - Contains the units of the value being measured.
- * @property {Number} value     - Contains the consumption value.
- */
+        .when("/addmeter", {
+            templateUrl: "../views/meter-controls/add-meter-form.html",
+            controller: "meterController"
+        })
+        .when("/meters", {
+            templateUrl: "../views/meter-controls/meters.html",
+            controller: "meterController"
+        });
+    //$locationProvider.html5Mode(true);   //this is what is breaking page reload
+});
 
-/**
- * An Object that contains details about a User's Google account
- * @typedef  {Object} Google
- * @property {String} id        - Contains the id of the Google acocunt.
- * @property {String} token     - Contains the auth token of the Google account.
- * @property {String} email     - Contains the email address of the Google account.
- * @property {String} name      - Contains the name of the user as it appears in their Google acocunt.
- */
+myApp.controller('buildingEditController', function ($scope, $location, $route, Meter, Building, editbuilding) {
 
-/**
- * An object which holds customized combinations of Building as set by the User. Can be set to display on the public Dashboards or not.
- * @typedef  {Object} Block
- * @property {String} name                  - The name of the Block as set by the User when created.
- * @property {ObjectId} created_by          - The ObjectId of the User responsible for creating the Block.
- * @property {Array&lt;ObjectId>} building     - The array of ObjectId references to Building that the Block contains.
- * @property {String} chart                 - The type of chart used by this Block.
- * @property {Boolean} is_public            - The flag to determine if the Block should appear in the public Dashboard interface.
- * @property {String} variable              - The string to determine unit being measured (e.g. Killowatts/Hr).
- */
+    $scope.buildingFormTitle = "Update Building";
+    $scope.buttonText = "Update";
+    $scope.buildingNameForm = editbuilding.name;
+    $scope.buildingType = editbuilding.building_type;
+    $scope.buildingMeters = editbuilding.meters;
 
-/**
- * An object which aggregates DataEntry as gathered by Meter
- * @typedef  {Object} Building
- * @property {String} name                    - The name of the Building as set by the User when created.
- * @property {String} building_type           - The type of Building as set by the User when created.
- * @property {Array&lt;ObjectId>} meters         - The array of ObjectId references to Meter that are connected to the Building.
- * @property {Array&lt;ObjectId>} data_entries   - The array of ObjectId references to DataEntry that are connected to the Building.
- */
+    $scope.submit = function () {
+        if (!$.isEmptyObject($scope.buildingNameForm) &amp;&amp; !$.isEmptyObject($scope.buildingSerialForm)) {
+            // call the create function from our service (returns a promise object)
+            var buildingData = {
+                "name": $scope.buildingNameForm,
+                "building_type": $scope.buildingType,
+                "id": editbuilding._id
+            };
 
-/**
- * An object which contains Blocks and all the aggregated data of each, as set by User.
- * @typedef  {Object} Dashboard
- * @property {String} name              - The name of the Dashboard as set by the User when created.
- * @property {String} description       - The brief description of the Dashboard pertaining to what is contained as set by the User when created.
- * @property {Boolean} is_public        - The flag to determine if the Dashboard should appear in the public Dashboard interface.
- * @property {ObjectId} created_by      - The ObjectId of the User responsible for creating the Dashboard.
- * @property {Array&lt;ObjectId>} blocks   - The array of ObjectId references to Block as set by the User when created.
- */
+            Building.update(buildingData)
+                // if successful creation
+                .success(function (meter) {
+                    $scope.nameForm = "";
+                    $scope.type = "";
+                    $location.path('/buildings');
+                });
+        }
+    }
+});
 
-/**
- * An object which contains all the AcquiSuite POST data as well as relevant relationships.
- * @typedef  {Object} DataEntry
- * @property {ObjectId} building    - The ObjectId reference to Building that contains this DataEntry.
- * @property {ObjectId} meter_id    - The ObjectId reference to Meter that reported this DataEntry.
- * @property {String} timestamp     - The timestamp of the AcquiSuite POST data when it was collected.
- * @property {Array&lt;Point>} point   - The array of Point as reported by the AcquiSuite POST data.
- */
-
- /**
- * An object which assists in determining where each DataEntry should go.
- * @typedef  {Object} Meter
- * @property {String} name          - The name of the Meter. Typically contains an easily readable English string.
- * @property {String} meter_id      - The serial of the AcquiSuite with the address of the meter concatenated at the end.
- * @property {ObjectId} building    - The ObjectId reference to Building that the Meter connected to.
- */
-
-/**
- * An object which contains Blocks as and all the aggregated data of each.
- * @typedef  {Object} Story
- * @property {String} name                  - The name of the Story as set by the User when created.
- * @property {Boolean} is_public            - The flag to determine if the Story should appear in the public Story interface.
- * @property {ObjectId} created_by          - The ObjectId of the User responsible for creating the Story.
- * @property {Array&lt;ObjectId>} dashboards   - The array of ObjectId references to Dashboard as set by the User when created.
- */
-
-/**
- * An object which contains the login token and customizable settings of any given person using the interface.
- * @typedef  {Object} User
- * @property {Google} google                    - The token and email information of the User's Google account.
- * @property {Array&lt;ObjectId>} blocks           - The array of ObjectId references to Block that belong to this User.
- * @property {Array&lt;ObjectId>} dashboards       - The array of ObjectId references to Dashboard that belong to this User.
- * @property {Array&lt;ObjectId>} stories          - The array of ObjectId references to Story that belong to this User.
- * @property {String} accountAccess             - The permission level of this account.
- */
-</code></pre>
+myApp.controller('userController', function ($scope, EmailRegistration) {
+    $scope.email = {
+        email: '',
+        access: '0'
+    };
+    $scope.submit = function () {
+        console.log('controller hit');
+        EmailRegistration.post($scope.email)
+            .success(function () {
+                $scope.email.email = '';
+                $scope.email.access = '0';
+            });
+    };
+});</code></pre>
         </article>
     </section>
 
