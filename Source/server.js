@@ -1,7 +1,8 @@
-// server.js
+/**
+ * @file Contains the functions for server setup
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
 
-// set up ======================================================================
-// get all the tools we need
 var dotenv = require('dotenv').config();
 var express = require('express');
 var app = express();

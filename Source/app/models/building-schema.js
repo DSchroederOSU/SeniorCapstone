@@ -1,3 +1,8 @@
+/**
+ * @file Contains the schema for our building object.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 var mongoose = require('mongoose');
 var buildingSchema = mongoose.Schema({
     name: String,

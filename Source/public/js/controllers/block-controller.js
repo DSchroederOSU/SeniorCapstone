@@ -1,3 +1,8 @@
+/**
+ * @file Contains the controller for our block component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 var editBlock = null;
 //needs a function that goes through each block in User.blocks and retrieves chart data from that object.
 var blocksChartData = [];

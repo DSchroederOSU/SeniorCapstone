@@ -1,4 +1,8 @@
-// js/services/building-service.js
+/**
+ * @file Contains the services for our building component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 angular.module('BuildingService', [])
 
     // super simple service

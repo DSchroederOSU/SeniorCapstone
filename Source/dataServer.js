@@ -1,9 +1,10 @@
-// dataServer.js
-// This is a seperate server that's dedicated to accepting data from acquisuites
-// in real time.
+/**
+ * @file Contains the functions for data collection server backend
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ * @module DataServer 
+ */
 
-// set up ======================================================================
-// get all the tools we need
+
 var dotenv = require('dotenv').config();
 var express = require('express');
 var app = express();
@@ -42,11 +43,22 @@ app.use(bodyParser.json()); // get information from html forms
 var emailFlag = false;
 var dataFlag = false;
 
+
+
 /**
  * Handles POST requests received in XML format
  * Receives POST requests, converts from XML to JSON
- * @name receiveXML
- * @route {POST} /receiveXML
+ * @name post->receiveXML
+ * @memberof module:DataServer
+ * @function
+ * @inner
+ * @param {string} path - Express path
+ * @param {Object} xml  - Contains the XML data coming in.
+ * @fires checkUsage
+ * @fires checkMeterTimestamps
+ * @fires addMeter
+ * @fires addEntry
+ * @returns {Promise}
  */
 app.post('/receiveXML', xmlparser({
     trim: false,
@@ -102,6 +114,7 @@ app.post('/receiveXML', xmlparser({
  * @param {Object} email          - Contains email contents to be sent.
  * @param {String} email.subject  - Contains the email's subject.
  * @param {String} email.body     - Contains the email's body.
+ * @return {void}
  */
 function emailAlert(email) {
     AWS.config.update({
@@ -152,7 +165,10 @@ function emailAlert(email) {
 /**
  *  Helper function to see when the last time a meter posted
  *  Called once per day and Sends email if meter hasn't checked in for over a day but under two
+ * @fires emailAlert
+ * @return {void}
  */
+
 function checkMeterTimestamps() {
     var yesterday = moment.utc().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss');
     var twoDaysAgo = moment.utc().subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss');
@@ -193,6 +209,7 @@ function checkMeterTimestamps() {
  * Function used to find and alert during high usage spikes
  * Conditions - Only sends email if Average for day is greater than the average for week plus a standard deviation and
  * the meter has more than 100 entries 
+ * @fires emailAlert
  */
 function checkUsage() {
     var now = moment.utc().format('YYYY-MM-DD HH:mm:ss');

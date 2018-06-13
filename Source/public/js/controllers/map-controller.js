@@ -1,3 +1,8 @@
+/**
+ * @file Contains the controller for our map component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 var map_buildings;
 angular.module('mapController', [])
 	.controller('mapController', function ($rootScope, $compile, $scope, Building) {

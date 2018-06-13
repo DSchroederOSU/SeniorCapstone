@@ -1,3 +1,8 @@
+/**
+ * @file Contains the controller for our story component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 var viewStory;
 var editStory;
 angular.module('storyController', [])

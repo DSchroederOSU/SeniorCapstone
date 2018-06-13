@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Source/public/js/core.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/prism.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prism.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DataServer.html">DataServer</a><ul class='methods'><li data-type='method'><a href="module-DataServer.html#~addEntry">addEntry</a></li><li data-type='method'><a href="module-DataServer.html#~addMeter">addMeter</a></li><li data-type='method'><a href="module-DataServer.html#~checkMeterTimestamps">checkMeterTimestamps</a></li><li data-type='method'><a href="module-DataServer.html#~checkUsage">checkUsage</a></li><li data-type='method'><a href="module-DataServer.html#~emailAlert">emailAlert</a></li><li data-type='method'><a href="module-DataServer.html#~post-%253EreceiveXML">post->receiveXML</a></li></ul></li><li><a href="module-PublicServer.html">PublicServer</a><ul class='methods'><li data-type='method'><a href="module-PublicServer.html#~addMeter">addMeter</a></li><li data-type='method'><a href="module-PublicServer.html#~Block/get-%253Eapi/deleteBlock">Block/get->api/deleteBlock</a></li><li data-type='method'><a href="module-PublicServer.html#~Block/get-%253Eapi/getBlocksForDashboards">Block/get->api/getBlocksForDashboards</a></li><li data-type='method'><a href="module-PublicServer.html#~Block/get-%253Eapi/getUserBlocks">Block/get->api/getUserBlocks</a></li><li data-type='method'><a href="module-PublicServer.html#~Block/post-%253Eapi/deleteBlock">Block/post->api/deleteBlock</a></li><li data-type='method'><a href="module-PublicServer.html#~Block/post-%253Eapi/getBlocksForDashboards">Block/post->api/getBlocksForDashboards</a></li><li data-type='method'><a href="module-PublicServer.html#~Block/post-%253Eapi/updateBlock">Block/post->api/updateBlock</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/get-%253Eapi/buildings">Building/get->api/buildings</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/get-%253Eapi/getBuildingById">Building/get->api/getBuildingById</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/get-%253Eapi/getBuildingData">Building/get->api/getBuildingData</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/get-%253EsingleLine">Building/get->singleLine</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/post-%253Eapi/addBuilding">Building/post->api/addBuilding</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/post-%253Eapi/deleteBuilding">Building/post->api/deleteBuilding</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/post-%253Eapi/toCSV">Building/post->api/toCSV</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/post-%253Eapi/updateBuilding">Building/post->api/updateBuilding</a></li><li data-type='method'><a href="module-PublicServer.html#~Dashboard/get-%253Eapi/getDashboardNames">Dashboard/get->api/getDashboardNames</a></li><li data-type='method'><a href="module-PublicServer.html#~Dashboard/get-%253Eapi/getDashboards">Dashboard/get->api/getDashboards</a></li><li data-type='method'><a href="module-PublicServer.html#~Dashboard/get-%253Eapi/getPublicDashboards">Dashboard/get->api/getPublicDashboards</a></li><li data-type='method'><a href="module-PublicServer.html#~Dashboard/post-%253Eapi/addDashboard">Dashboard/post->api/addDashboard</a></li><li data-type='method'><a href="module-PublicServer.html#~Dashboard/post-%253Eapi/deleteDashboard">Dashboard/post->api/deleteDashboard</a></li><li data-type='method'><a href="module-PublicServer.html#~Dashboard/post-%253Eapi/updateDashboard">Dashboard/post->api/updateDashboard</a></li><li data-type='method'><a href="module-PublicServer.html#~Email/post-%253Eapi/emailRegistration">Email/post->api/emailRegistration</a></li><li data-type='method'><a href="module-PublicServer.html#~getMcNaryDining">getMcNaryDining</a></li><li data-type='method'><a href="module-PublicServer.html#~Google-%253Eapi/google_user)">Google->api/google_user)</a></li><li data-type='method'><a href="module-PublicServer.html#~Google/get-%253Eauth/google">Google/get->auth/google</a></li><li data-type='method'><a href="module-PublicServer.html#~Google/get-%253Eauth/google">Google/get->auth/google</a></li><li data-type='method'><a href="module-PublicServer.html#~Google/get-%253Elogout">Google/get->logout</a></li><li data-type='method'><a href="module-PublicServer.html#~isLoggedIn">isLoggedIn</a></li><li data-type='method'><a href="module-PublicServer.html#~login/get-%253Elogin">login/get->login</a></li><li data-type='method'><a href="module-PublicServer.html#~Meter/get-%253Eapi/getMeterById">Meter/get->api/getMeterById</a></li><li data-type='method'><a href="module-PublicServer.html#~Meter/get-%253Eapi/getMeters">Meter/get->api/getMeters</a></li><li data-type='method'><a href="module-PublicServer.html#~Meter/post-%253Eapi/addMeter">Meter/post->api/addMeter</a></li><li data-type='method'><a href="module-PublicServer.html#~Meter/post-%253Eapi/addMeter">Meter/post->api/addMeter</a></li><li data-type='method'><a href="module-PublicServer.html#~Meter/post-%253Eapi/updateMeter">Meter/post->api/updateMeter</a></li><li data-type='method'><a href="module-PublicServer.html#~pushNullMeter">pushNullMeter</a></li><li data-type='method'><a href="module-PublicServer.html#~Story/get-%253Eapi/getPublicStories">Story/get->api/getPublicStories</a></li><li data-type='method'><a href="module-PublicServer.html#~Story/get-%253Eapi/getUserStories">Story/get->api/getUserStories</a></li><li data-type='method'><a href="module-PublicServer.html#~Story/get-%253EstoryNav">Story/get->storyNav</a></li><li data-type='method'><a href="module-PublicServer.html#~Story/post-%253Eapi/addStory">Story/post->api/addStory</a></li><li data-type='method'><a href="module-PublicServer.html#~Story/post-%253Eapi/deleteStory">Story/post->api/deleteStory</a></li><li data-type='method'><a href="module-PublicServer.html#~Story/post-%253Eapi/updateStory">Story/post->api/updateStory</a></li><li data-type='method'><a href="module-PublicServer.html#~updateOldBuildingMeters">updateOldBuildingMeters</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Source/public/js/core.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Contains the redirect routing for our website. Also contains an edit controller and user controller
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
+var myApp = angular.module('myApp', ['dashboardController', 'mainController', 'blockController',
+    'buildingController', 'mapController', 'meterController', 'storyController', 'sideNavController', 'chartController',
+    'BlockService', 'UserService', 'MeterService', 'BuildingService',
+    'DashboardService', 'StoryService', 'ngRoute'
+]);
+myApp.config(function ($routeProvider, $locationProvider) {
+    $routeProvider
+        ///////////////////////////
+        ///////HOME PAGE///////
+        ///////////////////////////
+        .when("/", {
+            templateUrl: "../views/home.html"
+        })
+
+        ///////////////////////////
+        ///////TOP NAV ITEMS///////
+        ///////////////////////////
+        .when("/about", {
+            templateUrl: "../views/top-nav-views/about.html"
+        })
+        .when("/contact", {
+            templateUrl: "../views/top-nav-views/contact.html"
+        })
+        .when("/register", {
+            templateUrl: "../views/register.html"
+        })
+
+        ///////////////////////////
+        ////////DASHBOARDS/////////
+        ///////////////////////////
+        .when("/dashboards", {
+            templateUrl: "../views/dashboard/dashboards.html"
+        })
+        .when("/createdashboard", {
+            templateUrl: "../views/dashboard/create-dashboard.html"
+        })
+        .when("/viewdashboard", {
+            templateUrl: "../views/dashboard/view-dashboard.html"
+        })
+        .when("/public-dashboards", {
+            templateUrl: "../views/dashboard/public-dashboard.html"
+        })
+
+
+        ///////////////////////////
+        //////////BLOCKS///////////
+        ///////////////////////////
+        .when("/editblock", {
+            templateUrl: "../views/block/edit-block.html"
+        })
+        .when("/blocks", {
+            templateUrl: "../views/block/blocks.html"
+        })
+        .when("/createblock", {
+            templateUrl: "../views/block/create-block.html"
+        })
+
+        ///////////////////////////
+        /////////STORIES///////////
+        ///////////////////////////
+        .when("/createStory", {
+            templateUrl: "../views/story/create-story.html"
+        })
+        .when("/viewStory", {
+            templateUrl: "../views/story/view-story.html"
+        })
+        .when("/public-stories", {
+            templateUrl: "../views/story/public-story.html"
+        })
+        ///////////////////////////
+        ////////BUILDINGS//////////
+        ///////////////////////////
+        .when("/allBuildings", {
+            templateUrl: "../views/building/buildings.html"
+        })
+        .when("/viewBuilding", {
+            templateUrl: "../views/building/view-building.html",
+        })
+        .when("/addBuilding", {
+            templateUrl: "../views/building/create-building.html"
+        })
+
+        ///////////////////////////
+        ///////////METERS////////////
+        ///////////////////////////
+
+        .when("/addmeter", {
+            templateUrl: "../views/meter-controls/add-meter-form.html",
+            controller: "meterController"
+        })
+        .when("/meters", {
+            templateUrl: "../views/meter-controls/meters.html",
+            controller: "meterController"
+        });
+    //$locationProvider.html5Mode(true);   //this is what is breaking page reload
+});
+
+myApp.controller('buildingEditController', function ($scope, $location, $route, Meter, Building, editbuilding) {
+
+    $scope.buildingFormTitle = "Update Building";
+    $scope.buttonText = "Update";
+    $scope.buildingNameForm = editbuilding.name;
+    $scope.buildingType = editbuilding.building_type;
+    $scope.buildingMeters = editbuilding.meters;
+
+    $scope.submit = function () {
+        if (!$.isEmptyObject($scope.buildingNameForm) &amp;&amp; !$.isEmptyObject($scope.buildingSerialForm)) {
+            // call the create function from our service (returns a promise object)
+            var buildingData = {
+                "name": $scope.buildingNameForm,
+                "building_type": $scope.buildingType,
+                "id": editbuilding._id
+            };
+
+            Building.update(buildingData)
+                // if successful creation
+                .success(function (meter) {
+                    $scope.nameForm = "";
+                    $scope.type = "";
+                    $location.path('/buildings');
+                });
+        }
+    }
+});
+
+myApp.controller('userController', function ($scope, EmailRegistration) {
+    $scope.email = {
+        email: '',
+        access: '0'
+    };
+    $scope.submit = function () {
+        console.log('controller hit');
+        EmailRegistration.post($scope.email)
+            .success(function () {
+                $scope.email.email = '';
+                $scope.email.access = '0';
+            });
+    };
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Jun 12 2018 15:29:28 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

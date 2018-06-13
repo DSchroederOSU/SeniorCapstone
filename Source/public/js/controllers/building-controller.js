@@ -1,3 +1,8 @@
+/**
+ * @file Contains the controller for our building component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 var selectedBuilding;
 var selectedMeters = [];
 var dropdownMeters = [];

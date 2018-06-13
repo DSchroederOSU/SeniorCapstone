@@ -1,0 +1,149 @@
+\subsection{Aubrey Technology Review Overview}
+\subsubsection{Introduction}
+	My role in this project will primarily focus on the back-end side of the web application. This means I will oversee ensuring the database does exactly what it should be doing for any given query. This also includes any security measures to protect the database from common malicious attacks. Another thing I will oversee handling JSON requests from the front-end. This means I will have to ensure that the data expected by the user is returned by the server. Finally, a task I will oversee is to ensure the general structure of the server code as well as ensure computational logic is computed correctly.\\\\
+	Since our application for measuring energy usage on campus is web based; we will need various tools, technologies, and frameworks to assist us in storing and displaying information correctly. For this reason, it will be of the utmost importance to ensure that the right technology is selected for our project. We want to avoid technologies that are outdated, flawed, or otherwise counterintuitive for our needs. It is thus necessary to analyze multiple different technologies for each category to guarantee we are using the best technology available.\\\\
+This document will discuss both the pros and cons of different technologies that will be required for various components of our application. More specifically, this document will compare technologies for three different components needed by our application. These components are: Structural Framework, Server-side Web Application Frameworks, and Web Hosting. For the Structural Framework, comparisons will be made between Angular.js, Backbone.js, and Ember.js. For the Server-side Web Application Framework, comparisons will be made between Express.js, Koa.js, and hapi.js. For the Web Hosting, comparisons will be made between Amazon's AWS, Oregon State University's Drupal through CWS, and Heroku.
+
+\subsubsection{Structural Frameworks}
+	Structural frameworks control how the project directory and all related files/subdirectories will be stored. They aim to automate most of the overhead that will occur with most web based applications. Each framework will usually provide built in libraries to access databases, templating frameworks, and session management. Structural frameworks will run client side.
+	\paragraph{AngularJS}
+	\textbf{Pros}
+		\begin{itemize}
+			\item AngularJS is extremely fast and easy to set up and run on server. By simply adding a few attributes to the HTML tags, it will perform all the heavy lifting to identify controller functions \cite{angularjsPC}. 
+			\item It will then create dependencies between templates and the controller, which will then deliver the data directly to the screen \cite{angularjs}. 
+			\item AngularJS is also extremely comprehensive. It provides a completely seamless option for front-end development. 
+			\item It does not require any other framework or plugin \cite{angularjsPC}. 
+			\item It also features REST actions, which provides nearly instantaneous communication between clients and the server \cite{angularjs}. The REST actions also assist with retrieving interactable data within the webpage. 
+			\item It also features markup for DOM, which increases simplicity, integration with existing apps, and extensibility \cite{angularjs}. 
+			\item Finally, AngularJS boasts a high performance. From all the features AngularJS has, it still yields extremely high speeds and fast response times \cite{angularjsPC}.
+		\end{itemize}
+  \textbf{Cons}
+		\begin{itemize}
+			\item AngularJS mandates support of Javascript. Some computers and networks disable JavaScript by default. This means that the user would be unable to load, see, or access our page. 
+			\item AngularJS also relies heavily on the Model-View-Controller architectural patterns \cite{angularjsPC}. This means that we might have more difficulties since we aren't completely familiar with it. 
+			\item Since AngularJS is also quite layered and hierarchically arranged, it also might be difficult to debug scopes.
+		\end{itemize}
+	\paragraph{Backbone.js}	
+	\textbf{Pros}	
+			\begin{itemize}
+				\item Backbone.js is a highly compact and extremely versatile. 
+				\item It mainly excels in smaller projects. This is because Backbone.js itself is a very minimalistic \cite{mvc}. It is often referenced as a Javascript Library rather than an entire framework because of how small it is \cite{mvc}. 
+				\item It only contains the bare minimums needed to structure a web app in the Model-View-Controller pattern.
+			\end{itemize}
+	\textbf{Cons}
+		\begin{itemize}
+			\item Because of the barebones nature of Backbone.js, any non-basic features will have to be pulled in from separate libraries or plugins \cite{mvc}. This will require a chunk of time for researching compatible libraries. 
+			\item Backbone.js also doesn't support two-way binding, which will often result in a lot of boilerplate for updating the model \cite{mvc}.
+		\end{itemize}
+	\paragraph{Ember.js}
+	
+		\textbf{Pros}
+			\begin{itemize}
+				\item Out of the three options, Ember is by far the most robust of the frameworks. It comes with a plethora of features. 
+				\item By itself, it will have everything needed to construct a web application, with some exceptions \cite{mvc}. 
+				\item This obviously would allow us to not have to worry about external libraries, dependencies, or plug-ins to get the application running \cite{mvc}.
+			\end{itemize}
+		\textbf{Cons}
+			\begin{itemize}
+				\item However, the high level of control comes at a cost. Since it's such a robust framework, there always might be a concern for performance/speed issues. 
+				\item Ember also has issues with adding any extra dependencies without breaking code \cite{mvc}.
+				\item Ember is notorious for having extremely outdated examples and documentation \cite{mvc}. Its official tutorials are also out of date, which raises the concern of where to find the answer when a particular issue comes up.
+			\end{itemize}	
+
+\subsubsection{Server-side Web Application Framework}
+Server-side web application frameworks are, as the name implies, server side. This means everything in the framework will be executed server side, with minimal to no toll on the user's local performance. These frameworks must function in a stateless fashion. These frameworks will allow server side changes without having to refresh the page.
+	\paragraph{Express.js}
+			\textbf{Pros}
+			\begin{itemize}
+				\item Express.js excels at being both lightweight and flexible. It is simple option for single-page, multi-page, and hybrid web applications \cite{expressPC}. 
+				\item It is a powerful tool, despite being a micro-framework. 
+				\item Due to its simplicity, testing and quality assurance are streamlined. 
+				\item Its API takes advantage of the Node.js package manager to help install and distribute any needed plug-ins \cite{expressPC}.
+			\end{itemize}	
+		\textbf{Cons}
+			\begin{itemize}
+				\item Express.js doesn't have any recommended method of organization, which can lead to an unorganized codebase \cite{expressPC}. This can easily lead to non-reparability for some projects. 
+				\item Express.js is extremely manual labor-intensive when it comes to tasks. This can affect memory usage and performance if not addressed and handled professionally.
+			\end{itemize}	
+	\paragraph{Koa.js}
+	
+		\textbf{Pros}
+			\begin{itemize}
+				\item Koa.js is very similar to Express.js. In fact, it was developed by the same team who created Express.js \cite{expressKoaSails}. The developers created Koa.js to be a more concise and vivid alternative to Express.js. 
+				\item Koa.js is focused primarily on creating web applications and API's with improved and optimized performance. 
+				\item The main advantage it has over Express.js is its usage of the ES6 Generator feature \cite{expressKoaSails}. This generator avoids callbacks all together, which increases the manageability of the code. It also assists in error handling and block building.
+			\end{itemize}	
+		\textbf{Cons}
+			\begin{itemize}
+				\item The documentation for Koa.js is fairly lacking. This lack of documentation could prove problematic if we were to run into an obscure issue with the framework. 
+				\item Koa.js is also said to be an unstable framework \cite{expressKoaSails}. Instability is something we cannot afford to have with our project since we will have a lot of data going at any point.
+			\end{itemize}	
+	\paragraph{Hapi.js}
+	
+		\textbf{Pros} 
+			\begin{itemize}
+				\item Hapi.js is a great choice because it comes with built-in support for input validation, caching, and authentication. 
+				\item There is an extensive list of third-party plugins available compatible with Hapi.js that will provide Object Relation Mapper and Object Document Mapper support \cite{hapi}. 
+				\item Object Document Mapper support will be important to our NoSQL themed database. 
+				\item Hapi.js also grants an extensive amount of control over request handling. It is also a plugin-based architecture that would allow us to pick and choose which modules we want \cite{hapi}. This would give us more control over how large the application is scaled.
+			\end{itemize}	
+		\textbf{Cons}
+			\begin{itemize}
+				\item Hapi.js doesn't come with a built-in code structure, which would require us to build our own \cite{hapi}.
+				\item It also would require us to use only hapi.js-specific modules that would not be compatible with other frameworks, which could cause issues down the line. 
+				\item The main drawback to Hapi.js is that refactoring is all done manually, and endpoints are both created and tested manually \cite{hapi}.
+			\end{itemize}	
+	
+\subsubsection{Web Hosting}
+Web hosting is a server that will allow us to store our files on a remote server. This server will allow internet access to our files. This is needed, simply because we must store our files somewhere. With a web host, we can ensure our website is available to the public. Without it, our website would only be accessible on a local machine/network.
+	\paragraph{Amazon Web Services}	
+		\textbf{Pros}
+			\begin{itemize}
+				\item One of the main benefits of using AWS is the uptime. With the full power of Amazon, our application is almost guaranteed to always be accessible. 
+				\item AWS will also cover all our needs within the free tier that they offer \cite{amazon}. 
+				\item If/when our application needs to be scaled up, AWS offers scaled pricing based on how much data is used \cite{amazon}.
+			\end{itemize}
+		\textbf{Cons}
+			\begin{itemize}
+				\item AWS is said to have a difficult learning curve compared to other similar web hosts [7,8]. Furthermore, it is reported as user unfriendly. 
+				\item Another downside to AWS is the sheer amount of services it offers. This may sound like a pro at first, but most of these services have their own pricing and finding exactly what you need is not easy \cite{aws}. 
+				\item Finally, the pricing of AWS is just confusing in general. With how many features it offers and a scaling cost, a consultant might be required to simply figure out how much you will need to pay \cite{aws}.
+			\end{itemize}
+			
+	\paragraph{Drupal}	
+		\textbf{Pros} 
+			\begin{itemize}
+				\item Drupal would be a good choice because of how extensible it is. 
+				\item It's a blank slate that can defined exactly to user preference \cite{drupalPC}. 
+				\item Drupal is also excellent for building rapid prototypes \cite{drupalPC}. This would allow us to attempt to implement multiple front-end designs/mockups with little time in between.
+			\end{itemize}
+		\textbf{Cons}
+			\begin{itemize}
+				\item However, to gain access to the "High flexibility" tier, there would be a large fee attached to it \cite{drupalOSU}. 
+				\item In general, Drupal can have a large learning curve \cite{drupalPC}. 
+				\item It also requires a lot of effort to push any updates to the site \cite{drupalPC}. We believe this would be problematic while we are designing and pushing major updates and features to our application. 
+				\item Drupal is also very resource intensive, and can drastically slow down the end user's speed down \cite{drupalPC}. This is also something we can't afford to have since one of our main priorities is a highly reactive website.
+			\end{itemize}
+			
+	\paragraph{Heroku}	
+		\textbf{Pros} 
+			\begin{itemize}
+				\item Heroku is an extremely easy service to get started. An app can be deployed there in only a minute or two, by doing nothing more than a git remote and pushing to it \cite{heroku}. 
+				\item Heroku is also extremely extensible.
+				\item The addons Heroku provide cover almost every need an application might need \cite{heroku}. 
+				\item Heroku is very flexible. Since it's UNIX based, you can essentially run anything you want/need to in their manage environment, then scale it appropriately \cite{heroku}.
+			\end{itemize}
+		\textbf{Cons}
+			\begin{itemize}
+				\item While Heroku offers a free tier, it is very limited. It can become extremely expensive as the application scales up to higher processing needs \cite{heroku}. 
+				\item The deploy time is also slow compared to other options. While the first deployment from git is fast, anything after that will be extremely slow \cite{heroku}. 
+				\item Everything on the server needs to recompile and restart, which results in downtime for the website/application \cite{heroku}.
+			\end{itemize}
+			
+			
+\subsubsection{Conclusion}
+
+For our structural framework, we have decided to use AngularJS. This is a middle ground between lightweight/flexible and robust/rigid. It also seems to offer the most features while also working well with our Node structure. The REST functionality will also be extremely useful for responsiveness. For our Server-side Web Application Framework, we decided to use Express.js. This is mainly due to the lack of documentation/support for Koa.js and the incompatibilities with hapi.js. We may end up using hapi.js as well for additional functionality. For web hosting options, we believe that AWS will be the best option. Its free tier is perfect for our project size. It also offers the best scaling, should our project grow to need it.
+
+
+

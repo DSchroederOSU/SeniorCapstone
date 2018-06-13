@@ -1,4 +1,8 @@
-// js/services/building-service.js
+/**
+ * @file Contains the services for our chart component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 angular.module('ChartService', [])
 
     // super simple service

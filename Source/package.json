@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-docs": "./node_modules/jsdoc/jsdoc.js -c ./jsdoc.conf.json"
+    "build-docs": "node_modules/jsdoc/jsdoc.js -c ./jsdoc.conf.json"
   },
   "dependencies": {
     "@angular/animations": "^5.2.1",

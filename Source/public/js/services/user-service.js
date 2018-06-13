@@ -1,4 +1,8 @@
-// js/services/user_service.js
+/**
+ * @file Contains the services for our user component.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 angular.module('UserService', [])
 
     // super simple service

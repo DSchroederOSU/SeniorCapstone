@@ -1,12 +1,14 @@
 /**
  * @file Contains the Express routes for the server responsible for user input as well as serving content.
  * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ * @module PublicServer
+ * 
  */
 
 require('mongoose');
 require('mongodb');
-var _ = require('underscore');
 const Json2csvParser = require('json2csv').Parser;
+var _ = require('underscore');
 var parseString = require('xml2js').parseString;
 var bodyParser = require('body-parser');
 var User = require('./models/user-schema');
@@ -31,7 +33,16 @@ module.exports = function (app, passport) {
 
         return res.render('./index.html'); // load the index.html file
     });
-
+    /**
+     * Route serving login authorization.
+     * @name Google->api/google_user)
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path         - Express path.
+     * @param {callback} callback   - Express middlewear.
+     * @returns {google}
+     */
     app.get('/api/google_user', function (req, res) {
         if (req.user) {
             res.json({google: req.user.google, accessLevel: req.user.accountAccess});
@@ -40,9 +51,19 @@ module.exports = function (app, passport) {
         }
     });
 
-    // =====================================================================
-    ///////////////////////////////BUILDING API/////////////////////////////
-    // =====================================================================
+
+    /**
+     * Route for adding buildings through the application interface.
+     * @name Building/post->api/addBuilding
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @fires updateOldBuildingMeters
+     * @fires addMeter
+     * @param {string} path         - Express path.
+     * @param {callback} callback   - Express middlewear.
+     * @returns {Building}
+     */
     app.post('/api/addBuilding', function (req, res) {
         var building = new Building();
         building.name = req.body.name;
@@ -62,6 +83,18 @@ module.exports = function (app, passport) {
         });
     });
 
+    /**
+     * Route for updating buildings through the application interface.
+     * @name Building/post->api/updateBuilding
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @fires updateOldBuildingMeters
+     * @fires addMeter
+     * @param {string} path         - Express path.
+     * @param {callback} callback   - Express middlewear.
+     * @returns {Building}
+     */
     app.post('/api/updateBuilding', function (req, res) {
         Building.findByIdAndUpdate({
             _id: req.body._id
@@ -85,13 +118,21 @@ module.exports = function (app, passport) {
                         .then(addMeter(meter._id, req.body))
                 });
 
-                // updateOldBuildingMeters(req.body.meters[i],req.body).then(console.log('hi'));
-
             }
         });
         res.json(req.body);
     });
 
+    /**
+     * Route for deleting buildings through the application interface.
+     * @name Building/post->api/deleteBuilding
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path         - Express path.
+     * @param {callback} callback   - Express middlewear.
+     * @returns {String}
+     */
     app.post('/api/deleteBuilding', function (req, res) {
         // null out the meters in this building?
         Building.remove({
@@ -119,7 +160,17 @@ module.exports = function (app, passport) {
 
         });
     });
-
+    
+    /**
+     * Route for returning all of the buildings stored in the database to the application.
+     * @name Building/get->api/buildings
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path         - Express path.
+     * @param {callback} callback   - Express middlewear.
+     * @returns {Building[]}
+     */
     app.get('/api/buildings', function (req, res) {
         Building.find({})
             .select('-data_entries')
@@ -131,6 +182,16 @@ module.exports = function (app, passport) {
             });
     });
 
+    /**
+     * Route for returning a building given a MongoDB id tag.
+     * @name Building/get->api/getBuildingById
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path         - Express path.
+     * @param {callback} callback   - Express middlewear.
+     * @returns {Building}
+     */
     app.get('/api/getBuildingById', function (req, res) {
         // delete a building then set it's meters/data 'building' var to null
         Building.findOne({
@@ -145,6 +206,22 @@ module.exports = function (app, passport) {
             });
     });
 
+    /**
+     * Route for returning all of the data entries assosciated with a building, given an id
+     * @name Building/get->api/getBuildingData
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                             - Express path.
+     * @param {callback} callback                       - Express middlewear.
+     * @param {Object} callback.req                     - Contains request data.
+     * @param {Object} callback.req.query               - Contains passed query.
+     * @param {String[]} callback.req.query.buildings   - Array of building ids.
+     * @param {String} callback.req.query.start         - Start time to filter.
+     * @param {String} callback.req.query.end           - End time to filter.
+     * @param {String} callback.req.query.var           - The unit type.
+     * @returns {{String, String, String}}
+     */
     app.get('/api/getBuildingData', function (req, res) {
         var match;
         if (req.query && req.query.start && req.query.end) {
@@ -352,21 +429,58 @@ module.exports = function (app, passport) {
 
     });
 
+    /**
+     * Route for returning and rendering the story selection html page.
+     * @name Story/get->storyNav
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path         - Express path.
+     * @param {callback} callback   - Express middlewear.
+     * @returns {FILE}
+     */
     app.get('/storyNav', function (req, res) {
         res.render('./story/story-selector.html'); // load the index.html file
     });
 
+    /**
+     * Route for returning a single line and returns the html file.
+     * @name Building/get->singleLine
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path - Express path.
+     * @param {callback} callback - Express middlewear.
+     * @returns {FILE}
+     */
     app.get('/singleLine', function (req, res) {
         res.render('./charts/single-building-line.html'); // load the index.html file
     });
-
+    /**
+     * Route for returning and rendering the login splash html page.
+     * @name login/get->login
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path         - Express path.
+     * @param {callback} callback   - Express middlewear.
+     * @returns {FILE}
+     */
     app.get('/login', function (req, res) {
         res.render('login.html'); // load the login.html file
     });
 
-    // =====================================================================
-    ///////////////////////////////BLOCK API////////////////////////////////
-    // =====================================================================
+    /**
+     * Route for returning a given users blocks.
+     * @name Block/get->api/getUserBlocks
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path             - Express path.
+     * @param {callback} callback       - Express middlewear.
+     * @param {User} callback.req.user  - contains user to retrieve the blocks of.
+     * @returns {Blocks[]}
+     */
     app.get('/api/getUserBlocks', function (req, res) {
         User.findOne({
                 _id: req.user._id
@@ -383,6 +497,18 @@ module.exports = function (app, passport) {
             });
     });
 
+    /**
+     * Route for returning an array of Blocks to populate a Dashboard
+     * @name Block/get->api/getBlocksForDashboards
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path            - Express path.
+     * @param {callback} callback      - Express middlewear.
+     * @param {Object} callback.req    - Contains request data.
+     * @param {User} callback.req.user - contains user to retrieve the blocks of.
+     * @returns {Block[]}
+     */
     app.get('/api/getBlocksForDashboards', function (req, res) {
         User.findOne({
                 _id: req.user._id
@@ -400,6 +526,18 @@ module.exports = function (app, passport) {
             });
     });
 
+    /**
+     * Route for returning all of the data entries assosciated with a building, given an id
+     * @name Block/post->api/getBlocksForDashboards
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path            - Express path.
+     * @param {callback} callback      - Express middlewear.
+     * @param {Object} callback.req    - Contains request data.
+     * @param {User} callback.req.user - contains user to add Block to.
+     * @returns {Block[]}
+     */
     app.post('/api/addBlock', function (req, res) {
         var user = req.user;
         var block = new Block();
@@ -436,6 +574,19 @@ module.exports = function (app, passport) {
         });
     });
 
+     /**
+     * Route for deleting a block from the database and the user's assosciation
+     * @name Block/post->api/deleteBlock
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path              - Express path.
+     * @param {callback} callback        - Express middlewear.
+     * @param {Object} callback.req      - Contains request data.
+     * @param {User} callback.req.user   - contains user to delete block from
+     * @param {Block} callback.req.body  - contains Block to delete
+     * @returns {String}
+     */
     app.post('/api/deleteBlock', function (req, res) {
         User.findByIdAndUpdate({
             _id: req.user._id
@@ -460,6 +611,19 @@ module.exports = function (app, passport) {
 
     });
 
+    /**
+     * Route for retrieving a block given an id.
+     * @name Block/get->api/deleteBlock
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                             - Express path.
+     * @param {callback} callback                       - Express middlewear.
+     * @param {Object} callback.req                     - Contains request data.
+     * @param {Object} callback.req.query               - Contains passed query.
+     * @param {String} callback.req.query.block_id      - The id of the block being retrieved.
+     * @returns {Block}
+     */
     app.get('/api/getBlockById', function (req, res) {
         Block.findOne({
                 _id: req.query.block_id
@@ -473,6 +637,23 @@ module.exports = function (app, passport) {
             });
     });
 
+    /**
+     * Route for updating a block given an id.
+     * @name Block/post->api/updateBlock
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                         - Express path.
+     * @param {callback} callback                   - Express middlewear.
+     * @param {Object} callback.req                 - Contains request data.
+     * @param {Object} callback.req.body            - Contains passed query.
+     * @param {String} callback.req.body.name       - The new name of the block.
+     * @param {Chart} callback.req.body.chart       - The new chart data.
+     * @param {String} callback.req.body.building   - The id of the assosciated building.
+     * @param {Boolean} callback.req.body.is_public - The bool to determine if the public can view it.
+     * @param {String} callback.req.body.variable   - The unit being measured.
+     * @returns {Block}
+     */
     app.post('/api/updateBlock', function (req, res) {
         Block.findByIdAndUpdate({
             _id: req.body._id
@@ -488,18 +669,32 @@ module.exports = function (app, passport) {
             safe: true,
             upsert: true,
             new: true
-        }, function (err, meter) {
+        }, function (err, block) {
             if (err)
                 throw (err);
             else {
-                res.json(meter);
+                res.json(block);
             }
         });
     });
 
-    // =====================================================================
-    /////////////////////////////DASHBOARD API//////////////////////////////
-    // =====================================================================
+    /**
+     * Route for adding a new dashboard from the application interface.
+     * @name Dashboard/post->api/addDashboard
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                             - Express path.
+     * @param {callback} callback                       - Express middlewear.
+     * @param {Object} callback.req                     - Contains request data.
+     * @param {Object} callback.req.body                - Contains passed query.
+     * @param {String} callback.req.body.name           - The name of the new dashboard.
+     * @param {String} callback.req.body.description    - The description of the new dashboard.
+     * @param {String} callback.req.body.user           - The user who created the dashboard.
+     * @param {Boolean} callback.req.body.is_public     - The bool that determines if the public can see it or not.
+     * @param {Block[]} callback.req.body.blocks        - The array of Blocks to add to Dashboard.
+     * @returns {User}
+     */
     app.post('/api/addDashboard', function (req, res) {
         var user = req.user;
         var dashboard = new Dashboard();
@@ -533,6 +728,18 @@ module.exports = function (app, passport) {
         });
     });
 
+    /**
+     * Route for returning a given users dashboards.
+     * @name Dashboard/get->api/getDashboards
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path             - Express path.
+     * @param {callback} callback       - Express middlewear.
+     * @param {Object} callback.req     - Contains query.
+     * @param {User} callback.req.user  - contains user to retrieve the Dashboards of.
+     * @returns {Dashboard[]}
+     */
     app.get('/api/getDashboards', isLoggedIn, function (req, res) {
         User.findOne({
                 _id: req.user._id
@@ -554,6 +761,18 @@ module.exports = function (app, passport) {
             });
     });
 
+    /**
+     * Route for returning the Dashboards labeled public.
+     * @name Dashboard/get->api/getPublicDashboards
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path             - Express path.
+     * @param {callback} callback       - Express middlewear.
+     * @param {Object} callback.req     - Contains query.
+     * @param {User} callback.req.user  - contains user to retrieve the Dashboards of.
+     * @returns {Dashboard[]}
+     */
     app.get('/api/getPublicDashboards', function (req, res) {
         Dashboard.find({
                 is_public: true
@@ -572,7 +791,18 @@ module.exports = function (app, passport) {
                 res.json(dashboards);
             });
     });
-
+    /**
+     * Route for getting the names of a given User's Dashboards.
+     * @name Dashboard/get->api/getDashboardNames
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path             - Express path.
+     * @param {callback} callback       - Express middlewear.
+     * @param {Object} callback.req     - Contains query.
+     * @param {User} callback.req.user  - contains user to retrieve the Dashboards of.
+     * @returns {Dashboard[]}
+     */
     app.get('/api/getDashboardNames', isLoggedIn, function (req, res) {
         User.findOne({
                 _id: req.user._id
@@ -589,6 +819,19 @@ module.exports = function (app, passport) {
             });
     });
 
+    /**
+     * Route for deleting a Dashboard given a user id.
+     * @name Dashboard/post->api/deleteDashboard
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                 - Express path.
+     * @param {callback} callback           - Express middlewear.
+     * @param {Object} callback.req         - Contains query.
+     * @param {User} callback.req.user      - contains user to delete the Dashboard from.
+     * @param {Dashboard} callback.req.body - contains the Dashboard to delete.
+     * @returns {String}
+     */
     app.post('/api/deleteDashboard', function (req, res) {
         User.findByIdAndUpdate({
             _id: req.user._id
@@ -612,6 +855,18 @@ module.exports = function (app, passport) {
         });
     });
 
+     /**
+     * Route for updating a Dashboard given the Dashboard.
+     * @name Dashboard/post->api/updateDashboard
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                 - Express path.
+     * @param {callback} callback           - Express middlewear.
+     * @param {Object} callback.req         - Contains query.
+     * @param {Dashboard} callback.req.body - Contains Dashboard.
+     * @returns {Dashboard}
+     */
     app.post('/api/updateDashboard', function (req, res) {
         Dashboard.findByIdAndUpdate({
             _id: req.body._id
@@ -635,10 +890,18 @@ module.exports = function (app, passport) {
         });
     });
 
-
-    // =====================================================================
-    ///////////////////////////////STORY API////////////////////////////////
-    // =====================================================================
+    /**
+     * Route for getting stories given a User id.
+     * @name Story/get->api/getUserStories
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path             - Express path.
+     * @param {callback} callback       - Express middlewear.
+     * @param {Object} callback.req     - Contains query.
+     * @param {User} callback.req.user  - Contains User to retrieve stories..
+     * @returns {Story[]}
+     */
     app.get('/api/getUserStories', isLoggedIn, function (req, res) {
         User.findOne({
                 _id: req.user._id
@@ -662,6 +925,19 @@ module.exports = function (app, passport) {
             });
     });
 
+    /**
+     * Route for adding a Story to a given User.
+     * @name Story/post->api/addStory
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path               - Express path.
+     * @param {callback} callback         - Express middlewear.
+     * @param {Object} callback.req       - Contains query.
+     * @param {User} callback.req.user    - Contains User.
+     * @param {Story} callback.req.body   - Contains Story to add to user.
+     * @returns {User}
+     */
     app.post('/api/addStory', function (req, res) {
         var user = req.user;
         var story = new Story();
@@ -694,6 +970,19 @@ module.exports = function (app, passport) {
             });
         });
     });
+
+    /**
+     * Route for updating a Story.
+     * @name Story/post->api/updateStory
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                 - Express path.
+     * @param {callback} callback           - Express middlewear.
+     * @param {Object} callback.req         - Contains query.
+     * @param {Story} callback.req.body     - Contains Story to add to user
+     * @returns {Story}
+     */
     app.post('/api/updateStory', function (req, res) {
         Story.findByIdAndUpdate({
             _id: req.body._id
@@ -716,6 +1005,18 @@ module.exports = function (app, passport) {
         });
     });
 
+    /**
+     * Route for deleting a Story.
+     * @name Story/post->api/deleteStory
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                 - Express path.
+     * @param {callback} callback           - Express middlewear.
+     * @param {Object} callback.req         - Contains query.
+     * @param {Story} callback.req.body     - Contains Story to delete
+     * @returns {Story}
+     */
     app.post('/api/deleteStory', function (req, res) {
         User.findByIdAndUpdate({
             _id: req.user._id
@@ -739,6 +1040,17 @@ module.exports = function (app, passport) {
         });
     });
 
+    /**
+     * Route for retrieving public Stories.
+     * @name Story/get->api/getPublicStories
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                 - Express path.
+     * @param {callback} callback           - Express middlewear.
+     * @param {Object} callback.req         - Contains query.
+     * @returns {Story[]}
+     */
     app.get('/api/getPublicStories', function (req, res) {
         Story.find({
                 is_public: true
@@ -762,9 +1074,19 @@ module.exports = function (app, passport) {
             });
     });
 
-    // =====================================================================
-    /////////////////////////////METER API//////////////////////////////
-    // =====================================================================
+    /**
+     * Route for adding a Meter.
+     * @name Meter/post->api/addMeter
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                 - Express path.
+     * @param {callback} callback           - Express middlewear.
+     * @param {Object} callback.req         - Contains query.
+     * @param {User} callback.req.user      - Contains the User who added the Meter.
+     * @param {Meter} callback.req.body     - Contains the Meter to add.
+     * @returns {Meter}
+     */
     app.post('/api/addMeter', function (req, res) {
         var user = req.user;
         var meter = new Meter();
@@ -779,6 +1101,16 @@ module.exports = function (app, passport) {
         });
     });
 
+    /**
+     * Route for retrieving Meters.
+     * @name Meter/get->api/getMeters
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                 - Express path.
+     * @param {callback} callback           - Express middlewear.
+     * @returns {Meter[]}
+     */
     app.get('/api/getMeters', function (req, res) {
         Meter.find({})
             .populate({
@@ -791,6 +1123,18 @@ module.exports = function (app, passport) {
             });
     });
 
+     /**
+     * Route for retrieving a Meter given an id.
+     * @name Meter/get->api/getMeterById
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                           - Express path.
+     * @param {callback} callback                     - Express middlewear.
+     * @param {Object} callback.req                   - Contains query.
+     * @param {String} callback.req.query.meter_id    - Contains Meter being retrieved..
+     * @returns {Meter}
+     */
     app.get('/api/getMeterById', function (req, res) {
         Meter.findOne({
                 _id: req.query.meter_id
@@ -804,6 +1148,18 @@ module.exports = function (app, passport) {
             });
     });
 
+      /**
+     * Route for updating a Meter.
+     * @name Meter/post->api/updateMeter
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                 - Express path.
+     * @param {callback} callback           - Express middlewear.
+     * @param {Object} callback.req         - Contains query.
+     * @param {Meter} callback.req.body     - Contains the Meter to update.
+     * @returns {Meter}
+     */
     app.post('/api/updateMeter', function (req, res) {
         Meter.findByIdAndUpdate({
             _id: req.body.id
@@ -824,6 +1180,19 @@ module.exports = function (app, passport) {
             }
         });
     });
+
+    /**
+     * Route for deleting a Meter.
+     * @name Meter/post->api/addMeter
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                 - Express path.
+     * @param {callback} callback           - Express middlewear.
+     * @param {Object} callback.req         - Contains query.
+     * @param {Meter} callback.req.body     - Contains the Meter to delete.
+     * @returns {Meter}
+     */
     app.post('/api/deleteMeter', function (req, res) {
         Meter.remove({
             _id: req.body._id
@@ -842,7 +1211,20 @@ module.exports = function (app, passport) {
     });
 
 
-
+    /**
+     * Route for emailing and updating user credentials based on query.
+     * @name Email/post->api/emailRegistration
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {string} path                     - Express path.
+     * @param {callback} callback               - Express middlewear.
+     * @param {Object} callback.req             - Contains query.
+     * @param {Object} callback.req.body        - Contains an object with email and user info.
+     * @param {String} callback.req.body.email  - Contains the email address.
+     * @param {String} callback.req.body.access - Contains the User's new account access level.
+     * @returns {String}
+     */
     app.post('/api/emailRegistration', function (req, res) {
         AWS.config.update({
             region: 'us-west-2'
@@ -917,31 +1299,64 @@ module.exports = function (app, passport) {
         });
     });
 
-    // =====================================
-    // GOOGLE ROUTES =======================
-    // =====================================
-    // send to google to do the authentication
-    // profile gets us their basic information including their name
-    // email gets their emails
+     /**
+     * Route for Google Authentication. Send to google to do the authentication.
+     * Profile gets us their basic information including their name.
+     * Email gets their emails.
+     * @name Google/get->auth/google
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @fires Google/get->auth/google/callback
+     * @returns {callback}
+     */
     app.get('/auth/google',
         passport.authenticate('google', {
             scope: ['profile', 'email']
         })
     );
 
-    // the callback after google has authenticated the user
+     /**
+     * Route for Google Authentication, the callback after google has authenticated the user.
+     * Redirects User on success/failure.
+     * @name Google/get->auth/google
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @returns {FILE}
+     */
     app.get('/auth/google/callback',
         passport.authenticate('google', {
             successRedirect: '/',
             failureRedirect: '/login'
         })
     );
+    
+    /**
+     * Route for logging a User out of their Google account.
+     * @name Google/get->logout
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @returns {FILE}
+     */
     app.get('/logout', function (req, res) {
         req.session.destroy(function (e) {
             req.logout();
             res.redirect('/');
         });
     });
+    /**
+     * Route for exporting building data to a csv file.
+     * @name Building/post->api/toCSV
+     * @function
+     * @memberof module:PublicServer
+     * @inner
+     * @param {String[]} callback.req.query.buildings   - Array of building ids.
+     * @param {String} callback.req.query.start         - Start time to filter.
+     * @param {String} callback.req.query.end           - End time to filter.
+     * @returns {FILE}
+     */
     app.post('/api/toCSV', function (req, res) {
 
         var match;
@@ -1210,7 +1625,15 @@ module.exports = function (app, passport) {
     // });
 }
 
-
+/**
+ * Function to update a Building's Meter's when that specific Building is Edited. Also called when new Building is created with in use meters.
+ * @param  {String[]} meter     - Array of Meter IDs
+ * @param  {Building} building  - Building to check and remove meters from
+ * @function
+ * @memberof module:PublicServer
+ * @inner
+ * @returns {PROMISE}
+ */
 function updateOldBuildingMeters(meter, building) {
     return new Promise((resolve, reject) => {
 
@@ -1238,7 +1661,16 @@ function updateOldBuildingMeters(meter, building) {
     });
 
 }
-
+/**
+ * Function for adding Meters to a building.
+ * @param  {String} meter           - id of Meter being added.
+ * @param  {String} savedBuilding   - id of Building being added to.
+ * @function
+ * @memberof module:PublicServer
+ * @inner
+ * @fires pushNullMeter
+ * @return {Promise}
+ */
 function addMeter(meter, savedBuilding) {
     return new Promise((resolve, reject) => {
         pushNullMeter(meter, savedBuilding)
@@ -1264,7 +1696,15 @@ function addMeter(meter, savedBuilding) {
             });
     })
 }
-
+/**
+ * Function for adding retrieving McNary Dining specifically because it has special properties.
+ * @param  {Object} match  - timestamp to crosscheck McNary entries..
+ * @function
+ * @memberof module:PublicServer
+ * @inner
+ * @fires pushNullMeter
+ * @return {Promise}
+ */
 function getMcNaryDining(match){
     return new Promise((resolve, reject) => {
     Meter.find({meter_id: { $in: ['001EC60527B4_1', '001EC60527B4_2']}})
@@ -1348,7 +1788,15 @@ function getMcNaryDining(match){
     });
 
 }
-
+/**
+ * Function that adds DataEntries to a Building when the Meter is first added to that Building.
+ * @param  {String} meter           - id of Meter being added.
+ * @param  {String} savedBuilding   - id of Building being added to.
+ * @function
+ * @memberof module:PublicServer
+ * @inner
+ * @return {Promise}
+ */
 function pushNullMeter(meter, savedBuilding) {
     // DataEntry.update({building: null}, {$set: {building: savedBuilding}});
     return new Promise((resolve, reject) => {
@@ -1404,7 +1852,13 @@ function pushNullMeter(meter, savedBuilding) {
 
 }
 
-// route middleware to make sure a user is logged in
+/**
+ * Route middleware to make sure a user is logged in
+ * @function
+ * @memberof module:PublicServer
+ * @inner
+ * @return {callback}
+ */
 function isLoggedIn(req, res, next) {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated())

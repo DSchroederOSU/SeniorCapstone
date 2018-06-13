@@ -1,3 +1,8 @@
+/**
+ * @file Contains the schema for our dashboard object.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 var mongoose = require('mongoose');
 var dashboardSchema = mongoose.Schema({
     name: String,

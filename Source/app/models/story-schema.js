@@ -1,3 +1,8 @@
+/**
+ * @file Contains the schema for our story object.
+ * @author Aubrey Thenell, Daniel Schroede, Parker Bruni.
+ */
+
 var mongoose = require('mongoose');
 var storySchema = mongoose.Schema({
     name: String,

@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>DataServer - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/prism.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link type="text/css" rel="stylesheet" href="styles/prism.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-DataServer.html">DataServer</a><ul class='methods'><li data-type='method'><a href="module-DataServer.html#~addEntry">addEntry</a></li><li data-type='method'><a href="module-DataServer.html#~addMeter">addMeter</a></li><li data-type='method'><a href="module-DataServer.html#~checkMeterTimestamps">checkMeterTimestamps</a></li><li data-type='method'><a href="module-DataServer.html#~checkUsage">checkUsage</a></li><li data-type='method'><a href="module-DataServer.html#~emailAlert">emailAlert</a></li><li data-type='method'><a href="module-DataServer.html#~post-%253EreceiveXML">post->receiveXML</a></li></ul></li><li><a href="module-PublicServer.html">PublicServer</a><ul class='methods'><li data-type='method'><a href="module-PublicServer.html#~addMeter">addMeter</a></li><li data-type='method'><a href="module-PublicServer.html#~Block/get-%253Eapi/deleteBlock">Block/get->api/deleteBlock</a></li><li data-type='method'><a href="module-PublicServer.html#~Block/get-%253Eapi/getBlocksForDashboards">Block/get->api/getBlocksForDashboards</a></li><li data-type='method'><a href="module-PublicServer.html#~Block/get-%253Eapi/getUserBlocks">Block/get->api/getUserBlocks</a></li><li data-type='method'><a href="module-PublicServer.html#~Block/post-%253Eapi/deleteBlock">Block/post->api/deleteBlock</a></li><li data-type='method'><a href="module-PublicServer.html#~Block/post-%253Eapi/getBlocksForDashboards">Block/post->api/getBlocksForDashboards</a></li><li data-type='method'><a href="module-PublicServer.html#~Block/post-%253Eapi/updateBlock">Block/post->api/updateBlock</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/get-%253Eapi/buildings">Building/get->api/buildings</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/get-%253Eapi/getBuildingById">Building/get->api/getBuildingById</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/get-%253Eapi/getBuildingData">Building/get->api/getBuildingData</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/get-%253EsingleLine">Building/get->singleLine</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/post-%253Eapi/addBuilding">Building/post->api/addBuilding</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/post-%253Eapi/deleteBuilding">Building/post->api/deleteBuilding</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/post-%253Eapi/toCSV">Building/post->api/toCSV</a></li><li data-type='method'><a href="module-PublicServer.html#~Building/post-%253Eapi/updateBuilding">Building/post->api/updateBuilding</a></li><li data-type='method'><a href="module-PublicServer.html#~Dashboard/get-%253Eapi/getDashboardNames">Dashboard/get->api/getDashboardNames</a></li><li data-type='method'><a href="module-PublicServer.html#~Dashboard/get-%253Eapi/getDashboards">Dashboard/get->api/getDashboards</a></li><li data-type='method'><a href="module-PublicServer.html#~Dashboard/get-%253Eapi/getPublicDashboards">Dashboard/get->api/getPublicDashboards</a></li><li data-type='method'><a href="module-PublicServer.html#~Dashboard/post-%253Eapi/addDashboard">Dashboard/post->api/addDashboard</a></li><li data-type='method'><a href="module-PublicServer.html#~Dashboard/post-%253Eapi/deleteDashboard">Dashboard/post->api/deleteDashboard</a></li><li data-type='method'><a href="module-PublicServer.html#~Dashboard/post-%253Eapi/updateDashboard">Dashboard/post->api/updateDashboard</a></li><li data-type='method'><a href="module-PublicServer.html#~Email/post-%253Eapi/emailRegistration">Email/post->api/emailRegistration</a></li><li data-type='method'><a href="module-PublicServer.html#~getMcNaryDining">getMcNaryDining</a></li><li data-type='method'><a href="module-PublicServer.html#~Google-%253Eapi/google_user)">Google->api/google_user)</a></li><li data-type='method'><a href="module-PublicServer.html#~Google/get-%253Eauth/google">Google/get->auth/google</a></li><li data-type='method'><a href="module-PublicServer.html#~Google/get-%253Eauth/google">Google/get->auth/google</a></li><li data-type='method'><a href="module-PublicServer.html#~Google/get-%253Elogout">Google/get->logout</a></li><li data-type='method'><a href="module-PublicServer.html#~isLoggedIn">isLoggedIn</a></li><li data-type='method'><a href="module-PublicServer.html#~login/get-%253Elogin">login/get->login</a></li><li data-type='method'><a href="module-PublicServer.html#~Meter/get-%253Eapi/getMeterById">Meter/get->api/getMeterById</a></li><li data-type='method'><a href="module-PublicServer.html#~Meter/get-%253Eapi/getMeters">Meter/get->api/getMeters</a></li><li data-type='method'><a href="module-PublicServer.html#~Meter/post-%253Eapi/addMeter">Meter/post->api/addMeter</a></li><li data-type='method'><a href="module-PublicServer.html#~Meter/post-%253Eapi/addMeter">Meter/post->api/addMeter</a></li><li data-type='method'><a href="module-PublicServer.html#~Meter/post-%253Eapi/updateMeter">Meter/post->api/updateMeter</a></li><li data-type='method'><a href="module-PublicServer.html#~pushNullMeter">pushNullMeter</a></li><li data-type='method'><a href="module-PublicServer.html#~Story/get-%253Eapi/getPublicStories">Story/get->api/getPublicStories</a></li><li data-type='method'><a href="module-PublicServer.html#~Story/get-%253Eapi/getUserStories">Story/get->api/getUserStories</a></li><li data-type='method'><a href="module-PublicServer.html#~Story/get-%253EstoryNav">Story/get->storyNav</a></li><li data-type='method'><a href="module-PublicServer.html#~Story/post-%253Eapi/addStory">Story/post->api/addStory</a></li><li data-type='method'><a href="module-PublicServer.html#~Story/post-%253Eapi/deleteStory">Story/post->api/deleteStory</a></li><li data-type='method'><a href="module-PublicServer.html#~Story/post-%253Eapi/updateStory">Story/post->api/updateStory</a></li><li data-type='method'><a href="module-PublicServer.html#~updateOldBuildingMeters">updateOldBuildingMeters</a></li></ul></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">DataServer</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Contains the functions for data collection server backend</div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Aubrey Thenell, Daniel Schroede, Parker Bruni.</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="~addEntry"><span class="type-signature">(inner) </span>addEntry<span class="signature">(meter, body, serialAddress)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Function to add a data entry to a database. Checks for duplicate first.Conditions:     - Called whenever POST request comes in
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>meter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Object">Object</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains elements of the source meter
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#String">String</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains the ID of the meter as it is in the database</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#String">String</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains the public facing name of the meter as it is in the database</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>building</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#String">String</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains the building that the meter is associated with as it is in the database</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>body</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Object">Object</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains the POST request body with all extraneous pieces cut</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>serialAddress</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Object">Object</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains the POST request body that can access the serial and address information</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line310">line 310</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~addMeter"><span class="type-signature">(inner) </span>addMeter<span class="signature">(meter)</span><span class="type-signature"> &rarr; {Promise.&lt;<a href="global.html#Meter">Meter</a>>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Function that is called when the server gets a POST request from a meterthat is not in our database already.Only called when a matching meter cannot be located in the database
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>meter</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Object">Object</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains a POST request body that is slightly trimmed</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line283">line 283</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    newmeter
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#Meter">Meter</a>></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~checkMeterTimestamps"><span class="type-signature">(inner) </span>checkMeterTimestamps<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Helper function to see when the last time a meter posted Called once per day and Sends email if meter hasn't checked in for over a day but under two
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line172">line 172</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<h5>Fires:</h5>
+<ul>
+    <li>event:emailAlert</li>
+</ul>
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~checkUsage"><span class="type-signature">(inner) </span>checkUsage<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Function used to find and alert during high usage spikesConditions - Only sends email if Average for day is greater than the average for week plus a standard deviation andthe meter has more than 100 entries
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line214">line 214</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<h5>Fires:</h5>
+<ul>
+    <li>event:emailAlert</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~emailAlert"><span class="type-signature">(inner) </span>emailAlert<span class="signature">(email)</span><span class="type-signature"> &rarr; {void}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Sends out alert to users (admins).Specifically when A meter hasn't checked in over a day. Also when a meter reports unusually high usage.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Object">Object</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains email contents to be sent.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>subject</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#String">String</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains the email's subject.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>body</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#String">String</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains the email's body.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line119">line 119</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~post-%3EreceiveXML"><span class="type-signature">(inner) </span>post->receiveXML<span class="signature">(path, xml)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Handles POST requests received in XML formatReceives POST requests, converts from XML to JSON
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Express path</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>xml</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Object">Object</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains the XML data coming in.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Source_dataServer.js.html">Source/dataServer.js</a>, <a href="Source_dataServer.js.html#line48">line 48</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<h5>Fires:</h5>
+<ul>
+    <li>event:checkUsage</li>
+
+    <li>event:checkMeterTimestamps</li>
+
+    <li>event:addMeter</li>
+
+    <li>event:addEntry</li>
+</ul>
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Jun 12 2018 15:29:29 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
