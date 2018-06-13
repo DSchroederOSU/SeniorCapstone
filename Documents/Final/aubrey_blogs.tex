@@ -270,7 +270,7 @@
     \vspace{-0.5cm}\textbf{Plans:}
     \vspace{-0.5cm}
     \begin{itemize}
-        \item Wait for client to get sample data to begin backend 
+        \item Wait for client to get sample data to begin backend 
     \end{itemize} 
     \vspace{-0.3cm}\textbf{Progress:}
     \vspace{-0.5cm}
@@ -280,7 +280,7 @@
     \vspace{-0.3cm}\textbf{Problems:}
     \vspace{-0.5cm}
     \begin{itemize}
-        \item A lot of hardware problems with my computer set me behind schedule quite. 
+        \item A lot of hardware problems with my computer set me behind schedule quite a bit. 
     \end{itemize}  
     \vspace{-0.3cm}\noindent\textbf{Summary:}\\
     \noindent Continuing to build plan of action. Waiting patiently for client to get back to me so I can start on backend data collection.
@@ -358,7 +358,7 @@
 		\item See if I can get addBuildings to work 
     \end{itemize} 
     \vspace{-0.3cm}\textbf{Progress:}
-	\noident This week I worked a lot on routing to make it easier to access schema data after POST 
+	\noindent This week I worked a lot on routing to make it easier to access schema data after POST data comes in.
     \vspace{-0.5cm}
     \begin{itemize}
         \item Implemented functional routes to add data to new schema
@@ -410,7 +410,7 @@
 	\begin{itemize}
 		\item If the meter's building is null, then the meter data entry array will push the entry
 	\end{itemize}
-	\item Then, once the meter gets added to a building (via edit meter or edit building), then all the contents of `meter.data_entries` would be pushed into that building and popped out of meter.data_entries (to prevent duplicate entries if it were to change buildings) 
+	\item Then, once the meter gets added to a building (via edit meter or edit building), then all the contents of a meter's data entries would be pushed into that building and popped out of the meter's data entries (to prevent duplicate entries if it were to change buildings) 
   \end{itemize}
   \vspace{-0.3cm}\noindent\textbf{Summary:}\\
     \noindent A lot of work was completed this week and we now have AcquiSuites posting to our EC2 Instance.
@@ -437,7 +437,7 @@
 	 \item Fixed error that occurred when buildings were null when trying to add entries 
 	 \item Implemented functionality to let us keep track of data when it comes to our server before a building/meter is added to it. 
 	 \begin{itemize}
-		\item Creates meter for data entry. Then it sets that meter as data_entry.meter
+		\item Creates meter for data entry. Then it sets that meter as the DataEntries' Meter.
 		\item This function is called when a building is added when a meter.building is null
 		\item Pushes all the the matching data entries to the building array 
 	 \end{itemize} 

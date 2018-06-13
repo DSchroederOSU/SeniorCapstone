@@ -6,7 +6,7 @@
     \graphicspath{/images} 
     \usepackage[english]{babel}
     \usepackage{blindtext}
-    
+ 
     \makeatletter
     \renewcommand{\paragraph}{\@startsection{paragraph}{4}{0ex}%
        {-3.25ex plus -1ex minus -0.2ex}%
@@ -112,7 +112,7 @@
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \title{Final Report for: \linebreak Scalable Web Application Framework for Monitoring Energy Usage on Campus}
-    \author{Daniel Schroeder, Aubrey Thenell, Parker Bruni}
+    \author{Daniel Schroeder, Aubrey Thenell, Parker Bruni \linebreak Group 57}
     \date{\today}
     
     \begin{document}
@@ -157,11 +157,11 @@
     %%%%%%% ---------------------------------
     \input{requirements}
     
-    \section{Design Document (original)}
+    \section{Design Document}
     \input{design}
     include the original document, showing what you thought, at the time, was the project design
     Add (your client should have okay'd): What design aspects were changed, deleted or added? Why? 
-    \section{Tech Review (original)}
+    \section{Tech Review}
     \input{tech_review}
 	\input{parker_tech_review}
 	\input{aubrey_tech_review}
@@ -176,16 +176,34 @@
     %--------------- include image poster
     %\includegraphics[angle=270,origin=c,width=18cm]{images/poster1} 
     \section{Project Documentation}
-    \subsection{How does your project work? (Could include the following...)}
-    \begin{itemize}
-    \item What is its structure?
-    \item What is its Theory of Operation?
-    \item Block and flow diagrams are good here.
-    \end{itemize}
     \subsection{How does one install your software, if any?}
+    \begin{itemize}
+        \item In a shell, clone the repoistory via 'git clone https://github.com/DSchroederOSU/SeniorCapstone.git'
+    \end{itemize}
     \subsection{How does one run it?}
+    \begin{enumerate}
+        \item Open two shell/consoles.
+        \item In both shells, Switch into the 'Source' directory
+        \item Install package dependencies via 'npm install'
+        \item Add your environmental variables to './config.js'
+        \item In your first shell, Start the data server via 'nodemon ./dataServer.js'
+        \item In your second shell, Start the public server via 'nodemon ./server.js'
+        \item In a web browser, navigate to 'localhost:3000' to access the application interface
+    \end{enumerate}
     \subsection{Are there any special hardware, OS, or runtime requirements to run your software?}
-    \subsection{Any user guides, API documentation, etc.}
+    \begin{itemize}
+        \item If running in a local environment, MongoDB will have to be running on your machine
+    \end{itemize} 
+    \subsection{Code documentation}
+    \subsubsection{TypeDefs}
+    \includepdf[pages=-,scale=.95,pagecommand={}]{./pdfs/typedef.pdf}
+    \subsubsection{Files}
+    \includepdf[pages=-,scale=.95,pagecommand={}]{./pdfs/files.pdf}
+    \subsubsection{DataServer}
+    \includepdf[pages=-,scale=.95,pagecommand={}]{./pdfs/DataServer.pdf}
+    \subsubsection{PublicServer}
+    \includepdf[pages=-,scale=.95,pagecommand={}]{./pdfs/PublicServer.pdf}
+
     \section{Recommended Technical Resources for Learning More}
     \subsection{Helpful Websites(Listed in order of helpfulness)}
 	\begin{itemize}
@@ -201,7 +219,7 @@
 	\item Behnam Saeedi
     \item Jack Woods
     \end{itemize}
-    \section{Conclusions and Reflections (each team member answers all questions individually)}
+    \section{Conclusions and Reflections}
     \subsection{Daniel}
     \subsubsection{What technical information did you learn?}    
     Before building this project, I had very little (if any) knowledge about AngularJS as a front-end framework, MongoDB, Amazon web services, or Express.js. While I had previously tried to do small scale M.E.A.N. stack applications, they were always bootstrapped from an example code source and I never truly understood the fundamentals behind a RESTful API or a full stack web application. I think building this project allowed me to really learn 3 main concepts:
@@ -249,7 +267,7 @@
     
     \section{Appendix 2: Anything else you want to include.}
     Photos, etc.
-    %\input{appendix_b}
+    \input{appendix_b}
     
     \bibliographystyle{IEEEtran}
     \bibliography{refs}
